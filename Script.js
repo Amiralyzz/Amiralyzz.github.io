@@ -1,15 +1,28 @@
 function    gender() {
-    var maleicon = "https://cdn-icons-png.flaticon.com/512/2404/2404544.png";
-    var femaleicon = "https://cdn-icons-png.flaticon.com/512/2404/2404482.png";
-    if (document.getElementById("gen_icon").src == maleicon) {
-        window.setTimeout(function() { document.getElementById("gen_icon").src = femaleicon;
-        document.getElementById("preg").style.display = "inline";} , 150)
+   
+    var malelogo= "https://cdn-icons-png.flaticon.com/512/3001/3001764.png";
+    var femalelogo = "https://cdn-icons-png.flaticon.com/512/2922/2922561.png" ;
+
+    if (document.getElementById("gen_logo").src == malelogo) {
+        window.setTimeout(function() { 
+        document.getElementById("preg").style.color = "white";
+        document.getElementById("preg").disabled = false;
+        document.getElementById("gender").value = "female";
+        document.getElementById("gen_logo").src = femalelogo;
+        document.getElementById("gen_logo").alt="female";
+    } , 150)
        
     }
     else {
-        window.setTimeout(function() {document.getElementById("gen_icon").src = maleicon;
-        document.getElementById("preg").style.display = "none";},150)
+        window.setTimeout(function() {
+        document.getElementById("preg").style.color = "transparent";
+        document.getElementById("preg").disabled = true;
+        document.getElementById("gender").value = "male";
+        document.getElementById("gen_logo").src = malelogo;
+        document.getElementById("gen_logo").alt="male";
+    },150)    
     }
+
 }
 
 function check_range(id,minn,maxx,out) {
@@ -49,6 +62,7 @@ function check_range(id,minn,maxx,out) {
             }   
     }
     document.getElementById(out).style.color = c;
+    document.getElementById(id).style.color = c;
     if(xs!="") document.getElementById(out).innerHTML = y;
 }
 
