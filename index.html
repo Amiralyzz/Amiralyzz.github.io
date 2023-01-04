@@ -9,38 +9,48 @@
     <script type="text/javascript" src="Script.js"></script>
     <!---                           --->
     <header>
-        <img src="https://cdn-icons-png.flaticon.com/512/8045/8045916.png" id="logo">
-        <h1>CBC</h1>
+        <img  src="https://cdn-icons-png.flaticon.com/512/8045/8045916.png" id="logo">
+        <h1>CBC </h1>
         <div id="top"><em>Lab Interpreter</em></div> 
     </header>
     <main>
-        <table class="ident" cellspacing="0" cellpadding="0" >
+        <table class="ident" cellspacing="0" cellpadding="0">
                 <tr style="background-color:rgb(54, 47, 79); ">
-                    <th></th>
-                    <th colspan="6" style="text-align:left ;">Patient Info</th>
+                    <th><img onclick="gender()" id="gen_logo" src="https://cdn-icons-png.flaticon.com/512/3001/3001764.png" alt="male"></th>
+                    <th colspan="10" style="text-align:left ; margin-left: 5px;" > Patient Info</th>
                 </tr>
                 <tr class="idee">
-                    <td><label for="age">Age</label></td>
-                    <td><input type="number" id="age" min="0" class="inp" value="40" autofocus></td>
+                    
                 <!--    <td >
                     <label class="switch">
                         <input type="checkbox" onchange="gender()" id="gen_chck" checked>
                         <span class="slider round"></span>
                     </label>
                 </td>  -->
-                <td>
-                    <button type="button" class="gend" onclick="gender()"> <img src="https://cdn-icons-png.flaticon.com/512/2404/2404544.png" id="gen_icon"></button>
+                <td colspan="1" style="width: 250px;">
+                    <select name="gendr" id="gender" onchange="gender()" autofocus>
+                        <option value="male" selected>Male</option>
+                        <option value="female">Female</option>
+                    </select>
                 </td>
                 <td>
-                    <select name="preg" id="preg" style="display:none;">
+                    <select name="preg" id="preg" disabled="true" style="color:transparent;">
                         <option value="preg1" selected>Not pregnant</option>
                         <option value="preg2">First trimester</option>
                         <option value="preg3">Second trimester</option>
                         <option value="preg3">Third trimester</option>
                     </select> 
-                </td>                                 
-                 
-                <td style="width:100% ;"></td>   
+                </td>    
+                <td style="width:100% ;"></td>    
+                <td><label for="age">Age</label></td>
+                    <td><input type="number" id="age" min="0" class="inp" placeholder="40" ></td>                         
+                <td><label for="weight">Weight<small>(kg)</small></label></td>
+                <td><input type="number" id="weight" min="0" class="inp" placeholder="70"></td>
+                <td>
+                    <label for="heightt">Height<small>(cm)</small></label>
+                </td>
+                <td><input type="number" id="heightt" min="0" class="inp" placeholder="165"></td>
+                   
                 </tr>   
                 </table>
         <table class="lab" cellspacing="0" cellpadding="0">    
