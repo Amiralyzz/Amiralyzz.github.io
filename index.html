@@ -17,7 +17,7 @@
         <table class="ident" cellspacing="0" cellpadding="0">
                 <tr style="background-color:rgb(54, 47, 79); ">
                     <th><img onclick="gender()" id="gen_logo" src="https://cdn-icons-png.flaticon.com/512/3001/3001764.png" alt="male"></th>
-                    <th colspan="10" style="text-align:left ; margin-left: 5px;" > Patient Info</th>
+                    <th colspan="9" style="text-align:left ; margin-left: 5px;" > Patient Info</th>
                 </tr>
                 <tr class="idee">
                     
@@ -53,121 +53,188 @@
                    
                 </tr>   
                 </table>
-        <table class="lab" cellspacing="0" cellpadding="0">    
+        <table class="lab" id="table_lft" cellspacing="0" cellpadding="0" >    
             
-                <tr style="background-color:darkslategray; ">
-                    <th> 
-                        <img src="https://cdn-icons-png.flaticon.com/512/655/655285.png" style=" height:30px; width:30px; padding-left: 5px;"> </th>
-                        <th style="text-align: left;" colspan="9">Liver Function Tests </th> 
-                    
-                    </tr>       
-                    
-                    <tr>
-                    <td><label for="ast"><div class="tooltip">AST
-                        <span class="tooltiptext">Aspartate transaminase or SGOT</span>
-                      </div></label></td>
-                    <td><input type="number" placeholder="Enter" id="ast" class="inp" onchange="check_range('ast', 0,'ast_rx','ast_a')" onkeyup="check_range('ast',0,'ast_rx','ast_a')"> </td>
-                    <td><h3 id="ast_a">    </h3> </td>
-                    <td class="space"></td>
-                    <td></td>
-                    <td></td>
-                    <td>    <input type="number" maxlength="3" min="0" value="40" id="ast_rx"  class="range_inpx"
-                        onchange="check_range('ast', 0,'ast_rx','ast_a',)" onkeyup="check_range('ast',0,'ast_rx','ast_a')"> </td>
-                    <td><label for="ast_rx"><img src="https://cdn-icons-png.flaticon.com/512/1634/1634156.png" alt="max" class="maxminicon"></label> </td>
-                    <td><small>IU/L</small></td>
-                    <td><button onclick="reset_ranges(0,'ast_rx',0,40,'ast','ast_a')" class="reseet" type="button" >
-                            <img src="https://cdn-icons-png.flaticon.com/512/5307/5307941.png" id="res_lft" >
-                        </button> </td>
-                    
-                    </tr>
-                    <!--- ast_rx = ast range max
-                    ast_a = ast analysis-->
-
-                    <tr>
-                        <td><label for="alt"><div class="tooltip">ALT
-                            <span class="tooltiptext">Alanine transaminase or SGPT</span>
-                          </div> </label></td>
-                        <td><input type="number" placeholder="Enter" id="alt" class="inp" onchange="check_range('alt', 0,'alt_rx','alt_a')" onkeyup="check_range('alt',0,'alt_rx','alt_a')"> </td>
-                        <td><h3 id="alt_a">    </h3> </td>
-                        <td class="space"></td>
-                        <td></td>
-                        <td></td>
-                        <td>    <input type="number" maxlength="3" min="0" value="40" id="alt_rx"  class="range_inpx"
-                            onchange="check_range('alt', 0,'alt_rx','alt_a',)" onkeyup="check_range('alt',0,'alt_rx','alt_a')"> </td>
-                        <td><label for="alt_rx"><img src="https://cdn-icons-png.flaticon.com/512/1634/1634156.png" alt="max" class="maxminicon"></label> </td>
-                        <td><small>IU/L</small></td>
-                        <td><button onclick="reset_ranges(0,'alt_rx',0,40,'alt','alt_a')" class="reseet" type="button" >
-                                <img src="https://cdn-icons-png.flaticon.com/512/5307/5307941.png" id="res_lft" >
-                            </button> </td>
-                        
-                        </tr>
-
-                    <!------------------------------>
-                     
-
-                    <tr>
-                        <td><label for="alp"><div class="tooltip">ALP
-                            <span class="tooltiptext" >Alkaline Phosphatase</span>
-                          </div> </label></td>
-                        <td><input type="number" placeholder="Enter" id="alp" class="inp" onchange="check_range('alp', 'alp_rn','alp_rx','alp_a')" onkeyup="check_range('alp','alp_rn','alp_rx','alp_a')"> </td>
-                        <td><h3 id="alp_a">    </h3> </td>
-                        <td class="space"></td>
-                        <td><label for="alp_rn"><img src="https://cdn-icons-png.flaticon.com/512/1634/1634155.png" alp="min" class="maxminicon"></label></td>
-                        <td><input type="number" maxlength="3" value="80" min="0" id="alp_rn"  onchange="check_range('alp','alp_rn','alp_rx','alp_a')"   class="range_inpn"></td>
-                        <td>    <input type="number" maxlength="3" min="0" value="306" id="alp_rx"  class="range_inpx"
-                            onchange="check_range('alp', 'alp_rn','alp_rx','alp_a',)" onkeyup="check_range('alp','alp_rn','alp_rx','alp_a')"> </td>
-                        <td><label for="alp_rx"><img src="https://cdn-icons-png.flaticon.com/512/1634/1634156.png" alp="max" class="maxminicon"></label> </td>
-                        <td><small>IU/L</small></td>
-                        <td><button onclick="reset_ranges('alp_rn','alp_rx',80,306,'alp','alp_a')" class="reseet" type="button" >
-                                <img src="https://cdn-icons-png.flaticon.com/512/5307/5307941.png" id="res_lft" >
-                            </button> </td>
-                        
-                    </tr>
-
-                    <!------------------------------>
-
-                    <tr>
-                        <td><label for="bilt"><div class="tooltip">Bil(T)
-                            <span class="tooltiptext">Total Bilirubin</span>
-                          </div> </label></td>
-                        <td><input type="number" placeholder="Enter" step="0.1" id="bilt" class="inp" onchange="check_range('bilt', 'bilt_rn','bilt_rx','bilt_a')" > </td>
-                        <td><h3 id="bilt_a">    </h3> </td>
-                        <td class="space"></td>
-                        <td><label for="bilt_rn"><img src="https://cdn-icons-png.flaticon.com/512/1634/1634155.png" bilt="min" class="maxminicon"></label></td>
-                        <td><input type="number" maxlength="3" value="0.1" min="0" id="bilt_rn"  onchange="check_range('bilt','bilt_rn','bilt_rx','bilt_a')"
-                             step="0.1"  class="range_inpn"></td>
-                        <td>    <input type="number" maxlength="3" step="0.1" min="0" value="1.2" id="bilt_rx"  class="range_inpx"
-                            onchange="check_range('bilt',  'bilt_rn','bilt_rx','bilt_a',)" > </td>
-                        <td><label for="bilt_rx"><img src="https://cdn-icons-png.flaticon.com/512/1634/1634156.png" bilt="max" class="maxminicon"></label> </td>
-                        <td><small>mg/dL</small></td>
-                        <td><button onclick="reset_ranges('bilt_rn','bilt_rx',0.1,1.2,'bilt','bilt_a')" class="reseet" type="button" >
-                                <img src="https://cdn-icons-png.flaticon.com/512/5307/5307941.png" id="res_lft" >
-                            </button> </td>
-                        
-                    </tr>
-
-                    <!------------------------------>
-
-                    <tr>
-                        <td><label for="bild"><div class="tooltip">Bil(D)
-                            <span class="tooltiptext">Direct Bilirubin</span>
-                          </div> </label></td>
-                        <td><input type="number" step="0.1" placeholder="Enter" id="bild" class="inp" onchange="check_range('bild', 0,'bild_rx','bild_a')"> </td>
-                        <td><h3 id="bild_a">    </h3> </td>
-                        <td class="space"></td>
-                        <td></td>
-                        <td></td>
-                        <td>    <input type="number" step="0.1" maxlength="3" min="0" value="0.3" id="bild_rx"  class="range_inpx"
-                            onchange="check_range('bild', 0,'bild_rx','bild_a',)" > </td>
-                        <td><label for="bild_rx"><img src="https://cdn-icons-png.flaticon.com/512/1634/1634156.png" alt="max" class="maxminicon"></label> </td>
-                        <td><small>mg/dL</small></td>
-                        <td><button onclick="reset_ranges(0,'bild_rx',0,0.3,'bild','bild_a')" class="reseet" type="button" >
-                                <img src="https://cdn-icons-png.flaticon.com/512/5307/5307941.png" id="res_lft" >
-                            </button> </td>
-                        
-                    </tr>
+            <tr style="background-color:darkslategray; ">
+                <th> 
+                    <img src="https://cdn-icons-png.flaticon.com/128/3904/3904574.png" class="logo_table" alt="Liver"> </th>
+                    <th style="text-align: left;" colspan="9">Liver Function Tests </th> 
                 
+            </tr>       
+                
+            <tr>
+                <td><label for="ast"><div class="tooltip">AST
+                    <span class="tooltiptext" role="tooltip">Aspartate transaminase or SGOT</span>
+                    </div></label></td>
+                <td><input type="number" placeholder="Enter" id="ast" class="inp" onchange="check_range('ast', 0,'ast_rx','ast_a')" 
+                    onkeyup="check_range('ast',0,'ast_rx','ast_a')"> </td>
+                <td><h3 id="ast_a">    </h3> </td>
+                <td class="space"></td>
+                <td></td>
+                <td></td>
+                <td>    <input type="number" maxlength="3" min="0" value="40" id="ast_rx"  class="range_inpx"
+                    onchange="check_range('ast', 0,'ast_rx','ast_a',)" onkeyup="check_range('ast',0,'ast_rx','ast_a')"> </td>
+                <td><label for="ast_rx"><img src="https://cdn-icons-png.flaticon.com/512/1634/1634156.png" alt="max" class="maxminicon"></label> </td>
+                <td><small>IU/L</small></td>
+                <td><button onclick="reset_ranges(0,'ast_rx',0,40,'ast','ast_a')" class="reseet" type="button" >
+                        <img src="https://cdn-icons-png.flaticon.com/512/5307/5307941.png" id="res_lft" >
+                    </button> </td>
+                
+            </tr>
+                
+            <!--- ast_rx = ast range max                 ast_a = ast analysis-->
+
+            <tr>
+                <td><label for="alt"><div class="tooltip">ALT
+                    <span class="tooltiptext" role="tooltip">Alanine transaminase or SGPT</span>
+                    </div> </label></td>
+                <td><input type="number" placeholder="Enter" id="alt" class="inp" onchange="check_range('alt', 0,'alt_rx','alt_a')" 
+                    onkeyup="check_range('alt',0,'alt_rx','alt_a')"> </td>
+                <td><h3 id="alt_a">    </h3> </td>
+                <td class="space"></td>
+                <td></td>
+                <td></td>
+                <td>    <input type="number" maxlength="3" min="0" value="40" id="alt_rx"  class="range_inpx"
+                    onchange="check_range('alt', 0,'alt_rx','alt_a',)" onkeyup="check_range('alt',0,'alt_rx','alt_a')"> </td>
+                <td><label for="alt_rx"><img src="https://cdn-icons-png.flaticon.com/512/1634/1634156.png" alt="max" class="maxminicon"></label> </td>
+                <td><small>IU/L</small></td>
+                <td><button onclick="reset_ranges(0,'alt_rx',0,40,'alt','alt_a')" class="reseet" type="button" >
+                        <img src="https://cdn-icons-png.flaticon.com/512/5307/5307941.png" id="res_lft" >
+                    </button> </td>
+                
+            </tr>
+
+            <!------------------------------>
+                
+
+            <tr>
+                <td><label for="alp"><div class="tooltip">ALP
+                    <span class="tooltiptext" role="tooltip">Alkaline Phosphatase</span>
+                    </div> </label></td>
+                <td><input type="number" placeholder="Enter" id="alp" class="inp" onchange="check_range('alp', 'alp_rn','alp_rx','alp_a')" 
+                    onkeyup="check_range('alp','alp_rn','alp_rx','alp_a')"> </td>
+                <td><h3 id="alp_a">    </h3> </td>
+                <td class="space"></td>
+                <td><label for="alp_rn"><img src="https://cdn-icons-png.flaticon.com/512/1634/1634155.png" alt="min" class="maxminicon"></label></td>
+                <td><input type="number" maxlength="3" value="80" min="0" id="alp_rn"  onchange="check_range('alp','alp_rn','alp_rx','alp_a')"   class="range_inpn"></td>
+                <td>    <input type="number" maxlength="3" min="0" value="306" id="alp_rx"  class="range_inpx"
+                    onchange="check_range('alp', 'alp_rn','alp_rx','alp_a',)" > </td>
+                <td><label for="alp_rx"><img src="https://cdn-icons-png.flaticon.com/512/1634/1634156.png" alt="max" class="maxminicon"></label> </td>
+                <td><small>IU/L</small></td>
+                <td><button onclick="reset_ranges('alp_rn','alp_rx',80,306,'alp','alp_a')" class="reseet" type="button" >
+                        <img src="https://cdn-icons-png.flaticon.com/512/5307/5307941.png" id="res_lft" >
+                    </button> </td>
+                
+            </tr>
+
+            <!------------------------------>
+
+            <tr>
+                <td><label for="bilt"><div class="tooltip">Bil(T)
+                    <span class="tooltiptext" role="tooltip">Total Bilirubin</span>
+                    </div> </label></td>
+                <td><input type="number" placeholder="Enter" step="0.1" id="bilt" class="inp" onchange="check_range('bilt', 'bilt_rn','bilt_rx','bilt_a')" > </td>
+                <td><h3 id="bilt_a">    </h3> </td>
+                <td class="space"></td>
+                <td><label for="bilt_rn"><img src="https://cdn-icons-png.flaticon.com/512/1634/1634155.png" alt="min" class="maxminicon"></label></td>
+                <td><input type="number" maxlength="3" value="0.1" min="0" id="bilt_rn"  onchange="check_range('bilt','bilt_rn','bilt_rx','bilt_a')"
+                        step="0.1"  class="range_inpn"></td>
+                <td>    <input type="number" maxlength="3" step="0.1" min="0" value="1.2" id="bilt_rx"  class="range_inpx"
+                    onchange="check_range('bilt',  'bilt_rn','bilt_rx','bilt_a',)" > </td>
+                <td><label for="bilt_rx"><img src="https://cdn-icons-png.flaticon.com/512/1634/1634156.png" alt="max" class="maxminicon"></label> </td>
+                <td><small>mg/dL</small></td>
+                <td><button onclick="reset_ranges('bilt_rn','bilt_rx',0.1,1.2,'bilt','bilt_a')" class="reseet" type="button" >
+                        <img src="https://cdn-icons-png.flaticon.com/512/5307/5307941.png" id="res_lft" >
+                    </button> </td>
+                
+            </tr>
+
+            <!------------------------------>
+
+            <tr>
+                <td><label for="bild"><div class="tooltip">Bil(D)
+                    <span class="tooltiptext" role="tooltip">Direct Bilirubin</span>
+                    </div> </label></td>
+                <td><input type="number" step="0.1" placeholder="Enter" id="bild" class="inp" onchange="check_range('bild', 0,'bild_rx','bild_a')"> </td>
+                <td><h3 id="bild_a">    </h3> </td>
+                <td class="space"></td>
+                <td></td>
+                <td></td>
+                <td>    <input type="number" step="0.1" maxlength="3" min="0" value="0.3" id="bild_rx"  class="range_inpx"
+                    onchange="check_range('bild', 0,'bild_rx','bild_a',)" > </td>
+                <td><label for="bild_rx"><img src="https://cdn-icons-png.flaticon.com/512/1634/1634156.png" alt="max" class="maxminicon"></label> </td>
+                <td><small>mg/dL</small></td>
+                <td><button onclick="reset_ranges(0,'bild_rx',0,0.3,'bild','bild_a')" class="reseet" type="button" >
+                        <img src="https://cdn-icons-png.flaticon.com/512/5307/5307941.png" id="res_lft" >
+                    </button> </td>
+                
+            </tr>
+
+            <!------------------------------>
+
+            <tr>
+                <td><label for="alb"><div class="tooltip">Alb
+                    <span class="tooltiptext" role="tooltip">Total Albumin</span>
+                    </div> </label></td>
+                <td><input type="number" placeholder="Enter" step="0.1" id="alb" class="inp" onchange="check_range('alb', 'alb_rn','alb_rx','alb_a')" 
+                    onkeyup="check_range('alb','alb_rn','alb_rx','alb_a')"> </td>
+                <td><h3 id="alb_a">    </h3> </td>
+                <td class="space"></td>
+                <td><label for="alb_rn"><img src="https://cdn-icons-png.flaticon.com/512/1634/1634155.png" alt="min" class="maxminicon"></label></td>
+                <td><input type="number" maxlength="3" value="3.4" min="0" id="alb_rn"  onchange="check_range('alb','alb_rn','alb_rx','alb_a')" 
+                        step="0.1"  class="range_inpn"></td>
+                <td>    <input type="number" maxlength="3" step="0.1" min="0" value="5.4" id="alb_rx"  class="range_inpx"
+                    onchange="check_range('alb',  'alb_rn','alb_rx','alb_a',)" > </td>
+                <td><label for="alb_rx"><img src="https://cdn-icons-png.flaticon.com/512/1634/1634156.png" alt="max" class="maxminicon"></label> </td>
+                <td><small>IU/L</small></td>
+                <td><button onclick="reset_ranges('alb_rn','alb_rx',3.4,5.4,'alb','alb_a')" class="reseet" type="button" >
+                        <img src="https://cdn-icons-png.flaticon.com/512/5307/5307941.png" id="res_lft" >
+                    </button> </td>
+                
+            </tr>
             
+            <!------------------------------>
+
+            <tr>
+                <td><label for="ggt"><div class="tooltip">GGT
+                    <span class="tooltiptext" role="tooltip">Gamma-glutamyl transferase</span>
+                    </div> </label></td>
+                <td><input type="number" placeholder="Enter" step="1" id="ggt" class="inp" onchange="check_range('ggt', 'ggt_rn','ggt_rx','ggt_a')" 
+                    onkeyup="check_range('ggt','ggt_rn','ggt_rx','ggt_a')"> </td>
+                <td><h3 id="ggt_a">    </h3> </td>
+                <td class="space"></td>
+                <td><label for="ggt_rn"><img src="https://cdn-icons-png.flaticon.com/512/1634/1634155.png" alt="min" class="maxminicon"></label></td>
+                <td><input type="number" maxlength="3" value="5" min="0" id="ggt_rn"  onchange="check_range('ggt','ggt_rn','ggt_rx','ggt_a')" 
+                        step="1"  class="range_inpn"></td>
+                <td>    <input type="number" maxlength="3" step="1" min="0" value="40" id="ggt_rx"  class="range_inpx"
+                    onchange="check_range('ggt',  'ggt_rn','ggt_rx','ggt_a',)" > </td>
+                <td><label for="ggt_rx"><img src="https://cdn-icons-png.flaticon.com/512/1634/1634156.png" alt="max" class="maxminicon"></label> </td>
+                <td><small>IU/L</small></td>
+                <td><button onclick="reset_ranges('ggt_rn','ggt_rx',5,40,'ggt','ggt_a')" class="reseet" type="button" >
+                        <img src="https://cdn-icons-png.flaticon.com/512/5307/5307941.png" id="res_lft" >
+                    </button> </td>
+                
+            </tr>
+            
+            <tr>
+                <td><label for="5nt"><div class="tooltip">5′NT
+                    <span class="tooltiptext" role="tooltip">5′-Nucleotidase</span>
+                    </div> </label></td>
+                <td><input type="number" placeholder="Enter" step="1" id="5nt" class="inp" onchange="check_range('5nt', '5nt_rn','5nt_rx','5nt_a')" onkeyup="check_range('5nt','5nt_rn','5nt_rx','5nt_a')"> </td>
+                <td><h3 id="5nt_a">    </h3> </td>
+                <td class="space"></td>
+                <td><label for="5nt_rn"><img src="https://cdn-icons-png.flaticon.com/512/1634/1634155.png" alt="min" class="maxminicon"></label></td>
+                <td><input type="number" maxlength="3" value="2" min="0" id="5nt_rn"  onchange="check_range('5nt','5nt_rn','5nt_rx','5nt_a')" 
+                        step="1"  class="range_inpn"></td>
+                <td>    <input type="number" maxlength="3" step="1" min="0" value="17" id="5nt_rx"  class="range_inpx"
+                    onchange="check_range('5nt',  '5nt_rn','5nt_rx','5nt_a',)" > </td>
+                <td><label for="5nt_rx"><img src="https://cdn-icons-png.flaticon.com/512/1634/1634156.png" alt="max" class="maxminicon"></label> </td>
+                <td><small>IU/L</small></td>
+                <td><button onclick="reset_ranges('5nt_rn','5nt_rx',2,17,'5nt','5nt_a')" class="reseet" type="button" >
+                        <img src="https://cdn-icons-png.flaticon.com/512/5307/5307941.png" id="res_lft" >
+                    </button> </td>
+                
+            </tr>
         </table> 
     </main>
 </body>
