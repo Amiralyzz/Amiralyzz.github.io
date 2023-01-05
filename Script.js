@@ -25,6 +25,40 @@ function    gender() {
 
 }
 
+function    change_table(tab_id,table_id)  {
+    var tab_selected = document.getElementById(tab_id);
+    var table_selected = document.getElementById(table_id);
+    var tabs = document.getElementsByClassName("tab");
+    var tables = document.getElementsByClassName("lab");
+    for (const tab of tabs) {
+        tab.style.opacity = 0.4;
+    }
+    for (const table of tables) {
+        table.style.display = "none";
+    }
+    table_selected.style.display = "table";
+    tab_selected.style.opacity = 1;
+
+}
+
+function    expand(rows_id,button_id)    {
+    var extra_rows = document.getElementsByClassName(rows_id);
+    var button = document.getElementById(button_id);
+    if (button.innerHTML=="<em>more</em>") {
+        for (const rows_id of extra_rows) {
+        rows_id.style.display = "table-row";
+        button.innerHTML="<em>less</em>";
+        }
+    }
+    else {
+        for (const rows_id of extra_rows) {
+            rows_id.style.display = "none";
+            button.innerHTML="<em>more</em>";
+            }
+    }
+}
+
+
 function check_range(id,minn,maxx,out) {
     if (minn!=0) check_range_validity(minn,maxx);
     if (id=="bild" || id=="bilt") bili_check();
