@@ -124,6 +124,7 @@ table {
   text-align: center;
   margin: 10px 30px;
   background-color: rgba(0, 0, 39, 0.815);
+  
 }
 #table_lft {
   border-color: darkslategray;
@@ -131,6 +132,10 @@ table {
 
 #table_cbc {
   border-color: darkslateblue;
+}
+
+#table_tft {
+  border-color: rgb(65, 87, 65);
 }
 table.ident {
   border-color: rgb(54, 47, 79)
@@ -307,12 +312,7 @@ option::selection {
   cursor: pointer;
 }
 
-.maxminicon {
-  height:15px; 
-  width:15px;
-  display: inline-block;
-  vertical-align:middle;
-}
+
 
 
 
