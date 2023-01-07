@@ -6,6 +6,27 @@ body {
 
 }
 
+#table_shown {
+
+  position: relative;
+  margin: 30px;
+  
+  color: white;
+  display: flex;
+  flex-direction:row;
+  align-items: center;
+  align-content: center;
+  justify-content: space-between;
+  vertical-align: middle;
+  flex-wrap: wrap;
+  font-family: "Cambria, Cochin, Georgia, Times, 'Times New Roman', serif";
+}
+
+
+input {
+  font-family: "Cambria, Cochin, Georgia, Times, 'Times New Roman', serif";
+}
+
 .tooltip {
   position: relative;
   display: inline-block;
@@ -114,29 +135,7 @@ h1 {
 
 }
 
-table {
-  vertical-align: middle;
-  border-radius: 20px;
-  border-width: 10px;
-  border-style: solid;
-  vertical-align: middle;
-  font-size: 25px;
-  text-align: center;
-  margin: 10px 30px;
-  background-color: rgba(0, 0, 39, 0.815);
-  
-}
-#table_lft {
-  border-color: darkslategray;
-}
 
-#table_cbc {
-  border-color: darkslateblue;
-}
-
-#table_tft {
-  border-color: rgb(65, 87, 65);
-}
 table.ident {
   border-color: rgb(54, 47, 79)
 }
@@ -147,18 +146,6 @@ table.lab tr td:nth-child(3) {
   width: 10%;
 }
 
-
-table.ident tr:hover {
-  background-color: rgb(54, 47, 79);
-}
-
-tr.idee td {
-  border: none;
-}
-td {
-  padding: 7px;
-  border-top: 1px solid darkslategray;
-}
 
 .expander {
   width: 40px;
@@ -311,8 +298,6 @@ option::selection {
   background-color: darkslategray;
   cursor: pointer;
 }
-
-
 
 
 
