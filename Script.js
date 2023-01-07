@@ -1,5 +1,97 @@
-function    gender() {
-   
+var min=[], max=[], in_id=[], out_id=[], namee=[], valuee=[], statuss=[];
+
+function filterByType(item,typee) {
+    if (item.type == typee) {
+      return true;
+    }
+}
+function    change_table(tab_id,test_cat)  {
+    document.getElementById("table_shown").innerHTML ="";
+    var tab_selected = document.getElementById(tab_id);
+    var tabs = document.getElementsByClassName("tab");
+    for (const tab of tabs) {
+        tab.style.opacity = 0.4;
+    }
+    tab_selected.style.opacity = 1;
+    
+
+    var searchVal = test_cat;
+    
+    for (i=0;i<mydata.length;i++)
+    {
+        if (mydata[i]["type"] == searchVal)    {
+            var entry = mydata[i];
+            var new_div = document.createElement("div");
+            new_div.className = "entry";
+            new_div.style.display= "flex";
+            new_div.style.position = "relative";
+            new_div.style.flexWrap = "nowrap";
+            new_div.style.width = "30%";
+            new_div.style.minWidth = "310px";
+            new_div.style.flexGrow = "1";
+            new_div.style.height= "50px";
+            new_div.style.padding= "10px";
+            new_div.style.margin = "5px 5px";
+            new_div.style.border= "none";
+            new_div.style.borderRadius= "25px";
+            new_div.style.background =entry.color;
+            new_div.style.color = "white";
+            new_div.style.fontSize = "20px"
+            new_div.style.justifyContent = "space-between";
+            document.getElementById("table_shown").appendChild(new_div);
+            var new_label = document.createElement("label");
+            new_div.appendChild(new_label);
+            new_label.innerHTML = entry.name + "<br>" + entry.min + " - " + entry.max;
+            new_label.style.width="150px";
+            
+
+            var new_output = document.createElement("div");
+            new_output.id = entry.output_id;
+            new_output.style.display = "flex";
+            new_output.style.position = "relative";
+            new_output.style.width = "80px";
+            new_output.style.height = "34px";
+            new_output.style.padding = "5px";
+            new_output.style.fontSize = "20px";
+            if(entry.status != 0) new_output.innerHTML = entry.status.toFixed(2);
+            new_div.appendChild(new_output);
+
+            
+            var new_input = document.createElement("input");
+            new_input.type = "number"
+            new_input.style.display = "flex";
+            new_input.style.position = "relative";
+            new_input.style.width = "80px";
+            new_input.style.height = "34px";
+            new_input.style.padding = "5px";
+            new_input.style.fontSize = "20px";
+            new_input.style.color = "white";
+            new_input.style.background = "rgb(19, 19, 19)";
+            new_input.style.border = "none";
+            new_input.value = entry.value;
+            new_input.step = entry.step;
+            
+            namee[i] = entry.name;
+            valuee[i] = entry.value;
+            min[i] = entry.min;
+            max[i] = entry.max;
+            out_id[i] = entry.output_id;
+            in_id[i] = entry.input_id;
+            new_input.id = entry.input_id;
+            new_input.onchange = check_range;
+            new_input.onkeyup = check_range;
+            //check_range.apply(new_input,Number(new_input.value),min,max,out_id,i);
+            new_div.appendChild(new_input);
+        }
+        //console.log(min);
+    }
+    
+    
+    
+}
+
+function  gender() {
+
     var malelogo= "https://cdn-icons-png.flaticon.com/512/3001/3001764.png";
     var femalelogo = "https://cdn-icons-png.flaticon.com/512/2922/2922561.png" ;
 
@@ -22,116 +114,115 @@ function    gender() {
         document.getElementById("gen_logo").alt="male";
     },150)    
     }
-
 }
 
-function    change_table(tab_id,table_id)  {
-    var tab_selected = document.getElementById(tab_id);
-    var table_selected = document.getElementById(table_id);
-    var tabs = document.getElementsByClassName("tab");
-    var tables = document.getElementsByClassName("lab");
-    for (const tab of tabs) {
-        tab.style.opacity = 0.4;
-    }
-    for (const table of tables) {
-        table.style.display = "none";
-    }
-    table_selected.style.display = "table";
-    tab_selected.style.opacity = 1;
-
-}
-
-function    expand(rows_id,button_id)    {
-    var extra_rows = document.getElementsByClassName(rows_id);
-    var button = document.getElementById(button_id);
-    if (button.innerHTML=="<em>more</em>") {
-        for (const rows_id of extra_rows) {
-        rows_id.style.display = "table-row";
-        button.innerHTML="<em>less</em>";
+function check_range() {
+    //if (id=="bild" || id=="bilt") bili_check();
+    //console.log(min,max,out,i);
+    x= Number(this.value);
+    id= this.id;
+    for(var j=0;j<mydata.length;j++) {
+        if(id==mydata[j].input_id) {
+            if (x==0) document.getElementById(out_id[j]).innerHTML = "";      
+    
+            if (x>max[j]) y = x/max[j];
+            else if (x<min[j]) y= x/min[j];
+            else y=0;
+            mydata[j].value = x;
+            mydata[j].status = y;
+            if(x!="") document.getElementById(out_id[j]).innerHTML = y.toFixed(2);
+            break;
         }
     }
-    else {
-        for (const rows_id of extra_rows) {
-            rows_id.style.display = "none";
-            button.innerHTML="<em>more</em>";
-            }
-    }
+    
+    console.log(mydata[j].status);
+   
+
+   // document.getElementById(out).style.color = c;
+    
 }
 
 
-function check_range(id,minn,maxx,out) {
-    if (minn!=0) check_range_validity(minn,maxx);
-    if (id=="bild" || id=="bilt") bili_check();
-    var xs = document.getElementById(id).value;
-    if (xs==0) document.getElementById(out).innerHTML = "";
-    var y = "Normal";
-    var c = "white";
-    if (minn!=0) var mins = document.getElementById(minn).value;
-    var maxs = document.getElementById(maxx).value;
-    var x = Number(xs);
-    if (minn!=0) var min = Number(mins);
-    var max = Number(maxs);
-    if (minn!=0) {
-        if (x>max) {
-            y = "Increased";
-            c = "lightpink";
-        }
-        else if (x<min) {
-            y = "Decreased";
-            c = "lightgreen";
-            }
-        else {
-            y = "Normal";
-            c = "white";
-            }   
-            
-    } else {
-        if (x>max) {
-            y = "Increased";
-            c = "lightpink";
-        }
-        else {
-            y = "Normal";
-            c = "white";
-            }   
-    }
-    document.getElementById(out).style.color = c;
-    document.getElementById(id).style.color = c;
-    if(xs!="") document.getElementById(out).innerHTML = y;
-}
 
-function    check_range_validity(minn,maxx) {
-    var mins = document.getElementById(minn).value;
-    var maxs = document.getElementById(maxx).value;
-    var min = Number(mins);
-    var max = Number(maxs);
-    if(min>max) {
-        document.getElementById(minn).value = max;
-        document.getElementById(maxx).value = max;
-    }
-}
 
-function    reset_ranges(minn,maxx,min,max,id,out) {
-    if (minn!=0)    document.getElementById(minn).value = min;
-    document.getElementById(maxx).value = max;
-    check_range(id,minn,maxx,out);
-}
+var mydata = [
+    {
+        "name" : "WBC" ,
+        "tooltip" : "White Blood Cells" ,
+        "type" : "hemato" ,
+        "value" : 0 ,
+        "min": 4400 ,
+        "max": 11000 ,
+        "step": 100 ,
+        "status": 0 ,
+        "color" : "darkslateblue"  ,
+        "input_id" : "inp_wbc"  ,
+        "output_id" : "out_wbc"
+    },
+    {
+        "name" : "RBC" ,
+        "tooltip" : "Red Blood Cells" ,
+        "type" : "hemato" ,
+        "value" : 0 ,
+        "min": 4.5 ,
+        "max": 5.9 ,
+        "step": 0.1 ,
+        "status": 0 ,
+        "color" : "darkslateblue" ,
+        "input_id" : "inp_rbc" ,
+        "output_id" : "out_rbc"
+    },
+    {
+        "name" : "Hb" ,
+        "tooltip" : "Hemoglobin" ,
+        "type" : "hemato" ,
+        "value" : 0 ,
+        "min": 13.5 ,
+        "max": 18 ,
+        "step": 1 ,
+        "status": 0 ,
+        "color" : "darkslateblue" ,
+        "input_id" : "inp_hb" ,
+        "output_id" : "out_hb"
+    },
+    {
+        "name" : "Hct" ,
+        "tooltip" : "Hematocrit" ,
+        "type" : "hemato" ,
+        "value" : 0 ,
+        "min": 40 ,
+        "max": 54 ,
+        "step": 1 ,
+        "status": 0 ,
+        "color" : "darkslateblue" ,
+        "input_id" : "inp_hct" ,
+        "output_id" : "out_hct"
+    } ,
 
-function    bili_check() {
-    var bildd = document.getElementById("bild").value;
-    var biltt = document.getElementById("bilt").value;
-    var mins = document.getElementById("bild_rx").value;
-    var maxs = document.getElementById("bilt_rx").value;
-    var bild = Number(bildd);
-    var bilt = Number(biltt);
-    var min = Number(mins);
-    var max = Number(maxs);
-    if(bild>bilt) {
-        document.getElementById("bild").value = bilt;
-        document.getElementById("bilt").value = bilt;
+    {
+        "name" : "AST" ,
+        "tooltip" : "SGOT" ,
+        "type" : "lft" ,
+        "value" : 0 ,
+        "min": 0 ,
+        "max": 40 ,
+        "step": 1 ,
+        "status": 0 ,
+        "color" : "darkslategrey"  ,
+        "input_id" : "inp_ast"  ,
+        "output_id" : "out_ast"
+    },
+    {
+        "name" : "TSH" ,
+        "tooltip" : "Thyroid" ,
+        "type" : "tft" ,
+        "value" : 0 ,
+        "min": 0.5 ,
+        "max": 5 ,
+        "step": 0.1 ,
+        "status": 0 ,
+        "color" : "rgb(65, 87, 65)" ,
+        "input_id" : "inp_tsh" ,
+        "output_id" : "out_tsh"
     }
-    if(min>max) {
-        document.getElementById("bild_rx").value = max;
-        document.getElementById("bilt_rx").value = max;
-    }
-}
+];
