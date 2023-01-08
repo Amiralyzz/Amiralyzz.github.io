@@ -1,5 +1,5 @@
 var min=[], max=[], in_id=[], out_id=[], namee=[], valuee=[], statuss=[];
-var age = 40 ,weig = 70 ,heig = 170 , sex=0; //sex=0 male sex=2 female
+var age = 40 ,weig = 70000 ,heig = 170 , sex=0; //sex=0 male sex=2 female
 var age_gp = ["newborn3" , "newborn14" , "newborn30" , "newborn60" , "infant6" , "infant1" , "infant2" , "child6" , "child9" , "child10" , "teen12" , "teen18" , "adult"];
 var age_gp_selected_index = 12;
 var age_gp_selected = "adult";
@@ -10,8 +10,11 @@ function    age_calc() {
     var age_select = document.getElementById("age_unit");
     var inp = Number(age_txtbox.value);
     var age_unit = age_select.value;
+    if (inp<0) {
+        age_txtbox.value = 0;
+        inp=0;
+    }
     if (age_unit == "day") {
-        if (inp<0) inp=0;
         if (inp>60) {
             age_txtbox.value = 60;
             inp=60;   
@@ -68,8 +71,10 @@ function    age_calc() {
     age_gp_selected = age_gp[age_gp_selected_index];
     range_maker(age_gp_selected);
     change_table(tab_idd,lab_type);
+    
     for(var j=0;j<mydata.length;j++) {
-        if(id==mydata[j].input_id) {
+        x= Number(mydata[j].value);
+       // if(id==mydata[j].input_id) {
             if (x==0) document.getElementById(out_id[j]).innerHTML = "";      
     
             if (x>max[j]) {y = x/max[j]; st=" &#215 max";}
@@ -80,8 +85,8 @@ function    age_calc() {
             mydata[j].value = x;
             document.getElementById(out_id[j]).innerHTML = mydata[j].status;
 
-            break;
-        }
+            
+      //  }
     }
 }
 
@@ -94,6 +99,100 @@ function    range_maker(key) {
     }
 }
 
+function    weight_calc() {
+    var weight_txtbox = document.getElementById("weight");
+    var weight_select = document.getElementById("weight_unit");
+    var inp = Number(weight_txtbox.value);
+    var weight_unit = weight_select.value;
+    if (inp<0) {
+        weight_txtbox.value = 0;
+        inp=0;
+    }
+    if (weight_unit == "kg") {
+        if (inp>500) {
+            weight_txtbox.value = 500;
+            inp=500;
+        }
+        weig = inp * 1000;
+    }
+    if (weight_unit == "gr") {
+        if (inp>10000) {
+            weight_txtbox.value = 10000;
+            inp=10000;
+        }
+        weig = inp;
+    }
+    if (weight_unit == "lb") {
+        if (inp>1000) {
+            weight_txtbox.value = 1000;
+            inp=1000;
+        }
+        weig = inp * 453.592 ;
+
+    }
+    
+    bmi_calc();
+
+
+}
+
+function height_calc() {
+    var height_txtbox = document.getElementById("height");
+    var height_select = document.getElementById("height_unit");
+    var inp = Number(height_txtbox.value);
+    var height_unit = height_select.value;
+    if (inp<0) {
+        height_txtbox.value = 0;
+        inp=0;
+    }
+    if (height_unit == "cm") {
+        if (inp>270) {
+            height_txtbox.value = 270;
+            inp=270;
+        }
+        heig = inp;
+    }
+    if (height_unit == "ft") {
+        
+        var feet = height_txtbox.value.slice(0,1);
+        var inch = height_txtbox.value.slice(1);
+        if (feet <0) {
+            feet = 0;
+        }
+        if(inch>=12) {
+            inch = 11;
+        }
+        // if(inch = "") {
+        //     inch = 0;
+        // }
+        if (height_txtbox.value.length == 1) {
+            inch=0;
+            height_txtbox.value = feet ;
+        }
+        else if (height_txtbox.value.length > 1) {
+            height_txtbox.value = feet + inch;
+        } else {
+            feet = 0;
+            inch = 0;
+        }
+        heig = feet * 30.48 + inch * 2.54 ;
+        console.log(feet+" feet and " + inch + "inches = " + heig + " cm");
+        
+    }
+    bmi_calc();
+}
+
+function    bmi_calc() {
+    if (weig<=0) weig = 0;
+    if (heig!=0) { 
+        var bmi = (weig/1000) / (heig/100) / (heig/100);
+        document.getElementById("bmi_val").innerHTML = bmi.toFixed(1);
+    }
+    if (heig ==0) {
+        var bmi = (weig/1000) / (1/100) / (1/100);
+        document.getElementById("bmi_val").innerHTML = bmi.toFixed(1);
+    }
+}
 function    change_table(tab_id,test_cat)  {
     document.getElementById("table_shown").innerHTML ="";
     lab_type = test_cat;
