@@ -49,9 +49,10 @@
                     <div class="id_tab" id="weight_id">
                         <label for="weight" style="margin: 5px 10px; font-size: 25px;">Weight</label>
                         <div style="flex-wrap: nowrap; display: flex; justify-content: center;">
-                            <input type="number" name="weight" id="weight" min="0" class="input_id" placeholder="70">
-                            <select name="weight_unit" id="weight_unit" onchange="weightunit()">
-                                <option value="Kg" selected>Kg</option>
+                            <input type="number" name="weight" id="weight" min="0" class="input_id" placeholder="70" onkeyup="weight_calc()" onchange="weight_calc()" >
+                            <select name="weight_unit" id="weight_unit" onchange="weight_calc()">
+                                <option value="kg" selected>Kg</option>
+                                <option value="gr">gram</option>
                                 <option value="lb">lb</option>
                             </select>
                         </div>
@@ -59,10 +60,10 @@
                     <div class="id_tab" id="height_id">
                         <label for="height" style="margin: 5px 10px; font-size: 25px;">Height</label>
                         <div  style="flex-wrap: nowrap; display: flex; justify-content: center;" >
-                            <input type="number" name="height" id="height" min="0" class="input_id" placeholder="170">
-                            <select name="height_unit" id="height_unit" onchange="heightunit()">
-                                <option value="cm" selected>Kg</option>
-                                <option value="feet">ft</option>
+                            <input type="number" name="height" id="height" min="0" class="input_id" placeholder="170" onkeyup="height_calc()" onchange="height_calc()">
+                            <select name="height_unit" id="height_unit" onchange="height_calc()">
+                                <option value="cm" selected>cm</option>
+                                <option value="ft">ft</option>
                             </select>
                         </div>
                     </div>
@@ -71,20 +72,24 @@
 
             
             <div id="test_types">
+                <div style="background-color:rgb(48, 72, 124); align-items: center;  max-width: fit-content;" id="bmi" class="tab" onmouseover="change_table('test_types_cbc','bmi')">
+                    <div class="tab_label">BMI</div>
+                    <div class = "tab_lable" id="bmi_val">24.2</div>
+                </div>
                 <div style="background-color:darkslateblue; opacity: 1;" id="test_types_cbc" class="tab" onmouseover="change_table('test_types_cbc','hemato')">
-                    <img src="https://cdn-icons-png.flaticon.com/128/1834/1834940.png" class="logo_table" alt="Blood">CBC <em style="color:transparent;">/ </em>
+                    <img src="https://cdn-icons-png.flaticon.com/128/1834/1834940.png" class="logo_table" alt="Blood"><div class="tab_label">CBC</div>
                 </div>
                 <div style="background-color:darkslategray; " id="test_types_lft" class="tab" onmouseover="change_table('test_types_lft','lft')">
-                    <img src="https://cdn-icons-png.flaticon.com/128/3910/3910800.png" class="logo_table" alt="Liver">LFT <em style="color:transparent;">/ </em>
+                    <img src="https://cdn-icons-png.flaticon.com/128/3910/3910800.png" class="logo_table" alt="Liver"><div class="tab_label">LFT</div>
                 </div>
                 <div style="background-color:rgb(65, 87, 65); " id="test_types_tft" class="tab" onmouseover="change_table('test_types_tft','tft')">
-                    <img src="https://cdn-icons-png.flaticon.com/128/3912/3912448.png" class="logo_table" alt="Thyroid">TFT <em style="color:transparent;">/ </em>
+                    <img src="https://cdn-icons-png.flaticon.com/128/3912/3912448.png" class="logo_table" alt="Thyroid"><div class="tab_label">TFT</div>
                 </div>
                 <div style="background-color:rgb(128, 70, 32); " id="test_types_kft" class="tab" onmouseover="change_table('test_types_kft','kft')">
-                    <img src="https://cdn-icons-png.flaticon.com/128/1835/1835006.png" class="logo_table" alt="Kidney">KFT <em style="color:transparent;">/ </em>
+                    <img src="https://cdn-icons-png.flaticon.com/128/1835/1835006.png" class="logo_table" alt="Kidney"><div class="tab_label">KFT</div>
                 </div>
                 <div style="background-color:rgb(102, 30, 52); " id="test_types_bio" class="tab" onmouseover="change_table('test_types_bio','bio')">
-                    <img src="https://cdn-icons-png.flaticon.com/128/1834/1834943.png" class="logo_table" alt="biochem">Bio <em style="color:transparent;">/ </em>
+                    <img src="https://cdn-icons-png.flaticon.com/128/1834/1834943.png" class="logo_table" alt="biochem"><div class="tab_label">Bio</div>
                 </div>
             </div>
             <div id="table_shown">
