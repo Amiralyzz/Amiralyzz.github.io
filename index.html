@@ -5,7 +5,7 @@
         <title>CBC - Lab Interpreter</title>
         
     </head>
-    <body>
+    <body onload="range_maker('adult')">
         <script type="text/javascript" src="Script.js"></script>
         <!---                           --->
         <header>
@@ -14,45 +14,61 @@
             <div id="top" role="banner"><em>Lab Interpreter</em></div> 
         </header>
         <main>
-            <table class="ident" cellspacing="0" cellpadding="0" style="margin: 10px 30px;">
-                <tr style="background-color:rgb(54, 47, 79); ">
-                    <th><img onclick="gender()" id="gen_logo" src="https://cdn-icons-png.flaticon.com/512/3001/3001764.png" alt="male"></th>
-                    <th colspan="9" style="text-align:left ; margin-left: 5px;" > Patient Info</th>
-                </tr>
-                <tr class="idee">
+            <div id="identiff">
+                <div style="display:flex; flex-direction: row; flex-wrap:nowrap; align-items: center; justify-content: center;" >
+                    <div><img onclick="gender()" id="gen_logo" src="https://cdn-icons-png.flaticon.com/512/3001/3001764.png" alt="male" ></div>
+                    <div style="text-align:left ; font-size: 30px; margin-left: 5px; height: fit-content;  position: relative;" > Patient Info</div>
+                </div>
+                <div id="identif" >
                     
-                <!--    <td >
-                    <label class="switch">
-                        <input type="checkbox" onchange="gender()" id="gen_chck" checked>
-                        <span class="slider round"></span>
-                    </label>
-                </td>  -->
-                <td colspan="1" style="width: 250px;">
-                    <select name="gendr" id="gender" onchange="gender()" autofocus>
-                        <option value="male" selected>Male</option>
-                        <option value="female">Female</option>
-                    </select>
-                </td>
-                <td>
-                    <select name="preg" id="preg" disabled="true" style="color:transparent;">
-                        <option value="preg1" selected>Not pregnant</option>
-                        <option value="preg2">First trimester</option>
-                        <option value="preg3">Second trimester</option>
-                        <option value="preg3">Third trimester</option>
-                    </select> 
-                </td>    
-                <td style="width:100% ;"></td>    
-                <td><label for="age">Age</label></td>
-                    <td><input type="number" id="age" min="0" class="inp" placeholder="40" ></td>                         
-                <td><label for="weight">Weight<small>(kg)</small></label></td>
-                <td><input type="number" id="weight" min="0" class="inp" placeholder="70"></td>
-                <td>
-                    <label for="heightt">Height<small>(cm)</small></label>
-                </td>
-                <td><input type="number" id="heightt" min="0" class="inp" placeholder="165"></td>
-                
-            </tr>   
-        </table>
+                    <div id="sex_id" class="id_tab">
+                        <div style="flex-wrap: wrap; display: flex; justify-content: center;">
+                            <select name="gendr" id="gender" onchange="gender()" autofocus>
+                                <option value="male" selected>Male</option>
+                                <option value="female">Female</option>
+                            </select>
+                            <select name="preg" id="preg" disabled="true">
+                                <option value="preg1" selected>Not pregnant</option>
+                                <option value="preg2">First trimester</option>
+                                <option value="preg3">Second trimester</option>
+                                <option value="preg3">Third trimester</option>
+                            </select> 
+                        </div>
+                    </div>
+                    <div class="id_tab" id="age_id">
+                        <label for="age" style="margin: 5px 10px; font-size: 25px;">Age</label>
+                        <div style="flex-wrap: nowrap; display: flex; justify-content: center;">
+                            <input type="number" name="age" id="age" min="0" class="input_id" value="40" onkeyup="age_calc()" onchange="age_calc()">
+                            <select name="age_unit" id="age_unit" onchange="age_calc()">
+                                <option value="day">Days</option>
+                                <option value="mon">Months</option>
+                                <option value="year" selected>Years</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="id_tab" id="weight_id">
+                        <label for="weight" style="margin: 5px 10px; font-size: 25px;">Weight</label>
+                        <div style="flex-wrap: nowrap; display: flex; justify-content: center;">
+                            <input type="number" name="weight" id="weight" min="0" class="input_id" placeholder="70">
+                            <select name="weight_unit" id="weight_unit" onchange="weightunit()">
+                                <option value="Kg" selected>Kg</option>
+                                <option value="lb">lb</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="id_tab" id="height_id">
+                        <label for="height" style="margin: 5px 10px; font-size: 25px;">Height</label>
+                        <div  style="flex-wrap: nowrap; display: flex; justify-content: center;" >
+                            <input type="number" name="height" id="height" min="0" class="input_id" placeholder="170">
+                            <select name="height_unit" id="height_unit" onchange="heightunit()">
+                                <option value="cm" selected>Kg</option>
+                                <option value="feet">ft</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             
             <div id="test_types">
                 <div style="background-color:darkslateblue; opacity: 1;" id="test_types_cbc" class="tab" onmouseover="change_table('test_types_cbc','hemato')">
@@ -63,6 +79,12 @@
                 </div>
                 <div style="background-color:rgb(65, 87, 65); " id="test_types_tft" class="tab" onmouseover="change_table('test_types_tft','tft')">
                     <img src="https://cdn-icons-png.flaticon.com/128/3912/3912448.png" class="logo_table" alt="Thyroid">TFT <em style="color:transparent;">/ </em>
+                </div>
+                <div style="background-color:rgb(128, 70, 32); " id="test_types_kft" class="tab" onmouseover="change_table('test_types_kft','kft')">
+                    <img src="https://cdn-icons-png.flaticon.com/128/1835/1835006.png" class="logo_table" alt="Kidney">KFT <em style="color:transparent;">/ </em>
+                </div>
+                <div style="background-color:rgb(102, 30, 52); " id="test_types_bio" class="tab" onmouseover="change_table('test_types_bio','bio')">
+                    <img src="https://cdn-icons-png.flaticon.com/128/1834/1834943.png" class="logo_table" alt="biochem">Bio <em style="color:transparent;">/ </em>
                 </div>
             </div>
             <div id="table_shown">
