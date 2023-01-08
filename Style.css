@@ -22,6 +22,10 @@ body {
   
 }
 
+.tab_label {
+  margin: 5px 10px;
+  /* padding: 5px; */
+}
 #identif {
   position: relative;
   color: white;
@@ -161,10 +165,12 @@ input {
 
 #test_types {
   margin: 30px 30px 10px 30px;
+  display: flex;
 }
 .tab {
-  display: inline-block;
+  align-items: center;
   opacity: 0.4;
+  display: flex;
   cursor: pointer;
   border-radius: 20px;
   vertical-align: middle;
