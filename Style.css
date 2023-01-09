@@ -15,7 +15,7 @@ body {
   flex-direction:row;
   align-items: center;
   align-content: center;
-  justify-content:left;
+  justify-content: center;
   vertical-align: middle;
   flex-wrap: wrap;
   font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
@@ -209,12 +209,25 @@ input {
 }
 
 .add:hover {
-  transform: scale(2);
+  transform: scale(2)  rotatex(-40deg) rotateZ(-45deg);
 }
 
 .add:active {
   transform: scale(0.9);
 }
+
+.rem {
+  transition: transform .2s;
+}
+
+.rem:hover {
+  transform: scale(2)  rotatey(-30deg) rotateZ(45deg) ;
+}
+
+.rem:active {
+  transform: scale(0.9) ;
+}
+
 #logo {
   float: left;
   width: 50px;
