@@ -257,11 +257,16 @@ function    change_table(tab_id,test_cat)  {
 
 
     if(tab_id=='tab_search') {
+        
         var search_val = document.getElementById(test_cat).value;
         var searched_items = document.createElement("div");
         
         //for saved search items
-
+        try {
+            document.getElementById("searched").remove();
+        }
+        catch {}
+        searched_items.id= "searched";
         searched_items.style.display= "flex";
         searched_items.style.maxWidth = "100%";
         searched_items.style.width = "fit-content"
@@ -269,15 +274,15 @@ function    change_table(tab_id,test_cat)  {
         searched_items.style.flexWrap = "wrap";
         searched_items.style.flexDirection = "row";
         searched_items.style.position = "relative";
-        //searched_items.style.justifyContent = "space-around";
+        searched_items.style.justifyContent = "center";
         searched_items.style.alignItems = "center";
         searched_items.style.margin = "5px 5px";
         searched_items.style.borderRadius= "25px";
         searched_items.style.background = "transparent";
         //searched_items.style.border = "5px solid white";
         searched_items.style.color ="black";
-        document.getElementById("table_shown").appendChild(searched_items);
-
+        document.getElementById("table_shown").before(searched_items);
+       
         for (i=0;i<mydata.length;i++)
         {
             if (searched[i] == 1)    {
@@ -324,6 +329,7 @@ function    change_table(tab_id,test_cat)  {
                 new_div.appendChild(new_output_frame);
                 
                 var warn_icon = document.createElement("img");
+                
                 warn_icon.style.width = "34px";
                 warn_icon.style.height = "34px";
                 warn_icon.style.padding = "5px 0px";
@@ -395,23 +401,31 @@ function    change_table(tab_id,test_cat)  {
                     warn_icon.style.display ="flex";
                     out_icon.src = low_icon;
                 } 
+                if (crit[i] ==1) {
+                    warn_icon.style.display ="flex";
+                } else {
+                    warn_icon.style.display = "none";
+                }
                 new_input.onchange = check_range;
                 new_input.onkeyup = check_range;
                 //check_range.apply(new_input,Number(new_input.value),min,max,out_id,i);
                 new_div.appendChild(new_input);
                 
                 var rem_button = document.createElement("img");
-                rem_button.className = "add";
-                rem_button.src = "https://cdn-icons-png.flaticon.com/128/1618/1618719.png"; 
+                rem_button.className = "rem";
+                rem_button.src = "https://cdn-icons-png.flaticon.com/128/6342/6342193.png"; 
                 rem_button.style.width = "34px";
                 rem_button.style.height = "34px";
                 rem_button.style.padding = "5px 0px";
-                rem_button.style.position = "sticky";
+                rem_button.style.position = "absolute";
+                rem_button.style.alignSelf = "flex-start";
                 rem_button.style.top = "5px";
                 rem_button.style.cursor = "pointer";
                 rem_button.id = i;
                 rem_button.onclick = rem_search;
                 new_div.appendChild(rem_button);
+
+                new_label.innerHTML = "<div style='font-size: 35px;'>" +entry.name+"</div>"  + entry.min + " - " + entry.max + " " + entry.unit.toString();
             }
         
 
@@ -528,6 +542,11 @@ function    change_table(tab_id,test_cat)  {
                     out_icon.style.display ="flex";
                     out_icon.src = low_icon;
                 } 
+                if (crit[i] ==1) {
+                    warn_icon.style.display ="flex";
+                } else {
+                    warn_icon.style.display = "none";
+                }
                 new_input.onchange = check_range;
                 new_input.onkeyup = check_range;
                 //check_range.apply(new_input,Number(new_input.value),min,max,out_id,i);
@@ -535,11 +554,12 @@ function    change_table(tab_id,test_cat)  {
 
                 var add_button = document.createElement("img");
                 add_button.className = "add";
-                add_button.src = "https://cdn-icons-png.flaticon.com/128/1618/1618718.png"; 
+                add_button.src = "https://cdn-icons-png.flaticon.com/512/2972/2972186.png"; 
                 add_button.style.width = "34px";
                 add_button.style.height = "34px";
                 add_button.style.padding = "5px 0px";
-                add_button.style.position = "sticky";
+                add_button.style.position = "absolute";
+                add_button.style.alignSelf = "flex-start";
                 add_button.style.top = "5px";
                 add_button.style.cursor = "pointer";
                 add_button.id = i;
