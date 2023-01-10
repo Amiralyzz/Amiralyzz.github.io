@@ -14,12 +14,12 @@
             <div id="top" role="banner"><em>Lab Interpreter</em></div> 
         </header>
         <main>
-            <div id="identiff">
+            <div id="patient_info_parent">
                 <div style="display:flex; flex-direction: row; flex-wrap:nowrap; align-items:center; justify-content: center;" >
                     <div><img onclick="gender()" id="gen_logo" src="https://cdn-icons-png.flaticon.com/512/3001/3001764.png" alt="male" ></div>
                     <div style="text-align:left ; font-size: 30px; margin-left: 5px; height: fit-content;  position: relative;" > Patient Info</div>
                 </div>
-                <div id="identif" >
+                <div id="gen_a_w_h" >
                     
                     <div id="sex_id" class="id_tab">
                         <div style="flex-wrap: wrap; display: flex; justify-content: center;">
@@ -70,8 +70,10 @@
                 </div>
             </div>
 
-            
-            <div class="tab_parent">
+            <div class="tooltip_parent" id="tooltip">
+                Select a tab
+            </div>
+            <div class="tab_parent"> 
                 <div style="background-color:rgb(252, 252, 252); " id="tab_search" class="tab" onclick="change_table('tab_search','searchbar')">
                     <img src="https://cdn-icons-png.flaticon.com/128/1296/1296902.png" class="logo_table" alt="search"><div class="tab_label" style="color: black;"></div>
                     <input type="text" class="searchbar" placeholder="Enter" id="searchbar" style="width: 150px; color:black; margin-right: 5px;" 
