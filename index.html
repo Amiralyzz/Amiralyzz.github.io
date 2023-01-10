@@ -5,7 +5,7 @@
         <title>CBC - Lab Interpreter</title>
         
     </head>
-    <body onload="range_maker('adult')">
+    <body onload="init(); range_maker('adult');">
         <script type="text/javascript" src="Script.js"></script>
         <!---                           --->
         <header>
@@ -71,11 +71,11 @@
             </div>
 
             
-            <div id="test_types">
+            <div class="tab_parent">
                 <div style="background-color:rgb(252, 252, 252); " id="tab_search" class="tab" onclick="change_table('tab_search','searchbar')">
-                    <img src="https://cdn-icons-png.flaticon.com/128/1296/1296902.png" class="logo_table" alt="search"><div class="tab_label" style="color: black;">Search: </div>
-                    <input type="search" class="searchbar" placeholder="Enter" id="searchbar" style="width: 150px; color:black; margin-right: 5px;" 
-                    onchange="this.style.minWidth = ((this.value.length + 1) * 25) + 'px'; change_table('tab_search','searchbar')" 
+                    <img src="https://cdn-icons-png.flaticon.com/128/1296/1296902.png" class="logo_table" alt="search"><div class="tab_label" style="color: black;"></div>
+                    <input type="text" class="searchbar" placeholder="Enter" id="searchbar" style="width: 150px; color:black; margin-right: 5px;" 
+                    
                     onkeyup="this.style.minWidth = ((this.value.length + 1) * 25) + 'px'; change_table('tab_search','searchbar')"
                     onkeydown="this.style.minWidth = ((this.value.length + 1) * 25) + 'px';">
                 </div>
