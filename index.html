@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html lang="En">
     <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge"> 
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
         <link rel="stylesheet" href="Style.css">
         <title>CBC - Lab Interpreter</title>
         
@@ -69,22 +72,17 @@
                     </div>
                 </div>
             </div>
-
             <div class="tooltip_parent" id="tooltip">
                 Select a tab
             </div>
             <div class="tab_parent"> 
                 <div style="background-color:rgb(252, 252, 252); " id="tab_search" class="tab" onclick="change_table('tab_search','searchbar')">
                     <img src="https://cdn-icons-png.flaticon.com/128/1296/1296902.png" class="logo_table" alt="search"><div class="tab_label" style="color: black;"></div>
-                    <input type="text" class="searchbar" placeholder="Enter" id="searchbar" style="width: 150px; color:black; margin-right: 5px;" 
+                    <input type="text" class="searchbar" placeholder="Search" id="searchbar" style="width: 150px; color:black; margin-right: 5px;" 
                     
                     onkeyup="this.style.minWidth = ((this.value.length + 1) * 25) + 'px'; change_table('tab_search','searchbar')"
                     onkeydown="this.style.minWidth = ((this.value.length + 1) * 25) + 'px';">
                 </div>
-                <!-- <div style="background-color:rgb(48, 72, 124); align-items: center;  max-width: fit-content;" id="bmi" class="tab" onclick="change_table('bmi','bmi')">
-                    <div class="tab_label">BMI</div>
-                    <div class = "tab_lable" id="bmi_val">24.2</div>
-                </div> -->
                 <div style="background-color:darkslateblue;" id="test_types_cbc" class="tab" onclick="change_table('test_types_cbc','hemato')">
                     <img src="https://cdn-icons-png.flaticon.com/128/1834/1834940.png" class="logo_table" alt="Blood"><div class="tab_label">CBC</div>
                 </div>
@@ -100,11 +98,11 @@
                 <div style="background-color:rgb(102, 30, 52); " id="test_types_bio" class="tab" onclick="change_table('test_types_bio','bio')">
                     <img src="https://cdn-icons-png.flaticon.com/128/1834/1834943.png" class="logo_table" alt="biochem"><div class="tab_label">Bio</div>
                 </div>
-                
+                <div style="background-color:rgb(30, 102, 60); " id="tab_analyse" class="tab" onclick="change_table('tab_analyse','analyse')">
+                    <img src="https://cdn-icons-png.flaticon.com/128/6851/6851478.png" class="logo_table" alt="biochem"><div class="tab_label">Analyse</div>
+                </div>
             </div>
-            <div id="table_shown">
-                   
-            </div>
+            <div id="table_shown"></div>
         </main>
     </body>
 </html>
