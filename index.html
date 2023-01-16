@@ -30,7 +30,7 @@
                                 <option value="male" selected>Male</option>
                                 <option value="female">Female</option>
                             </select>
-                            <select name="preg" id="preg" disabled="true">
+                            <select name="preg" id="preg" disabled="true" onchange="pregnancy()">
                                 <option value="preg1" selected>Not pregnant</option>
                                 <option value="preg2">First trimester</option>
                                 <option value="preg3">Second trimester</option>
@@ -79,7 +79,6 @@
                 <div style="background-color:rgb(252, 252, 252); " id="tab_search" class="tab" onclick="change_table('tab_search','searchbar')">
                     <img src="https://cdn-icons-png.flaticon.com/128/1296/1296902.png" class="logo_table" alt="search"><div class="tab_label" style="color: black;"></div>
                     <input type="text" class="searchbar" placeholder="Search" id="searchbar" style="width: 150px; color:black; margin-right: 5px;" 
-                    
                     onkeyup="this.style.minWidth = ((this.value.length + 1) * 25) + 'px'; change_table('tab_search','searchbar')"
                     onkeydown="this.style.minWidth = ((this.value.length + 1) * 25) + 'px';">
                 </div>
