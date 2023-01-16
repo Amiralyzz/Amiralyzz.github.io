@@ -703,20 +703,24 @@ function    change_table(tab_id,test_cat)  {
                 }
             }
             catch{}
-            
         }
 
         var findings_parent = document.createElement("div");
         findings_parent.className = "findings_parent";
         parent_element.appendChild(findings_parent);
         findings_parent.innerHTML = "Found findings: ";
-        for(i=0; i<patient[0].signs.length; i++) {
+        for(i=0; i<patient[0].signs[0].length; i++) {
             var signs_section = document.createElement("div");
             signs_section.className = "signs_section";
             findings_parent.appendChild(signs_section);
-            
+            var path_section = document.createElement("div");
+            path_section.className = "path_section";
+            path_section.id = "path" + i;
             try {
-                signs_section.innerHTML += patient[0].signs[i];
+                signs_section.innerHTML = patient[0].signs[0][i];
+                signs_section.appendChild(path_section);
+                path_section.innerHTML = "+";
+                path_section.onclick = show_path;
                 //signs_section.style.backgroundColor = '#'+(0x1000000+Math.random()*0xffffff).toString(16).substr(1,6);
             }
             catch{}
@@ -726,19 +730,28 @@ function    change_table(tab_id,test_cat)  {
     }
 }
 
-function  add_search() {
+function    show_path() {
+    id = this.id.slice(4);
+    if (document.getElementById(this.id).innerHTML == "+") {
+        document.getElementById(this.id).innerHTML = patient[0].signs[1][Number(id)];
+    } else {
+        document.getElementById(this.id).innerHTML = "+";
+    }
+}
+
+function    add_search() {
     id = this.id;
     clicked[id] = 1;
     change_table('tab_search','searchbar');
 }
 
-function  rem_search() {
+function    rem_search() {
     id = this.id;
     clicked[id] = 0;
     change_table('tab_search','searchbar');
 }
 
-function check_range() {
+function    check_range() {
     x= Number(this.value);
     id= this.id;
     
@@ -814,7 +827,7 @@ function check_range() {
     
 } 
 
-function id_maker(i,name) {
+function    id_maker(i,name) {
     mydata[i].input_id= "in_" + (name).toString();
     mydata[i].output_id = "out_" + (name).toString();
 }
@@ -829,6 +842,7 @@ function    iron_profile() {
     var p_si = mydata[40].value;
     var p_fe = mydata[41].value;
     var p_tibc = mydata[42].value;
+    var path = "";
     if (p_si >0 && p_tibc>0) {
         calc_measurements();  //to calc TSAT
     } else {
@@ -838,33 +852,37 @@ function    iron_profile() {
     //to remove previous irons
     anemia_string = new RegExp(/iron/,'i');
     var ind = 0;
-    for (const sign of patient[0].signs) {
+    for (const sign of patient[0].signs[0]) {
         if (sign.search(anemia_string) != -1) {
-            patient[0].signs.splice(ind, 1);
+            patient[0].signs[0].splice(ind, 1);
+            patient[0].signs[1].splice(ind, 1);
         }
         ind++;
     }
     anemia_string = new RegExp(/chronic/,'i');
     var ind = 0;
-    for (const sign of patient[0].signs) {
+    for (const sign of patient[0].signs[0]) {
         if (sign.search(anemia_string) != -1) {
-            patient[0].signs.splice(ind, 1);
+            patient[0].signs[0].splice(ind, 1);
+            patient[0].signs[1].splice(ind, 1);
         }
         ind++;
     }
     anemia_string = new RegExp(/MCV/,'i');
     var ind = 0;
-    for (const sign of patient[0].signs) {
+    for (const sign of patient[0].signs[0]) {
         if (sign.search(anemia_string) != -1) {
-            patient[0].signs.splice(ind, 1);
+            patient[0].signs[0].splice(ind, 1);
+            patient[0].signs[1].splice(ind, 1);
         }
         ind++;
     }
     anemia_string = new RegExp(/thalassemia/,'i');
     var ind = 0;
-    for (const sign of patient[0].signs) {
+    for (const sign of patient[0].signs[0]) {
         if (sign.search(anemia_string) != -1) {
-            patient[0].signs.splice(ind, 1);
+            patient[0].signs[0].splice(ind, 1);
+            patient[0].signs[1].splice(ind, 1);
         }
         ind++;
     }
@@ -875,118 +893,180 @@ function    iron_profile() {
     if(p_fe <= 0) return 0; //we cant assess iron profile without ferritin
     if(p_mcv>mydata[4].max) {
         //we have macrocytosis so no deficiency , but maybe it is false!
-        patient[0].signs.push("make sure MCV is not reported Falsely");
+        patient[0].signs[0].push("make sure MCV is not reported Falsely");
+        path += ("MCV > " + mydata[4].max );
+        patient[0].signs[1].push(path);
         return 5;
     } 
     if (p_fe < mydata[41].min) {
+        path += ("Ferritin < " + mydata[41].min + " &#8594 ");
         //we have IDA , now we have to find the intensity
         if (p_hb<=0) {
-            patient[0].signs.push("iron storage deficiency (w/o Hb)");
+            patient[0].signs[0].push("iron storage deficiency (w/o Hb)");
+            path += ("Hb not entered");
+            patient[0].signs[1].push(path);
             return 11; //atleast we have ironStoreDeficiency
         }
         else {
             if (p_hb < mydata[2].min) {
+                path += ("Hb < " + mydata[2].min + " &#8594 ");
                 if (tsat == 0) {
-                    patient[0].signs.push("iron storage deficiency (w/o TSAT)");
+                    path += ("Serum iron and/or TIBC not entered");
+                    patient[0].signs[0].push("iron storage deficiency (w/o TSAT)");
+                    patient[0].signs[1].push(path);
                     return 11; //we have Iron Deficiency
                 } else if (tsat <= 10) {
-                    patient[0].signs.push("severe iron deficiency anemia");
+                    path += ("TSAT < 10");
+                    patient[0].signs[0].push("severe iron deficiency anemia");
+                    patient[0].signs[1].push(path);
                     return 1; //we probably have Iron Deficiency anemia 
                 } else if (tsat <= 15) {
-                    patient[0].signs.push("mild iron deficiency anemia");
+                    path += ("TSAT < 15");
+                    patient[0].signs[0].push("mild iron deficiency anemia");
+                    patient[0].signs[1].push(path);
                     return 111; //we probably have iron deficient erythropoesis
                 } else if (tsat >= 40) {
-                    patient[0].signs.push("iron deficiency doesn't match TSAT (w/o sTfR)");
+                    path += ("TSAT > 40");
+                    patient[0].signs[0].push("iron deficiency doesn't match TSAT (w/o sTfR)");
+                    patient[0].signs[1].push(path);
                     return 0; //no assessment 
                 } else {
-                    patient[0].signs.push("iron deficiency anemia");
+                    path += ("20 < TSAT < 40");
+                    patient[0].signs[0].push("iron deficiency anemia");
+                    patient[0].signs[1].push(path);
                     return 1; //we have Iron Deficiency Anemia 
                 }
                 
             } else {
                 // maybe hb is wrong or has not changed yet
                 if (tsat == 0) {
-                    patient[0].signs.push("iron storage deficiency (w/o TSAT)");
+                    path += ("Serum iron and/or TIBC not entered");
+                    patient[0].signs[0].push("iron storage deficiency (w/o TSAT)");
+                    patient[0].signs[1].push(path);
                     return 11; //we have Iron Deficiency
                 } else if (tsat <= 15) {
-                    patient[0].signs.push("probable iron deficiency anemia (w/o sTfR)");
+                    path += ("TSAT < 15");
+                    patient[0].signs[0].push("probable iron deficiency anemia (w/o sTfR)");
+                    patient[0].signs[1].push(path);
                     return 1; //we probably have Iron Deficiency anemia 
                 } else if (tsat <= 20) {
-                    patient[0].signs.push("iron deficient erythropoesis (w/o sTfR)");
+                    path += ("TSAT < 20");
+                    patient[0].signs[0].push("iron deficient erythropoesis (w/o sTfR)");
+                    patient[0].signs[1].push(path);
                     return 111; //we probably have iron deficient erythropoesis
                 } else if (tsat >= 40) {
-                    patient[0].signs.push("iron deficiency doesn't match TSAT (w/o sTfR)");
+                    path += ("TSAT > 40");
+                    patient[0].signs[0].push("iron deficiency doesn't match TSAT (w/o sTfR)");
+                    patient[0].signs[1].push(path);
                     return 0; //no assessment 
                 } else {
-                    patient[0].signs.push("iron storage deficiency (w/o sTfR)");
+                    path += ("20 < TSAT < 40");
+                    patient[0].signs[0].push("iron storage deficiency (w/o sTfR)");
+                    patient[0].signs[1].push(path);
                     return 11; //we have Iron Deficiency 
                 }   
             }
         }
     } else {
+        path += ("Ferritin > " + mydata[41].min + " &#8594 ");
         if (p_hb<=0) {
             //no hb and ferritin is normal
+            path += ("no Hb entered");
+            patient[0].signs[0].push("no iron deficiency");
+            patient[0].signs[1].push(path);
             return false;
         }
         else {
             if (p_hb < mydata[2].min) {    //anemia with nl or elevated ferritin
+                path += ("Hb < " + mydata[2].min + " &#8594 ");
                 //now we check mcv
                 if (p_mcv > mydata[4].min) {
+                    path += (mydata[4].min + " < MCV < " + mydata[4].max + " &#8594 ");
                     //normocytic now we need crp
                     if (p_crp <= 0) {
                         //we dont have crp
-                        patient[0].signs.push("iron deficiency anemia unlikely or anemia of chronic disease (w/o CRP)");
+                        path += ("no CRP entered");
+                        patient[0].signs[0].push("iron deficiency anemia unlikely or anemia of chronic disease (w/o CRP)");
+                        patient[0].signs[1].push(path);
                         return 6;
                     } else {
                         if (p_crp >= mydata[13].max) {
                             //inflammation
+                            path += ("CRP > " + mydata[13].max + " &#8594 ");
                             if (tsat <= 0) {
-                                patient[0].signs.push("iron deficiency anemia or anemia of chronic disease (w/o TSAT");
+                                path += ("Serum iron and/or TIBC not entered");
+                                patient[0].signs[0].push("iron deficiency anemia or anemia of chronic disease (w/o TSAT");
+                                patient[0].signs[1].push(path);
                                 return 12; 
                             } else if (tsat <= 20) {
-                                patient[0].signs.push("iron deficiency anemia from other causes (w/o sTfR)");
+                                path += ("TSAT < 20");
+                                patient[0].signs[0].push("iron deficiency anemia from other causes (w/o sTfR)");
+                                patient[0].signs[1].push(path);
                                 return 4;
                             } else if (tsat < 40) {
-                                patient[0].signs.push("anemia of chronic disease from other causes (w/o sTfR)");
+                                path += ("TSAT < 40");
+                                patient[0].signs[0].push("anemia of chronic disease from other causes (w/o sTfR)");
+                                patient[0].signs[1].push(path);
                                 return 2;
                             } else {
-                                patient[0].signs.push("iron deficiency doesn't match TSAT (w/o sTfR)");
+                                path += ("TSAT > 40");
+                                patient[0].signs[0].push("iron deficiency doesn't match TSAT (w/o sTfR)");
+                                patient[0].signs[1].push(path);
                                 return 0; //no assessment
                             }
                         } else {
-                            // crp nl and ferritin high and mcv nl -> no def
+                            // crp nl and ferritin high and mcv nl so no def
+                            path += ("CRP < " + mydata[13].max);
+                            patient[0].signs[1].push(path);
+                            patient[0].signs[0].push("no iron deficiency");
                             return false;
                         }
                     }
                 } else  {
                     if (p_mcv <= 0) {
-                        patient[0].signs.push("iron deficiency unlikely (w/o MCV)");
-                        return false; //no def
+                        path += "MCV not entered";
+                        patient[0].signs[0].push("iron deficiency unlikely (w/o MCV)");
+                        patient[0].signs[1].push(path);
+                        return false;   //no def
                     } else {
                         //microcytic we need crp
+                        path += ("MCV < " + mydata[4].min + " &#8594 ");
                         if (p_crp <= 0) {
                             //we dont have crp
-                            patient[0].signs.push("iron deficiency anemia or anemia of chronic disease or thalassemia (w/o CRP)");
+                            path += "CRP not entered";
+                            patient[0].signs[0].push("iron deficiency anemia or anemia of chronic disease or thalassemia (w/o CRP)");
+                            patient[0].signs[1].push(path);
                             return 12;
                         } else {
                             if (p_crp >= mydata[13].max) {
                                 //inflammation
+                                path += ("CRP > " + mydata[13].max + " &#8594 ");
                                 if (tsat <= 0) {
-                                    patient[0].signs.push("anemia of chronic disease and/or iron deficiency anemia (w/o TSAT");
+                                    path += ("Serum iron and/or TIBC not entered");
+                                    patient[0].signs[0].push("anemia of chronic disease and/or iron deficiency anemia (w/o TSAT");
+                                    patient[0].signs[1].push(path);
                                     return 12; 
                                 } else if (tsat <= 20) {
-                                    patient[0].signs.push("anemia of chronic disease and/or iron deficiency anemia (w/o sTfR)");
+                                    path += ("TSAT < 20");
+                                    patient[0].signs[0].push("anemia of chronic disease and/or iron deficiency anemia (w/o sTfR)");
+                                    patient[0].signs[1].push(path);
                                     return 12;
                                 } else if (tsat < 40) {
-                                    patient[0].signs.push("anemia of chronic disease (w/o sTfR)");
+                                    path += ("TSAT < 40");
+                                    patient[0].signs[0].push("anemia of chronic disease (w/o sTfR)");
+                                    patient[0].signs[1].push(path);
                                     return 2;
                                 } else {
-                                    //patient[0].signs.push("iron deficiency doesn't match TSAT (w/o sTfR)");
+                                    patient[0].signs[0].push("iron deficiency unlikely (w/o sTfR)");
+                                    path += ("TSAT > 40");
+                                    patient[0].signs[1].push(path);
                                     return 0; //no assessment
                                 }
                             } else {
-                                // crp nl and ferritin high and mcv low -> check thal
-                                patient[0].signs.push("check for thalassemia");
+                                // crp nl and ferritin high and mcv low &#8594 check thal
+                                path += ("CRP < " + mydata[13].max);
+                                patient[0].signs[0].push("check for thalassemia");
+                                patient[0].signs[1].push(path);
                                 return 3;
                             }
                         }
@@ -994,6 +1074,9 @@ function    iron_profile() {
                 }
             } else {
                 //no anemia no low ferritin 
+                patient[0].signs[0].push("no iron deficiency");
+                path += ("Hb > " + mydata[2].min);
+                patient[0].signs[1].push(path);
                 return false;
             }
         }
@@ -1012,44 +1095,56 @@ function    anemia()    {
     //to remove previous anemias
     anemia_string = new RegExp(/anemia/,'i');
     var ind = 0;
-    for (const sign of patient[0].signs) {
+    for (const sign of patient[0].signs[0]) {
         if (sign.search(anemia_string) != -1) {
-            patient[0].signs.splice(ind, 1);
+            patient[0].signs[0].splice(ind, 1);
+            patient[0].signs[1].splice(ind, 1);
         }
         ind++;
     }
     
     //anemia algorithm based on RPI and MCV
+    path ="";
     if (p_hb <= 0 ) {                       //we need to check this in the function calling this function -
+        
         return 0; //no need to access  //and if there is no hb entered unlike mcv, check for macrocytosis
     }
 
     if (p_hb >= mydata[2].min) {
-        iron_profile();
+        path += ("Hb > " + mydata[2].min);
+        patient[0].signs[1].push(path);
         return false; //no anemia 
     }
+    
     if (p_hct > 0 && p_retic > 0) {
         calc_measurements(); // to access RPI 
     } else {
         // we dont have rpi
     }
     if (p_mcv > 0) {
+        path += ("Hb < " + mydata[2].min + " &#8594 ");
         // we have mcv and we approach
         if (sex == 0 || preg_situation ==0) {
             //this approach only for non-pregnants
             if (p_mcv < mydata[4].min) {
                 //microcytic anemia
-                patient[0].signs.push("microcytic anemia");
+                path += (" MCV < " + mydata[4].min);
+                patient[0].signs[0].push("Microcytic anemia");
+                patient[0].signs[1].push(path);
                 //now we have to check Iron profile , RDW , RBC count , MCH , if we have PBS
-                iron_profile();
+                
             } else if (p_mcv < mydata[4].max) {
                 //normocytic anemia
-                patient[0].signs.push("normocytic anemia");
-                iron_profile();
+                path += (mydata[4].min + " < MCV < " + mydata[4].max);
+                patient[0].signs[0].push("Normocytic anemia");
+                patient[0].signs[1].push(path);
+                
             } else {
                 //macrocytic anemia
-                patient[0].signs.push("macrocytic anemia");
-                iron_profile();
+                path += (" MCV > " + mydata[4].max);
+                patient[0].signs[0].push("Macrocytic anemia");
+                patient[0].signs[1].push(path);
+                
             }
         
         
@@ -1059,10 +1154,13 @@ function    anemia()    {
 
     } else {
         // we dont have mcv
-        patient[0].signs.push("anemia");
-        iron_profile();
+        path += ("Hb < " + mydata[2].min + " and no MCV entered");
+        patient[0].signs[0].push("Anemia");
+        patient[0].signs[1].push(path);
+        
     }
     
+    iron_profile();
 }
 
 
@@ -1074,20 +1172,20 @@ function    folate() {
     //to remove previous signs
     folate_string = new RegExp(/folate/,'i');
     var ind = 0;
-    for (const sign of patient[0].signs) {
+    for (const sign of patient[0].signs[0]) {
         if (sign.search(folate_string) != -1) {
-            patient[0].signs.splice(ind, 1);
+            patient[0].signs[0].splice(ind, 1);
         }
         ind++;
     }
 
     if (p_fol < mydata[43].min) {
         if (p_b12 < mydata[44].min && p_b12>0)  {
-            patient[0].signs.push("folate and b12 deficiency");
+            patient[0].signs[0].push("folate and b12 deficiency");
             return true;
         }
         else {
-            patient[0].signs.push("folate deficiency");
+            patient[0].signs[0].push("folate deficiency");
             return true;
         }
     } else {
@@ -1102,19 +1200,19 @@ function    b12() {
     //to remove previous signs
     b12_string = new RegExp(/b12/,'i');
     var ind = 0;
-    for (const sign of patient[0].signs) {
+    for (const sign of patient[0].signs[0]) {
         if (sign.search(b12_string) != -1) {
-            patient[0].signs.splice(ind, 1);
+            patient[0].signs[0].splice(ind, 1);
         }
         ind++;
     }
 
     if (p_b12 < mydata[44].min) {
         if (p_fol < mydata[43].min && p_fol>0)  {
-            patient[0].signs.push("folate and b12 deficiency");
+            patient[0].signs[0].push("folate and b12 deficiency");
             return true;
         } else {
-            patient[0].signs.push("b12 deficiency");
+            patient[0].signs[0].push("b12 deficiency");
             return true;
         }  
     }
@@ -1139,7 +1237,7 @@ function    check_illness() {
 
         for (j=0; j<illness[i].criteria.length ; j++) {
             
-            for (const sign of patient[0].signs) {
+            for (const sign of patient[0].signs[0]) {
                 if (sign == illness[i].criteria[j]) {
                     illness[i].criteria_met[j] = 1;
                 }
@@ -1234,7 +1332,8 @@ var patient = [
         name : "patient 1" ,
         possibles: [],
         illness : [],
-        signs: [],
+        signs: [[],[]],
+        path: [],
         range: []
     }
 ]
