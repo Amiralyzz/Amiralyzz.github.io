@@ -995,7 +995,7 @@ function    iron_profile() {
                             path += ("CRP > " + mydata[13].max + " &#8594 ");
                             if (tsat <= 0) {
                                 path += ("Serum iron and/or TIBC not entered");
-                                patient[0].signs[0].push("iron deficiency anemia or anemia of chronic disease (w/o TSAT");
+                                patient[0].signs[0].push("iron deficiency anemia or anemia of chronic disease (w/o TSAT)");
                                 patient[0].signs[1].push(path);
                                 return 12; 
                             } else if (tsat <= 20) {
@@ -1043,7 +1043,7 @@ function    iron_profile() {
                                 path += ("CRP > " + mydata[13].max + " &#8594 ");
                                 if (tsat <= 0) {
                                     path += ("Serum iron and/or TIBC not entered");
-                                    patient[0].signs[0].push("anemia of chronic disease and/or iron deficiency anemia (w/o TSAT");
+                                    patient[0].signs[0].push("anemia of chronic disease and/or iron deficiency anemia (w/o TSAT)");
                                     patient[0].signs[1].push(path);
                                     return 12; 
                                 } else if (tsat <= 20) {
