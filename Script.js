@@ -682,9 +682,9 @@ function    change_table(tab_id,test_cat)  {
     //for analyse
     if(tab_id=='tab_analyse') {
         anemia();
+        iron_profile();
         folate();
         b12();
-        check_illness();
         calc_measurements();
         parent_element = document.getElementById("table_shown");
         parent_element.style.display = "flex";
@@ -719,12 +719,14 @@ function    change_table(tab_id,test_cat)  {
             try {
                 signs_section.innerHTML = patient[0].signs[0][i];
                 signs_section.appendChild(path_section);
-                path_section.innerHTML = "+";
+                path_section.innerHTML = " + ";
                 path_section.onclick = show_path;
+                signs_section.style.backgroundColor = patient[0].signs[2][i];
                 //signs_section.style.backgroundColor = '#'+(0x1000000+Math.random()*0xffffff).toString(16).substr(1,6);
             }
             catch{}
         }
+        //console.log(patient[0].signs[2]);
 
         
     }
@@ -732,10 +734,10 @@ function    change_table(tab_id,test_cat)  {
 
 function    show_path() {
     id = this.id.slice(4);
-    if (document.getElementById(this.id).innerHTML == "+") {
+    if (document.getElementById(this.id).innerHTML == " + ") {
         document.getElementById(this.id).innerHTML = patient[0].signs[1][Number(id)];
     } else {
-        document.getElementById(this.id).innerHTML = "+";
+        document.getElementById(this.id).innerHTML = " + ";
     }
 }
 
@@ -762,16 +764,17 @@ function    check_range() {
 
             try{
                 if (id == "in_Bil(D)") {
-                    var bilt_val = document.getElementById(in_id[j-1]).value;
+                    var bilt_val = mydata[17].value;
                     console.log(x , bilt_val);
                     if(x > bilt_val && bilt_val!=0) {
                         x = bilt_val;
+                        document.getElementById('in_Bil(D)').value = x;
                     }
                 } else if (id == "in_Bil(T)") {
-                    var bild_val = document.getElementById(in_id[j+1]).value;
+                    var bild_val =  mydata[18].value;
                     console.log(x , bild_val);
                     if(x < bild_val) {
-                        document.getElementById(in_id[j+1]).value = x;
+                        document.getElementById('in_Bil(D)').value = x;
                     }
                 }
             }
@@ -843,6 +846,7 @@ function    iron_profile() {
     var p_fe = mydata[41].value;
     var p_tibc = mydata[42].value;
     var path = "";
+    var bio_color = "rgb(102, 30, 52)";
     if (p_si >0 && p_tibc>0) {
         calc_measurements();  //to calc TSAT
     } else {
@@ -856,6 +860,7 @@ function    iron_profile() {
         if (sign.search(anemia_string) != -1) {
             patient[0].signs[0].splice(ind, 1);
             patient[0].signs[1].splice(ind, 1);
+            patient[0].signs[2].splice(ind, 1);
         }
         ind++;
     }
@@ -865,6 +870,7 @@ function    iron_profile() {
         if (sign.search(anemia_string) != -1) {
             patient[0].signs[0].splice(ind, 1);
             patient[0].signs[1].splice(ind, 1);
+            patient[0].signs[2].splice(ind, 1);
         }
         ind++;
     }
@@ -874,6 +880,7 @@ function    iron_profile() {
         if (sign.search(anemia_string) != -1) {
             patient[0].signs[0].splice(ind, 1);
             patient[0].signs[1].splice(ind, 1);
+            patient[0].signs[2].splice(ind, 1);
         }
         ind++;
     }
@@ -883,86 +890,107 @@ function    iron_profile() {
         if (sign.search(anemia_string) != -1) {
             patient[0].signs[0].splice(ind, 1);
             patient[0].signs[1].splice(ind, 1);
+            patient[0].signs[2].splice(ind, 1);
         }
         ind++;
     }
-    
+    //console.log("after deleting : " + patient[0].signs[1]);
     //returns 0 = no assessment, 1 = IDA , 11 = IronStoreDeficiency , 111= IronDeficientEryPoes
     //        2 = ACD , 3 = Thal , 4 = others , 5 = maybe mcv is wrong , 6 = no crp , false = no def
     //        12 = 1 + 2
     if(p_fe <= 0) return 0; //we cant assess iron profile without ferritin
-    if(p_mcv>mydata[4].max) {
-        //we have macrocytosis so no deficiency , but maybe it is false!
-        patient[0].signs[0].push("make sure MCV is not reported Falsely");
-        path += ("MCV > " + mydata[4].max );
-        patient[0].signs[1].push(path);
-        return 5;
-    } 
     if (p_fe < mydata[41].min) {
         path += ("Ferritin < " + mydata[41].min + " &#8594 ");
         //we have IDA , now we have to find the intensity
         if (p_hb<=0) {
-            patient[0].signs[0].push("iron storage deficiency (w/o Hb)");
             path += ("Hb not entered");
+            patient[0].signs[0].push("iron storage deficiency (w/o Hb)");
             patient[0].signs[1].push(path);
+            patient[0].signs[2].push(bio_color);
             return 11; //atleast we have ironStoreDeficiency
         }
         else {
             if (p_hb < mydata[2].min) {
                 path += ("Hb < " + mydata[2].min + " &#8594 ");
+                if(p_mcv>mydata[4].max) {
+                    //we have macrocytosis so no deficiency , but maybe it is false!
+                    path += ("MCV > " + mydata[4].max );
+                    patient[0].signs[0].push("iron deficiency is unlikely with macrocytosis");
+                    patient[0].signs[1].push(path);
+                    patient[0].signs[2].push(bio_color);
+                    return 5;
+                } 
                 if (tsat == 0) {
                     path += ("Serum iron and/or TIBC not entered");
                     patient[0].signs[0].push("iron storage deficiency (w/o TSAT)");
                     patient[0].signs[1].push(path);
+                    patient[0].signs[2].push(bio_color);
                     return 11; //we have Iron Deficiency
                 } else if (tsat <= 10) {
                     path += ("TSAT < 10");
                     patient[0].signs[0].push("severe iron deficiency anemia");
                     patient[0].signs[1].push(path);
+                    patient[0].signs[2].push(bio_color);
                     return 1; //we probably have Iron Deficiency anemia 
                 } else if (tsat <= 15) {
                     path += ("TSAT < 15");
                     patient[0].signs[0].push("mild iron deficiency anemia");
                     patient[0].signs[1].push(path);
+                    patient[0].signs[2].push(bio_color);
                     return 111; //we probably have iron deficient erythropoesis
                 } else if (tsat >= 40) {
                     path += ("TSAT > 40");
                     patient[0].signs[0].push("iron deficiency doesn't match TSAT (w/o sTfR)");
                     patient[0].signs[1].push(path);
+                    patient[0].signs[2].push(bio_color);
                     return 0; //no assessment 
                 } else {
                     path += ("20 < TSAT < 40");
                     patient[0].signs[0].push("iron deficiency anemia");
                     patient[0].signs[1].push(path);
+                    patient[0].signs[2].push(bio_color);
                     return 1; //we have Iron Deficiency Anemia 
                 }
                 
             } else {
                 // maybe hb is wrong or has not changed yet
+                if(p_mcv>mydata[4].max) {
+                    //we have macrocytosis so no deficiency , but maybe it is false!
+                    path += ("MCV > " + mydata[4].max );
+                    patient[0].signs[0].push("iron deficiency is unlikely with macrocytosis");
+                    patient[0].signs[1].push(path);
+                    patient[0].signs[2].push(bio_color);
+                    return 5;
+                }  
                 if (tsat == 0) {
                     path += ("Serum iron and/or TIBC not entered");
                     patient[0].signs[0].push("iron storage deficiency (w/o TSAT)");
                     patient[0].signs[1].push(path);
+                    patient[0].signs[2].push(bio_color);
                     return 11; //we have Iron Deficiency
                 } else if (tsat <= 15) {
                     path += ("TSAT < 15");
                     patient[0].signs[0].push("probable iron deficiency anemia (w/o sTfR)");
                     patient[0].signs[1].push(path);
+                    patient[0].signs[2].push(bio_color);
                     return 1; //we probably have Iron Deficiency anemia 
                 } else if (tsat <= 20) {
                     path += ("TSAT < 20");
                     patient[0].signs[0].push("iron deficient erythropoesis (w/o sTfR)");
                     patient[0].signs[1].push(path);
+                    patient[0].signs[2].push(bio_color);
                     return 111; //we probably have iron deficient erythropoesis
                 } else if (tsat >= 40) {
                     path += ("TSAT > 40");
                     patient[0].signs[0].push("iron deficiency doesn't match TSAT (w/o sTfR)");
                     patient[0].signs[1].push(path);
+                    patient[0].signs[2].push(bio_color);
                     return 0; //no assessment 
                 } else {
                     path += ("20 < TSAT < 40");
                     patient[0].signs[0].push("iron storage deficiency (w/o sTfR)");
                     patient[0].signs[1].push(path);
+                    patient[0].signs[2].push(bio_color);
                     return 11; //we have Iron Deficiency 
                 }   
             }
@@ -974,13 +1002,20 @@ function    iron_profile() {
             path += ("no Hb entered");
             patient[0].signs[0].push("no iron deficiency");
             patient[0].signs[1].push(path);
+            patient[0].signs[2].push(bio_color);
             return false;
         }
         else {
             if (p_hb < mydata[2].min) {    //anemia with nl or elevated ferritin
                 path += ("Hb < " + mydata[2].min + " &#8594 ");
                 //now we check mcv
-                if (p_mcv > mydata[4].min) {
+                if(p_mcv > mydata[4].max) {
+                    //we have macrocytosis so no deficiency , but maybe it is false!
+                    patient[0].signs[0].push("iron deficiency is unlikely with macrocytosis");
+                    path += ("MCV > " + mydata[4].max );
+                    patient[0].signs[1].push(path);
+                    return 5;
+                } else if (p_mcv > mydata[4].min) {
                     path += (mydata[4].min + " < MCV < " + mydata[4].max + " &#8594 ");
                     //normocytic now we need crp
                     if (p_crp <= 0) {
@@ -1074,9 +1109,10 @@ function    iron_profile() {
                 }
             } else {
                 //no anemia no low ferritin 
-                patient[0].signs[0].push("no iron deficiency");
                 path += ("Hb > " + mydata[2].min);
+                patient[0].signs[0].push("no iron deficiency");
                 patient[0].signs[1].push(path);
+                patient[0].signs[2].push(bio_color);
                 return false;
             }
         }
@@ -1091,7 +1127,7 @@ function    anemia()    {
     var p_mch = mydata[5].value;
     var p_rdw = mydata[8].value;
     var p_retic = mydata[11].value;
-    
+    var cbc_color = "darkslateblue";
     //to remove previous anemias
     anemia_string = new RegExp(/anemia/,'i');
     var ind = 0;
@@ -1099,6 +1135,7 @@ function    anemia()    {
         if (sign.search(anemia_string) != -1) {
             patient[0].signs[0].splice(ind, 1);
             patient[0].signs[1].splice(ind, 1);
+            patient[0].signs[2].splice(ind, 1);
         }
         ind++;
     }
@@ -1112,7 +1149,9 @@ function    anemia()    {
 
     if (p_hb >= mydata[2].min) {
         path += ("Hb > " + mydata[2].min);
+        patient[0].signs[0].push("no anemia");
         patient[0].signs[1].push(path);
+        patient[0].signs[2].push(cbc_color);
         return false; //no anemia 
     }
     
@@ -1131,6 +1170,7 @@ function    anemia()    {
                 path += (" MCV < " + mydata[4].min);
                 patient[0].signs[0].push("Microcytic anemia");
                 patient[0].signs[1].push(path);
+                patient[0].signs[2].push(cbc_color);
                 //now we have to check Iron profile , RDW , RBC count , MCH , if we have PBS
                 
             } else if (p_mcv < mydata[4].max) {
@@ -1138,13 +1178,13 @@ function    anemia()    {
                 path += (mydata[4].min + " < MCV < " + mydata[4].max);
                 patient[0].signs[0].push("Normocytic anemia");
                 patient[0].signs[1].push(path);
-                
+                patient[0].signs[2].push(cbc_color);
             } else {
                 //macrocytic anemia
                 path += (" MCV > " + mydata[4].max);
                 patient[0].signs[0].push("Macrocytic anemia");
                 patient[0].signs[1].push(path);
-                
+                patient[0].signs[2].push(cbc_color);
             }
         
         
@@ -1157,7 +1197,7 @@ function    anemia()    {
         path += ("Hb < " + mydata[2].min + " and no MCV entered");
         patient[0].signs[0].push("Anemia");
         patient[0].signs[1].push(path);
-        
+        patient[0].signs[2].push(cbc_color);
     }
     
     iron_profile();
@@ -1332,7 +1372,7 @@ var patient = [
         name : "patient 1" ,
         possibles: [],
         illness : [],
-        signs: [[],[]],
+        signs: [[],[],[]],
         path: [],
         range: []
     }
