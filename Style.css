@@ -352,10 +352,10 @@ h1 {
   width: fit-content;
   vertical-align: middle;
   cursor: pointer;
-  backdrop-filter: brightness(130%);
+  backdrop-filter: brightness(90%);
   filter: brightness(80%);
   border-radius: 5px;
-  border: 1px dotted white;
+  /* border: 1px dotted white; */
 }
 
 #searchbar {
