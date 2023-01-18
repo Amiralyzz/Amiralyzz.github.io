@@ -149,13 +149,21 @@ h1 {
 }
 ::-webkit-scrollbar{width:2px;height:2px;}
 ::-webkit-scrollbar-button{width:2px;height:2px;}
-@media screen and (max-width: 900px) {
+@media screen and (min-width: 600px) {
+  .entry_box {
+    font-size: 18px;
+  }
+  #table_shown {
+    grid-template-columns: repeat( auto-fill, minmax(170px, 1fr) );
+  }
+}
+@media screen and (max-width: 600px) {
   
   h1 {
     color: rgb(178, 173, 212);
     outline-color: black;
     outline-width: 10px;
-    font-size:30px;
+    font-size:40px;
     letter-spacing:3px;
     margin-bottom: 0px;
     padding-bottom: 0px;
@@ -169,7 +177,7 @@ h1 {
       
     color:rgb(156, 156, 156);
     text-align: left;
-    font-size: 15px;
+    font-size: 25px;
     display: inline;
   }
   .tab_parent {
@@ -209,12 +217,12 @@ h1 {
     min-width: 130px;
     max-width: 130px;
     flex-grow: 1;
-    padding: 10px;
+    padding: 00px;
     margin: 5px 5px;
     border-radius: 25px;
-    box-shadow : rgba(0, 0, 0, 0.17) 0px -23px 25px 0px inset, rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset, rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;
+    box-shadow: rgb(0 0 0 / 17%) 0px -23px 25px 0px inset, rgb(0 0 0 / 15%) 0px -36px 30px 0px inset, rgb(0 0 0 / 10%) 0px -79px 40px 0px inset, rgb(0 0 0 / 6%) 0px 2px 1px, rgb(0 0 0 / 9%) 0px 4px 2px, rgb(0 0 0 / 9%) 0px 8px 4px, rgb(0 0 0 / 9%) 0px 16px 8px, rgb(0 0 0 / 9%) 0px 32px 16px;
     color: white;
-    font-size: 10px;
+    font-size: 18px;
     justify-content: space-between;
     font-family: 'Abel' , sans-serif;
   }
