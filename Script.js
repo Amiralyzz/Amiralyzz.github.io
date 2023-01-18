@@ -13,11 +13,6 @@ var sup_high_icon = "https://www.iconsdb.com/icons/download/red/arrow-149-512.pn
 var nl_icon = "https://cdn-icons-png.flaticon.com/128/6785/6785304.png";
 //var clicked = new Array(mydata.length).fill(1);
 
-//console.log(illness[0].name);
-function    init() {
-    for (i=0; i<mydata.length;i++) clicked[i] = 0;
-}
-
 function    gender() {
 
    
@@ -568,13 +563,6 @@ function    change_table(tab_id,test_cat)  {
                     var add_button = document.createElement("img");
                     add_button.className = "add";
                     add_button.src = "https://cdn-icons-png.flaticon.com/512/2972/2972186.png"; 
-                    add_button.style.width = "34px";
-                    add_button.style.height = "34px";
-                    add_button.style.padding = "5px 0px";
-                    add_button.style.position = "absolute";
-                    add_button.style.alignSelf = "flex-start";
-                    add_button.style.top = "5px";
-                    add_button.style.cursor = "pointer";
                     add_button.id = i;
                     add_button.onclick = add_search;
                     new_div.appendChild(add_button);

@@ -78,11 +78,8 @@ h1 {
 }
 
 
-.tab_label {
-  margin: 5px 10px 5px 0px;
-}
+
 #gen_a_w_h {
-  margin-left: 10px;
   position: relative;
   color: white;
   display: flex;
@@ -117,6 +114,7 @@ h1 {
   display: flex;
   flex-grow: 1;
   justify-content: left;
+  max-width: -moz-fit-content;
   max-width: fit-content;
   vertical-align: middle;
   flex-wrap: nowrap;
@@ -138,7 +136,9 @@ h1 {
 
 .tooltip_parent {
   position: relative;
+  width: -moz-fit-content;
   width: fit-content;
+  height: -moz-fit-content;
   height: fit-content;
   min-height: 25px;
   max-height: 25px;
@@ -148,26 +148,69 @@ h1 {
   margin: -5px auto;
 }
 
+@media screen and (max-width: 600px) {
+  ::-webkit-scrollbar{width:2px;height:2px;}
+::-webkit-scrollbar-button{width:2px;height:2px;}
+  .tab_parent {
+    margin: 20px 30px 10px 30px;
+    display: flex;
+    /* flex-wrap: wrap; */
+    overflow-y: hidden;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+  .tab {
+    -webkit-overflow-scrolling: touch;
+    
+    width: -moz-fit-content;
+    width: fit-content;
+    height: 54px;
+    align-items: center;
+    opacity: 0.6;
+    display: inline-flex;
+    cursor: pointer;
+    border-radius: 20px;
+    vertical-align: middle;
+    /* transition: transform .2s; */
+    box-shadow: rgba(0, 0, 0, 0.17) 0px -23px 25px 0px inset, rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset, rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;
+    margin: 5px;
+  }
+  .tab_label {
+    margin: 5px 10px 5px 0px;
+    display: inline-block;
+  }
+}
+
 .tab_parent {
   margin: 20px 30px 10px 30px;
   display: flex;
-  flex-wrap: wrap;
+  /* flex-wrap: wrap; */
+  overflow-y: hidden;
+  overflow-x: auto;
+  white-space: nowrap;
 }
 .tab {
+  width: -moz-fit-content;
+  width: fit-content;
+  height: 54px;
   align-items: center;
   opacity: 0.6;
-  display: flex;
+  display: inline-flex;
   cursor: pointer;
   border-radius: 20px;
   vertical-align: middle;
-  transition: transform .2s;
+  /* transition: transform .2s; */
   box-shadow: rgba(0, 0, 0, 0.17) 0px -23px 25px 0px inset, rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset, rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;
   margin: 5px;
 }
-.tab:hover {
+.tab_label {
+  margin: 5px 10px 5px 0px;
+  display: inline-block;
+}
+/* .tab:hover {
   opacity: 1 !important;
   transform: translateY(-10px) scale(1.1);
-}
+} */
 
 .logo_table {
 
@@ -175,6 +218,7 @@ h1 {
   width:40px; 
   padding: 5px;
   vertical-align:middle;
+  display: inline-block;
 }
 
 
@@ -245,6 +289,7 @@ h1 {
   flex-direction : row;
   position : relative;
   margin : 5px 0px;
+  height : -moz-fit-content;
   height : fit-content;
   align-items: center;
 }
@@ -265,6 +310,7 @@ h1 {
 }
 
 .entry_output_label {
+  width: -moz-fit-content;
   width: fit-content;
   padding: 5px;
   font-size: 20px;
@@ -294,8 +340,12 @@ h1 {
   position: relative;
   flex-wrap: wrap;
   align-items: center;
+  min-width: -webkit-fill-available;
+  min-width: -moz-fit-content;
   min-width: fit-content;
+  max-width: -moz-fit-content;
   max-width: fit-content;
+  max-height: -moz-fit-content;
   max-height: fit-content;
   flex-grow: 1;
   padding: 10px;
@@ -331,8 +381,12 @@ h1 {
   position: relative;
   flex-wrap: wrap;
   align-items: center;
+  min-width: -webkit-fill-available;
+  min-width: -moz-fit-content;
   min-width: fit-content;
+  max-width: -moz-fit-content;
   max-width: fit-content;
+  max-height: -moz-fit-content;
   max-height: fit-content;
   flex-grow: 1;
   padding: 10px;
@@ -350,9 +404,11 @@ h1 {
   margin-left: 10px;
   padding: 0px 5px;
   font-size: medium;
+  width: -moz-fit-content;
   width: fit-content;
   vertical-align: middle;
   cursor: pointer;
+  -webkit-backdrop-filter: brightness(90%);
   backdrop-filter: brightness(90%);
   filter: brightness(80%);
   border-radius: 5px;
@@ -360,6 +416,7 @@ h1 {
 }
 
 #searchbar {
+  width: -moz-fit-content;
   width: fit-content;
   min-width: 100px;
 }
@@ -367,9 +424,9 @@ h1 {
 .add {
   transition: transform .2s;
   cursor: pointer !important;
-  width: 34px;
-  height: 34px;
-  padding: 0px 5px;
+  width: 22px;
+  height: 22px;
+  padding: 0px 0px;
   position:absolute;
   align-self: flex-start;
   top: 5px;
@@ -387,9 +444,9 @@ h1 {
 .rem {
   transition: transform .2s;
   cursor: pointer !important;
-  width: 34px;
-  height: 34px;
-  padding: 0px 5px;
+  width: 22px;
+  height: 22px;
+  padding: 0px 0px;
   position:absolute;
   align-self: flex-start;
   top: 5px;
