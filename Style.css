@@ -271,6 +271,7 @@ h1 {
   transform: translateY(-10px) scale(1.1);
 } */
 
+
 .logo_table {
 
   height:40px; 
@@ -478,6 +479,7 @@ h1 {
   width: -moz-fit-content;
   width: fit-content;
   min-width: 100px;
+  display: none;
 }
 
 .add {

@@ -12,7 +12,7 @@ var sup_low_icon = "https://www.iconsdb.com/icons/download/red/arrow-211-512.png
 var sup_high_icon = "https://www.iconsdb.com/icons/download/red/arrow-149-512.png";
 var nl_icon = "https://cdn-icons-png.flaticon.com/128/6785/6785304.png";
 //var clicked = new Array(mydata.length).fill(1);
-
+var searchbar_show = "none";
 function    gender() {
 
    
@@ -334,6 +334,7 @@ function    change_table(tab_id,test_cat)  {
     var tooltip_text = document.getElementById("tooltip");
     tooltip_text.innerHTML = "";
     document.getElementById("table_shown").innerHTML ="";
+    var search_bar = document.getElementById("searchbar");
     try {
         document.getElementById("searched").remove();
     }
@@ -356,7 +357,7 @@ function    change_table(tab_id,test_cat)  {
     if(tab_id=='tab_search') {
         var search_val = document.getElementById(test_cat).value;
         var searched_items = document.createElement("div");
-        
+        searchbar_show = "block";
         //for saved search items
         searched_items.id= "searched";
         searched_items.style.color ="black";
@@ -571,7 +572,10 @@ function    change_table(tab_id,test_cat)  {
                 }
             }
         }
+    } else {
+        searchbar_show = "none";
     }
+    search_bar.style.display = searchbar_show;
     //for usual tabs
     if (test_cat != "searchbar" && test_cat != "analyse") {
         for (i=0;i<mydata.length;i++)
