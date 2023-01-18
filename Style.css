@@ -151,6 +151,27 @@ h1 {
 ::-webkit-scrollbar-button{width:2px;height:2px;}
 @media screen and (max-width: 600px) {
   
+  h1 {
+    color: rgb(178, 173, 212);
+    outline-color: black;
+    outline-width: 10px;
+    font-size:30px;
+    letter-spacing:3px;
+    margin-bottom: 0px;
+    padding-bottom: 0px;
+    margin-left: 0px;
+    margin-top: 0px;
+    text-align: left;
+    display: inline-block;
+  }
+  
+  #top {
+      
+    color:rgb(156, 156, 156);
+    text-align: left;
+    font-size: 15px;
+    display: inline;
+  }
   .tab_parent {
     margin: 20px 30px 10px 30px;
     display: flex;
@@ -222,13 +243,12 @@ h1 {
     word-wrap: break-word;
   }
   #table_shown {
-    margin: 20px 10px;
+    margin: 20px 5px;
     /* padding: 10px; */
     color: white;
     width: 100%;
     display: grid;
-    gap: 5px;
-    grid-template-columns: repeat( auto-fill, minmax(140px, 1fr) );
+    grid-template-columns: repeat( auto-fill, minmax(130px, 1fr) );
     box-sizing:border-box;
     position: relative;
   }
