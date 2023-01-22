@@ -13,12 +13,25 @@ var sup_high_icon = "https://www.iconsdb.com/icons/download/red/arrow-149-512.pn
 var nl_icon = "https://cdn-icons-png.flaticon.com/128/6785/6785304.png";
 //var clicked = new Array(mydata.length).fill(1);
 var searchbar_show = "none";
+window.onscroll = function() {scrollFunction()};
 
+function    scrollFunction() {
+    mybutton = document.getElementById("up");
+    if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+        mybutton.style.display = "block";
+    } else {
+    mybutton.style.display = "none";
+    }
+}
+
+function    up() {
+    document.body.scrollTop = 0; // For Safari
+    document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+}
 function    change_table_caller() {
     var id = this.id.slice(0,-1);
     if (id != "test_types_cbc") var type = id.slice(11);
     else type = "hemato";
-    console.log(id,type);
     change_table(id,type);
     document.body.removeChild(document.getElementById("burger"));
     document.getElementById("show_tab").style.display = "flex";
