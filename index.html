@@ -21,11 +21,12 @@
                 <div style="display:flex; flex-direction: row; flex-wrap:nowrap; align-items:center; justify-content: center;" >
                     <div><img onclick="gender()" id="gen_logo" src="https://cdn-icons-png.flaticon.com/512/3001/3001764.png" alt="male" ></div>
                     <div style="text-align:left ; font-size: 30px; margin-left: 5px; height: fit-content;  position: relative;" > Patient Info</div>
+                    <div class="expand_info" id="expand_info" onclick="expand_info()">show</div>
                 </div>
                 <div id="gen_a_w_h" >
                     <div id="sex_id" class="id_tab">
                         <div style="flex-wrap: wrap; display: flex; justify-content: center;">
-                            <select title="gender" name="gender" id="gender" onchange="gender()" autofocus>
+                            <select title="gender" name="gender" id="gender" onchange="gender()" >
                                 <option value="male" selected>Male</option>
                                 <option value="female">Female</option>
                             </select>
@@ -75,6 +76,7 @@
                 Select a tab
             </div>
             <div class="tab_parent"> 
+                <div class="tab" id="show_tab" style="background-color:rgb(34, 34, 34);" onclick="burger_menu()"><div class="tab_label" id="show_label">Show Tabs</div></div>
                 <div style="background-color:rgb(252, 252, 252); " id="tab_search" class="tab" onclick="change_table('tab_search','searchbar')" on>
                     <img src="https://cdn-icons-png.flaticon.com/128/1296/1296902.png" class="logo_table" alt="search"><div class="tab_label" style="color: black;"></div>
                     <input type="text" class="searchbar" placeholder="Search" id="searchbar" style="width: 150px; color:black; margin-right: 5px;" 
