@@ -13,9 +13,62 @@ var sup_high_icon = "https://www.iconsdb.com/icons/download/red/arrow-149-512.pn
 var nl_icon = "https://cdn-icons-png.flaticon.com/128/6785/6785304.png";
 //var clicked = new Array(mydata.length).fill(1);
 var searchbar_show = "none";
-function    gender() {
 
-   
+function    change_table_caller() {
+    var id = this.id.slice(0,-1);
+    if (id != "test_types_cbc") var type = id.slice(11);
+    else type = "hemato";
+    console.log(id,type);
+    change_table(id,type);
+    document.body.removeChild(document.getElementById("burger"));
+    document.getElementById("show_tab").style.display = "flex";
+}
+
+function    close() {
+    document.body.removeChild(document.getElementById("burger"));
+    document.getElementById("show_tab").style.display = "flex";
+}
+function    burger_menu() {
+    document.getElementById("show_tab").style.display = "none";
+    var burger_parent = document.createElement("div");
+    burger_parent.className = "burger";
+    burger_parent.id = "burger";
+    document.body.appendChild(burger_parent);
+    burger_parent.style.width = "150px";
+    var tabs = document.getElementsByClassName("tab");
+    for (const tab of tabs) {
+        if (tab.id != "tab_search" && tab.id != "tab_analyse" && tab.id != "show_tab") {   
+            var burger_tab = document.createElement("div");
+            burger_tab.className = "burger_tab";
+            burger_parent.appendChild(burger_tab);
+            burger_tab.id = tab.id + "b";
+            burger_tab.innerHTML = tab.innerHTML;
+            burger_tab.onclick = change_table_caller;
+            selected = tab.id;
+            document.getElementById(selected).style.display="none";
+        }
+    }
+
+    var close_btn = document.createElement("label");
+    close_btn.innerHTML = "&times";
+    close_btn.className = "close_btn";
+    close_btn.onclick = close;
+    burger_parent.appendChild(close_btn);
+}
+
+function    expand_info(){
+    var more_button = document.getElementById("expand_info");
+    var info = document.getElementById("gen_a_w_h");
+    if (more_button.innerHTML == "show") {
+        more_button.innerHTML = "hide";
+        info.style.display = "flex";
+    } else {
+        info.style.display = "none";
+        more_button.innerHTML = "show";
+    }
+}
+
+function    gender() {
     var malelogo= "https://cdn-icons-png.flaticon.com/512/3001/3001764.png";
     var femalelogo = "https://cdn-icons-png.flaticon.com/512/2922/2922561.png" ;
 
@@ -150,59 +203,11 @@ function    age_calc() {
     
 
     for(var j=0;j<mydata.length;j++) {
-        x= Number(mydata[j].value);
         
-        //console.log(j + "-" + x);
-       // if(id==mydata[j].input_id) {
-            //try{if (x==0) document.getElementById(out_id[j]).innerHTML = "";} catch{} 
-        try{
-            if (x>max[j] && max[j] != 0) {
-                y = x/max[j]; 
-                st=" &#215 max"; 
-                document.getElementById(out_id[j]+'_img').src=high_icon; 
-                document.getElementById(out_id[j]+'_img').style.display ="flex";
-            }
-            else if (x<min[j]) {
-                y= x/min[j]; 
-                st=" &#215 min"; 
-                document.getElementById(out_id[j]+'_img').src=low_icon; 
-                document.getElementById(out_id[j]+'_img').style.display ="flex";
-            }
-            else {
-                y=-1;  
-                st="Normal"; 
-                document.getElementById(out_id[j]+'_img').src=nl_icon; 
-                document.getElementById(out_id[j]+'_img').style.display ="flex";
-            }  
-            if(x!="" && y!=-1) {mydata[j].status = y.toFixed(2) + st;}
-            if(x!="" && y==-1)  {mydata[j].status = st; }
-        } catch{}
-        try{
-            if(x>mydata[j]["critmax"] && mydata[j]["critmax"] != 0) {
-                document.getElementById(out_id[j]+"_warn").style.display = "flex";
-                crit[j] = 1;
-            } else if(x<mydata[j]["critmin"] && x!=0){
-                document.getElementById(out_id[j]+"_warn").style.display = "flex";
-                crit[j] = 1;
-            }
-            else {
-                document.getElementById(out_id[j]+"_warn").style.display = "none";
-                crit[j] = 0;
-            }
-        } catch{}
-        mydata[j].value = x;
-        //console.log(out_id[j]);
-        try{ document.getElementById(out_id[j]).innerHTML = mydata[j].status; 
-            if (x==0) {
-                document.getElementById(out_id[j]).innerHTML = "";
-                document.getElementById(out_id[j]+'_img').style.display="none";
-                document.getElementById(out_id[j]+"_warn").style.display = "none";
-                mydata[j].status=0;
-            } 
-        } catch{}
-           // break;
-            
-      //  }
+        x= Number(mydata[j].value);
+        id = mydata[j].input_id;
+        check_ranges(x,id);
+        
     }
     change_table(tab_idd,lab_type);
 
@@ -348,11 +353,15 @@ function    change_table(tab_id,test_cat)  {
         tab.style.border = "none";
         tab.style.margin = "5px";
     }
-    tab_selected.style.opacity = 1;
-    tab_selected.style.borderWidth = "2px";
-    tab_selected.style.borderColor = "rgba(255, 255, 255, 0.164)";
-    tab_selected.style.borderStyle = "solid";
-    tab_selected.style.margin = "5px 3px";
+    var screen_is_small = document.getElementById("show_tab");
+   
+        tab_selected.style.opacity = 1;
+        tab_selected.style.borderWidth = "2px";
+        tab_selected.style.borderColor = "rgba(255, 255, 255, 0.164)";
+        tab_selected.style.borderStyle = "solid";
+        tab_selected.style.margin = "5px 3px";
+
+        tab_selected.style.display = "flex";
 
     if(tab_id=='tab_search') {
         var search_val = document.getElementById(test_cat).value;
@@ -489,17 +498,17 @@ function    change_table(tab_id,test_cat)  {
                     new_div.appendChild(new_label);
 
                     var min_string, max_string;   //what to write in label when it is upto or morethan
-                if (min[i] == 0) { 
-                    min_string = "< ";
-                    max_string = max[i] + " ";
-                } else if (max[i] == 0) { 
-                    min_string = "> " + min[i];
-                    max_string = " "; 
-                } else {
-                    min_string = min[i] + " - ";
-                    max_string = max[i] + " ";
-                }
-                new_label.innerHTML = "<div style='font-size: 35px;'>" +entry.name+"</div>"  + min_string + max_string + entry.unit.toString();
+                    if (min[i] == 0) { 
+                        min_string = "< ";
+                        max_string = max[i] + " ";
+                    } else if (max[i] == 0) { 
+                        min_string = "> " + min[i];
+                        max_string = " "; 
+                    } else {
+                        min_string = min[i] + " - ";
+                        max_string = max[i] + " ";
+                    }
+                    new_label.innerHTML = "<div style='font-size: 35px;'>" +entry.name+"</div>"  + min_string + max_string + entry.unit.toString();
 
                     var new_input = document.createElement("input");
                     new_input.type = "number"
@@ -560,7 +569,6 @@ function    change_table(tab_id,test_cat)  {
                     new_input.onchange = check_range;
                     new_input.onkeyup = check_range;
                     
-
                     var add_button = document.createElement("img");
                     add_button.className = "add";
                     add_button.src = "https://cdn-icons-png.flaticon.com/512/2972/2972186.png"; 
@@ -671,8 +679,6 @@ function    change_table(tab_id,test_cat)  {
     
     //for analyse
     if(tab_id=='tab_analyse') {
-        anemia();
-        iron_profile();
         folate();
         b12();
         calc_measurements();
@@ -715,11 +721,7 @@ function    change_table(tab_id,test_cat)  {
                 signs_section.style.backgroundColor = patient[0].signs[2][i];
                 //signs_section.style.backgroundColor = '#'+(0x1000000+Math.random()*0xffffff).toString(16).substr(1,6);
             }
-            
         }
-        //console.log(patient[0].signs[2]);
-
-        
     }
 }
 
@@ -747,11 +749,42 @@ function    rem_search() {
 function    check_range() {
     x= Number(this.value);
     id= this.id;
+    if (x<0) {x=0;}
+    if (x!=0) {
+        switch (id) {
+            // case in_WBC :
+                
+            case "in_RBC" :
+            case "in_Hb" :
+            case "in_MCV" :
+                cbc_autocomplete();
+                anemia();
+                break;
+            case "in_MCH" :
+            case "in_Hct" :
+            case "in_MCHC" :
+                anemia();
+                break;
+            case "in_Iron" :
+            case "in_TIBC" :
+            case "in_Ferritin" :
+                iron_profile();
+                break;
+            default:
+
+        }
+        check_ranges(x,id);
+    }
     
+}
+
+function    check_ranges(x,id) {
+    
+
     for(var j=0;j<mydata.length;j++) {
 
         if(id==mydata[j].input_id) {
-            if (x<0) {x=0;}
+            
 
             try{
                 if (id == "in_Bil(D)") {
@@ -826,10 +859,41 @@ function    id_maker(i,name) {
     mydata[i].output_id = "out_" + (name).toString();
 }
 
+function cbc_autocomplete() {
+    var p_hb =Number(document.getElementById("in_Hb").value); //p = patient's
+    var p_mcv = Number(document.getElementById("in_MCV").value);
+    var p_rbc = Number(document.getElementById("in_RBC").value);
+    var c_hct , c_mch , c_mchc , mcv_isnotzero;
+    if (p_rbc == 0) return 0;
+    if (p_mcv !=0 ) {
+        mcv_isnotzero = true;
+        c_hct = p_rbc * p_mcv / 10;
+        c_hct = c_hct.toFixed(1);
+        mydata[4].value = c_hct;
+        document.getElementById("in_Hct").value = c_hct;
+        check_ranges(c_hct,"in_Hct");
+    } else { mcv_isnotzero = false;}
+    if (p_hb != 0) {
+        c_mch = p_hb * 10 / p_rbc;
+        c_mch = c_mch.toFixed(1);
+        mydata[5].value = c_mch;
+        document.getElementById("in_MCH").value = c_mch;
+        check_ranges(c_mch,"in_MCH");
+        if (mcv_isnotzero) {
+            c_mchc = p_hb * 100 / c_hct;
+            c_mchc = c_mchc.toFixed(1);
+            mydata[6].value = c_mchc;
+            document.getElementById("in_MCHC").value = c_mchc;
+            check_ranges(c_mchc,"in_MCHC");
+        }
+    }
+    
+}
+
 
 function    iron_profile() {
     var p_hb = mydata[2].value; //p = patient's
-    var p_mcv = mydata[4].value;
+    var p_mcv = mydata[3].value;
     var p_mch = mydata[5].value;
     var p_mchc = mydata[6].value;
     var p_crp = mydata[13].value;
@@ -896,9 +960,9 @@ function    iron_profile() {
         else {
             if (p_hb < mydata[2].min) {
                 path += ("Hb < " + mydata[2].min + " &#8594 ");
-                if(p_mcv>mydata[4].max) {
+                if(p_mcv>mydata[3].max) {
                     //we have macrocytosis so no deficiency , but maybe it is false!
-                    path += ("MCV > " + mydata[4].max );
+                    path += ("MCV > " + mydata[3].max );
                     patient[0].signs[0][10] = ("iron deficiency is unlikely with macrocytosis");
                     patient[0].signs[1][10] = (path);
                     patient[0].signs[2][10] = (bio_color);
@@ -938,9 +1002,9 @@ function    iron_profile() {
                 
             } else {
                 // maybe hb is wrong or has not changed yet
-                if(p_mcv>mydata[4].max) {
+                if(p_mcv>mydata[3].max) {
                     //we have macrocytosis so no deficiency , but maybe it is false!
-                    path += ("MCV > " + mydata[4].max );
+                    path += ("MCV > " + mydata[3].max );
                     patient[0].signs[0][10] = ("iron deficiency is unlikely with macrocytosis");
                     patient[0].signs[1][10] = (path);
                     patient[0].signs[2][10] = (bio_color);
@@ -993,14 +1057,14 @@ function    iron_profile() {
             if (p_hb < mydata[2].min) {    //anemia with nl or elevated ferritin
                 path += ("Hb < " + mydata[2].min + " &#8594 ");
                 //now we check mcv
-                if(p_mcv > mydata[4].max) {
+                if(p_mcv > mydata[3].max) {
                     //we have macrocytosis so no deficiency , but maybe it is false!
                     patient[0].signs[0][10] = ("iron deficiency is unlikely with macrocytosis");
-                    path += ("MCV > " + mydata[4].max );
+                    path += ("MCV > " + mydata[3].max );
                     patient[0].signs[1][10] = (path);
                     return 5;
-                } else if (p_mcv > mydata[4].min) {
-                    path += (mydata[4].min + " < MCV < " + mydata[4].max + " &#8594 ");
+                } else if (p_mcv > mydata[3].min) {
+                    path += (mydata[3].min + " < MCV < " + mydata[3].max + " &#8594 ");
                     //normocytic now we need crp
                     if (p_crp <= 0) {
                         //we dont have crp
@@ -1049,7 +1113,7 @@ function    iron_profile() {
                         return false;   //no def
                     } else {
                         //microcytic we need crp
-                        path += ("MCV < " + mydata[4].min + " &#8594 ");
+                        path += ("MCV < " + mydata[3].min + " &#8594 ");
                         if (p_crp <= 0) {
                             //we dont have crp
                             path += "CRP not entered";
@@ -1106,8 +1170,8 @@ function    iron_profile() {
 function    anemia()    {
     var p_rbc = mydata[1].value; //p = patient's
     var p_hb = mydata[2].value; 
-    var p_hct = mydata[3].value;
-    var p_mcv = mydata[4].value;
+    var p_mcv = mydata[3].value;
+    var p_hct = mydata[4].value;
     var p_mch = mydata[5].value;
     var p_rdw = mydata[8].value;
     var p_retic = mydata[11].value;
@@ -1147,23 +1211,23 @@ function    anemia()    {
         // we have mcv and we approach
         if (sex == 0 || preg_situation ==0) {
             //this approach only for non-pregnants
-            if (p_mcv < mydata[4].min) {
+            if (p_mcv < mydata[3].min) {
                 //microcytic anemia
-                path += (" MCV < " + mydata[4].min);
+                path += (" MCV < " + mydata[3].min);
                 patient[0].signs[0][2] = ("Microcytic anemia");
                 patient[0].signs[1][2] = (path);
                 patient[0].signs[2][2] = (cbc_color);
                 //now we have to check Iron profile , RDW , RBC count , MCH , if we have PBS
                 
-            } else if (p_mcv < mydata[4].max) {
+            } else if (p_mcv < mydata[3].max) {
                 //normocytic anemia
-                path += (mydata[4].min + " < MCV < " + mydata[4].max);
+                path += (mydata[3].min + " < MCV < " + mydata[3].max);
                 patient[0].signs[0][2] = ("Normocytic anemia");
                 patient[0].signs[1][2] = (path);
                 patient[0].signs[2][2] = (cbc_color);
             } else {
                 //macrocytic anemia
-                path += (" MCV > " + mydata[4].max);
+                path += (" MCV > " + mydata[3].max);
                 patient[0].signs[0][2] = ("Macrocytic anemia");
                 patient[0].signs[1][2] = (path);
                 patient[0].signs[2][2] = (cbc_color);
@@ -1322,7 +1386,7 @@ function calc_measurements() {
     measurements[3].value = gfr_cg.toFixed(3);
 
     //RPI
-    var hct_val = mydata[3].value;
+    var hct_val = mydata[4].value;
     var retic_val = mydata[11].value;
     var maturation = 0 , rpi = 0;
     if (hct_val >= 40) {
@@ -1496,35 +1560,6 @@ var mydata = [
       "output_id": ""
     },
     {
-      "name": "Hct",
-      "tooltip": "Hematocrit",
-      "value": "",
-      "min": "",
-      "max": "",
-      "newborn3": "[42,66,42,66]",
-      "newborn14": "[42,66,42,66]",
-      "newborn30": "[42,66,42,66]",
-      "newborn60": "[32,44,32,44]",
-      "infant6": "[32,44,32,44]",
-      "infant1": "[32,44,32,44]",
-      "infant2": "[32,44,32,44]",
-      "child6": "[33,43,33,43]",
-      "child9": "[33,43,33,43]",
-      "child10": "[33,43,33,43]",
-      "teen12": "[36,47,35,45]",
-      "teen18": "[36,47,35,45]",
-      "adult": "[38,51,36,46]",
-      "step": "1",
-      "unit": "%",
-      "status": "0",
-      "color": "darkslateblue",
-      "type": "hemato",
-      "critmin": "20",
-      "critmax": "55",
-      "input_id": "",
-      "output_id": ""
-    },
-    {
       "name": "MCV",
       "tooltip": "Mean Corpuscular Volume",
       "value": "",
@@ -1550,6 +1585,35 @@ var mydata = [
       "type": "hemato",
       "critmin": "0",
       "critmax": "0",
+      "input_id": "",
+      "output_id": ""
+    },
+    {
+      "name": "Hct",
+      "tooltip": "Hematocrit",
+      "value": "",
+      "min": "",
+      "max": "",
+      "newborn3": "[42,66,42,66]",
+      "newborn14": "[42,66,42,66]",
+      "newborn30": "[42,66,42,66]",
+      "newborn60": "[32,44,32,44]",
+      "infant6": "[32,44,32,44]",
+      "infant1": "[32,44,32,44]",
+      "infant2": "[32,44,32,44]",
+      "child6": "[33,43,33,43]",
+      "child9": "[33,43,33,43]",
+      "child10": "[33,43,33,43]",
+      "teen12": "[36,47,35,45]",
+      "teen18": "[36,47,35,45]",
+      "adult": "[38,51,36,46]",
+      "step": "1",
+      "unit": "%",
+      "status": "0",
+      "color": "darkslateblue",
+      "type": "hemato",
+      "critmin": "20",
+      "critmax": "55",
       "input_id": "",
       "output_id": ""
     },
