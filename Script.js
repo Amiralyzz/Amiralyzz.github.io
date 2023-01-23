@@ -1,17 +1,17 @@
-var min=[], max=[], in_id=[], out_id=[], namee=[], valuee=[], clicked=[], crit=[];
-var age = 40 ,weig = 70000 ,heig = 170 , sex=0; //sex=0 male sex=2 female
-var age_gp = ["newborn3" , "newborn14" , "newborn30" , "newborn60" , "infant6" , "infant1" , "infant2" , "child6" , "child9" , "child10" , "teen12" , "teen18" , "adult"];
-var age_gp_selected_index = 12;
-var age_gp_selected = "adult";
+var minArray=[], maxArray=[], inputIdArray=[], outputIdArray=[], pinnedOrNotArray=[], critValueArray=[];
+var globalAgeYears = 40, globalAgeMonths ,gloalWeightGram = 70000 ,globalHeightCm = 170 , genderCoef=0; //genderCoef=0 male genderCoef=2 female
+var ageGroupsArray = ["newborn3" , "newborn14" , "newborn30" , "newborn60" , "infant6" , "infant1" , "infant2" , "child6" , "child9" , "child10" , "teen12" , "teen18" , "adult"];
+var selectedAgeGroupIndex = 12;
+var selectedAgeGroup = "adult";
 var preg_situation = 0; //0 for not pregnant
-var tab_idd = "test_types_cbc";
-var lab_type = "cbc";
+var selectedTabId = "test_types_cbc";
+var selectedLabType = "cbc";
 var low_icon = "https://cdn-icons-png.flaticon.com/512/892/892624.png";
 var high_icon = "https://cdn-icons-png.flaticon.com/512/892/892682.png";
 var sup_low_icon = "https://www.iconsdb.com/icons/download/red/arrow-211-512.png";
 var sup_high_icon = "https://www.iconsdb.com/icons/download/red/arrow-149-512.png";
 var nl_icon = "https://cdn-icons-png.flaticon.com/128/6785/6785304.png";
-//var clicked = new Array(mydata.length).fill(1);
+
 var searchbar_show = "none";
 window.onscroll = function() {scrollFunction()};
 
@@ -94,7 +94,7 @@ function    gender() {
         document.getElementById("gen_logo").alt="female";
         
     } , 150)
-       sex=2;
+       genderCoef=2;
     }
     else {
         window.setTimeout(function() {
@@ -105,7 +105,7 @@ function    gender() {
         document.getElementById("gen_logo").alt="male";
         
     },150)   
-    sex=0;  
+    genderCoef=0;  
     }
     age_calc();
 }
@@ -135,60 +135,78 @@ function    age_calc() {
             inp=60;   
         }
         if (inp<=3) {
-            age_gp_selected_index = 0;
+            selectedAgeGroupIndex = 0;
         } else if (inp<=14) {
-            age_gp_selected_index = 1;
+            selectedAgeGroupIndex = 1;
         } else if (inp<=30) {
-            age_gp_selected_index = 2;
+            selectedAgeGroupIndex = 2;
         } else {
-            age_gp_selected_index = 3;
+            selectedAgeGroupIndex = 3;
         }
+        globalAgeYears = 0;
+        globalAgeMonths = Math.floor(inp/30);
     }
     if (age_unit == "mon") {
-        if (inp<1) inp=1;
-        if (inp>24) {
-            age_txtbox.value = 24;
-            inp=24;   
+        if (inp<1) {
+            age_txtbox.value =1;
+            inp=1;
+        }
+        if (inp>=36) {
+            age_txtbox.value =36;
+            inp=36;
         }
         if (inp<=6) {
-            age_gp_selected_index = 4;
+            selectedAgeGroupIndex = 4;
         } else if (inp<=12) {
-            age_gp_selected_index = 5;
+            selectedAgeGroupIndex = 5;
+        } else if (inp<36) {
+            selectedAgeGroupIndex = 6;
         } else {
-            age_gp_selected_index = 6;
+            selectedAgeGroupIndex = 7;
         }
+        globalAgeMonths = inp;
+        globalAgeYears = Math.floor(inp/12);
+        
     } 
     if (age_unit == "year") {
-        if (inp<1) inp=1;
+        if (inp<1) {
+            inp=1;
+            
+        }
         if (inp>139) {
             age_txtbox.value = 139;
             inp=139;   
         }
-        age = inp;
+        globalAgeYears = inp;
         if (inp<2) {
-            age_gp_selected_index = 5;
+            selectedAgeGroupIndex = 5;
+            globalAgeMonths = 12; 
         } else if (inp<3) {
-            age_gp_selected_index = 6;
+            selectedAgeGroupIndex = 6;
+            globalAgeMonths = 24; 
+        }else if (inp==3) {
+            selectedAgeGroupIndex = 7;
+            globalAgeMonths = 36; 
         } else if (inp<=6) {
-            age_gp_selected_index = 7;
+            selectedAgeGroupIndex = 7;
         } else if (inp<=9) {
-            age_gp_selected_index = 8;
+            selectedAgeGroupIndex = 8;
         } else if (inp<=10) {
-            age_gp_selected_index = 9;
+            selectedAgeGroupIndex = 9;
         } else if (inp<=12) {
-            age_gp_selected_index = 10;
+            selectedAgeGroupIndex = 10;
         } else if (inp<=18) {
-            age_gp_selected_index = 11;
+            selectedAgeGroupIndex = 11;
         } else {
-            age_gp_selected_index = 12;
+            selectedAgeGroupIndex = 12;
         }
-
+        globalAgeYears = inp;
         
     } 
-    age_gp_selected = age_gp[age_gp_selected_index];
+    selectedAgeGroup = ageGroupsArray[selectedAgeGroupIndex];
     
     //to correct crit min and max for Hb and Hct
-    if(age_gp_selected_index == 0 || age_gp_selected_index == 1 || age_gp_selected_index == 2) {
+    if(selectedAgeGroupIndex == 0 || selectedAgeGroupIndex == 1 || selectedAgeGroupIndex == 2) {
         for(var j=0;j<mydata.length;j++) {
             if (mydata[j]["name"] == "Hb") {
                 mydata[j]["critmin"] = 9;
@@ -211,7 +229,7 @@ function    age_calc() {
             }
         }
     }
-    range_maker(age_gp_selected);
+    range_maker(selectedAgeGroup);
     
     
 
@@ -222,7 +240,7 @@ function    age_calc() {
         check_ranges(x,id);
         
     }
-    change_table(tab_idd,lab_type);
+    change_table(selectedTabId,selectedLabType);
 
 }
 
@@ -230,10 +248,10 @@ function    range_maker(key) {
     var i = 0;
     for (var data of mydata) {
         var array =data[key].slice(1, -1).split(','); //making key an array like ["1","2"]
-        min[i] = array[sex];
-        max[i] = array[sex+1];
-        data.min = array[sex];
-        data.max = array[sex+1];
+        minArray[i] = array[genderCoef];
+        maxArray[i] = array[genderCoef+1];
+        data.min = array[genderCoef];
+        data.max = array[genderCoef+1];
         i++;
     }
 }
@@ -252,25 +270,25 @@ function    weight_calc() {
             weight_txtbox.value = 500;
             inp=500;
         }
-        weig = inp * 1000;
+        gloalWeightGram = inp * 1000;
     }
     if (weight_unit == "gr") {
         if (inp>10000) {
             weight_txtbox.value = 10000;
             inp=10000;
         }
-        weig = inp;
+        gloalWeightGram = inp;
     }
     if (weight_unit == "lb") {
         if (inp>1000) {
             weight_txtbox.value = 1000;
             inp=1000;
         }
-        weig = inp * 453.592 ;
+        gloalWeightGram = inp * 453.592 ;
 
     }
     
-    change_table(tab_idd,lab_type);
+    change_table(selectedTabId,selectedLabType);
 
 
 }
@@ -289,7 +307,7 @@ function height_calc() {
             height_txtbox.value = 270;
             inp=270;
         }
-        heig = inp;
+        globalHeightCm = inp;
     }
     if (height_unit == "ft") {
         
@@ -314,21 +332,19 @@ function height_calc() {
             feet = 0;
             inch = 0;
         }
-        heig = feet * 30.48 + inch * 2.54 ;
-        //console.log(feet+" feet and " + inch + "inches = " + heig + " cm");
-        
+        globalHeightCm = feet * 30.48 + inch * 2.54 ;
     }
-    change_table(tab_idd,lab_type);
+    change_table(selectedTabId,selectedLabType);
 }
 
 function    bmi_calc() {
-    if (weig<=0) weig = 0;
-    if (heig!=0) { 
-        var bmi = (weig/1000) / (heig/100) / (heig/100);
+    if (gloalWeightGram<=0) gloalWeightGram = 0;
+    if (globalHeightCm!=0) { 
+        var bmi = (gloalWeightGram/1000) / (globalHeightCm/100) / (globalHeightCm/100);
         //document.getElementById("bmi_val").innerHTML = bmi.toFixed(1);
     }
-    if (heig ==0) {
-        var bmi = (weig/1000) / (1/100) / (1/100);
+    if (globalHeightCm ==0) {
+        var bmi = (gloalWeightGram/1000) / (1/100) / (1/100);
         //document.getElementById("bmi_val").innerHTML = bmi.toFixed(1);
     }
 }
@@ -357,8 +373,8 @@ function    change_table(tab_id,test_cat)  {
         document.getElementById("searched").remove();
     }
     catch {}
-    lab_type = test_cat;
-    tab_idd=tab_id;
+    selectedLabType = test_cat;
+    selectedTabId=tab_id;
     var tab_selected = document.getElementById(tab_id);
     var tabs = document.getElementsByClassName("tab");
     for (const tab of tabs) {
@@ -386,7 +402,7 @@ function    change_table(tab_id,test_cat)  {
         document.getElementById("table_shown").before(searched_items);      
         for (i=0;i<mydata.length;i++)
         {
-            if (clicked[i] == 1)    {
+            if (pinnedOrNotArray[i] == 1)    {
                 var entry = mydata[i];
                 var new_div = document.createElement("div");
                 new_div.className = "entry_box";
@@ -428,29 +444,27 @@ function    change_table(tab_id,test_cat)  {
                 if(entry.status != 0) new_output.innerHTML = entry.status;
                 new_output_frame.appendChild(new_output);
 
-                namee[i] = entry.name;
-                valuee[i] = entry.value;
-                min[i] = entry.min;
-                max[i] = entry.max;
+                minArray[i] = entry.min;
+                maxArray[i] = entry.max;
                 id_maker(i,entry.name);
-                in_id[i] = entry.input_id;
-                out_id[i] = entry.output_id;
-                new_input.id = in_id[i];
-                new_output.id = out_id[i];
-                warn_icon.id = out_id[i] + "_warn";
-                out_icon.id = out_id[i] + "_img";
+                inputIdArray[i] = entry.input_id;
+                outputIdArray[i] = entry.output_id;
+                new_input.id = inputIdArray[i];
+                new_output.id = outputIdArray[i];
+                warn_icon.id = outputIdArray[i] + "_warn";
+                out_icon.id = outputIdArray[i] + "_img";
                 out_icon.style.display = "none";
 
                 var min_string, max_string;   //what to write in label when it is upto or morethan
-                if (min[i] == 0) { 
+                if (minArray[i] == 0) { 
                     min_string = "< ";
-                    max_string = max[i] + " ";
-                } else if (max[i] == 0) { 
-                    min_string = "> " + min[i];
+                    max_string = maxArray[i] + " ";
+                } else if (maxArray[i] == 0) { 
+                    min_string = "> " + minArray[i];
                     max_string = " "; 
                 } else {
-                    min_string = min[i] + " - ";
-                    max_string = max[i] + " ";
+                    min_string = minArray[i] + " - ";
+                    max_string = maxArray[i] + " ";
                 }
                 new_label.innerHTML = "<div style='font-size: 35px;'>" +entry.name+"</div>"  + min_string + max_string + entry.unit.toString();
                 if (entry.status == 0) {
@@ -470,7 +484,7 @@ function    change_table(tab_id,test_cat)  {
                     warn_icon.style.display ="flex";
                     out_icon.src = low_icon;
                 } 
-                if (crit[i] ==1) {
+                if (critValueArray[i] ==1) {
                     warn_icon.style.display ="flex";
                 } else {
                     warn_icon.style.display = "none";
@@ -492,7 +506,7 @@ function    change_table(tab_id,test_cat)  {
         search_val = new RegExp(document.getElementById("searchbar").value,'i');  
         for (i=0;i<mydata.length;i++)
         {
-            if (document.getElementById("searchbar").value != "" && clicked[i] != 1) 
+            if (document.getElementById("searchbar").value != "" && pinnedOrNotArray[i] != 1) 
             {
                 if (mydata[i]["name"].search(search_val) != -1 || mydata[i]["tooltip"].search(search_val) != -1 )    {
 
@@ -511,15 +525,15 @@ function    change_table(tab_id,test_cat)  {
                     new_div.appendChild(new_label);
 
                     var min_string, max_string;   //what to write in label when it is upto or morethan
-                    if (min[i] == 0) { 
+                    if (minArray[i] == 0) { 
                         min_string = "< ";
-                        max_string = max[i] + " ";
-                    } else if (max[i] == 0) { 
-                        min_string = "> " + min[i];
+                        max_string = maxArray[i] + " ";
+                    } else if (maxArray[i] == 0) { 
+                        min_string = "> " + minArray[i];
                         max_string = " "; 
                     } else {
-                        min_string = min[i] + " - ";
-                        max_string = max[i] + " ";
+                        min_string = minArray[i] + " - ";
+                        max_string = maxArray[i] + " ";
                     }
                     new_label.innerHTML = "<div style='font-size: 35px;'>" +entry.name+"</div>"  + min_string + max_string + entry.unit.toString();
 
@@ -551,17 +565,15 @@ function    change_table(tab_id,test_cat)  {
                     if(entry.status != 0) new_output.innerHTML = entry.status;
                     new_output_frame.appendChild(new_output);
                     
-                    namee[i] = entry.name;
-                    valuee[i] = entry.value;
-                    min[i] = entry.min;
-                    max[i] = entry.max;
+                    minArray[i] = entry.min;
+                    maxArray[i] = entry.max;
                     id_maker(i,entry.name);
-                    in_id[i] = entry.input_id;
-                    out_id[i] = entry.output_id;
-                    new_input.id = in_id[i];
-                    new_output.id = out_id[i];
-                    out_icon.id = out_id[i] + "_img";
-                    warn_icon.id = out_id[i] + "_warn";
+                    inputIdArray[i] = entry.input_id;
+                    outputIdArray[i] = entry.output_id;
+                    new_input.id = inputIdArray[i];
+                    new_output.id = outputIdArray[i];
+                    out_icon.id = outputIdArray[i] + "_img";
+                    warn_icon.id = outputIdArray[i] + "_warn";
                     out_icon.style.display = "none";
                     if (entry.status == 0) {out_icon.style.display = "none";} 
                     else if (entry.status.slice(-1)=='l') {
@@ -574,7 +586,7 @@ function    change_table(tab_id,test_cat)  {
                         out_icon.style.display ="flex";
                         out_icon.src = low_icon;
                     } 
-                    if (crit[i] ==1) {
+                    if (critValueArray[i] ==1) {
                         warn_icon.style.display ="flex";
                     } else {
                         warn_icon.style.display = "none";
@@ -616,15 +628,15 @@ function    change_table(tab_id,test_cat)  {
                 new_div.appendChild(new_label);
 
                 var min_string, max_string;   //what to write in label when it is upto or morethan
-                if (min[i] == 0) { 
+                if (minArray[i] == 0) { 
                     min_string = "< ";
-                    max_string = max[i] + " ";
-                } else if (max[i] == 0) { 
-                    min_string = "> " + min[i];
+                    max_string = maxArray[i] + " ";
+                } else if (maxArray[i] == 0) { 
+                    min_string = "> " + minArray[i];
                     max_string = " "; 
                 } else {
-                    min_string = min[i] + " - ";
-                    max_string = max[i] + " ";
+                    min_string = minArray[i] + " - ";
+                    max_string = maxArray[i] + " ";
                 }
                 new_label.innerHTML = "<div style='font-size: 35px;'>" +entry.name+"</div>"  + min_string + max_string + entry.unit.toString();
 
@@ -656,17 +668,15 @@ function    change_table(tab_id,test_cat)  {
                 if(entry.status != 0) new_output.innerHTML = entry.status;
                 new_output_frame.appendChild(new_output);
 
-                namee[i] = entry.name;
-                valuee[i] = entry.value;
-                min[i] = entry.min;
-                max[i] = entry.max;
+                minArray[i] = entry.min;
+                maxArray[i] = entry.max;
                 id_maker(i,entry.name);
-                in_id[i] = entry.input_id;
-                out_id[i] = entry.output_id;
-                new_input.id = in_id[i];
-                new_output.id = out_id[i];
-                out_icon.id = out_id[i] + "_img";
-                warn_icon.id = out_id[i] + "_warn";
+                inputIdArray[i] = entry.input_id;
+                outputIdArray[i] = entry.output_id;
+                new_input.id = inputIdArray[i];
+                new_output.id = outputIdArray[i];
+                out_icon.id = outputIdArray[i] + "_img";
+                warn_icon.id = outputIdArray[i] + "_warn";
                 out_icon.style.display = "none";
                 if (entry.status == 0) {out_icon.style.display = "none";} 
                 else if (entry.status.slice(-1)=='l') {
@@ -679,7 +689,7 @@ function    change_table(tab_id,test_cat)  {
                     out_icon.style.display ="flex";
                     out_icon.src = low_icon;
                 }
-                if (crit[i] ==1) {
+                if (critValueArray[i] ==1) {
                     warn_icon.style.display ="flex";
                 } else {
                     warn_icon.style.display = "none";
@@ -749,13 +759,13 @@ function    show_path() {
 
 function    add_search() {
     id = this.id;
-    clicked[id] = 1;
+    pinnedOrNotArray[id] = 1;
     change_table('tab_search','searchbar');
 }
 
 function    rem_search() {
     id = this.id;
-    clicked[id] = 0;
+    pinnedOrNotArray[id] = 0;
     change_table('tab_search','searchbar');
 }
 
@@ -802,14 +812,12 @@ function    check_ranges(x,id) {
             try{
                 if (id == "in_Bil(D)") {
                     var bilt_val = mydata[17].value;
-                    console.log(x , bilt_val);
                     if(x > bilt_val && bilt_val!=0) {
                         x = bilt_val;
                         document.getElementById('in_Bil(D)').value = x;
                     }
                 } else if (id == "in_Bil(T)") {
                     var bild_val =  mydata[18].value;
-                    console.log(x , bild_val);
                     if(x < bild_val) {
                         document.getElementById('in_Bil(D)').value = x;
                     }
@@ -819,46 +827,56 @@ function    check_ranges(x,id) {
         
                  
     
-            if (x>max[j] && max[j] != 0) {
-                y = x/max[j]; 
+            if (x>maxArray[j] && maxArray[j] != 0) {
+                y = x/maxArray[j]; 
                 st=" &#215 max"; 
-                document.getElementById(out_id[j]+'_img').src=high_icon; 
-                document.getElementById(out_id[j]+'_img').style.display ="flex";
+                try{
+                    document.getElementById(outputIdArray[j]+'_img').src=high_icon; 
+                    document.getElementById(outputIdArray[j]+'_img').style.display ="flex";
+                }catch{}
             }
-            else if (x<min[j]) {
-                y= x/min[j]; 
+            else if (x<minArray[j]) {
+                y= x/minArray[j]; 
                 st=" &#215 min"; 
-                document.getElementById(out_id[j]+'_img').src=low_icon; 
-                document.getElementById(out_id[j]+'_img').style.display ="flex";
+                try{
+                    document.getElementById(outputIdArray[j]+'_img').src=low_icon; 
+                    document.getElementById(outputIdArray[j]+'_img').style.display ="flex";
+                } catch{}
             }
             else {
                 y=-1;  
                 st="Normal"; 
-                document.getElementById(out_id[j]+'_img').src=nl_icon; 
-                document.getElementById(out_id[j]+'_img').style.display ="flex";
+                try{
+                    document.getElementById(outputIdArray[j]+'_img').src=nl_icon; 
+                    document.getElementById(outputIdArray[j]+'_img').style.display ="flex";
+                } catch{}
             }  
             if(x!="" && y!=-1) {mydata[j].status = y.toFixed(2) + st;}
             if(x!="" && y==-1)  {mydata[j].status = st; }
             try{
                 if(x>mydata[j]["critmax"] && mydata[j]["critmax"] != 0) {
-                    document.getElementById(out_id[j]+"_warn").style.display = "flex";
-                    crit[j] = 1;
+                    document.getElementById(outputIdArray[j]+"_warn").style.display = "flex";
+                    critValueArray[j] = 1;
                 } else if(x<mydata[j]["critmin"] && x!=0){
-                    document.getElementById(out_id[j]+"_warn").style.display = "flex";
-                    crit[j] = 1;
+                    document.getElementById(outputIdArray[j]+"_warn").style.display = "flex";
+                    critValueArray[j] = 1;
                 }
                 else {
-                    document.getElementById(out_id[j]+"_warn").style.display = "none";
-                    crit[j] = 0;
+                    document.getElementById(outputIdArray[j]+"_warn").style.display = "none";
+                    critValueArray[j] = 0;
                 }
             } catch{}
             mydata[j].value = x;
             //document.getElementById(in_id[j]).value = x;
-            document.getElementById(out_id[j]).innerHTML = mydata[j].status;
+            try {
+                document.getElementById(outputIdArray[j]).innerHTML = mydata[j].status;
+            } catch{}
             if (x==0) {
-                document.getElementById(out_id[j]).innerHTML = "";
-                document.getElementById(out_id[j]+'_img').style.display="none";
-                document.getElementById(out_id[j]+"_warn").style.display = "none";
+                try {
+                    document.getElementById(outputIdArray[j]).innerHTML = "";
+                    document.getElementById(outputIdArray[j]+'_img').style.display="none";
+                    document.getElementById(outputIdArray[j]+"_warn").style.display = "none";
+                } catch{}
                 mydata[j].status=0;
             } 
             break;
@@ -873,9 +891,21 @@ function    id_maker(i,name) {
 }
 
 function cbc_autocomplete() {
-    var p_hb =Number(document.getElementById("in_Hb").value); //p = patient's
-    var p_mcv = Number(document.getElementById("in_MCV").value);
-    var p_rbc = Number(document.getElementById("in_RBC").value);
+    try{
+        var p_rbc = Number(document.getElementById("in_RBC").value);//p = patient's
+    } catch {
+        var p_rbc =mydata[1].value;
+    }
+    try{
+        var p_hb =  Number(document.getElementById("in_Hb").value); 
+    } catch {
+        var p_hb = mydata[2].value;
+    }
+    try{
+        var p_mcv = Number(document.getElementById("in_MCV").value);
+    } catch {
+        var p_mcv = mydata[3].value;
+    }
     var c_hct , c_mch , c_mchc , mcv_isnotzero;
     if (p_rbc == 0) return 0;
     if (p_mcv !=0 ) {
@@ -883,20 +913,26 @@ function cbc_autocomplete() {
         c_hct = p_rbc * p_mcv / 10;
         c_hct = c_hct.toFixed(1);
         mydata[4].value = c_hct;
-        document.getElementById("in_Hct").value = c_hct;
+        try{
+            document.getElementById("in_Hct").value = c_hct;
+        } catch{}
         check_ranges(c_hct,"in_Hct");
     } else { mcv_isnotzero = false;}
     if (p_hb != 0) {
         c_mch = p_hb * 10 / p_rbc;
         c_mch = c_mch.toFixed(1);
         mydata[5].value = c_mch;
-        document.getElementById("in_MCH").value = c_mch;
+        try{
+            document.getElementById("in_MCH").value = c_mch;
+        } catch{}
         check_ranges(c_mch,"in_MCH");
         if (mcv_isnotzero) {
             c_mchc = p_hb * 100 / c_hct;
             c_mchc = c_mchc.toFixed(1);
             mydata[6].value = c_mchc;
-            document.getElementById("in_MCHC").value = c_mchc;
+            try{
+                document.getElementById("in_MCHC").value = c_mchc;
+            } catch{}
             check_ranges(c_mchc,"in_MCHC");
         }
     }
@@ -1222,7 +1258,7 @@ function    anemia()    {
     if (p_mcv > 0) {
         path += ("Hb < " + mydata[2].min + " &#8594 ");
         // we have mcv and we approach
-        if (sex == 0 || preg_situation ==0) {
+        if (genderCoef == 0 || preg_situation ==0) {
             //this approach only for non-pregnants
             if (p_mcv < mydata[3].min) {
                 //microcytic anemia
@@ -1276,7 +1312,6 @@ function    folate() {
             delete patient[0].signs[1][i];
             delete patient[0].signs[2][i];
         }
-        console.log('+')
     }
 
     if (p_fol < mydata[43].min) {
@@ -1305,7 +1340,6 @@ function    b12() {
             delete patient[0].signs[1][i];
             delete patient[0].signs[2][i];
         }
-        console.log('+')
     }
     if (p_b12 < mydata[44].min) {
         if (p_fol < mydata[43].min && p_fol>0)  {
@@ -1321,51 +1355,22 @@ function    b12() {
     }
 }
 
-function    check_illness() {
-    for (i=0; i<illness.length ; i++) {
-        //to remove previous illnesses
-        illness_name = new RegExp(illness[i].name,'i');
-        var ind = 0;
-        for (const illness of patient[0].illness) {
-            if (illness.search(illness_name) != -1) {
-                patient[0].illness.splice(ind, 1);
-            }
-            ind++;
-        }
-        illness[i].criteria_met = Array(illness[i].criteria.length);
-        for (let m=0; m<illness[i].criteria_met.length; ++m) illness[i].criteria_met[m] = 0;
-
-        for (j=0; j<illness[i].criteria.length ; j++) {
-            
-            for (const sign of patient[0].signs[0]) {
-                if (sign == illness[i].criteria[j]) {
-                    illness[i].criteria_met[j] = 1;
-                }
-            }
-        }
-        for(let m=0; m < illness[i].criteria_needed.length ; m++) {
-            if (JSON.stringify(illness[i].criteria_met) === JSON.stringify(illness[i].criteria_needed[m])) {
-                patient[0].illness.push(illness[i].name);
-            }
-        }
-    }
-}
 
 function calc_measurements() {
     //bmi
-    if (weig<=0) weig = 0;
-    if (heig!=0) { 
-        var bmi = (weig/1000) / (heig/100) / (heig/100);
+    if (gloalWeightGram<=0) gloalWeightGram = 0;
+    if (globalHeightCm!=0) { 
+        var bmi = (gloalWeightGram/1000) / (globalHeightCm/100) / (globalHeightCm/100);
         measurements[0].value = bmi.toFixed(2);
     }
-    if (heig ==0) {
+    if (globalHeightCm ==0) {
         var bmi = 0;
         measurements[0].value = bmi;
     }
 
     //gfr
     cr_val = mydata[30].value;
-    if (cr_val ==0 || weig == 0) {
+    if (cr_val ==0 || gloalWeightGram == 0) {
         gfr_cg = 0;
         gfr_mdrd = 0;
         gfr_ckd = 0;
@@ -1375,15 +1380,15 @@ function calc_measurements() {
         var coef_ckd = 1;
         var coef_ckd_k = 0.9;
         var coef_ckd_a = -0.302;
-        if (sex==2) { //for female
+        if (genderCoef==2) { //for female
             coef_cg = 0.85; 
             coef_mdrd=0.742; 
             coef_ckd = 1.012;
             coef_ckd_k = 0.7;
             coef_ckd_a = -0.241;
         }   
-        gfr_cg = (140 - age) * (weig/1000) * coef_cg / (72 * cr_val);
-        gfr_mdrd = 175 * (cr_val ** -1.154) * (age ** -0.203) * coef_mdrd;
+        gfr_cg = (140 - globalAgeYears) * (gloalWeightGram/1000) * coef_cg / (72 * cr_val);
+        gfr_mdrd = 175 * (cr_val ** -1.154) * (globalAgeYears ** -0.203) * coef_mdrd;
         var cr_to_k = cr_val / coef_ckd_k;
         if (cr_to_k>1) {
             cr_to_k_min = 1; 
@@ -1392,7 +1397,7 @@ function calc_measurements() {
             cr_to_k_min = cr_to_k; 
             cr_to_k_max= 1;
         }
-        gfr_ckd = 142 * cr_to_k_min ** coef_ckd_a * cr_to_k_max ** -1.2 * 0.9938 ** age * coef_ckd;
+        gfr_ckd = 142 * cr_to_k_min ** coef_ckd_a * cr_to_k_max ** -1.2 * 0.9938 ** globalAgeYears * coef_ckd;
     }
     measurements[1].value = gfr_ckd.toFixed(3);
     measurements[2].value = gfr_mdrd.toFixed(3);
@@ -1425,7 +1430,69 @@ function calc_measurements() {
         tsat = iron_val/tibc_val * 100;
         measurements[5].value = tsat.toFixed(2);
     }
+
+    //Percentiles
+    weightPercentileCalc();
+    heightPercentileCalc();
+    
+    
 }
+
+function    heightPercentileCalc() {
+    if (globalAgeYears<=3) {
+        if (globalAgeMonths == 0){
+            var currentAgeObject = heightAgeInfantJSON.find(o => o.Age === globalAgeMonths.toString());
+        } else  {
+            var currentAgeObject = heightAgeInfantJSON.find(o => o.Age === (globalAgeMonths-0.5).toString());
+        }
+    } else if (globalAgeYears <=20) {
+        var currentAgeObject = heightAgeJSON.find(o => o.Age === globalAgeYears.toString());
+    }  else {
+        measurements[7].value = 0;
+        return 0;
+    }
+    if(genderCoef == 0){
+        var L = currentAgeObject.L;
+        var M = currentAgeObject.M;
+        var S = currentAgeObject.S;
+    } else {
+        var L = currentAgeObject.L2;
+        var M = currentAgeObject.M2;
+        var S = currentAgeObject.S2;
+    }
+    var heightZScore = ((globalHeightCm / M) ** L -1) / (S * L);
+    var heightPercentile = ztable_finder(heightZScore) * 100;
+    measurements[7].value = heightPercentile.toFixed(2);
+}
+function    weightPercentileCalc() {
+    if (globalAgeYears<=3) {
+        if (globalAgeMonths!=36 && globalAgeMonths!=0) {
+            var currentAgeObject = weightAgeInfantJSON.find(o => o.Age === (globalAgeMonths+0.5).toString());
+        } else {
+            var currentAgeObject = weightAgeInfantJSON.find(o => o.Age === globalAgeMonths.toString());
+        }
+    }  else if (globalAgeYears <=20) {
+        var currentAgeObject = weightAgeJSON.find(o => o.Age === globalAgeYears.toString());
+    }  else  {
+        measurements[6].value = 0;
+        return 0;
+    }
+        if(genderCoef == 0){
+            var L = currentAgeObject.L;
+            var M = currentAgeObject.M;
+            var S = currentAgeObject.S;
+        } else {
+            var L = currentAgeObject.L2;
+            var M = currentAgeObject.M2;
+            var S = currentAgeObject.S2;
+        }
+        var weightKg = gloalWeightGram / 1000;
+        var weightZScore = ((weightKg / M) ** L - 1)  / (S * L);
+        var weightPercentile = ztable_finder(weightZScore) * 100;
+        measurements[6].value = weightPercentile.toFixed(2);
+    
+}
+
 
 var patient = [
     {
@@ -1437,7 +1504,1124 @@ var patient = [
         range: []
     }
 ]
-
+var weightAgeInfantJSON = [
+    {
+      "Age": "0",
+      "L": "1.815151075",
+      "M": "3.530203168",
+      "S": "0.152385273",
+      "L2": "1.509187507",
+      "M2": "3.39918645",
+      "S2": "0.142106724",
+      "": ""
+    },
+    {
+      "Age": "0.5",
+      "L": "1.547523128",
+      "M": "4.003106424",
+      "S": "0.146025021",
+      "L2": "1.357944315",
+      "M2": "3.79752846",
+      "S2": "0.138075916",
+      "": ""
+    },
+    {
+      "Age": "1.5",
+      "L": "1.068795548",
+      "M": "4.879525083",
+      "S": "0.136478767",
+      "L2": "1.105537708",
+      "M2": "4.544776513",
+      "S2": "0.131733888",
+      "": ""
+    },
+    {
+      "Age": "2.5",
+      "L": "0.695973505",
+      "M": "5.672888765",
+      "S": "0.129677511",
+      "L2": "0.902596648",
+      "M2": "5.230584214",
+      "S2": "0.126892697",
+      "": ""
+    },
+    {
+      "Age": "3.5",
+      "L": "0.41981509",
+      "M": "6.391391982",
+      "S": "0.124717085",
+      "L2": "0.734121414",
+      "M2": "5.859960798",
+      "S2": "0.123025182",
+      "": ""
+    },
+    {
+      "Age": "4.5",
+      "L": "0.219866801",
+      "M": "7.041836432",
+      "S": "0.121040119",
+      "L2": "0.590235275",
+      "M2": "6.437587751",
+      "S2": "0.119840911",
+      "": ""
+    },
+    {
+      "Age": "5.5",
+      "L": "0.077505598",
+      "M": "7.630425182",
+      "S": "0.1182712",
+      "L2": "0.464391566",
+      "M2": "6.967850457",
+      "S2": "0.117166868",
+      "": ""
+    },
+    {
+      "Age": "6.5",
+      "L": "-0.02190761",
+      "M": "8.162951035",
+      "S": "0.116153695",
+      "L2": "0.352164071",
+      "M2": "7.454854109",
+      "S2": "0.11489384",
+      "": ""
+    },
+    {
+      "Age": "7.5",
+      "L": "-0.0894409",
+      "M": "8.644832479",
+      "S": "0.114510349",
+      "L2": "0.250497889",
+      "M2": "7.902436186",
+      "S2": "0.112949644",
+      "": ""
+    },
+    {
+      "Age": "8.5",
+      "L": "-0.1334091",
+      "M": "9.081119817",
+      "S": "0.113217163",
+      "L2": "0.15724751",
+      "M2": "8.314178377",
+      "S2": "0.11128469",
+      "": ""
+    },
+    {
+      "Age": "9.5",
+      "L": "-0.1600954",
+      "M": "9.476500305",
+      "S": "0.11218624",
+      "L2": "0.070885725",
+      "M2": "8.693418423",
+      "S2": "0.109863709",
+      "": ""
+    },
+    {
+      "Age": "10.5",
+      "L": "-0.17429685",
+      "M": "9.835307701",
+      "S": "0.111354536",
+      "L2": "-0.00968493",
+      "M2": "9.043261854",
+      "S2": "0.10866078",
+      "": ""
+    },
+    {
+      "Age": "11.5",
+      "L": "-0.1797189",
+      "M": "10.16153567",
+      "S": "0.110676413",
+      "L2": "-0.085258",
+      "M2": "9.366593571",
+      "S2": "0.10765621",
+      "": ""
+    },
+    {
+      "Age": "12.5",
+      "L": "-0.179254",
+      "M": "10.45885399",
+      "S": "0.110118635",
+      "L2": "-0.15640945",
+      "M2": "9.666089185",
+      "S2": "0.106834517",
+      "": ""
+    },
+    {
+      "Age": "13.5",
+      "L": "-0.17518447",
+      "M": "10.7306256",
+      "S": "0.109656941",
+      "L2": "-0.22355869",
+      "M2": "9.944226063",
+      "S2": "0.106183085",
+      "": ""
+    },
+    {
+      "Age": "14.5",
+      "L": "-0.16932268",
+      "M": "10.97992482",
+      "S": "0.109273653",
+      "L2": "-0.28701346",
+      "M2": "10.20329397",
+      "S2": "0.105691242",
+      "": ""
+    },
+    {
+      "Age": "15.5",
+      "L": "-0.1631139",
+      "M": "11.20955529",
+      "S": "0.10895596",
+      "L2": "-0.34699919",
+      "M2": "10.4454058",
+      "S2": "0.105349631",
+      "": ""
+    },
+    {
+      "Age": "16.5",
+      "L": "-0.15770999",
+      "M": "11.4220677",
+      "S": "0.108694678",
+      "L2": "-0.40368918",
+      "M2": "10.67250698",
+      "S2": "0.105149754",
+      "": ""
+    },
+    {
+      "Age": "17.5",
+      "L": "-0.15402279",
+      "M": "11.61977698",
+      "S": "0.108483324",
+      "L2": "-0.45721877",
+      "M2": "10.88638558",
+      "S2": "0.105083666",
+      "": ""
+    },
+    {
+      "Age": "18.5",
+      "L": "-0.15276214",
+      "M": "11.80477902",
+      "S": "0.108317416",
+      "L2": "-0.50770077",
+      "M2": "11.08868151",
+      "S2": "0.105143752",
+      "": ""
+    },
+    {
+      "Age": "19.5",
+      "L": "-0.15446658",
+      "M": "11.9789663",
+      "S": "0.108193944",
+      "L2": "-0.55523599",
+      "M2": "11.28089537",
+      "S2": "0.105322575",
+      "": ""
+    },
+    {
+      "Age": "20.5",
+      "L": "-0.15952202",
+      "M": "12.14404334",
+      "S": "0.108110954",
+      "L2": "-0.59992113",
+      "M2": "11.46439708",
+      "S2": "0.10561278",
+      "": ""
+    },
+    {
+      "Age": "21.5",
+      "L": "-0.16817926",
+      "M": "12.30154103",
+      "S": "0.108067236",
+      "L2": "-0.64185418",
+      "M2": "11.64043402",
+      "S2": "0.106007025",
+      "": ""
+    },
+    {
+      "Age": "22.5",
+      "L": "-0.1805668",
+      "M": "12.45283028",
+      "S": "0.108062078",
+      "L2": "-0.6811381",
+      "M2": "11.81013895",
+      "S2": "0.106497957",
+      "": ""
+    },
+    {
+      "Age": "23.5",
+      "L": "-0.19670196",
+      "M": "12.59913494",
+      "S": "0.108095077",
+      "L2": "-0.71788283",
+      "M2": "11.97453748",
+      "S2": "0.107078197",
+      "": ""
+    },
+    {
+      "Age": "24.5",
+      "L": "-0.21650121",
+      "M": "12.74154396",
+      "S": "0.108166005",
+      "L2": "-0.75220617",
+      "M2": "12.13455528",
+      "S2": "0.107740346",
+      "": ""
+    },
+    {
+      "Age": "25.5",
+      "L": "-0.23979048",
+      "M": "12.88102276",
+      "S": "0.108274705",
+      "L2": "-0.78423359",
+      "M2": "12.2910249",
+      "S2": "0.108477009",
+      "": ""
+    },
+    {
+      "Age": "26.5",
+      "L": "-0.26631585",
+      "M": "13.01842382",
+      "S": "0.108421024",
+      "L2": "-0.81409743",
+      "M2": "12.44469237",
+      "S2": "0.109280822",
+      "": ""
+    },
+    {
+      "Age": "27.5",
+      "L": "-0.29575496",
+      "M": "13.1544966",
+      "S": "0.108604769",
+      "L2": "-0.8419355",
+      "M2": "12.59622335",
+      "S2": "0.110144488",
+      "": ""
+    },
+    {
+      "Age": "28.5",
+      "L": "-0.32772936",
+      "M": "13.28989667",
+      "S": "0.108825681",
+      "L2": "-0.86788939",
+      "M2": "12.74620911",
+      "S2": "0.111060814",
+      "": ""
+    },
+    {
+      "Age": "29.5",
+      "L": "-0.36181746",
+      "M": "13.42519408",
+      "S": "0.109083423",
+      "L2": "-0.89210264",
+      "M2": "12.89517218",
+      "S2": "0.112022758",
+      "": ""
+    },
+    {
+      "Age": "30.5",
+      "L": "-0.39756808",
+      "M": "13.56088113",
+      "S": "0.109377581",
+      "L2": "-0.91471881",
+      "M2": "13.04357164",
+      "S2": "0.113023466",
+      "": ""
+    },
+    {
+      "Age": "31.5",
+      "L": "-0.43452025",
+      "M": "13.69737858",
+      "S": "0.109707646",
+      "L2": "-0.93587966",
+      "M2": "13.19180827",
+      "S2": "0.114056316",
+      "": ""
+    },
+    {
+      "Age": "32.5",
+      "L": "-0.47218875",
+      "M": "13.83504622",
+      "S": "0.110073084",
+      "L2": "-0.95572344",
+      "M2": "13.34022934",
+      "S2": "0.115114952",
+      "": ""
+    },
+    {
+      "Age": "33.5",
+      "L": "-0.51012309",
+      "M": "13.97418199",
+      "S": "0.110473238",
+      "L2": "-0.97438101",
+      "M2": "13.48913357",
+      "S2": "0.116193337",
+      "": ""
+    },
+    {
+      "Age": "34.5",
+      "L": "-0.54788557",
+      "M": "14.1150324",
+      "S": "0.1109074",
+      "L2": "-0.99198075",
+      "M2": "13.63877446",
+      "S2": "0.11728575",
+      "": ""
+    },
+    {
+      "Age": "35.5",
+      "L": "-0.5850701",
+      "M": "14.25779618",
+      "S": "0.111374787",
+      "L2": "-1.00864074",
+      "M2": "13.78936547",
+      "S2": "0.118386847",
+      "": ""
+    },
+    {
+      "Age": "36",
+      "L": "-0.60333785",
+      "M": "14.32994444",
+      "S": "0.111620652",
+      "L2": "-1.01665314",
+      "M2": "13.86507382",
+      "S2": "0.118939087",
+      "": ""
+    }
+  ];
+var heightAgeInfantJSON = [
+    {
+      "Age": "0",
+      "L": "1.267004226",
+      "M": "49.98888408",
+      "S": "0.053112191",
+      "L2": "-1.295960857",
+      "M2": "49.28639612",
+      "S2": "0.05008556",
+      "": ""
+    },
+    {
+      "Age": "0.5",
+      "L": "0.511237696",
+      "M": "52.6959753",
+      "S": "0.048692684",
+      "L2": "-0.809249882",
+      "M2": "51.68358057",
+      "S2": "0.046818545",
+      "": ""
+    },
+    {
+      "Age": "1.5",
+      "L": "-0.45224446",
+      "M": "56.62842855",
+      "S": "0.04411683",
+      "L2": "-0.050782985",
+      "M2": "55.28612813",
+      "S2": "0.0434439",
+      "": ""
+    },
+    {
+      "Age": "2.5",
+      "L": "-0.990594599",
+      "M": "59.60895343",
+      "S": "0.041795583",
+      "L2": "0.476851407",
+      "M2": "58.09381906",
+      "S2": "0.041716103",
+      "": ""
+    },
+    {
+      "Age": "3.5",
+      "L": "-1.285837689",
+      "M": "62.07700027",
+      "S": "0.040454126",
+      "L2": "0.843299612",
+      "M2": "60.45980763",
+      "S2": "0.040705173",
+      "": ""
+    },
+    {
+      "Age": "4.5",
+      "L": "-1.43031238",
+      "M": "64.2168641",
+      "S": "0.039633879",
+      "L2": "1.097562257",
+      "M2": "62.53669656",
+      "S2": "0.040079765",
+      "": ""
+    },
+    {
+      "Age": "5.5",
+      "L": "-1.47657547",
+      "M": "66.1253149",
+      "S": "0.039123813",
+      "L2": "1.272509641",
+      "M2": "64.40632762",
+      "S2": "0.039686845",
+      "": ""
+    },
+    {
+      "Age": "6.5",
+      "L": "-1.456837849",
+      "M": "67.8601799",
+      "S": "0.038811994",
+      "L2": "1.390428859",
+      "M2": "66.11841553",
+      "S2": "0.039444555",
+      "": ""
+    },
+    {
+      "Age": "7.5",
+      "L": "-1.391898768",
+      "M": "69.45908458",
+      "S": "0.038633209",
+      "L2": "1.466733925",
+      "M2": "67.70574419",
+      "S2": "0.039304738",
+      "": ""
+    },
+    {
+      "Age": "8.5",
+      "L": "-1.29571459",
+      "M": "70.94803912",
+      "S": "0.038546833",
+      "L2": "1.512301976",
+      "M2": "69.19123614",
+      "S2": "0.03923711",
+      "": ""
+    },
+    {
+      "Age": "9.5",
+      "L": "-1.177919048",
+      "M": "72.34586111",
+      "S": "0.038526262",
+      "L2": "1.534950767",
+      "M2": "70.59163924",
+      "S2": "0.039221665",
+      "": ""
+    },
+    {
+      "Age": "10.5",
+      "L": "-1.045326049",
+      "M": "73.6666541",
+      "S": "0.038553387",
+      "L2": "1.540390875",
+      "M2": "71.91961673",
+      "S2": "0.039244672",
+      "": ""
+    },
+    {
+      "Age": "11.5",
+      "L": "-0.902800887",
+      "M": "74.92129717",
+      "S": "0.038615501",
+      "L2": "1.532852892",
+      "M2": "73.1850104",
+      "S2": "0.03929642",
+      "": ""
+    },
+    {
+      "Age": "12.5",
+      "L": "-0.753908107",
+      "M": "76.11837536",
+      "S": "0.038703461",
+      "L2": "1.51550947",
+      "M2": "74.39564379",
+      "S2": "0.039369875",
+      "": ""
+    },
+    {
+      "Age": "13.5",
+      "L": "-0.601263523",
+      "M": "77.26479911",
+      "S": "0.038810557",
+      "L2": "1.490765028",
+      "M2": "75.5578544",
+      "S2": "0.039459832",
+      "": ""
+    },
+    {
+      "Age": "14.5",
+      "L": "-0.446805039",
+      "M": "78.36622309",
+      "S": "0.038931784",
+      "L2": "1.460458255",
+      "M2": "76.67685871",
+      "S2": "0.039562382",
+      "": ""
+    },
+    {
+      "Age": "15.5",
+      "L": "-0.291974772",
+      "M": "79.4273405",
+      "S": "0.039063356",
+      "L2": "1.426006009",
+      "M2": "77.75700986",
+      "S2": "0.039674542",
+      "": ""
+    },
+    {
+      "Age": "16.5",
+      "L": "-0.13784767",
+      "M": "80.45209492",
+      "S": "0.039202382",
+      "L2": "1.388507095",
+      "M2": "78.80198406",
+      "S2": "0.03979401",
+      "": ""
+    },
+    {
+      "Age": "17.5",
+      "L": "0.014776155",
+      "M": "81.44383603",
+      "S": "0.039346629",
+      "L2": "1.348818127",
+      "M2": "79.81491852",
+      "S2": "0.039918994",
+      "": ""
+    },
+    {
+      "Age": "18.5",
+      "L": "0.165304169",
+      "M": "82.40543643",
+      "S": "0.039494365",
+      "L2": "1.307609654",
+      "M2": "80.79851532",
+      "S2": "0.040048084",
+      "": ""
+    },
+    {
+      "Age": "19.5",
+      "L": "0.313301809",
+      "M": "83.33938063",
+      "S": "0.039644238",
+      "L2": "1.265408149",
+      "M2": "81.75512092",
+      "S2": "0.040180162",
+      "": ""
+    },
+    {
+      "Age": "20.5",
+      "L": "0.458455471",
+      "M": "84.24783394",
+      "S": "0.039795189",
+      "L2": "1.222627732",
+      "M2": "82.6867881",
+      "S2": "0.04031434",
+      "": ""
+    },
+    {
+      "Age": "21.5",
+      "L": "0.600544631",
+      "M": "85.13269658",
+      "S": "0.039946388",
+      "L2": "1.179594365",
+      "M2": "83.59532461",
+      "S2": "0.040449904",
+      "": ""
+    },
+    {
+      "Age": "22.5",
+      "L": "0.739438953",
+      "M": "85.9956488",
+      "S": "0.040097181",
+      "L2": "1.136564448",
+      "M2": "84.48233206",
+      "S2": "0.040586283",
+      "": ""
+    },
+    {
+      "Age": "23.5",
+      "L": "0.875000447",
+      "M": "86.8381751",
+      "S": "0.04024706",
+      "L2": "1.093731947",
+      "M2": "85.34923624",
+      "S2": "0.040723015",
+      "": ""
+    },
+    {
+      "Age": "24.5",
+      "L": "1.00720807",
+      "M": "87.66160934",
+      "S": "0.040395626",
+      "L2": "1.051272912",
+      "M2": "86.1973169",
+      "S2": "0.040859727",
+      "": ""
+    },
+    {
+      "Age": "25.5",
+      "L": "0.837251351",
+      "M": "88.45247282",
+      "S": "0.040577525",
+      "L2": "1.041951175",
+      "M2": "87.09026318",
+      "S2": "0.041142161",
+      "": ""
+    },
+    {
+      "Age": "26.5",
+      "L": "0.681492975",
+      "M": "89.22326434",
+      "S": "0.040723122",
+      "L2": "1.012592236",
+      "M2": "87.95714182",
+      "S2": "0.041349399",
+      "": ""
+    },
+    {
+      "Age": "27.5",
+      "L": "0.538779654",
+      "M": "89.97549228",
+      "S": "0.040833194",
+      "L2": "0.970541909",
+      "M2": "88.7960184",
+      "S2": "0.041500428",
+      "": ""
+    },
+    {
+      "Age": "28.5",
+      "L": "0.407697153",
+      "M": "90.71040853",
+      "S": "0.040909059",
+      "L2": "0.921129988",
+      "M2": "89.6055115",
+      "S2": "0.041610508",
+      "": ""
+    },
+    {
+      "Age": "29.5",
+      "L": "0.286762453",
+      "M": "91.42907762",
+      "S": "0.040952433",
+      "L2": "0.868221392",
+      "M2": "90.38476689",
+      "S2": "0.041691761",
+      "": ""
+    },
+    {
+      "Age": "30.5",
+      "L": "0.174489485",
+      "M": "92.13242379",
+      "S": "0.04096533",
+      "L2": "0.81454413",
+      "M2": "91.13341722",
+      "S2": "0.04175368",
+      "": ""
+    },
+    {
+      "Age": "31.5",
+      "L": "0.069444521",
+      "M": "92.82127167",
+      "S": "0.040949976",
+      "L2": "0.761957977",
+      "M2": "91.8515436",
+      "S2": "0.041803562",
+      "": ""
+    },
+    {
+      "Age": "32.5",
+      "L": "-0.029720564",
+      "M": "93.49637946",
+      "S": "0.040908737",
+      "L2": "0.711660228",
+      "M2": "92.5396352",
+      "S2": "0.041846882",
+      "": ""
+    },
+    {
+      "Age": "33.5",
+      "L": "-0.124251789",
+      "M": "94.15846546",
+      "S": "0.040844062",
+      "L2": "0.664323379",
+      "M2": "93.19854429",
+      "S2": "0.041887626",
+      "": ""
+    },
+    {
+      "Age": "34.5",
+      "L": "-0.215288396",
+      "M": "94.80822923",
+      "S": "0.040758431",
+      "L2": "0.620285102",
+      "M2": "93.82945392",
+      "S2": "0.041928568",
+      "": ""
+    },
+    {
+      "Age": "35.5",
+      "L": "-0.30385434",
+      "M": "95.44636981",
+      "S": "0.040654312",
+      "L2": "0.57955631",
+      "M2": "94.43382278",
+      "S2": "0.041971514",
+      "": ""
+    }
+  ];
+var weightAgeJSON = [
+    {
+      "Age": "3",
+      "L": "-0.621319726",
+      "M": "14.40262749",
+      "S": "0.111874514",
+      "L2": "-1.024471278",
+      "M2": "13.94108332",
+      "S2": "0.119491669",
+      "": ""
+    },
+    {
+      "Age": "4",
+      "L": "-0.915241589",
+      "M": "16.31676727",
+      "S": "0.11995532",
+      "L2": "-1.177029925",
+      "M2": "15.87823668",
+      "S2": "0.131802186",
+      "": ""
+    },
+    {
+      "Age": "5",
+      "L": "-1.000453886",
+      "M": "18.48592413",
+      "S": "0.129879257",
+      "L2": "-1.287691525",
+      "M2": "18.02313904",
+      "S2": "0.141190842",
+      "": ""
+    },
+    {
+      "Age": "6",
+      "L": "-1.087471249",
+      "M": "20.77769565",
+      "S": "0.139142773",
+      "L2": "-1.326763834",
+      "M2": "20.33635961",
+      "S2": "0.149589838",
+      "": ""
+    },
+    {
+      "Age": "7",
+      "L": "-1.236497304",
+      "M": "23.16741888",
+      "S": "0.147337375",
+      "L2": "-1.265548787",
+      "M2": "22.86804258",
+      "S2": "0.159693163",
+      "": ""
+    },
+    {
+      "Age": "8",
+      "L": "-1.351813296",
+      "M": "25.75256528",
+      "S": "0.155973912",
+      "L2": "-1.127684095",
+      "M2": "25.7570168",
+      "S2": "0.172147043",
+      "": ""
+    },
+    {
+      "Age": "9",
+      "L": "-1.339405453",
+      "M": "28.68130005",
+      "S": "0.166659247",
+      "L2": "-0.970685789",
+      "M2": "29.14291171",
+      "S2": "0.185201039",
+      "": ""
+    },
+    {
+      "Age": "10",
+      "L": "-1.206688407",
+      "M": "32.08799062",
+      "S": "0.17892874",
+      "L2": "-0.846872805",
+      "M2": "33.06392318",
+      "S2": "0.195947008",
+      "": ""
+    },
+    {
+      "Age": "11",
+      "L": "-1.019277299",
+      "M": "36.07262569",
+      "S": "0.190029545",
+      "L2": "-0.787374433",
+      "M2": "37.39088668",
+      "S2": "0.201971282",
+      "": ""
+    },
+    {
+      "Age": "12",
+      "L": "-0.836961905",
+      "M": "40.67443658",
+      "S": "0.196591612",
+      "L2": "-0.807599577",
+      "M2": "41.82797963",
+      "S2": "0.202298783",
+      "": ""
+    },
+    {
+      "Age": "13",
+      "L": "-0.698166437",
+      "M": "45.81336172",
+      "S": "0.196662115",
+      "L2": "-0.915513542",
+      "M2": "45.98368656",
+      "S2": "0.197363191",
+      "": ""
+    },
+    {
+      "Age": "14",
+      "L": "-0.631876912",
+      "M": "51.23096332",
+      "S": "0.190808471",
+      "L2": "-1.111606122",
+      "M2": "49.49075409",
+      "S2": "0.188559804",
+      "": ""
+    },
+    {
+      "Age": "15",
+      "L": "-0.665609025",
+      "M": "56.49095862",
+      "S": "0.181665781",
+      "L2": "-1.376478254",
+      "M2": "52.13568193",
+      "S2": "0.177946804",
+      "": ""
+    },
+    {
+      "Age": "16",
+      "L": "-0.801993069",
+      "M": "61.09536847",
+      "S": "0.172459052",
+      "L2": "-1.651248208",
+      "M2": "53.94543725",
+      "S2": "0.168124538",
+      "": ""
+    },
+    {
+      "Age": "17",
+      "L": "-0.973244762",
+      "M": "64.69961427",
+      "S": "0.16564009",
+      "L2": "-1.838091576",
+      "M2": "55.18216811",
+      "S2": "0.161752634",
+      "": ""
+    },
+    {
+      "Age": "18",
+      "L": "-1.066224038",
+      "M": "67.28992603",
+      "S": "0.161922819",
+      "L2": "-1.850946286",
+      "M2": "56.22969564",
+      "S2": "0.16036959",
+      "": ""
+    },
+    {
+      "Age": "19",
+      "L": "-1.023291946",
+      "M": "69.19467288",
+      "S": "0.160138158",
+      "L2": "-1.693267093",
+      "M2": "57.35175792",
+      "S2": "0.163138124",
+      "": ""
+    },
+    {
+      "Age": "20",
+      "L": "-0.91648762",
+      "M": "70.59761453",
+      "S": "0.161476792",
+      "L2": "-1.51336185",
+      "M2": "58.21897289",
+      "S2": "0.166644749",
+      "": ""
+    }
+  ];
+var heightAgeJSON = [
+    {
+      "Age": "3",
+      "L": "-0.390918369",
+      "M": "95.27359106",
+      "S": "0.04053412",
+      "L2": "0.54198094",
+      "M2": "94.21335709",
+      "S2": "0.042017509",
+      "": ""
+    },
+    {
+      "Age": "4",
+      "L": "0.827636736",
+      "M": "102.5104735",
+      "S": "0.041344257",
+      "L2": "0.225705996",
+      "M2": "101.033927",
+      "S2": "0.043259907",
+      "": ""
+    },
+    {
+      "Age": "5",
+      "L": "1.266367398",
+      "M": "109.1751441",
+      "S": "0.042593311",
+      "L2": "-0.057729947",
+      "M2": "107.9566031",
+      "S2": "0.044276588",
+      "": ""
+    },
+    {
+      "Age": "6",
+      "L": "1.137442868",
+      "M": "115.6608862",
+      "S": "0.043673359",
+      "L2": "-0.219069129",
+      "M2": "115.0054978",
+      "S2": "0.044963636",
+      "": ""
+    },
+    {
+      "Age": "7",
+      "L": "0.753244292",
+      "M": "122.0305342",
+      "S": "0.044403374",
+      "L2": "-0.210210748",
+      "M2": "121.7616844",
+      "S2": "0.045460702",
+      "": ""
+    },
+    {
+      "Age": "8",
+      "L": "0.455267507",
+      "M": "128.1237104",
+      "S": "0.045127088",
+      "L2": "-0.079283065",
+      "M2": "127.8262759",
+      "S2": "0.045968169",
+      "": ""
+    },
+    {
+      "Age": "9",
+      "L": "0.415687443",
+      "M": "133.7344759",
+      "S": "0.046217028",
+      "L2": "0.08414848",
+      "M2": "133.1303527",
+      "S2": "0.04688401",
+      "": ""
+    },
+    {
+      "Age": "10",
+      "L": "0.505564115",
+      "M": "138.8234114",
+      "S": "0.047610108",
+      "L2": "0.284748919",
+      "M2": "138.2111552",
+      "S2": "0.048704503",
+      "": ""
+    },
+    {
+      "Age": "11",
+      "L": "0.487939275",
+      "M": "143.7303663",
+      "S": "0.048937694",
+      "L2": "0.744289752",
+      "M2": "144.2609497",
+      "S2": "0.050524236",
+      "": ""
+    },
+    {
+      "Age": "12",
+      "L": "0.420919142",
+      "M": "149.3088178",
+      "S": "0.049947823",
+      "L2": "1.303044695",
+      "M2": "151.4865636",
+      "S2": "0.048599314",
+      "": ""
+    },
+    {
+      "Age": "13",
+      "L": "0.816239713",
+      "M": "156.4098858",
+      "S": "0.050333444",
+      "L2": "1.242968236",
+      "M2": "157.3436995",
+      "S2": "0.043859135",
+      "": ""
+    },
+    {
+      "Age": "14",
+      "L": "1.670433444",
+      "M": "164.1418486",
+      "S": "0.04894519",
+      "L2": "0.95657215",
+      "M2": "160.4776996",
+      "S2": "0.041022401",
+      "": ""
+    },
+    {
+      "Age": "15",
+      "L": "2.205180153",
+      "M": "170.139255",
+      "S": "0.045889585",
+      "L2": "0.895569834",
+      "M2": "161.8979913",
+      "S2": "0.040083845",
+      "": ""
+    },
+    {
+      "Age": "16",
+      "L": "2.113023423",
+      "M": "173.6100518",
+      "S": "0.043085685",
+      "L2": "0.941145943",
+      "M2": "162.5689958",
+      "S2": "0.039820663",
+      "": ""
+    },
+    {
+      "Age": "17",
+      "L": "1.724738292",
+      "M": "175.340954",
+      "S": "0.041408129",
+      "L2": "0.999505539",
+      "M2": "162.9238449",
+      "S2": "0.039732048",
+      "": ""
+    },
+    {
+      "Age": "18",
+      "L": "1.399999187",
+      "M": "176.1850208",
+      "S": "0.04064364",
+      "L2": "1.047571238",
+      "M2": "163.1307866",
+      "S2": "0.039687311",
+      "": ""
+    },
+    {
+      "Age": "19",
+      "L": "1.229163362",
+      "M": "176.6178621",
+      "S": "0.040391101",
+      "L2": "1.083315329",
+      "M2": "163.2590052",
+      "S2": "0.039657339",
+      "": ""
+    },
+    {
+      "Age": "20",
+      "L": "1.167279219",
+      "M": "176.8492322",
+      "S": "0.040369574",
+      "L2": "1.108046193",
+      "M2": "163.338251",
+      "S2": "0.039636316",
+      "": ""
+    }
+  ];
 var measurements = [
     {
         name: "BMI",
@@ -1462,27 +2646,101 @@ var measurements = [
     {
         name: "TSAT (transferin saturation)",
         value: 0
-    }
+    },
+    {
+        name: "Weight percentile",
+        value: 0
+    },
+    {
+        name: "Height percentile",
+        value: 0
+    },
 ]
 
-var illness = [
-    {
-        "name": "megaloblastic anemia", 
-        "criteria": ["macrocytic anemia" , "megaloblastic level anemia" , "folate deficiency" , "b12 deficiency"] , 
-        "signs": ["indirect bilirubinemia" , "anisocytosis" , "poikilocytosis" , "thrombocytopenia" , "increased urine urobilinogen" , "increased LDH"] ,
-        "prefered_range" : ["adult"],
-        "criteria_met" : [] , 
-        "criteria_needed" : [[1,1,1,0] , [1,0,1,0] , [1,1,0,1] , [1,1,0,0] , [1,0,0,1] , [1,1,1,1] , [1,0,1,1]]
-    } , 
-    {
-        "name": "iron deficiency anemia" , 
-        "criteria": ["microcytic anemia" , "iron deficiency"] ,
-        "signs": [] ,
-        "prefered_range" : [],
-        "criteria_met" : [] , 
-        "criteria_needed" : []
+
+var ZTABLE =
+{
+    'z': [0.09, 0.08,0.07,0.06,0.05,0.04,0.03,0.02,0.01,0],
+    '-3.4': [ 0.0002, 0.0003, 0.0003, 0.0003, 0.0003, 0.0003, 0.0003, 0.0003, 0.0003, 0.0003],
+    '-3.3': [ 0.0003, 0.0004, 0.0004, 0.0004, 0.0004, 0.0004, 0.0004, 0.0005, 0.0005, 0.0005],
+    '-3.2': [ 0.0005, 0.0005, 0.0005, 0.0006, 0.0006, 0.0006, 0.0006, 0.0006, 0.0007, 0.0007],
+    '-3.1': [ 0.0007, 0.0007, 0.0008, 0.0008, 0.0008, 0.0008, 0.0009, 0.0009, 0.0009, 0.0010],
+    '-3.0': [ 0.0010, 0.0010, 0.0011, 0.0011, 0.0011, 0.0012, 0.0012, 0.0013, 0.0013, 0.0013],
+    '-2.9': [ 0.0014, 0.0014, 0.0015, 0.0015, 0.0016, 0.0016, 0.0017, 0.0018, 0.0018, 0.0019],
+    '-2.8': [ 0.0019, 0.0020, 0.0021, 0.0021, 0.0022, 0.0023, 0.0023, 0.0024, 0.0025, 0.0026],
+    '-2.7': [ 0.0026, 0.0027, 0.0028, 0.0029, 0.0030, 0.0031, 0.0032, 0.0033, 0.0034, 0.0035],
+    '-2.6': [ 0.0036, 0.0037, 0.0038, 0.0039, 0.0040, 0.0041, 0.0043, 0.0044, 0.0045, 0.0047],
+    '-2.5': [ 0.0048, 0.0049, 0.0051, 0.0052, 0.0054, 0.0055, 0.0057, 0.0059, 0.0060, 0.0062],
+    '-2.4': [ 0.0064, 0.0066, 0.0068, 0.0069, 0.0071, 0.0073, 0.0075, 0.0078, 0.0080, 0.0082],
+    '-2.3': [ 0.0084, 0.0087, 0.0089, 0.0091, 0.0094, 0.0096, 0.0099, 0.0102, 0.0104, 0.0107],
+    '-2.2': [ 0.0110, 0.0113, 0.0116, 0.0119, 0.0122, 0.0125, 0.0129, 0.0132, 0.0136, 0.0139],
+    '-2.1': [ 0.0143, 0.0146, 0.0150, 0.0154, 0.0158, 0.0162, 0.0166, 0.0170, 0.0174, 0.0179],
+    '-2.0': [ 0.0183, 0.0188, 0.0192, 0.0197, 0.0202, 0.0207, 0.0212, 0.0217, 0.0222, 0.0228],
+    '-1.9': [ 0.0233, 0.0239, 0.0244, 0.0250, 0.0256, 0.0262, 0.0268, 0.0274, 0.0281, 0.0287],
+    '-1.8': [ 0.0294, 0.0301, 0.0307, 0.0314, 0.0322, 0.0329, 0.0336, 0.0344, 0.0351, 0.0359],
+    '-1.7': [ 0.0367, 0.0375, 0.0384, 0.0392, 0.0401, 0.0409, 0.0418, 0.0427, 0.0436, 0.0446],
+    '-1.6': [ 0.0455, 0.0465, 0.0475, 0.0485, 0.0495, 0.0505, 0.0516, 0.0526, 0.0537, 0.0548],
+    '-1.5': [ 0.0559, 0.0571, 0.0582, 0.0594, 0.0606, 0.0618, 0.0630, 0.0643, 0.0655, 0.0668],
+    '-1.4': [ 0.0681, 0.0694, 0.0708, 0.0721, 0.0735, 0.0749, 0.0764, 0.0778, 0.0793, 0.0808],
+    '-1.3': [ 0.0823, 0.0838, 0.0853, 0.0869, 0.0885, 0.0901, 0.0918, 0.0934, 0.0951, 0.0968],
+    '-1.2': [ 0.0985, 0.1003, 0.1020, 0.1038, 0.1056, 0.1075, 0.1093, 0.1112, 0.1131, 0.1151],
+    '-1.1': [ 0.1170, 0.1190, 0.1210, 0.1230, 0.1251, 0.1271, 0.1292, 0.1314, 0.1335, 0.1357],
+    '-1.0': [ 0.1379, 0.1401, 0.1423, 0.1446, 0.1469, 0.1492, 0.1515, 0.1539, 0.1562, 0.1587],
+    '-0.9': [ 0.1611, 0.1635, 0.1660, 0.1685, 0.1711, 0.1736, 0.1762, 0.1788, 0.1814, 0.1841],
+    '-0.8': [ 0.1867, 0.1894, 0.1922, 0.1949, 0.1977, 0.2005, 0.2033, 0.2061, 0.2090, 0.2119],
+    '-0.7': [ 0.2148, 0.2177, 0.2206, 0.2236, 0.2266, 0.2296, 0.2327, 0.2358, 0.2389, 0.2420],
+    '-0.6': [ 0.2451, 0.2483, 0.2514, 0.2546, 0.2578, 0.2611, 0.2643, 0.2676, 0.2709, 0.2743],
+    '-0.5': [ 0.2776, 0.2810, 0.2843, 0.2877, 0.2912, 0.2946, 0.2981, 0.3015, 0.3050, 0.3085],
+    '-0.4': [ 0.3121, 0.3156, 0.3192, 0.3228, 0.3264, 0.3300, 0.3336, 0.3372, 0.3409, 0.3446],
+    '-0.3': [ 0.3483, 0.3520, 0.3557, 0.3594, 0.3632, 0.3669, 0.3707, 0.3745, 0.3783, 0.3821],
+    '-0.2': [ 0.3829, 0.3897, 0.3936, 0.3974, 0.4013, 0.4052, 0.4090, 0.4129, 0.4168, 0.4207],
+    '-0.1': [ 0.4247, 0.4286, 0.4325, 0.4364, 0.4404, 0.4443, 0.4483, 0.4522, 0.4562, 0.4602],
+    '0.0': [ 0.4641, 0.4681, 0.4721, 0.4761, 0.4801, 0.4840, 0.4880, 0.4920, 0.4960,  0.5000]
+};
+
+function    ztable_finder(zscore) {
+    zscore = parseFloat(zscore);
+
+    if (isNaN(zscore)) {
+        throw new TypeError('zscore is not a valid number');
     }
-];
+
+    var yZscore = -3.4;
+    var xZscore = 0.09;
+
+    if(zscore === 0) {
+        return 0.5000;
+    }
+
+    if(zscore > 0) {
+        if(zscore > 3.49) {
+            return 1;
+        }
+
+        zscore = Math.floor(zscore * 100) / 100;
+        yZscore = Math.floor(zscore * 10) / 10;
+        yZscore = -yZscore;
+    } else {
+        if(zscore < -3.49) {
+            return 0;
+        }
+
+        zscore = Math.ceil(zscore * 100) / 100;
+        yZscore = Math.ceil(zscore * 10) / 10;
+    }
+    xZscore = Math.abs(Math.round((zscore % yZscore) * 10000) / 10000);
+
+    var z100 = isNaN(xZscore) ? Math.abs(zscore) : xZscore;
+    var z10 = yZscore === 0 ? '0.0' : yZscore.toFixed(1);
+    var col = ZTABLE.z.indexOf(z100);
+    var perc = ZTABLE[z10][col];
+
+    if(zscore > 0) {
+        perc = Math.round((1 - perc) * 10000) / 10000;
+    }
+
+    return perc;
+}
 
 var mydata = [
     {
