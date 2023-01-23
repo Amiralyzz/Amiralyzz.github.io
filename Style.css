@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Abel&family=Eczar&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Abel&family=Eczar&family=Vidaloka&display=swap');
 
 
 
@@ -25,7 +25,7 @@ input {
 
 #logo {
   float: left;
-  
+  vertical-align: middle;
   position:inherit;
   margin-top: 5px;
   margin-left: 30px;
@@ -33,31 +33,27 @@ input {
   transition: transform .2s;
 }
 
-#logo:hover {
-  transform: scale(1.5);
-}
 
 h1 {
   color: rgb(178, 173, 212);
-  outline-color: black;
-  outline-width: 10px;
   font-size:50px;
   letter-spacing:3px;
   margin-bottom: 0px;
   padding-bottom: 0px;
   margin-left: 0px;
-  margin-top: 0px;
+  margin-top: 5px;
   text-align: left;
   display: inline-block;
+  font-family: 'Vidaloka', serif;
 }
 
-#top {
+/* #top {
     
   color:rgb(156, 156, 156);
   text-align: left;
   font-size: 35px;
   display: inline;
-}
+} */
 
 #gen_logo {
   width: 50px;
@@ -68,13 +64,6 @@ h1 {
   margin: 10px;
 }
 
-#gen_logo:hover {
-  transform: scale(2);
-}
-
-#gen_logo:active {
-  transform: scale(0.9) ; 
-}
 
 
 
@@ -126,7 +115,7 @@ h1 {
   text-align: center;
   color: white;
   position : relative;
-  width : 50px;
+  width : 60px;
   padding : 5px;
   font-size: 20px;
   background-color:rgb(38, 3, 58);
@@ -665,16 +654,22 @@ option::selection {
 }
 
 #up {
-  display: none; 
-  position: fixed; 
-  bottom: 20px; 
+  display: none;
+  position: fixed;
+  height: 30px;
+  width:  30px;
+  bottom: 20px;
   right: 30px;
   z-index: 99;
-  border: none; 
-  outline: none; 
-  background-color: rgba(255, 255, 255, 0.486); 
+  border: none;
+  outline: none;
+  background-color: rgba(255, 255, 255, 0.486);
   border-radius: 50%;
-  cursor: pointer; 
-  padding: 10px;
+  cursor: pointer;
+  /* padding: 10px; */
   font-size: medium;
+  transform: rotate(-90deg);
+  font-family: 'Courier New', Courier, monospace;
+  text-align: center;
+  vertical-align: middle;
 }
