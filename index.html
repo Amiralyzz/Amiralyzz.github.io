@@ -5,16 +5,17 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge"> 
         <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
         <link rel="stylesheet" href="Style.css">
-        <title>CBC - Lab Interpreter</title>
+        <title>LAB|ENTER</title>
         
     </head>
     <body onload="range_maker('adult');">
-        <script type="text/javascript" src="Script.js"></script>
+        <script defer src="Script.js"></script>
+        <script type="text/javascript" src="node_modules/ztable/index.js"></script>
         <!---                           --->
         <header>
             <img  src="https://cdn-icons-png.flaticon.com/512/8045/8045916.png" id="logo" alt="lab">
-            <h1>CBC </h1>
-            <div id="top" role="banner"><em>Lab Interpreter</em></div> 
+            <h1>LAB|ENTER </h1>
+            <!-- <div id="top" role="banner"><em>Lab Interpreter</em></div>  -->
         </header>
         <main>
             <div id="patient_info_parent">
@@ -52,7 +53,7 @@
                     <div class="id_tab" id="weight_id">
                         <label for="weight" style="margin: 5px 10px; font-size: 25px;">Weight</label>
                         <div style="flex-wrap: nowrap; display: flex; justify-content: center;">
-                            <input type="number" name="weight" id="weight" min="0" class="input_id" placeholder="70" onkeyup="weight_calc()" onchange="weight_calc()" >
+                            <input type="number" name="weight" id="weight" min="0" step="0.1" class="input_id" value="70" onkeyup="weight_calc()" onchange="weight_calc()" >
                             <select title="weight_unit" name="weight_unit" id="weight_unit" onchange="weight_calc()">
                                 <option value="kg" selected>Kg</option>
                                 <option value="gr">gram</option>
@@ -63,7 +64,7 @@
                     <div class="id_tab" id="height_id">
                         <label for="height" style="margin: 5px 10px; font-size: 25px;">Height</label>
                         <div  style="flex-wrap: nowrap; display: flex; justify-content: center;" >
-                            <input type="number" name="height" id="height" min="0" class="input_id" placeholder="170" onkeyup="height_calc()" onchange="height_calc()">
+                            <input type="number" name="height" id="height" min="0" step="0.1" class="input_id" value="170" onkeyup="height_calc()" onchange="height_calc()">
                             <select title="height_unit" name="height_unit" id="height_unit" onchange="height_calc()">
                                 <option value="cm" selected>cm</option>
                                 <option value="ft">ft</option>
@@ -106,7 +107,7 @@
                 </div>
             </div>
             <div id="table_shown"></div>
-            <button type="button" title="up" id="up" onclick="up()">top</button>
+            <button type="button" title="up" id="up" onclick="up()">></button>
         </main>
     </body>
 </html>
