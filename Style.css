@@ -181,7 +181,7 @@ h1 {
   }
 
   .burger {
-    background-color: rgba(0, 0, 0, 0.863);
+    background-color: rgba(0, 0, 0, 1);
     display: block;
     position: fixed;
     height: 100vh;
@@ -203,7 +203,7 @@ h1 {
     cursor: pointer;
     vertical-align: middle;
     padding-left: 10px;
-    margin-bottom: -10px;
+    margin-bottom: -8px;
   }
   .close_btn {
     position: absolute;
