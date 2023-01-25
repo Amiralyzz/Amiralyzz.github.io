@@ -47,7 +47,7 @@ function    burger_menu() {
     burger_parent.className = "burger";
     burger_parent.id = "burger";
     document.body.appendChild(burger_parent);
-    burger_parent.style.width = "150px";
+
     var tabs = document.getElementsByClassName("tab");
     for (const tab of tabs) {
         if (tab.id != "tab_search" && tab.id != "tab_analyse" && tab.id != "show_tab") {   
@@ -57,7 +57,7 @@ function    burger_menu() {
             burger_tab.id = tab.id + "b";
             burger_tab.innerHTML = tab.innerHTML;
             burger_tab.onclick = change_table_caller;
-            selected = tab.id;
+            var selected = tab.id;
             document.getElementById(selected).style.display="none";
         }
     }
@@ -84,28 +84,19 @@ function    expand_info(){
 function    gender() {
     var malelogo= "https://cdn-icons-png.flaticon.com/512/3001/3001764.png";
     var femalelogo = "https://cdn-icons-png.flaticon.com/512/2922/2922561.png" ;
-
-    if (document.getElementById("gen_logo").src == malelogo) {
-        window.setTimeout(function() { 
-        //document.getElementById("preg").style.color = "white";
+    if (genderCoef == 0) {
         document.getElementById("preg").disabled = false;
         document.getElementById("gender").value = "female";
         document.getElementById("gen_logo").src = femalelogo;
         document.getElementById("gen_logo").alt="female";
-        
-    } , 150)
        genderCoef=2;
     }
     else {
-        window.setTimeout(function() {
-        //document.getElementById("preg").style.color = "transparent";
-        document.getElementById("preg").disabled = true;
-        document.getElementById("gender").value = "male";
-        document.getElementById("gen_logo").src = malelogo;
-        document.getElementById("gen_logo").alt="male";
-        
-    },150)   
-    genderCoef=0;  
+      document.getElementById("preg").disabled = true;
+      document.getElementById("gender").value = "male";
+      document.getElementById("gen_logo").src = malelogo;
+      document.getElementById("gen_logo").alt="male";   
+      genderCoef=0;  
     }
     age_calc();
 }
@@ -122,9 +113,9 @@ function    pregnancy() {
 
 function    age_calc() {
     var age_txtbox = document.getElementById("age");
-    var age_select = document.getElementById("age_unit");
+    var age_unit_selected = document.getElementById("age_unit");
     var inp = Number(age_txtbox.value);
-    var age_unit = age_select.value;
+    var age_unit = age_unit_selected.value;
     if (inp<0) {
         age_txtbox.value = 0;
         inp=0;
@@ -350,11 +341,15 @@ function    bmi_calc() {
 }
 
 function    tooltip() {
-    var tootltip_text = document.getElementById("tooltip");
+    var tooltip_text = document.getElementById("tooltip");
     for (const entry of mydata) {
-        if (entry.name == this.id) {
-            tootltip_text.innerHTML = entry.tooltip;
-        }
+      if (entry.name == this.id) {
+          tooltip_text.innerHTML = entry.tooltip;
+      }
+    }
+    measurements_RE = new RegExp(/measurement/,'i')
+    if (measurements_RE.test(this.id)) {
+      tooltip_text.innerHTML = measurements[this.id.slice(11)].tooltip;
     }
 }
 function    tooltip_remove() {
@@ -466,7 +461,7 @@ function    change_table(tab_id,test_cat)  {
                     min_string = minArray[i] + " - ";
                     max_string = maxArray[i] + " ";
                 }
-                new_label.innerHTML = "<div style='font-size: 35px;'>" +entry.name+"</div>"  + min_string + max_string + entry.unit.toString();
+                new_label.innerHTML = "<div style='font-size: 2rem;'>" +entry.name+"</div>"  + min_string + max_string + entry.unit.toString();
                 if (entry.status == 0) {
                     out_icon.style.display = "none";
                     warn_icon.style.display = "none";
@@ -489,8 +484,8 @@ function    change_table(tab_id,test_cat)  {
                 } else {
                     warn_icon.style.display = "none";
                 }
-                new_input.onchange = check_range;
-                new_input.onkeyup = check_range;
+                new_input.onchange = whenAnInputChanges;
+                new_input.onkeyup = whenAnInputChanges;
 
                 var rem_button = document.createElement("img");
                 rem_button.className = "rem";
@@ -535,7 +530,7 @@ function    change_table(tab_id,test_cat)  {
                         min_string = minArray[i] + " - ";
                         max_string = maxArray[i] + " ";
                     }
-                    new_label.innerHTML = "<div style='font-size: 35px;'>" +entry.name+"</div>"  + min_string + max_string + entry.unit.toString();
+                    new_label.innerHTML = "<div style='font-size: 2rem;'>" +entry.name+"</div>"  + min_string + max_string + entry.unit.toString();
 
                     var new_input = document.createElement("input");
                     new_input.type = "number"
@@ -591,8 +586,8 @@ function    change_table(tab_id,test_cat)  {
                     } else {
                         warn_icon.style.display = "none";
                     }
-                    new_input.onchange = check_range;
-                    new_input.onkeyup = check_range;
+                    new_input.onchange = whenAnInputChanges;
+                    new_input.onkeyup = whenAnInputChanges;
                     
                     var add_button = document.createElement("img");
                     add_button.className = "add";
@@ -638,7 +633,7 @@ function    change_table(tab_id,test_cat)  {
                     min_string = minArray[i] + " - ";
                     max_string = maxArray[i] + " ";
                 }
-                new_label.innerHTML = "<div style='font-size: 35px;'>" +entry.name+"</div>"  + min_string + max_string + entry.unit.toString();
+                new_label.innerHTML = "<div style='font-size: 2rem;'>" +entry.name+"</div>"  + min_string + max_string + entry.unit.toString();
 
                 var new_input = document.createElement("input");
                 new_input.type = "number"
@@ -694,57 +689,63 @@ function    change_table(tab_id,test_cat)  {
                 } else {
                     warn_icon.style.display = "none";
                 }
-                new_input.onchange = check_range;
-                new_input.onkeyup = check_range;
+                new_input.onchange = whenAnInputChanges;
+                new_input.onkeyup = whenAnInputChanges;
             }
         }
     }
     
     //for analyse
     if(tab_id=='tab_analyse') {
-        folate();
-        b12();
-        calc_measurements();
-        parent_element = document.getElementById("table_shown");
-        parent_element.style.display = "flex";
-        parent_element.style.flexDirection = "column";
-        var measurements_parent = document.createElement("div");
-        measurements_parent.className = "measurements_parent";
-        parent_element.appendChild(measurements_parent);
-        measurements_parent.innerHTML = "Found Measurements: ";
-        for(i=0; i<measurements.length; i++) {
-            try {
-                if (measurements[i].value != 0) {
-                    var measurements_section = document.createElement("div");
-                    measurements_section.className = "measurements_section";
-                    measurements_section.innerHTML = measurements[i].name + "= " + measurements[i].value;
-                    measurements_parent.appendChild(measurements_section);
-                }
+      anemia();
+      iron_profile();  
+      folate();
+      b12();
+      calc_measurements();
+      parent_element = document.getElementById("table_shown");
+      parent_element.style.display = "flex";
+      parent_element.style.flexDirection = "column";
+      var measurements_parent = document.createElement("div");
+      measurements_parent.className = "measurements_parent";
+      parent_element.appendChild(measurements_parent);
+      measurements_parent.innerHTML = "Found Measurements: ";
+      for(i=0; i<measurements.length; i++) {
+        try {
+            if (measurements[i].value != 0) {
+                var measurements_section = document.createElement("div");
+                measurements_section.id = "measurement" + i;
+                measurements_section.className = "measurements_section";
+                measurements_section.innerHTML = measurements[i].name + "= " + measurements[i].value;
+                measurements_parent.appendChild(measurements_section);
+                measurements_section.style.backgroundColor = measurements[i].color;
+                measurements_section.onmouseover = tooltip;
+                measurements_section.onmouseleave = tooltip_remove;
             }
-            catch{}
         }
+        catch{}
+      }
 
-        var findings_parent = document.createElement("div");
-        findings_parent.className = "findings_parent";
-        parent_element.appendChild(findings_parent);
-        findings_parent.innerHTML = "Found findings: ";
-        for(i=0; i<patient[0].signs[0].length; i++) {
-            var signs_section = document.createElement("div");
-            signs_section.className = "signs_section";
-            
-            var path_section = document.createElement("div");
-            path_section.className = "path_section";
-            path_section.id = "path" + i;
-            if (patient[0].signs[0][i] != undefined) {
-                findings_parent.appendChild(signs_section);
-                signs_section.innerHTML = patient[0].signs[0][i];
-                signs_section.appendChild(path_section);
-                path_section.innerHTML = " + ";
-                path_section.onclick = show_path;
-                signs_section.style.backgroundColor = patient[0].signs[2][i];
-                //signs_section.style.backgroundColor = '#'+(0x1000000+Math.random()*0xffffff).toString(16).substr(1,6);
-            }
+      var findings_parent = document.createElement("div");
+      findings_parent.className = "findings_parent";
+      parent_element.appendChild(findings_parent);
+      findings_parent.innerHTML = "Found findings: ";
+      for(i=0; i<patient[0].signs[0].length; i++) {
+        var signs_section = document.createElement("div");
+        signs_section.className = "signs_section";
+        
+        var path_section = document.createElement("div");
+        path_section.className = "path_section";
+        path_section.id = "path" + i;
+        if (patient[0].signs[0][i] != undefined) {
+            findings_parent.appendChild(signs_section);
+            signs_section.innerHTML = patient[0].signs[0][i];
+            signs_section.appendChild(path_section);
+            path_section.innerHTML = " + ";
+            path_section.onclick = show_path;
+            signs_section.style.backgroundColor = patient[0].signs[2][i];
+            //signs_section.style.backgroundColor = '#'+(0x1000000+Math.random()*0xffffff).toString(16).substr(1,6);
         }
+     }
     }
 }
 
@@ -769,7 +770,7 @@ function    rem_search() {
     change_table('tab_search','searchbar');
 }
 
-function    check_range() {
+function    whenAnInputChanges() {
     x= Number(this.value);
     id= this.id;
     if (x<0) {x=0;}
@@ -1241,7 +1242,6 @@ function    anemia()    {
         
         return 0; //no need to access  //and if there is no hb entered unlike mcv, check for macrocytosis
     }
-
     if (p_hb >= mydata[2].min) {
         path += ("Hb > " + mydata[2].min);
         patient[0].signs[0][2] = ("no anemia");
@@ -1399,13 +1399,24 @@ function calc_measurements() {
         }
         gfr_ckd = 142 * cr_to_k_min ** coef_ckd_a * cr_to_k_max ** -1.2 * 0.9938 ** globalAgeYears * coef_ckd;
     }
-    measurements[1].value = gfr_ckd.toFixed(3);
-    measurements[2].value = gfr_mdrd.toFixed(3);
-    measurements[3].value = gfr_cg.toFixed(3);
+    measurements[5].value = gfr_ckd.toFixed(3);
+    measurements[6].value = gfr_mdrd.toFixed(3);
+    measurements[7].value = gfr_cg.toFixed(3);
 
-    //RPI
+    //CRC
     var hct_val = mydata[4].value;
     var retic_val = mydata[11].value;
+    var crc_val = 0;
+    var normal_hct_gender = 45 - genderCoef*2.5;
+    if (hct_val <= 0 || retic_val <= 0) {
+      crc = 0;
+    } else {
+      crc = retic_val * (hct_val/normal_hct_gender);
+    }
+    measurements[3].value = crc.toFixed(2);
+
+    //RPI
+
     var maturation = 0 , rpi = 0;
     if (hct_val >= 40) {
         maturation =1;
@@ -1428,7 +1439,7 @@ function calc_measurements() {
     var tibc_val = mydata[42].value;
     if (iron_val>0 && tibc_val>0) {
         tsat = iron_val/tibc_val * 100;
-        measurements[5].value = tsat.toFixed(2);
+        measurements[8].value = tsat.toFixed(2);
     }
 
     //Percentiles
@@ -1448,7 +1459,7 @@ function    heightPercentileCalc() {
     } else if (globalAgeYears <=20) {
         var currentAgeObject = heightAgeJSON.find(o => o.Age === globalAgeYears.toString());
     }  else {
-        measurements[7].value = 0;
+        measurements[2].value = 0;
         return 0;
     }
     if(genderCoef == 0){
@@ -1462,7 +1473,7 @@ function    heightPercentileCalc() {
     }
     var heightZScore = ((globalHeightCm / M) ** L -1) / (S * L);
     var heightPercentile = ztable_finder(heightZScore) * 100;
-    measurements[7].value = heightPercentile.toFixed(2);
+    measurements[2].value = heightPercentile.toFixed(2);
 }
 function    weightPercentileCalc() {
     if (globalAgeYears<=3) {
@@ -1474,7 +1485,7 @@ function    weightPercentileCalc() {
     }  else if (globalAgeYears <=20) {
         var currentAgeObject = weightAgeJSON.find(o => o.Age === globalAgeYears.toString());
     }  else  {
-        measurements[6].value = 0;
+        measurements[1].value = 0;
         return 0;
     }
         if(genderCoef == 0){
@@ -1489,7 +1500,7 @@ function    weightPercentileCalc() {
         var weightKg = gloalWeightGram / 1000;
         var weightZScore = ((weightKg / M) ** L - 1)  / (S * L);
         var weightPercentile = ztable_finder(weightZScore) * 100;
-        measurements[6].value = weightPercentile.toFixed(2);
+        measurements[1].value = weightPercentile.toFixed(2);
     
 }
 
@@ -1504,6 +1515,66 @@ var patient = [
         range: []
     }
 ]
+
+var measurements = [
+  {
+    name: "BMI",
+    value: 0 , 
+    color: "rgb(38, 3, 58)" , 
+    tooltip: "Body Mass Index"
+  },
+  {
+    name: "Weight percentile",
+    value: 0 , 
+    color: "rgb(38, 3, 58)",
+    tooltip: "Weight percentile based on gender and age"
+  },
+  {
+    name: "Height percentile",
+    value: 0 , 
+    color: "rgb(38, 3, 58)",
+    tooltip: "Height percentile based on gender and age"
+  },
+  {
+    name: "CRC",
+    value: 0 , 
+    color: "darkslateblue" , 
+    tooltip: "Corrected Reticulocyte Count"
+  },
+  {
+    name: "RPI",
+    value: 0 , 
+    color: "darkslateblue" , 
+    tooltip: "Reticulocyte Production Index (use when Polychromasia is present)"
+  },
+  {
+    name: "GFR (CKD-EPI)",
+    value: 0 , 
+    color: "rgb(128, 70, 32)" , 
+    tooltip: "Estimated Glomerular Filtration Rate based on CKD-EPI Equations"
+  },
+  {
+    name: "GFR (MDRD)",
+    value: 0 , 
+    color: "rgb(128, 70, 32)",
+    tooltip: "Estimated Glomerular Filtration Rate based on MDRD Equation"
+  },
+  {
+    name: "GFR (Cockcroft)",
+    value: 0 , 
+    color: "rgb(128, 70, 32)" , 
+    tooltip: "Estimated Glomerular Filtration Rate based on Cockcroft-Gault Equation"
+  },
+  
+  {
+    name: "TSAT (transferin saturation)",
+    value: 0 , 
+    color: "rgb(102, 30, 52)"
+  }
+  
+];
+
+
 var weightAgeInfantJSON = [
     {
       "Age": "0",
@@ -2622,40 +2693,7 @@ var heightAgeJSON = [
       "": ""
     }
   ];
-var measurements = [
-    {
-        name: "BMI",
-        value: 0
-    },
-    {
-        name: "GFR (CKD-EPI)",
-        value: 0
-    },
-    {
-        name: "GFR (MDRD)",
-        value: 0
-    },
-    {
-        name: "GFR (Cockcroft-Gault)",
-        value: 0
-    },
-    {
-        name: "RPI",
-        value: 0
-    },
-    {
-        name: "TSAT (transferin saturation)",
-        value: 0
-    },
-    {
-        name: "Weight percentile",
-        value: 0
-    },
-    {
-        name: "Height percentile",
-        value: 0
-    },
-]
+
 
 
 var ZTABLE =
