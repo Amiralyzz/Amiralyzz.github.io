@@ -10,7 +10,6 @@
     </head>
     <body onload="range_maker('adult');">
         <script defer src="Script.js"></script>
-        <script type="text/javascript" src="node_modules/ztable/index.js"></script>
         <!---                           --->
         <header>
             <img  src="https://cdn-icons-png.flaticon.com/512/8045/8045916.png" id="logo" alt="lab">
@@ -77,7 +76,7 @@
                 Select a tab
             </div>
             <div class="tab_parent"> 
-                <div class="tab" id="show_tab" style="background-color:rgb(34, 34, 34);" onclick="burger_menu()"><div class="tab_label" id="show_label">Tabs</div></div>
+                <div class="tab" id="show_tab" style="background-color:rgb(30, 102, 96);" onclick="burger_menu()"><div class="tab_label" id="show_label">Tabs</div></div>
                 <div style="background-color:rgb(252, 252, 252); " id="tab_search" class="tab" onclick="change_table('tab_search','searchbar')" on>
                     <img src="https://cdn-icons-png.flaticon.com/128/1296/1296902.png" class="logo_table" alt="search"><div class="tab_label" style="color: black;"></div>
                     <input type="text" class="searchbar" placeholder="Search" id="searchbar" style="width: 150px; color:black; margin-right: 5px;" 
@@ -103,7 +102,7 @@
                     <img src="https://cdn-icons-png.flaticon.com/128/1834/1834943.png" class="logo_table" alt="biochem"><div class="tab_label">Bio</div>
                 </div>
                 <div style="background-color:rgb(30, 102, 42); " id="tab_analyse" class="tab" onclick="change_table('tab_analyse','analyse')">
-                    <img src="https://cdn-icons-png.flaticon.com/128/6851/6851478.png" class="logo_table" alt="biochem"><div class="tab_label">Analyse</div>
+                    <img src="https://cdn-icons-png.flaticon.com/128/6851/6851478.png" class="logo_table" alt="analyse" id="analyse_logo"><div class="tab_label">Analyse</div>
                 </div>
             </div>
             <div id="table_shown"></div>
