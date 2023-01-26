@@ -401,6 +401,7 @@ h1 {
     rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px,
     rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;
   margin: 5px;
+  flex-grow: 0;
 }
 .tab_label {
   margin: 5px 10px 5px 0px;
@@ -425,10 +426,12 @@ h1 {
   width: 100%;
   box-sizing: border-box;
   position: relative;
-  height: 65vh;
+  height: fit-content;
+  max-height: 65vh;
   overflow-y: scroll;
   overflow-x: hidden;
   white-space: nowrap;
+  
 }
 
 #searched {
@@ -441,11 +444,12 @@ h1 {
 
 .entry_box {
   display: flex;
+  height: fit-content;
   flex-direction: column;
   position: relative;
   flex-wrap: wrap;
   align-items: center;
-  flex-grow: 1;
+  flex-grow: 0;
   margin: 5px 5px;
   border-radius: 25px;
   box-shadow: rgba(0, 0, 0, 0.17) 0px -23px 25px 0px inset,
