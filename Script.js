@@ -383,21 +383,23 @@ function tooltip_remove() {
   tootltip_text.innerHTML = "";
 }
 
-function change_table(tab_id, test_cat) {
-  if (tab_id != "tab_analyse") {
-    document.getElementById("table_shown").style.display = "grid";
-    document.getElementById("table_shown").style.flexDirection = "row";
+function change_table(tabId, testCategory) {
+  var parentElement = document.getElementById("table_shown");
+  if (tabId != "tab_analyse") {
+    parentElement.style.display = "grid";
+    parentElement.style.flexDirection = "row";
+    parentElement.style.whiteSpace = "nowrap";
   }
   var tooltip_text = document.getElementById("tooltip");
   tooltip_text.innerHTML = "";
-  document.getElementById("table_shown").innerHTML = "";
+  parentElement.innerHTML = "";
   var search_bar = document.getElementById("searchbar");
   try {
     document.getElementById("searched").remove();
   } catch {}
-  selectedLabType = test_cat;
-  selectedTabId = tab_id;
-  var tab_selected = document.getElementById(tab_id);
+  selectedLabType = testCategory;
+  selectedTabId = tabId;
+  var selectedTab = document.getElementById(tabId);
   var tabs = document.getElementsByClassName("tab");
   for (const tab of tabs) {
     tab.style.opacity = 0.6;
@@ -406,22 +408,22 @@ function change_table(tab_id, test_cat) {
   }
   var screen_is_small = document.getElementById("show_tab");
 
-  tab_selected.style.opacity = 1;
-  tab_selected.style.borderWidth = "2px";
-  tab_selected.style.borderColor = "rgba(255, 255, 255, 0.164)";
-  tab_selected.style.borderStyle = "solid";
-  tab_selected.style.margin = "5px 3px";
+  selectedTab.style.opacity = 1;
+  selectedTab.style.borderWidth = "2px";
+  selectedTab.style.borderColor = "rgba(255, 255, 255, 0.164)";
+  selectedTab.style.borderStyle = "solid";
+  selectedTab.style.margin = "5px 3px";
 
-  tab_selected.style.display = "flex";
+  selectedTab.style.display = "flex";
 
-  if (tab_id == "tab_search") {
-    var search_val = document.getElementById(test_cat).value;
+  if (tabId == "tab_search") {
+    var search_val = document.getElementById(testCategory).value;
     var searched_items = document.createElement("div");
     searchbar_show = "block";
     //for saved search items
     searched_items.id = "searched";
     searched_items.style.color = "black";
-    document.getElementById("table_shown").before(searched_items);
+    parentElement.before(searched_items);
     for (i = 0; i < mydata.length; i++) {
       if (pinnedOrNotArray[i] == 1) {
         var entry = mydata[i];
@@ -547,7 +549,7 @@ function change_table(tab_id, test_cat) {
           new_div.id = entry.name;
           new_div.onmouseover = tooltip;
           new_div.onmouseleave = tooltip_remove;
-          document.getElementById("table_shown").appendChild(new_div);
+          parentElement.appendChild(new_div);
 
           var new_label = document.createElement("label");
           new_label.className = "entry_label";
@@ -646,9 +648,9 @@ function change_table(tab_id, test_cat) {
   }
   search_bar.style.display = searchbar_show;
   //for usual tabs
-  if (test_cat != "searchbar" && test_cat != "analyse") {
+  if (testCategory != "searchbar" && testCategory != "analyse") {
     for (i = 0; i < mydata.length; i++) {
-      if (mydata[i]["type"] == test_cat) {
+      if (mydata[i]["type"] == testCategory) {
         var entry = mydata[i];
         var new_div = document.createElement("div");
         new_div.className = "entry_box";
@@ -656,7 +658,7 @@ function change_table(tab_id, test_cat) {
         new_div.id = entry.name;
         new_div.onmouseover = tooltip;
         new_div.onmouseleave = tooltip_remove;
-        document.getElementById("table_shown").appendChild(new_div);
+        parentElement.appendChild(new_div);
 
         var new_label = document.createElement("label");
         new_label.className = "entry_label";
@@ -743,18 +745,18 @@ function change_table(tab_id, test_cat) {
   }
 
   //for analyse
-  if (tab_id == "tab_analyse") {
+  if (tabId == "tab_analyse") {
     anemia();
     iron_profile();
     folate();
     b12();
     calc_measurements();
-    parent_element = document.getElementById("table_shown");
-    parent_element.style.display = "flex";
-    parent_element.style.flexDirection = "column";
+    parentElement.style.display = "flex";
+    parentElement.style.flexDirection = "column";
+    parentElement.style.whiteSpace = "normal";
     var measurements_parent = document.createElement("div");
     measurements_parent.className = "measurements_parent";
-    parent_element.appendChild(measurements_parent);
+    parentElement.appendChild(measurements_parent);
     measurements_parent.innerHTML = "Found Measurements: ";
     for (i = 0; i < measurements.length; i++) {
       try {
@@ -774,7 +776,7 @@ function change_table(tab_id, test_cat) {
 
     var findings_parent = document.createElement("div");
     findings_parent.className = "findings_parent";
-    parent_element.appendChild(findings_parent);
+    parentElement.appendChild(findings_parent);
     findings_parent.innerHTML = "Found findings: ";
     for (i = 0; i < patient[0].signs[0].length; i++) {
       var signs_section = document.createElement("div");
@@ -913,7 +915,6 @@ function check_ranges(x, id) {
           critValueArray[j] = 0;
         }
       } catch {}
-      console.log(x);
       mydata[j].value = x;
       //document.getElementById(in_id[j]).value = x;
       try {
@@ -1640,9 +1641,10 @@ var measurements = [
   },
 
   {
-    name: "TSAT (transferin saturation)",
+    name: "TSAT",
     value: 0,
     color: "rgb(102, 30, 52)",
+    tooltip: "Transferin saturation (Iron / TIBC)"
   },
 ];
 
