@@ -746,7 +746,7 @@ function change_table(tabId, testCategory) {
 
   //for analyse
   if (tabId == "tab_analyse") {
-    anemia();
+    anemiaType();
     iron_profile();
     folate();
     b12();
@@ -795,6 +795,58 @@ function change_table(tabId, testCategory) {
         //signs_section.style.backgroundColor = '#'+(0x1000000+Math.random()*0xffffff).toString(16).substr(1,6);
       }
     }
+    var statisticsParent = document.createElement("div");
+    statisticsParent.className = "statisticsParent";
+    parentElement.appendChild(statisticsParent);
+    statisticsParent.innerHTML = "Statistics: ";
+    for (i = 0; i < patient[0].statistics[0].length; i++) {
+      var statisticsEntry = document.createElement("div");
+      statisticsEntry.className = "statisticsEntry";
+      if (patient[0].statistics[0][i] != undefined) {
+        statisticsParent.appendChild(statisticsEntry);
+        statisticsEntry.style.backgroundColor = patient[0].statistics[1][i];
+        var statisticsFirstLabel = document.createElement("div");
+        statisticsFirstLabel.className = "statisticsFirstLabel";
+        statisticsFirstLabel.innerHTML = patient[0].statistics[0][i] + "<br>";
+        statisticsEntry.appendChild(statisticsFirstLabel);
+        var prevalenceParent = document.createElement("div");
+        prevalenceParent.className = "prevalenceParent";
+        statisticsEntry.appendChild(prevalenceParent);
+        var prevalencePreLabel = document.createElement("div");
+        prevalencePreLabel.className = "prevalencePreLabel";
+        prevalenceParent.appendChild(prevalencePreLabel);
+
+        prevalencePreLabel.innerHTML= "Prevalence (%) of " + statistics[i].conditionName + " is: ";
+        var prevalenceInput = document.createElement("input");
+        prevalenceInput.type = "number";
+        prevalenceInput.className = "prevalenceInput";
+        prevalenceInput.name = statistics[i].name;
+        prevalenceInput.id = "prevalence_" + i;
+        prevalenceInput.style.background = patient[0].statistics[1][i];
+        if (statistics[i].prevalenceValue != 0) {
+          prevalenceInput.value = statistics[i].prevalenceValue;
+        }
+        prevalenceInput.onchange = prevalenceChange; 
+        prevalenceInput.onkeyup = prevalenceChange;
+        prevalenceParent.appendChild(prevalenceInput);
+        var prevalencePostLabel = document.createElement("div");
+        prevalencePostLabel.className = "prevalencePostLabel";
+        prevalenceParent.appendChild(prevalencePostLabel);
+        prevalencePostLabel.innerHTML = ("probability of " + statistics[i].conditionName + " is now: ");
+        var prevalenceResult = document.createElement("div");
+        prevalenceResult.className = "prevalenceResult";
+        prevalenceResult.innerHTML = scientificNumber(statistics[i].posteriorDistribution) + "%";
+        prevalenceResult.id= "prevalenceResult_" + i;
+        prevalenceParent.appendChild(prevalenceResult);
+        let currentCutoffIndex = statistics[0].currentCutoffIndex;
+        let sens = (statistics[0].sensitivities[currentCutoffIndex] * 100).toFixed(2);
+        let spec = (statistics[0].specificities[currentCutoffIndex] * 100).toFixed(2);
+        var additionalStatistics = document.createElement("div");
+        additionalStatistics.className = "additionalStatistics";
+        additionalStatistics.innerHTML = "<b>Sensitivity</b> " + sens + "%<br><b>Specificity</b> " + spec + "%";
+        statisticsEntry.appendChild(additionalStatistics);
+      }
+    }
   }
 }
 
@@ -809,15 +861,35 @@ function show_path() {
 }
 
 function add_search() {
-  id = this.id;
+  let id = this.id;
   pinnedOrNotArray[id] = 1;
   change_table("tab_search", "searchbar");
 }
 
 function rem_search() {
-  id = this.id;
+  let id = this.id;
   pinnedOrNotArray[id] = 0;
   change_table("tab_search", "searchbar");
+}
+
+function prevalenceChange() {
+  let x= Number(this.value);
+  let index = this.id.slice(11);
+  statistics[index].prevalenceValue = x;
+  prevalenceCalc(index);
+}
+
+function prevalenceCalc(index) {
+  let prevalenceValue = statistics[index].prevalenceValue;
+  let currentLikelihoodRatio = statistics[index].currentLikelihoodRatio;
+  let currentRatio = prevalenceValue / (100 - prevalenceValue);
+  let posteriorRatio = currentRatio * currentLikelihoodRatio;
+  let posteriorDistribution = (100 / (1 + posteriorRatio)) * posteriorRatio;
+  statistics[index].posteriorDistribution = posteriorDistribution;
+  try{
+    document.getElementById("prevalenceResult_"+index).innerHTML = scientificNumber(posteriorDistribution) + "%";
+  }
+  catch{}
 }
 
 function whenAnInputChanges() {
@@ -826,20 +898,19 @@ function whenAnInputChanges() {
   if (x < 0) {
     x = 0;
   }
-  if (x != 0) {
+  if(x!=0) {
     switch (id) {
       // case in_WBC :
-
       case "in_RBC":
       case "in_Hb":
       case "in_MCV":
         cbc_autocomplete();
-        anemia();
+        anemiaType();
         break;
       case "in_MCH":
       case "in_Hct":
       case "in_MCHC":
-        anemia();
+        anemiaType();
         break;
       case "in_Iron":
       case "in_TIBC":
@@ -849,6 +920,7 @@ function whenAnInputChanges() {
       default:
     }
   }
+  statisticsMaker(0);
   check_ranges(x, id);
 }
 
@@ -1006,42 +1078,24 @@ function iron_profile() {
   } else {
     tsat = 0;
   }
-
+  var signsLenght = patient[0].signs[0].length;
   //to remove previous irons
-  iron_string = new RegExp(/iron/, "i");
-  //patient[0].signs[0][i].search(anemia_string) != -1
-  for (i = 0; i < patient[0].signs[0].length; i++) {
-    if (iron_string.test(patient[0].signs[0][i])) {
+  var iron_string1 = new RegExp(/iron/, "i");
+  var iron_string2 = new RegExp(/chronic/, "i");
+  var iron_string3 = new RegExp(/MCV/, "i");
+  var iron_string4 = new RegExp(/thalassemia/, "i");
+  for (i = 0; i < signsLenght; i++) {
+    if (
+      iron_string1.test(patient[0].signs[0][i]) ||
+      iron_string2.test(patient[0].signs[0][i]) ||
+      iron_string3.test(patient[0].signs[0][i]) ||
+      iron_string4.test(patient[0].signs[0][i])
+    ) {
       delete patient[0].signs[0][i];
       delete patient[0].signs[1][i];
       delete patient[0].signs[2][i];
     }
   }
-  iron_string = new RegExp(/chronic/, "i");
-  for (i = 0; i < patient[0].signs[0].length; i++) {
-    if (iron_string.test(patient[0].signs[0][i])) {
-      delete patient[0].signs[0][i];
-      delete patient[0].signs[1][i];
-      delete patient[0].signs[2][i];
-    }
-  }
-  iron_string = new RegExp(/MCV/, "i");
-  for (i = 0; i < patient[0].signs[0].length; i++) {
-    if (iron_string.test(patient[0].signs[0][i])) {
-      delete patient[0].signs[0][i];
-      delete patient[0].signs[1][i];
-      delete patient[0].signs[2][i];
-    }
-  }
-  iron_string = new RegExp(/thalassemia/, "i");
-  for (i = 0; i < patient[0].signs[0].length; i++) {
-    if (iron_string.test(patient[0].signs[0][i])) {
-      delete patient[0].signs[0][i];
-      delete patient[0].signs[1][i];
-      delete patient[0].signs[2][i];
-    }
-  }
-  //console.log("after deleting : " + patient[0].signs[1]);
   //returns 0 = no assessment, 1 = IDA , 11 = IronStoreDeficiency , 111= IronDeficientEryPoes
   //        2 = ACD , 3 = Thal , 4 = others , 5 = maybe mcv is wrong , 6 = no crp , false = no def
   //        12 = 1 + 2
@@ -1165,6 +1219,7 @@ function iron_profile() {
             "iron deficiency is unlikely with macrocytosis";
           path += "MCV > " + mydata[3].max;
           patient[0].signs[1][10] = path;
+          patient[0].signs[2][10] = bio_color;
           return 5;
         } else if (p_mcv > mydata[3].min) {
           path += mydata[3].min + " < MCV < " + mydata[3].max + " &#8594 ";
@@ -1175,6 +1230,7 @@ function iron_profile() {
             patient[0].signs[0][10] =
               "iron deficiency anemia unlikely or anemia of chronic disease (w/o CRP)";
             patient[0].signs[1][10] = path;
+            patient[0].signs[2][10] = bio_color;
             return 6;
           } else {
             if (p_crp >= mydata[13].max) {
@@ -1185,31 +1241,36 @@ function iron_profile() {
                 patient[0].signs[0][10] =
                   "iron deficiency anemia or anemia of chronic disease (w/o TSAT)";
                 patient[0].signs[1][10] = path;
+                patient[0].signs[2][10] = bio_color;
                 return 12;
               } else if (tsat <= 20) {
                 path += "TSAT < 20";
                 patient[0].signs[0][10] =
                   "iron deficiency anemia from other causes (w/o sTfR)";
                 patient[0].signs[1][10] = path;
+                patient[0].signs[2][10] = bio_color;
                 return 4;
               } else if (tsat < 40) {
                 path += "TSAT < 40";
                 patient[0].signs[0][10] =
                   "anemia of chronic disease from other causes (w/o sTfR)";
                 patient[0].signs[1][10] = path;
+                patient[0].signs[2][10] = bio_color;
                 return 2;
               } else {
                 path += "TSAT > 40";
                 patient[0].signs[0][10] =
                   "iron deficiency doesn't match TSAT (w/o sTfR)";
                 patient[0].signs[1][10] = path;
+                patient[0].signs[2][10] = bio_color;
                 return 0; //no assessment
               }
             } else {
               // crp nl and ferritin high and mcv nl so no def
               path += "CRP < " + mydata[13].max;
-              patient[0].signs[1][10] = path;
               patient[0].signs[0][10] = "no iron deficiency";
+              patient[0].signs[1][10] = path;
+              patient[0].signs[2][10] = bio_color;
               return false;
             }
           }
@@ -1218,6 +1279,7 @@ function iron_profile() {
             path += "MCV not entered";
             patient[0].signs[0][10] = "iron deficiency unlikely (w/o MCV)";
             patient[0].signs[1][10] = path;
+            patient[0].signs[2][10] = bio_color;
             return false; //no def
           } else {
             //microcytic we need crp
@@ -1228,6 +1290,7 @@ function iron_profile() {
               patient[0].signs[0][10] =
                 "iron deficiency anemia or anemia of chronic disease or thalassemia (w/o CRP)";
               patient[0].signs[1][10] = path;
+              patient[0].signs[2][10] = bio_color;
               return 12;
             } else {
               if (p_crp >= mydata[13].max) {
@@ -1238,24 +1301,28 @@ function iron_profile() {
                   patient[0].signs[0][10] =
                     "anemia of chronic disease and/or iron deficiency anemia (w/o TSAT)";
                   patient[0].signs[1][10] = path;
+                  patient[0].signs[2][10] = bio_color;
                   return 12;
                 } else if (tsat <= 20) {
                   path += "TSAT < 20";
                   patient[0].signs[0][10] =
                     "anemia of chronic disease and/or iron deficiency anemia (w/o sTfR)";
                   patient[0].signs[1][10] = path;
+                  patient[0].signs[2][10] = bio_color;
                   return 12;
                 } else if (tsat < 40) {
                   path += "TSAT < 40";
                   patient[0].signs[0][10] =
                     "anemia of chronic disease (w/o sTfR)";
                   patient[0].signs[1][10] = path;
+                  patient[0].signs[2][10] = bio_color;
                   return 2;
                 } else {
                   patient[0].signs[0][10] =
                     "iron deficiency unlikely (w/o sTfR)";
                   path += "TSAT > 40";
                   patient[0].signs[1][10] = path;
+                  patient[0].signs[2][10] = bio_color;
                   return 0; //no assessment
                 }
               } else {
@@ -1263,6 +1330,7 @@ function iron_profile() {
                 path += "CRP < " + mydata[13].max;
                 patient[0].signs[0][10] = "check for thalassemia";
                 patient[0].signs[1][10] = path;
+                patient[0].signs[2][10] = bio_color;
                 return 3;
               }
             }
@@ -1280,7 +1348,19 @@ function iron_profile() {
   }
 }
 
-function anemia() {
+function isAnemia() {
+  var p_hb = mydata[2].value;
+  if (p_hb <= 0) {
+    return false;
+  }
+  if (p_hb < mydata[2].min) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+function anemiaType() {
   var p_rbc = mydata[1].value; //p = patient's
   var p_hb = mydata[2].value;
   var p_mcv = mydata[3].value;
@@ -1408,6 +1488,68 @@ function b12() {
   } else {
     return false;
   }
+}
+function statisticsMaker(labItemIndex) {
+  if (mydata[statistics[labItemIndex].mydataIndex].value > 0) {
+    patient[0].statistics[0][labItemIndex] = statisticsCalc(labItemIndex);
+    patient[0].statistics[1][labItemIndex] = statistics[labItemIndex].color;
+  } else {
+    patient[0].statistics[0][labItemIndex] = undefined;
+    patient[0].statistics[1][labItemIndex] = undefined;
+  }
+}
+
+function statisticsCalc(labItemIndex) {
+  let labItem = statistics[labItemIndex];
+  let mydataItem = mydata[labItem.mydataIndex];
+  let cutoffsLength = labItem.cutoffs.length;
+  let currentLikelihoodRatio = 1;
+  let message = "";
+  if (mydataItem.value <= 0) return 0;
+  for (let i = cutoffsLength - 1; i >= 0; i--) {
+    if (mydataItem.value < labItem.cutoffs[i]) {
+      currentLikelihoodRatio = labItem.likelihoodPositive(i).toFixed(1);
+      message =
+        labItem.labItemName +
+        " < " +
+        labItem.cutoffs[i] +
+        " &#8594 chance of " +
+        labItem.conditionName +
+        " is " +
+         currentLikelihoodRatio +
+        " times higher now";
+      statistics[labItemIndex].currentLikelihoodRatio = currentLikelihoodRatio;
+      statistics[labItemIndex].currentCutoffIndex = i;
+      prevalenceCalc(labItemIndex);
+      return message;
+    } 
+  }
+  currentLikelihoodRatio = labItem.likelihoodNegative(0);
+  message =
+      labItem.labItemName +
+      " > " +
+      labItem.cutoffs[0] +
+      " &#8594 chance of " +
+      labItem.conditionName +
+      " is " +
+      scientificNumber(currentLikelihoodRatio) +
+      " times lower now";
+  statistics[labItemIndex].currentLikelihoodRatio = currentLikelihoodRatio;
+  statistics[labItemIndex].currentCutoffIndex = 0;
+  prevalenceCalc(labItemIndex);
+  return message;
+}
+  
+function scientificNumber(number) {
+  const numInSciNot = {};
+  [numInSciNot.coefficient, numInSciNot.exponent] =
+  number.toExponential().split('e').map(item => Number(item));
+  return numInSciNot.coefficient.toFixed(1) + " &#215 10 <sup>" + numInSciNot.exponent + "</sup> ";
+  
+
+  // var power = Math.floor(Math.log10(number));
+  // var m = (number * 10 ^ power).toFixed(1);
+  // return m.toString() + ' &#215 10<sup>' + power.toString() + '</sup>';
 }
 
 function calc_measurements() {
@@ -1585,6 +1727,36 @@ var patient = [
     signs: [[], [], []],
     path: [],
     range: [],
+    statistics: [[],[]]
+  },
+];
+
+var statistics = [
+  {
+    name: "ferritinID",
+    labItemName: "Ferritin",
+    conditionName: "iron deficiency",
+    prevalenceValue: 13.8 ,
+    posteriorDistribution: 13.8 ,
+    cutoffs: [30, 15],
+    sensitivities: [0.92, 0.57],
+    specificities: [0.98, 0.99],
+    likelihoodPositive(cutoffIndex) {
+      let sens = this.sensitivities[cutoffIndex];
+      let spec = this.specificities[cutoffIndex];
+      let lrp = sens / (1 - spec);
+      return lrp;
+    },
+    likelihoodNegative(cutoffIndex) {
+      let sens = this.sensitivities[cutoffIndex];
+      let spec = this.specificities[cutoffIndex];
+      let lrn = (1 - sens) / spec;
+      return lrn;
+    },
+    mydataIndex: 41,
+    currentLikelihoodRatio: 1,
+    currentCutoffIndex: 0,
+    color: "rgb(102, 30, 52)"
   },
 ];
 
@@ -1644,8 +1816,8 @@ var measurements = [
     name: "TSAT",
     value: 0,
     color: "rgb(102, 30, 52)",
-    tooltip: "Transferin saturation (Iron / TIBC)"
-  },
+    tooltip: "Transferin saturation (Iron / TIBC)",
+  }
 ];
 
 var weightAgeInfantJSON = [
