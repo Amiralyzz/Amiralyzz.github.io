@@ -750,6 +750,8 @@ function change_table(tabId, testCategory) {
     iron_profile();
     folate();
     b12();
+    statisticsMaker(0);
+    statisticsMaker(1);
     calc_measurements();
     parentElement.style.display = "flex";
     parentElement.style.flexDirection = "column";
@@ -799,7 +801,7 @@ function change_table(tabId, testCategory) {
     statisticsParent.className = "statisticsParent";
     parentElement.appendChild(statisticsParent);
     statisticsParent.innerHTML = "Statistics: ";
-    for (i = 0; i < patient[0].statistics[0].length; i++) {
+    for (let i = 0; i < patient[0].statistics[0].length; i++) {
       var statisticsEntry = document.createElement("div");
       statisticsEntry.className = "statisticsEntry";
       if (patient[0].statistics[0][i] != undefined) {
@@ -809,22 +811,34 @@ function change_table(tabId, testCategory) {
         statisticsFirstLabel.className = "statisticsFirstLabel";
         statisticsFirstLabel.innerHTML = patient[0].statistics[0][i] + "<br>";
         statisticsEntry.appendChild(statisticsFirstLabel);
+        
+        let currentCutoffIndex = statistics[i].currentCutoffIndex;
+        let sens = (statistics[i].sensitivities[currentCutoffIndex] * 100).toFixed(2);
+        let spec = (statistics[i].specificities[currentCutoffIndex] * 100).toFixed(2);
+        var additionalStatistics = document.createElement("div");
+        additionalStatistics.className = "additionalStatistics";
+        additionalStatistics.innerHTML = "<b>Sensitivity</b> " + sens + "%<br><b>Specificity</b> " + spec + "%";
+        statisticsEntry.appendChild(additionalStatistics);
+      }
+    }
+    for (let i= 0 ; i < patient[0].conditions.length ; i++) {
+      if(patient[0].conditions[i] == 1) {
         var prevalenceParent = document.createElement("div");
         prevalenceParent.className = "prevalenceParent";
-        statisticsEntry.appendChild(prevalenceParent);
+        prevalenceParent.style.backgroundColor = conditions[i].color;
+        statisticsParent.appendChild(prevalenceParent);
         var prevalencePreLabel = document.createElement("div");
         prevalencePreLabel.className = "prevalencePreLabel";
         prevalenceParent.appendChild(prevalencePreLabel);
-
-        prevalencePreLabel.innerHTML= "Prevalence (%) of " + statistics[i].conditionName + " is: ";
+        prevalencePreLabel.innerHTML= "Prevalence (%) of " + conditions[i].name + " is: ";
         var prevalenceInput = document.createElement("input");
         prevalenceInput.type = "number";
         prevalenceInput.className = "prevalenceInput";
-        prevalenceInput.name = statistics[i].name;
+        prevalenceInput.name = conditions[i].name;
         prevalenceInput.id = "prevalence_" + i;
-        prevalenceInput.style.background = patient[0].statistics[1][i];
-        if (statistics[i].prevalenceValue != 0) {
-          prevalenceInput.value = statistics[i].prevalenceValue;
+        prevalenceInput.style.backgroundColor = conditions[i].color;
+        if (conditions[i].prevalenceValue != 0) {
+          prevalenceInput.value = conditions[i].prevalenceValue;
         }
         prevalenceInput.onchange = prevalenceChange; 
         prevalenceInput.onkeyup = prevalenceChange;
@@ -832,19 +846,13 @@ function change_table(tabId, testCategory) {
         var prevalencePostLabel = document.createElement("div");
         prevalencePostLabel.className = "prevalencePostLabel";
         prevalenceParent.appendChild(prevalencePostLabel);
-        prevalencePostLabel.innerHTML = ("probability of " + statistics[i].conditionName + " is now: ");
+        prevalencePostLabel.innerHTML = ("probability of " + conditions[i].name + " is now: ");
         var prevalenceResult = document.createElement("div");
         prevalenceResult.className = "prevalenceResult";
-        prevalenceResult.innerHTML = scientificNumber(statistics[i].posteriorDistribution) + "%";
+        if (conditions[i].posteriorDistribution<1) prevalenceResult.innerHTML = scientificNumber(conditions[i].posteriorDistribution) + "%"; 
+        else prevalenceResult.innerHTML = conditions[i].posteriorDistribution.toFixed(2) + "%";
         prevalenceResult.id= "prevalenceResult_" + i;
         prevalenceParent.appendChild(prevalenceResult);
-        let currentCutoffIndex = statistics[0].currentCutoffIndex;
-        let sens = (statistics[0].sensitivities[currentCutoffIndex] * 100).toFixed(2);
-        let spec = (statistics[0].specificities[currentCutoffIndex] * 100).toFixed(2);
-        var additionalStatistics = document.createElement("div");
-        additionalStatistics.className = "additionalStatistics";
-        additionalStatistics.innerHTML = "<b>Sensitivity</b> " + sens + "%<br><b>Specificity</b> " + spec + "%";
-        statisticsEntry.appendChild(additionalStatistics);
       }
     }
   }
@@ -875,19 +883,25 @@ function rem_search() {
 function prevalenceChange() {
   let x= Number(this.value);
   let index = this.id.slice(11);
-  statistics[index].prevalenceValue = x;
+  conditions[index].prevalenceValue = x;
   prevalenceCalc(index);
 }
 
-function prevalenceCalc(index) {
-  let prevalenceValue = statistics[index].prevalenceValue;
-  let currentLikelihoodRatio = statistics[index].currentLikelihoodRatio;
+function prevalenceCalc(ind) {
+  let index = statistics[ind].conditionIndex;
+  let prevalenceValue = conditions[index].prevalenceValue;
+  let currentLikelihoodRatio = 1;
+  for (let i in conditions[index].statisticsParameteresRelated) {
+    console.log(i)
+    currentLikelihoodRatio = currentLikelihoodRatio * statistics[i].currentLikelihoodRatio;
+  }
   let currentRatio = prevalenceValue / (100 - prevalenceValue);
   let posteriorRatio = currentRatio * currentLikelihoodRatio;
   let posteriorDistribution = (100 / (1 + posteriorRatio)) * posteriorRatio;
-  statistics[index].posteriorDistribution = posteriorDistribution;
+  conditions[index].posteriorDistribution = posteriorDistribution;
   try{
-    document.getElementById("prevalenceResult_"+index).innerHTML = scientificNumber(posteriorDistribution) + "%";
+    if (posteriorDistribution<1) document.getElementById("prevalenceResult_"+index).innerHTML = scientificNumber(posteriorDistribution) + "%"; 
+    else document.getElementById("prevalenceResult_"+index).innerHTML = posteriorDistribution.toFixed(2) + "%";
   }
   catch{}
 }
@@ -920,7 +934,7 @@ function whenAnInputChanges() {
       default:
     }
   }
-  statisticsMaker(0);
+  
   check_ranges(x, id);
 }
 
@@ -1489,13 +1503,18 @@ function b12() {
     return false;
   }
 }
+
+
 function statisticsMaker(labItemIndex) {
+  let conditionIndex = statistics[labItemIndex].conditionIndex;
   if (mydata[statistics[labItemIndex].mydataIndex].value > 0) {
     patient[0].statistics[0][labItemIndex] = statisticsCalc(labItemIndex);
     patient[0].statistics[1][labItemIndex] = statistics[labItemIndex].color;
+    patient[0].conditions[conditionIndex] = 1;
   } else {
-    patient[0].statistics[0][labItemIndex] = undefined;
-    patient[0].statistics[1][labItemIndex] = undefined;
+    delete patient[0].statistics[0][labItemIndex] ;
+    delete patient[0].statistics[1][labItemIndex] ;
+    patient[0].conditions[conditionIndex] = 0;
   }
 }
 
@@ -1722,11 +1741,8 @@ function weightPercentileCalc() {
 var patient = [
   {
     name: "patient 1",
-    possibles: [],
-    illness: [],
+    conditions: [[0,0,0,0,0,0,0,0],["","","","","","","",""]],
     signs: [[], [], []],
-    path: [],
-    range: [],
     statistics: [[],[]]
   },
 ];
@@ -1736,8 +1752,7 @@ var statistics = [
     name: "ferritinID",
     labItemName: "Ferritin",
     conditionName: "iron deficiency",
-    prevalenceValue: 13.8 ,
-    posteriorDistribution: 13.8 ,
+    conditionIndex: 0,
     cutoffs: [30, 15],
     sensitivities: [0.92, 0.57],
     specificities: [0.98, 0.99],
@@ -1758,7 +1773,43 @@ var statistics = [
     currentCutoffIndex: 0,
     color: "rgb(102, 30, 52)"
   },
+  {
+    name: "HbID",
+    labItemName: "Hemoglobin",
+    conditionName: "iron deficiency",
+    conditionIndex: 0,
+    cutoffs: [12.8],
+    sensitivities: [0.713],
+    specificities: [0.793],
+    likelihoodPositive(cutoffIndex) {
+      let sens = this.sensitivities[cutoffIndex];
+      let spec = this.specificities[cutoffIndex];
+      let lrp = sens / (1 - spec);
+      return lrp;
+    },
+    likelihoodNegative(cutoffIndex) {
+      let sens = this.sensitivities[cutoffIndex];
+      let spec = this.specificities[cutoffIndex];
+      let lrn = (1 - sens) / spec;
+      return lrn;
+    },
+    mydataIndex: 2,
+    currentLikelihoodRatio: 1,
+    currentCutoffIndex: 0,
+    color: "darkslateblue"
+  }
 ];
+
+var conditions = [
+  {
+    name: "iron deficiency",
+    statisticsParameteresRelated: [0,1],
+    likelihoodRatio: 1,
+    prevalenceValue: 13.5,
+    posteriorDistribution: 13.5,
+    color: "rgb(102, 30, 52)"
+  }
+]
 
 var measurements = [
   {
