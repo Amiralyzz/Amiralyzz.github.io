@@ -1,305 +1,107 @@
 <!DOCTYPE html>
 <html lang="En">
-  <head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="Style.css" />
-    <title>LAB|ENTER</title>
-  </head>
-  <body onload="range_maker('adult');">
-    <script defer src="Script.js"></script>
-    <script defer src="JSON.js"></script>
-    <script defer src="TabContent.js"></script>
-    <!---                           --->
-    <header>
-      <img
-        src="https://cdn-icons-png.flaticon.com/512/8045/8045916.png"
-        id="logo"
-        alt="lab"
-      />
-      <h1>LAB|ENTER</h1>
-      <!-- <div id="top" role="banner"><em>Lab Interpreter</em></div>  -->
-    </header>
-    <main>
-      <div id="patient_info_parent">
-        <div
-          style="
-            display: flex;
-            flex-direction: row;
-            flex-wrap: nowrap;
-            align-items: center;
-            justify-content: center;
-          "
-        >
-          <div>
-            <img
-              onclick="gender()"
-              id="gen_logo"
-              src="https://cdn-icons-png.flaticon.com/512/3001/3001764.png"
-              alt="male"
-            />
-          </div>
-          <div
-            style="
-              text-align: left;
-              font-size: 30px;
-              margin-left: 5px;
-              height: fit-content;
-              position: relative;
-            "
-          >
-            Patient Info
-          </div>
-          <div class="expand_info" id="expand_info" onclick="expand_info()">
-            show
-          </div>
-        </div>
-        <div id="gen_a_w_h">
-          <div id="sex_id" class="id_tab">
-            <div
-              style="flex-wrap: wrap; display: flex; justify-content: center"
-            >
-              <select
-                title="gender"
-                name="gender"
-                id="gender"
-                onchange="gender()"
-              >
-                <option value="male" selected>Male</option>
-                <option value="female">Female</option>
-              </select>
-              <select
-                title="preg"
-                name="preg"
-                id="preg"
-                disabled="true"
-                onchange="pregnancy()"
-              >
-                <option value="preg1" selected>Not pregnant</option>
-                <option value="preg2">First trimester</option>
-                <option value="preg3">Second trimester</option>
-                <option value="preg4">Third trimester</option>
-              </select>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge"> 
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+        <link rel="stylesheet" href="Style.css">
+        <title>CBC - Lab Interpreter</title>
+        
+    </head>
+    <body onload="init(); range_maker('adult');">
+        <script type="text/javascript" src="Script.js"></script>
+        <!---                           --->
+        <header>
+            <img  alt="logo" src="https://cdn-icons-png.flaticon.com/512/8045/8045916.png" id="logo">
+            <h1>CBC </h1>
+            <div id="top" role="banner"><em>Lab Interpreter</em></div> 
+        </header>
+        <main>
+            <div id="patient_info_parent">
+                <div style="display:flex; flex-direction: row; flex-wrap:nowrap; align-items:center; justify-content: center;" >
+                    <div><img onclick="gender()" id="gen_logo" src="https://cdn-icons-png.flaticon.com/512/3001/3001764.png" alt="male" ></div>
+                    <div style="text-align:left ; font-size: 30px; margin-left: 5px; height: fit-content;  position: relative;" > Patient Info</div>
+                </div>
+                <div id="gen_a_w_h" >
+                    
+                    <div id="sex_id" class="id_tab">
+                        <div style="flex-wrap: wrap; display: flex; justify-content: center;">
+                            <select title= "genderSelect" name="gender" id="gender" onchange="gender()" autofocus>
+                                <option value="male" selected>Male</option>
+                                <option value="female">Female</option>
+                            </select>
+                            <select title= "pregnancySelect" name="preg" id="preg" disabled="true" onchange="pregnancy()">
+                                <option value="preg1" selected>Not pregnant</option>
+                                <option value="preg2">First trimester</option>
+                                <option value="preg3">Second trimester</option>
+                                <option value="preg4">Third trimester</option>
+                            </select> 
+                        </div>
+                    </div>
+                    <div class="id_tab" id="age_id">
+                        <label for="age" style="margin: 5px 10px; font-size: 25px;">Age</label>
+                        <div style="flex-wrap: nowrap; display: flex; justify-content: center;">
+                            <input type="number" name="age" id="age" min="0" class="input_id" value="40" onkeyup="age_calc()" onchange="age_calc()">
+                            <select title= "ageSelect" name="age_unit" id="age_unit" onchange="age_calc()">
+                                <option value="day">Days</option>
+                                <option value="mon">Months</option>
+                                <option value="year" selected>Years</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="id_tab" id="weight_id">
+                        <label for="weight" style="margin: 5px 10px; font-size: 25px;">Weight</label>
+                        <div style="flex-wrap: nowrap; display: flex; justify-content: center;">
+                            <input type="number" name="weight" id="weight" min="0" class="input_id" placeholder="70" onkeyup="weight_calc()" onchange="weight_calc()" >
+                            <select title= "WeightSelect" name="weight_unit" id="weight_unit" onchange="weight_calc()">
+                                <option value="kg" selected>Kg</option>
+                                <option value="gr">gram</option>
+                                <option value="lb">lb</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="id_tab" id="height_id">
+                        <label for="height" style="margin: 5px 10px; font-size: 25px;">Height</label>
+                        <div  style="flex-wrap: nowrap; display: flex; justify-content: center;" >
+                            <input type="number" name="height" id="height" min="0" class="input_id" placeholder="170" onkeyup="height_calc()" onchange="height_calc()">
+                            <select title= "heightSelect" name="height_unit" id="height_unit" onchange="height_calc()">
+                                <option value="cm" selected>cm</option>
+                                <option value="ft">ft</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
             </div>
-          </div>
-          <div class="id_tab" id="age_id">
-            <label for="age" style="margin: 5px 10px; font-size: 25px"
-              >Age</label
-            >
-            <div
-              style="flex-wrap: nowrap; display: flex; justify-content: center"
-            >
-              <input
-                type="number"
-                name="age"
-                id="age"
-                min="0"
-                class="input_id"
-                value="40"
-                onkeyup="age_calc()"
-                onchange="age_calc()"
-              />
-              <select
-                title="age_unit"
-                name="age_unit"
-                id="age_unit"
-                onchange="age_calc()"
-              >
-                <option value="day">Days</option>
-                <option value="mon">Months</option>
-                <option value="year" selected>Years</option>
-              </select>
+            <div class="tooltip_parent" id="tooltip">
+                Select a tab
             </div>
-          </div>
-          <div class="id_tab" id="weight_id">
-            <label for="weight" style="margin: 5px 10px; font-size: 25px"
-              >Weight</label
-            >
-            <div
-              style="flex-wrap: nowrap; display: flex; justify-content: center"
-            >
-              <input
-                type="number"
-                name="weight"
-                id="weight"
-                min="0"
-                step="0.1"
-                class="input_id"
-                value="70"
-                onkeyup="weight_calc()"
-                onchange="weight_calc()"
-              />
-              <select
-                title="weight_unit"
-                name="weight_unit"
-                id="weight_unit"
-                onchange="weight_calc()"
-              >
-                <option value="kg" selected>Kg</option>
-                <option value="gr">gram</option>
-                <option value="lb">lb</option>
-              </select>
+            <div class="tab_parent"> 
+                <div style="background-color:rgb(252, 252, 252); " id="tab_search" class="tab" onclick="change_table('tab_search','searchbar')">
+                    <img src="https://cdn-icons-png.flaticon.com/128/1296/1296902.png" class="logo_table" alt="search"><div class="tab_label" style="color: black;"></div>
+                    <input type="text" class="searchbar" placeholder="Search" id="searchbar" style="width: 150px; color:black; margin-right: 5px;" 
+                    onkeyup="this.style.minWidth = ((this.value.length + 1) * 25) + 'px'; change_table('tab_search','searchbar')"
+                    onkeydown="this.style.minWidth = ((this.value.length + 1) * 25) + 'px';">
+                </div>
+                <div style="background-color:darkslateblue;" id="test_types_cbc" class="tab" onclick="change_table('test_types_cbc','hemato')">
+                    <img src="https://cdn-icons-png.flaticon.com/128/1834/1834940.png" class="logo_table" alt="Blood"><div class="tab_label">CBC</div>
+                </div>
+                <div style="background-color:darkslategray; " id="test_types_lft" class="tab" onclick="change_table('test_types_lft','lft')">
+                    <img src="https://cdn-icons-png.flaticon.com/128/3910/3910800.png" class="logo_table" alt="Liver"><div class="tab_label">LFT</div>
+                </div>
+                <div style="background-color:rgb(65, 87, 65); " id="test_types_tft" class="tab" onclick="change_table('test_types_tft','tft')">
+                    <img src="https://cdn-icons-png.flaticon.com/128/3912/3912448.png" class="logo_table" alt="Thyroid"><div class="tab_label">TFT</div>
+                </div>
+                <div style="background-color:rgb(128, 70, 32); " id="test_types_kft" class="tab" onclick="change_table('test_types_kft','kft')">
+                    <img src="https://cdn-icons-png.flaticon.com/128/1835/1835006.png" class="logo_table" alt="Kidney"><div class="tab_label">KFT</div>
+                </div>
+                <div style="background-color:rgb(102, 30, 52); " id="test_types_bio" class="tab" onclick="change_table('test_types_bio','bio')">
+                    <img src="https://cdn-icons-png.flaticon.com/128/1834/1834943.png" class="logo_table" alt="biochem"><div class="tab_label">Bio</div>
+                </div>
+                <div style="background-color:rgb(30, 102, 60); " id="tab_analyse" class="tab" onclick="change_table('tab_analyse','analyse')">
+                    <img src="https://cdn-icons-png.flaticon.com/128/6851/6851478.png" class="logo_table" alt="biochem"><div class="tab_label">Analyse</div>
+                </div>
             </div>
-          </div>
-          <div class="id_tab" id="height_id">
-            <label for="height" style="margin: 5px 10px; font-size: 25px"
-              >Height</label
-            >
-            <div
-              style="flex-wrap: nowrap; display: flex; justify-content: center"
-            >
-              <input
-                type="number"
-                name="height"
-                id="height"
-                min="0"
-                step="0.1"
-                class="input_id"
-                value="170"
-                onkeyup="height_calc()"
-                onchange="height_calc()"
-              />
-              <select
-                title="height_unit"
-                name="height_unit"
-                id="height_unit"
-                onchange="height_calc()"
-              >
-                <option value="cm" selected>cm</option>
-                <option value="ft">ft</option>
-              </select>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="tooltip_parent" id="tooltip">Select a tab</div>
-      <div class="tab_parent">
-        <div
-          class="tab"
-          id="show_tab"
-          style="background-color: rgb(30, 102, 96)"
-          onclick="burger_menu()"
-        >
-          <div class="tab_label" id="show_label">Tabs</div>
-        </div>
-        <div
-          style="background-color: rgb(252, 252, 252)"
-          id="tab_search"
-          class="tab"
-          onclick="change_table('tab_search','searchbar')"
-          on
-        >
-          <img
-            src="https://cdn-icons-png.flaticon.com/128/1296/1296902.png"
-            class="logo_table"
-            alt="search"
-          />
-          <div class="tab_label" style="color: black"></div>
-          <input
-            type="text"
-            class="searchbar"
-            placeholder="Search"
-            id="searchbar"
-            style="width: 150px; color: black; margin-right: 5px"
-            onkeyup="this.style.minWidth = ((this.value.length + 1) * 25) + 'px'; change_table('tab_search','searchbar')"
-            onkeydown="this.style.minWidth = ((this.value.length + 1) * 25) + 'px';"
-          />
-        </div>
-        <div
-          style="background-color: darkslateblue"
-          id="test_types_cbc"
-          class="tab"
-          onclick="change_table('test_types_cbc','hemato')"
-        >
-          <img
-            src="https://cdn-icons-png.flaticon.com/128/1834/1834940.png"
-            class="logo_table"
-            alt="Blood"
-          />
-          <div class="tab_label">CBC</div>
-        </div>
-        <div
-          style="background-color: rgb(139, 61, 104)"
-          id="test_types_pbs"
-          class="tab"
-          onclick="change_table('test_types_pbs','pbs')"
-        >
-          <img
-            src="https://cdn-icons-png.flaticon.com/512/7886/7886169.png"
-            class="logo_table"
-            alt="Blood"
-          />
-          <div class="tab_label">PBS</div>
-        </div>
-        <div
-          style="background-color: darkslategray"
-          id="test_types_lft"
-          class="tab"
-          onclick="change_table('test_types_lft','lft')"
-        >
-          <img
-            src="https://cdn-icons-png.flaticon.com/128/3910/3910800.png"
-            class="logo_table"
-            alt="Liver"
-          />
-          <div class="tab_label">LFT</div>
-        </div>
-        <div
-          style="background-color: rgb(65, 87, 65)"
-          id="test_types_tft"
-          class="tab"
-          onclick="change_table('test_types_tft','tft')"
-        >
-          <img
-            src="https://cdn-icons-png.flaticon.com/128/3912/3912448.png"
-            class="logo_table"
-            alt="Thyroid"
-          />
-          <div class="tab_label">TFT</div>
-        </div>
-        <div
-          style="background-color: rgb(128, 70, 32)"
-          id="test_types_kft"
-          class="tab"
-          onclick="change_table('test_types_kft','kft')"
-        >
-          <img
-            src="https://cdn-icons-png.flaticon.com/128/1835/1835006.png"
-            class="logo_table"
-            alt="Kidney"
-          />
-          <div class="tab_label">KFT</div>
-        </div>
-        <div
-          style="background-color: rgb(102, 30, 52)"
-          id="test_types_bio"
-          class="tab"
-          onclick="change_table('test_types_bio','bio')"
-        >
-          <img
-            src="https://cdn-icons-png.flaticon.com/128/1834/1834943.png"
-            class="logo_table"
-            alt="biochem"
-          />
-          <div class="tab_label">Bio</div>
-        </div>
-        <div
-          style="background-color: rgb(30, 102, 42)"
-          id="tab_analyse"
-          class="tab"
-          onclick="change_table('tab_analyse','analyse')"
-        >
-          <img
-            src="https://cdn-icons-png.flaticon.com/128/6851/6851478.png"
-            class="logo_table"
-            alt="analyse"
-            id="analyse_logo"
-          />
-          <div class="tab_label">Analyse</div>
-        </div>
-      </div>
-      <div id="table_shown"></div>
-    </main>
-  </body>
+            <div id="table_shown"></div>
+        </main>
+    </body>
 </html>

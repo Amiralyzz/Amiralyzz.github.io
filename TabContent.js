@@ -358,7 +358,6 @@ function tabContent(tabId, testCategory) {
         }
       }
     }
-  
     //for analyse
     if (tabId == "tab_analyse") {
       anemiaType();
