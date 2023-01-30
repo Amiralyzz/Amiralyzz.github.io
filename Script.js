@@ -9,6 +9,7 @@ var globalAgeYears = 40,
   gloalWeightGram = 70000,
   globalHeightCm = 170,
   genderCoef = 0; //genderCoef=0 male genderCoef=2 female
+var globalTSAT = 0;
 var ageGroupsArray = [
   "newborn3",
   "newborn14",
@@ -750,8 +751,6 @@ function change_table(tabId, testCategory) {
     iron_profile();
     folate();
     b12();
-    statisticsMaker(0);
-    statisticsMaker(1);
     calc_measurements();
     parentElement.style.display = "flex";
     parentElement.style.flexDirection = "column";
@@ -779,7 +778,7 @@ function change_table(tabId, testCategory) {
     var findings_parent = document.createElement("div");
     findings_parent.className = "findings_parent";
     parentElement.appendChild(findings_parent);
-    findings_parent.innerHTML = "Found findings: ";
+    findings_parent.innerHTML = "Findings based on Clinical Guidelines: ";
     for (i = 0; i < patient[0].signs[0].length; i++) {
       var signs_section = document.createElement("div");
       signs_section.className = "signs_section";
@@ -800,7 +799,7 @@ function change_table(tabId, testCategory) {
     var statisticsParent = document.createElement("div");
     statisticsParent.className = "statisticsParent";
     parentElement.appendChild(statisticsParent);
-    statisticsParent.innerHTML = "Statistics: ";
+    statisticsParent.innerHTML = "Evidence Based Statistics: ";
     for (let i = 0; i < patient[0].statistics[0].length; i++) {
       var statisticsEntry = document.createElement("div");
       statisticsEntry.className = "statisticsEntry";
@@ -811,18 +810,27 @@ function change_table(tabId, testCategory) {
         statisticsFirstLabel.className = "statisticsFirstLabel";
         statisticsFirstLabel.innerHTML = patient[0].statistics[0][i] + "<br>";
         statisticsEntry.appendChild(statisticsFirstLabel);
-        
+
         let currentCutoffIndex = statistics[i].currentCutoffIndex;
-        let sens = (statistics[i].sensitivities[currentCutoffIndex] * 100).toFixed(2);
-        let spec = (statistics[i].specificities[currentCutoffIndex] * 100).toFixed(2);
+        let sens = (
+          statistics[i].sensitivities[currentCutoffIndex] * 100
+        ).toFixed(2);
+        let spec = (
+          statistics[i].specificities[currentCutoffIndex] * 100
+        ).toFixed(2);
         var additionalStatistics = document.createElement("div");
         additionalStatistics.className = "additionalStatistics";
-        additionalStatistics.innerHTML = "<b>Sensitivity</b> " + sens + "%<br><b>Specificity</b> " + spec + "%";
+        additionalStatistics.innerHTML =
+          "<b>Sensitivity</b> " +
+          sens +
+          "%<br><b>Specificity</b> " +
+          spec +
+          "%";
         statisticsEntry.appendChild(additionalStatistics);
       }
     }
-    for (let i= 0 ; i < patient[0].conditions.length ; i++) {
-      if(patient[0].conditions[i] == 1) {
+    for (let i = 0; i < patient[0].conditions.length; i++) {
+      if (patient[0].conditions[i] == 1) {
         var prevalenceParent = document.createElement("div");
         prevalenceParent.className = "prevalenceParent";
         prevalenceParent.style.backgroundColor = conditions[i].color;
@@ -830,7 +838,8 @@ function change_table(tabId, testCategory) {
         var prevalencePreLabel = document.createElement("div");
         prevalencePreLabel.className = "prevalencePreLabel";
         prevalenceParent.appendChild(prevalencePreLabel);
-        prevalencePreLabel.innerHTML= "Prevalence (%) of " + conditions[i].name + " is: ";
+        prevalencePreLabel.innerHTML =
+          "Prevalence (%) of " + conditions[i].name + " is: ";
         var prevalenceInput = document.createElement("input");
         prevalenceInput.type = "number";
         prevalenceInput.className = "prevalenceInput";
@@ -840,18 +849,23 @@ function change_table(tabId, testCategory) {
         if (conditions[i].prevalenceValue != 0) {
           prevalenceInput.value = conditions[i].prevalenceValue;
         }
-        prevalenceInput.onchange = prevalenceChange; 
+        prevalenceInput.onchange = prevalenceChange;
         prevalenceInput.onkeyup = prevalenceChange;
         prevalenceParent.appendChild(prevalenceInput);
         var prevalencePostLabel = document.createElement("div");
         prevalencePostLabel.className = "prevalencePostLabel";
         prevalenceParent.appendChild(prevalencePostLabel);
-        prevalencePostLabel.innerHTML = ("probability of " + conditions[i].name + " is now: ");
+        prevalencePostLabel.innerHTML =
+          "probability of " + conditions[i].name + " is now: ";
         var prevalenceResult = document.createElement("div");
         prevalenceResult.className = "prevalenceResult";
-        if (conditions[i].posteriorDistribution<1) prevalenceResult.innerHTML = scientificNumber(conditions[i].posteriorDistribution) + "%"; 
-        else prevalenceResult.innerHTML = conditions[i].posteriorDistribution.toFixed(2) + "%";
-        prevalenceResult.id= "prevalenceResult_" + i;
+        if (conditions[i].posteriorDistribution < 1)
+          prevalenceResult.innerHTML =
+            scientificNumber(conditions[i].posteriorDistribution) + "%";
+        else
+          prevalenceResult.innerHTML =
+            conditions[i].posteriorDistribution.toFixed(2) + "%";
+        prevalenceResult.id = "prevalenceResult_" + i;
         prevalenceParent.appendChild(prevalenceResult);
       }
     }
@@ -881,29 +895,32 @@ function rem_search() {
 }
 
 function prevalenceChange() {
-  let x= Number(this.value);
+  let x = Number(this.value);
   let index = this.id.slice(11);
   conditions[index].prevalenceValue = x;
-  prevalenceCalc(index);
+  PosteriorCalc(index);
 }
 
-function prevalenceCalc(ind) {
+function PosteriorCalc(ind) {
   let index = statistics[ind].conditionIndex;
   let prevalenceValue = conditions[index].prevalenceValue;
   let currentLikelihoodRatio = 1;
   for (let i in conditions[index].statisticsParameteresRelated) {
-    console.log(i)
-    currentLikelihoodRatio = currentLikelihoodRatio * statistics[i].currentLikelihoodRatio;
+    currentLikelihoodRatio =
+      currentLikelihoodRatio * statistics[i].currentLikelihoodRatio;
   }
   let currentRatio = prevalenceValue / (100 - prevalenceValue);
   let posteriorRatio = currentRatio * currentLikelihoodRatio;
   let posteriorDistribution = (100 / (1 + posteriorRatio)) * posteriorRatio;
   conditions[index].posteriorDistribution = posteriorDistribution;
-  try{
-    if (posteriorDistribution<1) document.getElementById("prevalenceResult_"+index).innerHTML = scientificNumber(posteriorDistribution) + "%"; 
-    else document.getElementById("prevalenceResult_"+index).innerHTML = posteriorDistribution.toFixed(2) + "%";
-  }
-  catch{}
+  try {
+    if (posteriorDistribution < 1)
+      document.getElementById("prevalenceResult_" + index).innerHTML =
+        scientificNumber(posteriorDistribution) + "%";
+    else
+      document.getElementById("prevalenceResult_" + index).innerHTML =
+        posteriorDistribution.toFixed(2) + "%";
+  } catch {}
 }
 
 function whenAnInputChanges() {
@@ -912,7 +929,7 @@ function whenAnInputChanges() {
   if (x < 0) {
     x = 0;
   }
-  if(x!=0) {
+  if (x != 0) {
     switch (id) {
       // case in_WBC :
       case "in_RBC":
@@ -934,7 +951,7 @@ function whenAnInputChanges() {
       default:
     }
   }
-  
+
   check_ranges(x, id);
 }
 
@@ -1090,7 +1107,7 @@ function iron_profile() {
   if (p_si > 0 && p_tibc > 0) {
     calc_measurements(); //to calc TSAT
   } else {
-    tsat = 0;
+    globalTSAT = 0;
   }
   var signsLenght = patient[0].signs[0].length;
   //to remove previous irons
@@ -1113,6 +1130,8 @@ function iron_profile() {
   //returns 0 = no assessment, 1 = IDA , 11 = IronStoreDeficiency , 111= IronDeficientEryPoes
   //        2 = ACD , 3 = Thal , 4 = others , 5 = maybe mcv is wrong , 6 = no crp , false = no def
   //        12 = 1 + 2
+  statisticsMaker(0);
+  conditionMaker(0);
   if (p_fe <= 0) return 0; //we cant assess iron profile without ferritin
   if (p_fe < mydata[41].min) {
     path += "Ferritin < " + mydata[41].min + " &#8594 ";
@@ -1135,25 +1154,25 @@ function iron_profile() {
           patient[0].signs[2][10] = bio_color;
           return 5;
         }
-        if (tsat == 0) {
+        if (globalTSAT == 0) {
           path += "Serum iron and/or TIBC not entered";
           patient[0].signs[0][10] = "iron storage deficiency (w/o TSAT)";
           patient[0].signs[1][10] = path;
           patient[0].signs[2][10] = bio_color;
           return 11; //we have Iron Deficiency
-        } else if (tsat <= 10) {
+        } else if (globalTSAT <= 10) {
           path += "TSAT < 10";
           patient[0].signs[0][10] = "severe iron deficiency anemia";
           patient[0].signs[1][10] = path;
           patient[0].signs[2][10] = bio_color;
           return 1; //we probably have Iron Deficiency anemia
-        } else if (tsat <= 15) {
+        } else if (globalTSAT <= 15) {
           path += "TSAT < 15";
           patient[0].signs[0][10] = "mild iron deficiency anemia";
           patient[0].signs[1][10] = path;
           patient[0].signs[2][10] = bio_color;
           return 111; //we probably have iron deficient erythropoesis
-        } else if (tsat >= 40) {
+        } else if (globalTSAT >= 40) {
           path += "TSAT > 40";
           patient[0].signs[0][10] =
             "iron deficiency doesn't match TSAT (w/o sTfR)";
@@ -1178,26 +1197,26 @@ function iron_profile() {
           patient[0].signs[2][10] = bio_color;
           return 5;
         }
-        if (tsat == 0) {
+        if (globalTSAT == 0) {
           path += "Serum iron and/or TIBC not entered";
           patient[0].signs[0][10] = "iron storage deficiency (w/o TSAT)";
           patient[0].signs[1][10] = path;
           patient[0].signs[2][10] = bio_color;
           return 11; //we have Iron Deficiency
-        } else if (tsat <= 15) {
+        } else if (globalTSAT <= 15) {
           path += "TSAT < 15";
           patient[0].signs[0][10] =
             "probable iron deficiency anemia (w/o sTfR)";
           patient[0].signs[1][10] = path;
           patient[0].signs[2][10] = bio_color;
           return 1; //we probably have Iron Deficiency anemia
-        } else if (tsat <= 20) {
+        } else if (globalTSAT <= 20) {
           path += "TSAT < 20";
           patient[0].signs[0][10] = "iron deficient erythropoesis (w/o sTfR)";
           patient[0].signs[1][10] = path;
           patient[0].signs[2][10] = bio_color;
           return 111; //we probably have iron deficient erythropoesis
-        } else if (tsat >= 40) {
+        } else if (globalTSAT >= 40) {
           path += "TSAT > 40";
           patient[0].signs[0][10] =
             "iron deficiency doesn't match TSAT (w/o sTfR)";
@@ -1250,21 +1269,21 @@ function iron_profile() {
             if (p_crp >= mydata[13].max) {
               //inflammation
               path += "CRP > " + mydata[13].max + " &#8594 ";
-              if (tsat <= 0) {
+              if (globalTSAT <= 0) {
                 path += "Serum iron and/or TIBC not entered";
                 patient[0].signs[0][10] =
                   "iron deficiency anemia or anemia of chronic disease (w/o TSAT)";
                 patient[0].signs[1][10] = path;
                 patient[0].signs[2][10] = bio_color;
                 return 12;
-              } else if (tsat <= 20) {
+              } else if (globalTSAT <= 20) {
                 path += "TSAT < 20";
                 patient[0].signs[0][10] =
                   "iron deficiency anemia from other causes (w/o sTfR)";
                 patient[0].signs[1][10] = path;
                 patient[0].signs[2][10] = bio_color;
                 return 4;
-              } else if (tsat < 40) {
+              } else if (globalTSAT < 40) {
                 path += "TSAT < 40";
                 patient[0].signs[0][10] =
                   "anemia of chronic disease from other causes (w/o sTfR)";
@@ -1310,21 +1329,21 @@ function iron_profile() {
               if (p_crp >= mydata[13].max) {
                 //inflammation
                 path += "CRP > " + mydata[13].max + " &#8594 ";
-                if (tsat <= 0) {
+                if (globalTSAT <= 0) {
                   path += "Serum iron and/or TIBC not entered";
                   patient[0].signs[0][10] =
                     "anemia of chronic disease and/or iron deficiency anemia (w/o TSAT)";
                   patient[0].signs[1][10] = path;
                   patient[0].signs[2][10] = bio_color;
                   return 12;
-                } else if (tsat <= 20) {
+                } else if (globalTSAT <= 20) {
                   path += "TSAT < 20";
                   patient[0].signs[0][10] =
                     "anemia of chronic disease and/or iron deficiency anemia (w/o sTfR)";
                   patient[0].signs[1][10] = path;
                   patient[0].signs[2][10] = bio_color;
                   return 12;
-                } else if (tsat < 40) {
+                } else if (globalTSAT < 40) {
                   path += "TSAT < 40";
                   patient[0].signs[0][10] =
                     "anemia of chronic disease (w/o sTfR)";
@@ -1395,9 +1414,10 @@ function anemiaType() {
 
   //anemia algorithm based on RPI and MCV
   path = "";
+  statisticsMaker(1);
+  conditionMaker(0);
   if (p_hb <= 0) {
     //we need to check this in the function calling this function -
-
     return 0; //no need to access  //and if there is no hb entered unlike mcv, check for macrocytosis
   }
   if (p_hb >= mydata[2].min) {
@@ -1504,17 +1524,26 @@ function b12() {
   }
 }
 
+function conditionMaker(conditionIndex) {
+  let parameters = conditions[conditionIndex].statisticsParameteresRelated;
+  let oneWereMet = 0 ;
+  for (let parameter in parameters) {
+    if(statisticsMaker(parameter)) oneWereMet=1;
+  }
+  if (oneWereMet == 1) patient[0].conditions[conditionIndex] = 1 ;
+  else patient[0].conditions[conditionIndex] = 0;
+}
 
 function statisticsMaker(labItemIndex) {
-  let conditionIndex = statistics[labItemIndex].conditionIndex;
   if (mydata[statistics[labItemIndex].mydataIndex].value > 0) {
     patient[0].statistics[0][labItemIndex] = statisticsCalc(labItemIndex);
     patient[0].statistics[1][labItemIndex] = statistics[labItemIndex].color;
-    patient[0].conditions[conditionIndex] = 1;
+    return 1;
   } else {
-    delete patient[0].statistics[0][labItemIndex] ;
-    delete patient[0].statistics[1][labItemIndex] ;
-    patient[0].conditions[conditionIndex] = 0;
+    statistics[labItemIndex].currentLikelihoodRatio = 1;
+    delete patient[0].statistics[0][labItemIndex];
+    delete patient[0].statistics[1][labItemIndex];
+    return 0;
   }
 }
 
@@ -1535,36 +1564,42 @@ function statisticsCalc(labItemIndex) {
         " &#8594 chance of " +
         labItem.conditionName +
         " is " +
-         currentLikelihoodRatio +
+        currentLikelihoodRatio +
         " times higher now";
       statistics[labItemIndex].currentLikelihoodRatio = currentLikelihoodRatio;
       statistics[labItemIndex].currentCutoffIndex = i;
-      prevalenceCalc(labItemIndex);
+      PosteriorCalc(labItemIndex);
       return message;
-    } 
+    }
   }
   currentLikelihoodRatio = labItem.likelihoodNegative(0);
   message =
-      labItem.labItemName +
-      " > " +
-      labItem.cutoffs[0] +
-      " &#8594 chance of " +
-      labItem.conditionName +
-      " is " +
-      scientificNumber(currentLikelihoodRatio) +
-      " times lower now";
+    labItem.labItemName +
+    " > " +
+    labItem.cutoffs[0] +
+    " &#8594 chance of " +
+    labItem.conditionName +
+    " is " +
+    scientificNumber(currentLikelihoodRatio) +
+    " times lower now";
   statistics[labItemIndex].currentLikelihoodRatio = currentLikelihoodRatio;
   statistics[labItemIndex].currentCutoffIndex = 0;
-  prevalenceCalc(labItemIndex);
+  PosteriorCalc(labItemIndex);
   return message;
 }
-  
+
 function scientificNumber(number) {
   const numInSciNot = {};
-  [numInSciNot.coefficient, numInSciNot.exponent] =
-  number.toExponential().split('e').map(item => Number(item));
-  return numInSciNot.coefficient.toFixed(1) + " &#215 10 <sup>" + numInSciNot.exponent + "</sup> ";
-  
+  [numInSciNot.coefficient, numInSciNot.exponent] = number
+    .toExponential()
+    .split("e")
+    .map((item) => Number(item));
+  return (
+    numInSciNot.coefficient.toFixed(1) +
+    " &#215 10 <sup>" +
+    numInSciNot.exponent +
+    "</sup> "
+  );
 
   // var power = Math.floor(Math.log10(number));
   // var m = (number * 10 ^ power).toFixed(1);
@@ -1663,8 +1698,8 @@ function calc_measurements() {
   var iron_val = mydata[40].value;
   var tibc_val = mydata[42].value;
   if (iron_val > 0 && tibc_val > 0) {
-    tsat = (iron_val / tibc_val) * 100;
-    measurements[8].value = tsat.toFixed(2);
+    globalTSAT = (iron_val / tibc_val) * 100;
+    measurements[8].value = globalTSAT.toFixed(2);
   }
 
   //Percentiles
@@ -1741,9 +1776,12 @@ function weightPercentileCalc() {
 var patient = [
   {
     name: "patient 1",
-    conditions: [[0,0,0,0,0,0,0,0],["","","","","","","",""]],
+    conditions: [
+      [0, 0, 0, 0, 0, 0, 0, 0],
+      ["", "", "", "", "", "", "", ""],
+    ],
     signs: [[], [], []],
-    statistics: [[],[]]
+    statistics: [[], []],
   },
 ];
 
@@ -1771,7 +1809,7 @@ var statistics = [
     mydataIndex: 41,
     currentLikelihoodRatio: 1,
     currentCutoffIndex: 0,
-    color: "rgb(102, 30, 52)"
+    color: "rgb(102, 30, 52)",
   },
   {
     name: "HbID",
@@ -1796,20 +1834,20 @@ var statistics = [
     mydataIndex: 2,
     currentLikelihoodRatio: 1,
     currentCutoffIndex: 0,
-    color: "darkslateblue"
-  }
+    color: "darkslateblue",
+  },
 ];
 
 var conditions = [
   {
     name: "iron deficiency",
-    statisticsParameteresRelated: [0,1],
+    statisticsParameteresRelated: [0, 1],
     likelihoodRatio: 1,
     prevalenceValue: 13.5,
     posteriorDistribution: 13.5,
-    color: "rgb(102, 30, 52)"
-  }
-]
+    color: "rgb(102, 30, 52)",
+  },
+];
 
 var measurements = [
   {
@@ -1868,7 +1906,7 @@ var measurements = [
     value: 0,
     color: "rgb(102, 30, 52)",
     tooltip: "Transferin saturation (Iron / TIBC)",
-  }
+  },
 ];
 
 var weightAgeInfantJSON = [
