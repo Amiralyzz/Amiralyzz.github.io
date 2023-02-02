@@ -201,9 +201,9 @@
             class="searchbar"
             placeholder="Search"
             id="searchbar"
-            style="width: 150px; color: black; margin-right: 5px"
-            onkeyup="this.style.minWidth = ((this.value.length + 1) * 25) + 'px'; tabContent('tab_search','searchbar')"
-            onkeydown="this.style.minWidth = ((this.value.length + 1) * 25) + 'px';"
+            style="color: black; margin-right: 5px"
+            onkeyup="searchBarSize();  tabContent('tab_search','searchbar')"
+            onkeydown="searchBarSize()"
           />
         </div>
         <div

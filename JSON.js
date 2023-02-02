@@ -1439,7 +1439,7 @@ var patient = [
     return perc;
   }
   
-  var mydata = [
+  var labItems = [
     {
       name: "WBC",
       tooltip: "White Blood Cells",
@@ -3645,4 +3645,3 @@ var patient = [
       output_id: "",
     },
   ];
-  

@@ -39,9 +39,9 @@ function tabContent(tabId, testCategory) {
       searched_items.id = "searched";
       searched_items.style.color = "black";
       parentElement.before(searched_items);
-      for (i = 0; i < mydata.length; i++) {
+      for (i = 0; i < labItems.length; i++) {
         if (pinnedOrNotArray[i] == 1) {
-          var entry = mydata[i];
+          var entry = labItems[i];
           var new_div = document.createElement("div");
           new_div.className = "entry_box";
           new_div.style.background = entry.color;
@@ -147,16 +147,16 @@ function tabContent(tabId, testCategory) {
   
       //for search results
       search_val = new RegExp(document.getElementById("searchbar").value, "i");
-      for (i = 0; i < mydata.length; i++) {
+      for (i = 0; i < labItems.length; i++) {
         if (
           document.getElementById("searchbar").value != "" &&
           pinnedOrNotArray[i] != 1
         ) {
           if (
-            mydata[i]["name"].search(search_val) != -1 ||
-            mydata[i]["tooltip"].search(search_val) != -1
+            labItems[i]["name"].search(search_val) != -1 ||
+            labItems[i]["tooltip"].search(search_val) != -1
           ) {
-            var entry = mydata[i];
+            var entry = labItems[i];
   
             var new_div = document.createElement("div");
             new_div.className = "entry_box";
@@ -264,9 +264,9 @@ function tabContent(tabId, testCategory) {
     search_bar.style.display = searchbar_show;
     //for usual tabs
     if (testCategory != "searchbar" && testCategory != "analyse") {
-      for (i = 0; i < mydata.length; i++) {
-        if (mydata[i]["type"] == testCategory) {
-          var entry = mydata[i];
+      for (i = 0; i < labItems.length; i++) {
+        if (labItems[i]["type"] == testCategory) {
+          var entry = labItems[i];
           var new_div = document.createElement("div");
           new_div.className = "entry_box";
           new_div.style.background = entry.color;

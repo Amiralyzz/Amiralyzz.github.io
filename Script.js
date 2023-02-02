@@ -40,6 +40,19 @@ var nl_icon = "https://cdn-icons-png.flaticon.com/128/6785/6785304.png";
 
 var searchbar_show = "none";
 
+function searchBarSize() {
+  var searchbar = document.getElementById('searchbar');
+  if(searchbar.value.length > 5) {
+    searchbar.style.minWidth = ((searchbar.value.length + 1) * 25) + 'px'; 
+  }
+  else {
+    searchbar.style.minWidth = '100px';
+  }
+  if (searchbar.style.minWidth > '270px') {
+    searchbar.style.minWidth = '270px';
+    searchbar.style.maxWidth = '1vw';
+  }
+}
 
 function change_table_caller() {
   var id = this.id.slice(0, -1);
@@ -314,33 +327,33 @@ function age_calc() {
     selectedAgeGroupIndex == 1 ||
     selectedAgeGroupIndex == 2
   ) {
-    for (var j = 0; j < mydata.length; j++) {
-      if (mydata[j]["name"] == "Hb") {
-        mydata[j]["critmin"] = 9;
-        mydata[j]["critmax"] = 25;
+    for (var j = 0; j < labItems.length; j++) {
+      if (currentLabItem["name"] == "Hb") {
+        currentLabItem["critmin"] = 9;
+        currentLabItem["critmax"] = 25;
       }
-      if (mydata[j]["name"] == "Hct") {
-        mydata[j]["critmin"] = 28;
-        mydata[j]["critmax"] = 67;
+      if (currentLabItem["name"] == "Hct") {
+        currentLabItem["critmin"] = 28;
+        currentLabItem["critmax"] = 67;
       }
     }
   } else {
-    for (var j = 0; j < mydata.length; j++) {
-      if (mydata[j]["name"] == "Hb") {
-        mydata[j]["critmin"] = 7;
-        mydata[j]["critmax"] = 18;
+    for (var j = 0; j < labItems.length; j++) {
+      if (currentLabItem["name"] == "Hb") {
+        currentLabItem["critmin"] = 7;
+        currentLabItem["critmax"] = 18;
       }
-      if (mydata[j]["name"] == "Hct") {
-        mydata[j]["critmin"] = 20;
-        mydata[j]["critmax"] = 55;
+      if (currentLabItem["name"] == "Hct") {
+        currentLabItem["critmin"] = 20;
+        currentLabItem["critmax"] = 55;
       }
     }
   }
   range_maker(selectedAgeGroup);
 
-  for (var j = 0; j < mydata.length; j++) {
-    x = Number(mydata[j].value);
-    id = mydata[j].input_id;
+  for (var j = 0; j < labItems.length; j++) {
+    x = Number(currentLabItem.value);
+    id = currentLabItem.input_id;
     check_ranges(x, id);
   }
 
@@ -350,7 +363,7 @@ function age_calc() {
 
 function range_maker(key) {
   var i = 0;
-  for (var data of mydata) {
+  for (var data of labItems) {
     var array = data[key].slice(1, -1).split(","); //making key an array like ["1","2"]
     minArray[i] = array[genderCoef];
     maxArray[i] = array[genderCoef + 1];
@@ -457,7 +470,7 @@ function bmi_calc() {
 
 function tooltip() {
   var tooltip_text = document.getElementById("tooltip");
-  for (const entry of mydata) {
+  for (const entry of labItems) {
     if (entry.name == this.id) {
       tooltip_text.innerHTML = entry.tooltip;
     }
@@ -642,110 +655,113 @@ function whenAnInputChanges() {
   check_ranges(x, id);
 }
 
+function minIsNotBiggerThanMax(x,id) {
+  try {
+    if (id == "in_Bil(D)") {
+      var bilt_val = labItems[17].value;
+      if (x > bilt_val && bilt_val != 0) {
+        x = bilt_val;
+        document.getElementById("in_Bil(D)").value = x;
+      }
+    } else if (id == "in_Bil(T)") {
+      var bild_val = labItems[18].value;
+      if (x < bild_val) {
+        document.getElementById("in_Bil(D)").value = x;
+      }
+    } else {
+
+    }
+  } catch {}
+}
 
 function check_ranges(x, id) {
-  for (var j = 0; j < mydata.length; j++) {
-    if (id == mydata[j].input_id) {
-      try {
-        if (id == "in_Bil(D)") {
-          var bilt_val = mydata[17].value;
-          if (x > bilt_val && bilt_val != 0) {
-            x = bilt_val;
-            document.getElementById("in_Bil(D)").value = x;
-          }
-        } else if (id == "in_Bil(T)") {
-          var bild_val = mydata[18].value;
-          if (x < bild_val) {
-            document.getElementById("in_Bil(D)").value = x;
-          }
-        }
-      } catch {}
-      if (x > maxArray[j] && maxArray[j] != 0) {
-        y = x / maxArray[j];
-        st = " &#215 max";
-        try {
-          document.getElementById(outputIdArray[j] + "_img").src = high_icon;
-          document.getElementById(outputIdArray[j] + "_img").style.display =
-            "flex";
-        } catch {}
-      } else if (x < minArray[j]) {
-        y = x / minArray[j];
-        st = " &#215 min";
-        try {
-          document.getElementById(outputIdArray[j] + "_img").src = low_icon;
-          document.getElementById(outputIdArray[j] + "_img").style.display =
-            "flex";
-        } catch {}
-      } else {
-        y = -1;
-        st = "Normal";
-        try {
-          document.getElementById(outputIdArray[j] + "_img").src = nl_icon;
-          document.getElementById(outputIdArray[j] + "_img").style.display =
-            "flex";
-        } catch {}
-      }
-      if (x != "" && y != -1) {
-        mydata[j].status = y.toFixed(2) + st;
-      }
-      if (x != "" && y == -1) {
-        mydata[j].status = st;
-      }
-      try {
-        if (x > mydata[j]["critmax"] && mydata[j]["critmax"] != 0) {
-          document.getElementById(outputIdArray[j] + "_warn").style.display =
-            "flex";
-          critValueArray[j] = 1;
-        } else if (x < mydata[j]["critmin"] && x != 0) {
-          document.getElementById(outputIdArray[j] + "_warn").style.display =
-            "flex";
-          critValueArray[j] = 1;
-        } else {
-          document.getElementById(outputIdArray[j] + "_warn").style.display =
-            "none";
-          critValueArray[j] = 0;
-        }
-      } catch {}
-      mydata[j].value = x;
-      //document.getElementById(in_id[j]).value = x;
-      try {
-        document.getElementById(outputIdArray[j]).innerHTML = mydata[j].status;
-      } catch {}
-      if (x == 0) {
-        try {
-          document.getElementById(outputIdArray[j]).innerHTML = "";
-          document.getElementById(outputIdArray[j] + "_img").style.display =
-            "none";
-          document.getElementById(outputIdArray[j] + "_warn").style.display =
-            "none";
-        } catch {}
-        mydata[j].status = 0;
-      }
-      break;
+  var currentLabItem = labItems.find(
+    (o) => o.input_id === id.toString()
+  );
+  minIsNotBiggerThanMax(x,id);
+  if (x > currentLabItem.max && currentLabItem.max != 0) {
+    y = x / currentLabItem.max;
+    st = " &#215 max";
+    try {
+      document.getElementById(currentLabItem.output_id + "_img").src = high_icon;
+      document.getElementById(currentLabItem.output_id + "_img").style.display =
+        "flex";
+    } catch {}
+  } else if (x < currentLabItem.min) {
+    y = x / currentLabItem.min;
+    st = " &#215 min";
+    try {
+      document.getElementById(currentLabItem.output_id + "_img").src = low_icon;
+      document.getElementById(currentLabItem.output_id + "_img").style.display =
+        "flex";
+    } catch {}
+  } else {
+    y = -1;
+    st = "Normal";
+    try {
+      document.getElementById(currentLabItem.output_id + "_img").src = nl_icon;
+      document.getElementById(currentLabItem.output_id + "_img").style.display =
+        "flex";
+    } catch {}
+  }
+  if (x != "" && y != -1) {
+    currentLabItem.status = y.toFixed(2) + st;
+  }
+  if (x != "" && y == -1) {
+    currentLabItem.status = st;
+  }
+  try {
+    if (x > currentLabItem.critmax && currentLabItem.critmax != 0) {
+      document.getElementById(currentLabItem.output_id + "_warn").style.display =
+        "flex";
+      critValueArray[j] = 1;
+    } else if (x < currentLabItem.critmin && x != 0) {
+      document.getElementById(currentLabItem.output_id + "_warn").style.display =
+        "flex";
+      critValueArray[j] = 1;
+    } else {
+      document.getElementById(currentLabItem.output_id + "_warn").style.display =
+        "none";
+      critValueArray[j] = 0;
     }
+  } catch {}
+  currentLabItem.value = x;
+  try {
+    document.getElementById(currentLabItem.output_id).innerHTML = currentLabItem.status;
+  } catch {}
+  if (x == 0) {
+    try {
+      document.getElementById(currentLabItem.output_id).innerHTML = "";
+      document.getElementById(currentLabItem.output_id + "_img").style.display =
+        "none";
+      document.getElementById(currentLabItem.output_id + "_warn").style.display =
+        "none";
+    } catch {}
+    currentLabItem.status = 0;
   }
 }
 
+
 function id_maker(i, name) {
-  mydata[i].input_id = "in_" + name.toString();
-  mydata[i].output_id = "out_" + name.toString();
+  labItems[i].input_id = "in_" + name.toString();
+  labItems[i].output_id = "out_" + name.toString();
 }
 
 function cbc_autocomplete() {
   try {
     var p_rbc = Number(document.getElementById("in_RBC").value); //p = patient's
   } catch {
-    var p_rbc = mydata[1].value;
+    var p_rbc = labItems[1].value;
   }
   try {
     var p_hb = Number(document.getElementById("in_Hb").value);
   } catch {
-    var p_hb = mydata[2].value;
+    var p_hb = labItems[2].value;
   }
   try {
     var p_mcv = Number(document.getElementById("in_MCV").value);
   } catch {
-    var p_mcv = mydata[3].value;
+    var p_mcv = labItems[3].value;
   }
   var c_hct, c_mch, c_mchc, mcv_isnotzero;
   if (p_rbc == 0) return 0;
@@ -753,7 +769,7 @@ function cbc_autocomplete() {
     mcv_isnotzero = true;
     c_hct = (p_rbc * p_mcv) / 10;
     c_hct = c_hct.toFixed(1);
-    mydata[4].value = c_hct;
+    labItems[4].value = c_hct;
     try {
       document.getElementById("in_Hct").value = c_hct;
     } catch {}
@@ -764,7 +780,7 @@ function cbc_autocomplete() {
   if (p_hb != 0) {
     c_mch = (p_hb * 10) / p_rbc;
     c_mch = c_mch.toFixed(1);
-    mydata[5].value = c_mch;
+    labItems[5].value = c_mch;
     try {
       document.getElementById("in_MCH").value = c_mch;
     } catch {}
@@ -772,7 +788,7 @@ function cbc_autocomplete() {
     if (mcv_isnotzero) {
       c_mchc = (p_hb * 100) / c_hct;
       c_mchc = c_mchc.toFixed(1);
-      mydata[6].value = c_mchc;
+      labItems[6].value = c_mchc;
       try {
         document.getElementById("in_MCHC").value = c_mchc;
       } catch {}
@@ -782,14 +798,14 @@ function cbc_autocomplete() {
 }
 
 function iron_profile() {
-  var p_hb = mydata[2].value; //p = patient's
-  var p_mcv = mydata[3].value;
-  var p_mch = mydata[5].value;
-  var p_mchc = mydata[6].value;
-  var p_crp = mydata[13].value;
-  var p_si = mydata[40].value;
-  var p_fe = mydata[41].value;
-  var p_tibc = mydata[42].value;
+  var p_hb = labItems[2].value; //p = patient's
+  var p_mcv = labItems[3].value;
+  var p_mch = labItems[5].value;
+  var p_mchc = labItems[6].value;
+  var p_crp = labItems[13].value;
+  var p_si = labItems[40].value;
+  var p_fe = labItems[41].value;
+  var p_tibc = labItems[42].value;
   var path = "";
   var bio_color = "rgb(102, 30, 52)";
   if (p_si > 0 && p_tibc > 0) {
@@ -821,8 +837,8 @@ function iron_profile() {
   statisticsMaker(0);
   conditionMaker(0);
   if (p_fe <= 0) return 0; //we cant assess iron profile without ferritin
-  if (p_fe < mydata[41].min) {
-    path += "Ferritin < " + mydata[41].min + " &#8594 ";
+  if (p_fe < labItems[41].min) {
+    path += "Ferritin < " + labItems[41].min + " &#8594 ";
     //we have IDA , now we have to find the intensity
     if (p_hb <= 0) {
       path += "Hb not entered";
@@ -831,11 +847,11 @@ function iron_profile() {
       patient[0].signs[2][10] = bio_color;
       return 11; //atleast we have ironStoreDeficiency
     } else {
-      if (p_hb < mydata[2].min) {
-        path += "Hb < " + mydata[2].min + " &#8594 ";
-        if (p_mcv > mydata[3].max) {
+      if (p_hb < labItems[2].min) {
+        path += "Hb < " + labItems[2].min + " &#8594 ";
+        if (p_mcv > labItems[3].max) {
           //we have macrocytosis so no deficiency , but maybe it is false!
-          path += "MCV > " + mydata[3].max;
+          path += "MCV > " + labItems[3].max;
           patient[0].signs[0][10] =
             "iron deficiency is unlikely with macrocytosis";
           patient[0].signs[1][10] = path;
@@ -876,9 +892,9 @@ function iron_profile() {
         }
       } else {
         // maybe hb is wrong or has not changed yet
-        if (p_mcv > mydata[3].max) {
+        if (p_mcv > labItems[3].max) {
           //we have macrocytosis so no deficiency , but maybe it is false!
-          path += "MCV > " + mydata[3].max;
+          path += "MCV > " + labItems[3].max;
           patient[0].signs[0][10] =
             "iron deficiency is unlikely with macrocytosis";
           patient[0].signs[1][10] = path;
@@ -921,7 +937,7 @@ function iron_profile() {
       }
     }
   } else {
-    path += "Ferritin > " + mydata[41].min + " &#8594 ";
+    path += "Ferritin > " + labItems[41].min + " &#8594 ";
     if (p_hb <= 0) {
       //no hb and ferritin is normal
       path += "no Hb entered";
@@ -930,20 +946,20 @@ function iron_profile() {
       patient[0].signs[2][10] = bio_color;
       return false;
     } else {
-      if (p_hb < mydata[2].min) {
+      if (p_hb < labItems[2].min) {
         //anemia with nl or elevated ferritin
-        path += "Hb < " + mydata[2].min + " &#8594 ";
+        path += "Hb < " + labItems[2].min + " &#8594 ";
         //now we check mcv
-        if (p_mcv > mydata[3].max) {
+        if (p_mcv > labItems[3].max) {
           //we have macrocytosis so no deficiency , but maybe it is false!
           patient[0].signs[0][10] =
             "iron deficiency is unlikely with macrocytosis";
-          path += "MCV > " + mydata[3].max;
+          path += "MCV > " + labItems[3].max;
           patient[0].signs[1][10] = path;
           patient[0].signs[2][10] = bio_color;
           return 5;
-        } else if (p_mcv > mydata[3].min) {
-          path += mydata[3].min + " < MCV < " + mydata[3].max + " &#8594 ";
+        } else if (p_mcv > labItems[3].min) {
+          path += labItems[3].min + " < MCV < " + labItems[3].max + " &#8594 ";
           //normocytic now we need crp
           if (p_crp <= 0) {
             //we dont have crp
@@ -954,9 +970,9 @@ function iron_profile() {
             patient[0].signs[2][10] = bio_color;
             return 6;
           } else {
-            if (p_crp >= mydata[13].max) {
+            if (p_crp >= labItems[13].max) {
               //inflammation
-              path += "CRP > " + mydata[13].max + " &#8594 ";
+              path += "CRP > " + labItems[13].max + " &#8594 ";
               if (globalTSAT <= 0) {
                 path += "Serum iron and/or TIBC not entered";
                 patient[0].signs[0][10] =
@@ -988,7 +1004,7 @@ function iron_profile() {
               }
             } else {
               // crp nl and ferritin high and mcv nl so no def
-              path += "CRP < " + mydata[13].max;
+              path += "CRP < " + labItems[13].max;
               patient[0].signs[0][10] = "no iron deficiency";
               patient[0].signs[1][10] = path;
               patient[0].signs[2][10] = bio_color;
@@ -1004,7 +1020,7 @@ function iron_profile() {
             return false; //no def
           } else {
             //microcytic we need crp
-            path += "MCV < " + mydata[3].min + " &#8594 ";
+            path += "MCV < " + labItems[3].min + " &#8594 ";
             if (p_crp <= 0) {
               //we dont have crp
               path += "CRP not entered";
@@ -1014,9 +1030,9 @@ function iron_profile() {
               patient[0].signs[2][10] = bio_color;
               return 12;
             } else {
-              if (p_crp >= mydata[13].max) {
+              if (p_crp >= labItems[13].max) {
                 //inflammation
-                path += "CRP > " + mydata[13].max + " &#8594 ";
+                path += "CRP > " + labItems[13].max + " &#8594 ";
                 if (globalTSAT <= 0) {
                   path += "Serum iron and/or TIBC not entered";
                   patient[0].signs[0][10] =
@@ -1048,7 +1064,7 @@ function iron_profile() {
                 }
               } else {
                 // crp nl and ferritin high and mcv low &#8594 check thal
-                path += "CRP < " + mydata[13].max;
+                path += "CRP < " + labItems[13].max;
                 patient[0].signs[0][10] = "check for thalassemia";
                 patient[0].signs[1][10] = path;
                 patient[0].signs[2][10] = bio_color;
@@ -1059,7 +1075,7 @@ function iron_profile() {
         }
       } else {
         //no anemia no low ferritin
-        path += "Hb > " + mydata[2].min;
+        path += "Hb > " + labItems[2].min;
         patient[0].signs[0][10] = "no iron deficiency";
         patient[0].signs[1][10] = path;
         patient[0].signs[2][10] = bio_color;
@@ -1070,11 +1086,11 @@ function iron_profile() {
 }
 
 function isAnemia() {
-  var p_hb = mydata[2].value;
+  var p_hb = labItems[2].value;
   if (p_hb <= 0) {
     return false;
   }
-  if (p_hb < mydata[2].min) {
+  if (p_hb < labItems[2].min) {
     return true;
   } else {
     return false;
@@ -1082,13 +1098,13 @@ function isAnemia() {
 }
 
 function anemiaType() {
-  var p_rbc = mydata[1].value; //p = patient's
-  var p_hb = mydata[2].value;
-  var p_mcv = mydata[3].value;
-  var p_hct = mydata[4].value;
-  var p_mch = mydata[5].value;
-  var p_rdw = mydata[8].value;
-  var p_retic = mydata[11].value;
+  var p_rbc = labItems[1].value; //p = patient's
+  var p_hb = labItems[2].value;
+  var p_mcv = labItems[3].value;
+  var p_hct = labItems[4].value;
+  var p_mch = labItems[5].value;
+  var p_rdw = labItems[8].value;
+  var p_retic = labItems[11].value;
   var cbc_color = "darkslateblue";
   //to remove previous anemias
   anemia_string = new RegExp(/anemia/, "i");
@@ -1108,8 +1124,8 @@ function anemiaType() {
     //we need to check this in the function calling this function -
     return 0; //no need to access  //and if there is no hb entered unlike mcv, check for macrocytosis
   }
-  if (p_hb >= mydata[2].min) {
-    path += "Hb > " + mydata[2].min;
+  if (p_hb >= labItems[2].min) {
+    path += "Hb > " + labItems[2].min;
     patient[0].signs[0][2] = "no anemia";
     patient[0].signs[1][2] = path;
     patient[0].signs[2][2] = cbc_color;
@@ -1122,26 +1138,26 @@ function anemiaType() {
     // we dont have rpi
   }
   if (p_mcv > 0) {
-    path += "Hb < " + mydata[2].min + " &#8594 ";
+    path += "Hb < " + labItems[2].min + " &#8594 ";
     // we have mcv and we approach
     if (genderCoef == 0 || preg_situation == 0) {
       //this approach only for non-pregnants
-      if (p_mcv < mydata[3].min) {
+      if (p_mcv < labItems[3].min) {
         //microcytic anemia
-        path += " MCV < " + mydata[3].min;
+        path += " MCV < " + labItems[3].min;
         patient[0].signs[0][2] = "Microcytic anemia";
         patient[0].signs[1][2] = path;
         patient[0].signs[2][2] = cbc_color;
         //now we have to check Iron profile , RDW , RBC count , MCH , if we have PBS
-      } else if (p_mcv < mydata[3].max) {
+      } else if (p_mcv < labItems[3].max) {
         //normocytic anemia
-        path += mydata[3].min + " < MCV < " + mydata[3].max;
+        path += labItems[3].min + " < MCV < " + labItems[3].max;
         patient[0].signs[0][2] = "Normocytic anemia";
         patient[0].signs[1][2] = path;
         patient[0].signs[2][2] = cbc_color;
       } else {
         //macrocytic anemia
-        path += " MCV > " + mydata[3].max;
+        path += " MCV > " + labItems[3].max;
         patient[0].signs[0][2] = "Macrocytic anemia";
         patient[0].signs[1][2] = path;
         patient[0].signs[2][2] = cbc_color;
@@ -1149,7 +1165,7 @@ function anemiaType() {
     }
   } else {
     // we dont have mcv
-    path += "Hb < " + mydata[2].min + " and no MCV entered";
+    path += "Hb < " + labItems[2].min + " and no MCV entered";
     patient[0].signs[0][2] = "Anemia";
     patient[0].signs[1][2] = path;
     patient[0].signs[2][2] = cbc_color;
@@ -1159,8 +1175,8 @@ function anemiaType() {
 }
 
 function folate() {
-  var p_fol = mydata[43].value;
-  var p_b12 = mydata[44].value;
+  var p_fol = labItems[43].value;
+  var p_b12 = labItems[44].value;
 
   if (p_fol <= 0) return false;
   //to remove previous signs
@@ -1173,8 +1189,8 @@ function folate() {
     }
   }
 
-  if (p_fol < mydata[43].min) {
-    if (p_b12 < mydata[44].min && p_b12 > 0) {
+  if (p_fol < labItems[43].min) {
+    if (p_b12 < labItems[44].min && p_b12 > 0) {
       patient[0].signs[0][11] = "folate and b12 deficiency";
       return true;
     } else {
@@ -1187,8 +1203,8 @@ function folate() {
 }
 
 function b12() {
-  var p_b12 = mydata[44].value;
-  var p_fol = mydata[43].value;
+  var p_b12 = labItems[44].value;
+  var p_fol = labItems[43].value;
   if (p_b12 <= 0) return false;
   //to remove previous signs
   b12_string = new RegExp(/b12/, "i");
@@ -1199,8 +1215,8 @@ function b12() {
       delete patient[0].signs[2][i];
     }
   }
-  if (p_b12 < mydata[44].min) {
-    if (p_fol < mydata[43].min && p_fol > 0) {
+  if (p_b12 < labItems[44].min) {
+    if (p_fol < labItems[43].min && p_fol > 0) {
       patient[0].signs[0][11] = "folate and b12 deficiency";
       return true;
     } else {
@@ -1223,7 +1239,7 @@ function conditionMaker(conditionIndex) {
 }
 
 function statisticsMaker(labItemIndex) {
-  if (mydata[statistics[labItemIndex].mydataIndex].value > 0) {
+  if (labItems[statistics[labItemIndex].mydataIndex].value > 0) {
     patient[0].statistics[0][labItemIndex] = statisticsCalc(labItemIndex);
     patient[0].statistics[1][labItemIndex] = statistics[labItemIndex].color;
     return 1;
@@ -1237,7 +1253,7 @@ function statisticsMaker(labItemIndex) {
 
 function statisticsCalc(labItemIndex) {
   let labItem = statistics[labItemIndex];
-  let mydataItem = mydata[labItem.mydataIndex];
+  let mydataItem = labItems[labItem.mydataIndex];
   let cutoffsLength = labItem.cutoffs.length;
   let currentLikelihoodRatio = 1;
   let message = "";
@@ -1308,7 +1324,7 @@ function calc_measurements() {
   }
 
   //gfr
-  cr_val = mydata[30].value;
+  cr_val = labItems[30].value;
   if (cr_val == 0 || gloalWeightGram == 0) {
     gfr_cg = 0;
     gfr_mdrd = 0;
@@ -1351,8 +1367,8 @@ function calc_measurements() {
   measurements[7].value = gfr_cg.toFixed(3);
 
   //CRC
-  var hct_val = mydata[4].value;
-  var retic_val = mydata[11].value;
+  var hct_val = labItems[4].value;
+  var retic_val = labItems[11].value;
   var crc_val = 0;
   var normal_hct_gender = 45 - genderCoef * 2.5;
   if (hct_val <= 0 || retic_val <= 0) {
@@ -1383,8 +1399,8 @@ function calc_measurements() {
   measurements[4].value = rpi.toFixed(2);
 
   //TSAT
-  var iron_val = mydata[40].value;
-  var tibc_val = mydata[42].value;
+  var iron_val = labItems[40].value;
+  var tibc_val = labItems[42].value;
   if (iron_val > 0 && tibc_val > 0) {
     globalTSAT = (iron_val / tibc_val) * 100;
     measurements[8].value = globalTSAT.toFixed(2);

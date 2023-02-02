@@ -231,7 +231,7 @@
     word-wrap: break-word;
   }
   #table_shown {
-    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
   }
 }
 
@@ -716,6 +716,7 @@ h1 {
   width: -moz-fit-content;
   width: fit-content;
   min-width: 100px;
+  max-width: 1vw;
   display: none;
 }
 
