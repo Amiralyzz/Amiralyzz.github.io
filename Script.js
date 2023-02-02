@@ -30,13 +30,13 @@ var selectedAgeGroup = "adult";
 var preg_situation = 0; //0 for not pregnant
 var selectedTabId = "test_types_cbc";
 var selectedLabType = "cbc";
-var low_icon = "https://cdn-icons-png.flaticon.com/512/892/892624.png";
-var high_icon = "https://cdn-icons-png.flaticon.com/512/892/892682.png";
+var low_icon = "/Art/downArrow.png";
+var high_icon = "/Art/upArrow.png";
 var sup_low_icon =
   "https://www.iconsdb.com/icons/download/red/arrow-211-512.png";
 var sup_high_icon =
   "https://www.iconsdb.com/icons/download/red/arrow-149-512.png";
-var nl_icon = "https://cdn-icons-png.flaticon.com/128/6785/6785304.png";
+var nl_icon = "/Art/normal.png";
 
 var searchbar_show = "none";
 
@@ -601,9 +601,6 @@ function scientificNumber(number) {
     "</sup> "
   );
 
-  // var power = Math.floor(Math.log10(number));
-  // var m = (number * 10 ^ power).toFixed(1);
-  // return m.toString() + ' &#215 10<sup>' + power.toString() + '</sup>';
 }
 
 function calc_measurements() {

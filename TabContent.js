@@ -360,11 +360,7 @@ function tabContent(tabId, testCategory) {
     }
     //for analyse
     if (tabId == "tab_analyse") {
-      anemiaType();
-      iron_profile();
-      folate();
-      b12();
-      calc_measurements();
+      engineMain();
       parentElement.style.display = "flex";
       parentElement.style.flexDirection = "column";
       parentElement.style.whiteSpace = "normal";
