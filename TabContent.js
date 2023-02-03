@@ -1,9 +1,13 @@
+var parentElement = document.getElementById("table_shown");
 function tabContent(tabId, testCategory) {
-    var parentElement = document.getElementById("table_shown");
     if (tabId != "tab_analyse") {
       parentElement.style.display = "grid";
       parentElement.style.flexDirection = "row";
       parentElement.style.whiteSpace = "nowrap";
+    } else {
+      parentElement.style.display = "flex";
+      parentElement.style.flexDirection = "column";
+      parentElement.style.whiteSpace = "normal";
     }
     var tooltip_text = document.getElementById("tooltip");
     tooltip_text.innerHTML = "";
@@ -28,233 +32,37 @@ function tabContent(tabId, testCategory) {
     selectedTab.style.borderColor = "rgba(255, 255, 255, 0.164)";
     selectedTab.style.borderStyle = "solid";
     selectedTab.style.margin = "5px 3px";
-  
     selectedTab.style.display = "flex";
   
     if (tabId == "tab_search") {
       var search_val = document.getElementById(testCategory).value;
       var searched_items = document.createElement("div");
       searchbar_show = "block";
+
       //for saved search items
       searched_items.id = "searched";
       searched_items.style.color = "black";
       parentElement.before(searched_items);
-      for (i = 0; i < labItems.length; i++) {
-        if (pinnedOrNotArray[i] == 1) {
-          var entry = labItems[i];
-          var new_div = document.createElement("div");
-          new_div.className = "entry_box";
-          new_div.style.background = entry.color;
-          new_div.id = entry.name;
-          new_div.onmouseover = tooltip;
-          new_div.onmouseleave = tooltip_remove;
-          searched_items.appendChild(new_div);
-  
-          var new_label = document.createElement("label");
-          new_label.className = "entry_label";
-          new_div.appendChild(new_label);
-  
-          var new_input = document.createElement("input");
-          new_input.className = "entry_input";
-          new_input.type = "number";
-          new_input.name = entry.name;
-          new_input.style.background = entry.color;
-          if (entry.value != 0) new_input.value = entry.value;
-          new_input.step = entry.step;
-          new_div.appendChild(new_input);
-  
-          var new_output_frame = document.createElement("div");
-          new_output_frame.className = "entry_output_frame";
-          new_div.appendChild(new_output_frame);
-  
-          var warn_icon = document.createElement("img");
-          warn_icon.className = "warning_icon";
-          warn_icon.src = "https://cdn-icons-png.flaticon.com/128/595/595067.png";
-          warn_icon.style.display = "none";
-          new_output_frame.appendChild(warn_icon);
-  
-          var out_icon = document.createElement("img");
-          out_icon.className = "status_icon";
-          new_output_frame.appendChild(out_icon);
-  
-          var new_output = document.createElement("div");
-          new_output.className = "entry_output_label";
-          if (entry.status != 0) new_output.innerHTML = entry.status;
-          new_output_frame.appendChild(new_output);
-  
-          minArray[i] = entry.min;
-          maxArray[i] = entry.max;
-          id_maker(i, entry.name);
-          inputIdArray[i] = entry.input_id;
-          outputIdArray[i] = entry.output_id;
-          new_input.id = inputIdArray[i];
-          new_output.id = outputIdArray[i];
-          warn_icon.id = outputIdArray[i] + "_warn";
-          out_icon.id = outputIdArray[i] + "_img";
-          out_icon.style.display = "none";
-  
-          var min_string, max_string; //what to write in label when it is upto or morethan
-          if (minArray[i] == 0) {
-            min_string = "< ";
-            max_string = maxArray[i] + " ";
-          } else if (maxArray[i] == 0) {
-            min_string = "> " + minArray[i];
-            max_string = " ";
-          } else {
-            min_string = minArray[i] + " - ";
-            max_string = maxArray[i] + " ";
-          }
-          new_label.innerHTML =
-            "<div style='font-size: 2rem;'>" +
-            entry.name +
-            "</div>" +
-            min_string +
-            max_string +
-            entry.unit.toString();
-          if (entry.status == 0) {
-            out_icon.style.display = "none";
-            warn_icon.style.display = "none";
-          } else if (entry.status.slice(-1) == "l") {
-            out_icon.style.display = "flex";
-            warn_icon.style.display = "flex";
-            out_icon.src = nl_icon;
-          } else if (entry.status.slice(-1) == "x") {
-            out_icon.style.display = "flex";
-            warn_icon.style.display = "flex";
-            out_icon.src = high_icon;
-          } else if (entry.status.slice(-1) == "n") {
-            out_icon.style.display = "flex";
-            warn_icon.style.display = "flex";
-            out_icon.src = low_icon;
-          }
-          if (critValueArray[i] == 1) {
-            warn_icon.style.display = "flex";
-          } else {
-            warn_icon.style.display = "none";
-          }
-          new_input.onchange = whenAnInputChanges;
-          new_input.onkeyup = whenAnInputChanges;
-  
-          var rem_button = document.createElement("img");
-          rem_button.className = "rem";
-          rem_button.src =
-            "https://cdn-icons-png.flaticon.com/128/6342/6342193.png";
-          rem_button.id = i;
-          new_div.appendChild(rem_button);
-          rem_button.onclick = rem_search;
+      for (let index = 0; index < labItems.length; index++) {
+        if (pinnedOrNotArray[index] == 1) {
+          searched_items.appendChild(buildUsualEntry(index));
+          unpinButtonMaker(index,labItems[index].name);
         }
       }
   
       //for search results
       search_val = new RegExp(document.getElementById("searchbar").value, "i");
-      for (i = 0; i < labItems.length; i++) {
+      for (let index = 0; index < labItems.length; index++) {
         if (
           document.getElementById("searchbar").value != "" &&
-          pinnedOrNotArray[i] != 1
+          pinnedOrNotArray[index] != 1
         ) {
           if (
-            labItems[i]["name"].search(search_val) != -1 ||
-            labItems[i]["tooltip"].search(search_val) != -1
+            labItems[index]["name"].search(search_val) != -1 ||
+            labItems[index]["tooltip"].search(search_val) != -1
           ) {
-            var entry = labItems[i];
-  
-            var new_div = document.createElement("div");
-            new_div.className = "entry_box";
-            new_div.style.background = entry.color;
-            new_div.id = entry.name;
-            new_div.onmouseover = tooltip;
-            new_div.onmouseleave = tooltip_remove;
-            parentElement.appendChild(new_div);
-  
-            var new_label = document.createElement("label");
-            new_label.className = "entry_label";
-            new_div.appendChild(new_label);
-  
-            var min_string, max_string; //what to write in label when it is upto or morethan
-            if (minArray[i] == 0) {
-              min_string = "< ";
-              max_string = maxArray[i] + " ";
-            } else if (maxArray[i] == 0) {
-              min_string = "> " + minArray[i];
-              max_string = " ";
-            } else {
-              min_string = minArray[i] + " - ";
-              max_string = maxArray[i] + " ";
-            }
-            new_label.innerHTML =
-              "<div style='font-size: 2rem;'>" +
-              entry.name +
-              "</div>" +
-              min_string +
-              max_string +
-              entry.unit.toString();
-  
-            var new_input = document.createElement("input");
-            new_input.type = "number";
-            new_input.className = "entry_input";
-            new_input.name = entry.name;
-            new_input.style.background = entry.color;
-            if (entry.value != 0) new_input.value = entry.value;
-            new_input.step = entry.step;
-            new_div.appendChild(new_input);
-  
-            var new_output_frame = document.createElement("div");
-            new_output_frame.className = "entry_output_frame";
-            new_div.appendChild(new_output_frame);
-  
-            var warn_icon = document.createElement("img");
-            warn_icon.className = "warning_icon";
-            warn_icon.src =
-              "https://cdn-icons-png.flaticon.com/128/595/595067.png";
-            warn_icon.style.display = "none";
-            new_output_frame.appendChild(warn_icon);
-  
-            var out_icon = document.createElement("img");
-            out_icon.className = "status_icon";
-            new_output_frame.appendChild(out_icon);
-  
-            var new_output = document.createElement("div");
-            new_output.className = "entry_output_label";
-            if (entry.status != 0) new_output.innerHTML = entry.status;
-            new_output_frame.appendChild(new_output);
-  
-            minArray[i] = entry.min;
-            maxArray[i] = entry.max;
-            id_maker(i, entry.name);
-            inputIdArray[i] = entry.input_id;
-            outputIdArray[i] = entry.output_id;
-            new_input.id = inputIdArray[i];
-            new_output.id = outputIdArray[i];
-            out_icon.id = outputIdArray[i] + "_img";
-            warn_icon.id = outputIdArray[i] + "_warn";
-            out_icon.style.display = "none";
-            if (entry.status == 0) {
-              out_icon.style.display = "none";
-            } else if (entry.status.slice(-1) == "l") {
-              out_icon.style.display = "flex";
-              out_icon.src = nl_icon;
-            } else if (entry.status.slice(-1) == "x") {
-              out_icon.style.display = "flex";
-              out_icon.src = high_icon;
-            } else if (entry.status.slice(-1) == "n") {
-              out_icon.style.display = "flex";
-              out_icon.src = low_icon;
-            }
-            if (critValueArray[i] == 1) {
-              warn_icon.style.display = "flex";
-            } else {
-              warn_icon.style.display = "none";
-            }
-            new_input.onchange = whenAnInputChanges;
-            new_input.onkeyup = whenAnInputChanges;
-  
-            var add_button = document.createElement("img");
-            add_button.className = "add";
-            add_button.src =
-              "https://cdn-icons-png.flaticon.com/512/2972/2972186.png";
-            add_button.id = i;
-            add_button.onclick = add_search;
-            new_div.appendChild(add_button);
+            parentElement.appendChild(buildUsualEntry(index));
+            pinButtonMaker(index,labItems[index].name);
           }
         }
       }
@@ -262,108 +70,23 @@ function tabContent(tabId, testCategory) {
       searchbar_show = "none";
     }
     search_bar.style.display = searchbar_show;
+
     //for usual tabs
     if (testCategory != "searchbar" && testCategory != "analyse") {
-      for (i = 0; i < labItems.length; i++) {
-        if (labItems[i]["type"] == testCategory) {
-          var entry = labItems[i];
-          var new_div = document.createElement("div");
-          new_div.className = "entry_box";
-          new_div.style.background = entry.color;
-          new_div.id = entry.name;
-          new_div.onmouseover = tooltip;
-          new_div.onmouseleave = tooltip_remove;
-          parentElement.appendChild(new_div);
-  
-          var new_label = document.createElement("label");
-          new_label.className = "entry_label";
-          new_div.appendChild(new_label);
-  
-          var min_string, max_string; //what to write in label when it is upto or morethan
-          if (minArray[i] == 0) {
-            min_string = "< ";
-            max_string = maxArray[i] + " ";
-          } else if (maxArray[i] == 0) {
-            min_string = "> " + minArray[i];
-            max_string = " ";
-          } else {
-            min_string = minArray[i] + " - ";
-            max_string = maxArray[i] + " ";
-          }
-          new_label.innerHTML =
-            "<div style='font-size: 2rem;'>" +
-            entry.name +
-            "</div>" +
-            min_string +
-            max_string +
-            entry.unit.toString();
-  
-          var new_input = document.createElement("input");
-          new_input.type = "number";
-          new_input.className = "entry_input";
-          new_input.name = entry.name;
-          new_input.style.background = entry.color;
-          if (entry.value != 0) new_input.value = entry.value;
-          new_input.step = entry.step;
-          new_div.appendChild(new_input);
-  
-          var new_output_frame = document.createElement("div");
-          new_output_frame.className = "entry_output_frame";
-          new_div.appendChild(new_output_frame);
-  
-          var warn_icon = document.createElement("img");
-          warn_icon.className = "warning_icon";
-          warn_icon.src = "https://cdn-icons-png.flaticon.com/128/595/595067.png";
-          warn_icon.style.display = "none";
-          new_output_frame.appendChild(warn_icon);
-  
-          var out_icon = document.createElement("img");
-          out_icon.className = "status_icon";
-          new_output_frame.appendChild(out_icon);
-  
-          var new_output = document.createElement("div");
-          new_output.className = "entry_output_label";
-          if (entry.status != 0) new_output.innerHTML = entry.status;
-          new_output_frame.appendChild(new_output);
-  
-          minArray[i] = entry.min;
-          maxArray[i] = entry.max;
-          id_maker(i, entry.name);
-          inputIdArray[i] = entry.input_id;
-          outputIdArray[i] = entry.output_id;
-          new_input.id = inputIdArray[i];
-          new_output.id = outputIdArray[i];
-          out_icon.id = outputIdArray[i] + "_img";
-          warn_icon.id = outputIdArray[i] + "_warn";
-          out_icon.style.display = "none";
-          if (entry.status == 0) {
-            out_icon.style.display = "none";
-          } else if (entry.status.slice(-1) == "l") {
-            out_icon.style.display = "flex";
-            out_icon.src = nl_icon;
-          } else if (entry.status.slice(-1) == "x") {
-            out_icon.style.display = "flex";
-            out_icon.src = high_icon;
-          } else if (entry.status.slice(-1) == "n") {
-            out_icon.style.display = "flex";
-            out_icon.src = low_icon;
-          }
-          if (critValueArray[i] == 1) {
-            warn_icon.style.display = "flex";
-          } else {
-            warn_icon.style.display = "none";
-          }
-          new_input.onchange = whenAnInputChanges;
-          new_input.onkeyup = whenAnInputChanges;
+      for (let index = 0; index < labItems.length; index++) {
+        if (labItems[index]["type"] == testCategory) {
+          parentElement.appendChild(buildUsualEntry(index));
         }
       }
     }
     //for analyse
     if (tabId == "tab_analyse") {
-      engineMain();
-      parentElement.style.display = "flex";
-      parentElement.style.flexDirection = "column";
-      parentElement.style.whiteSpace = "normal";
+      analyseTab();
+    }
+  }
+
+function analyseTab() {
+  engineMain();
       var measurements_parent = document.createElement("div");
       measurements_parent.className = "measurements_parent";
       parentElement.appendChild(measurements_parent);
@@ -478,5 +201,122 @@ function tabContent(tabId, testCategory) {
           prevalenceParent.appendChild(prevalenceResult);
         }
       }
+}
+
+  function buildUsualEntry(index) {
+    {
+      var entry = labItems[index];
+
+      var entryParent = document.createElement("div");
+      entryParent.className = "entry_box";
+      entryParent.style.background = entry.color;
+      entryParent.id = entry.name;
+      entryParent.onmouseover = tooltip;
+      entryParent.onmouseleave = tooltip_remove;
+      
+
+      var labelParent = document.createElement("div");
+      labelParent.className = "labelParent";
+      entryParent.appendChild(labelParent);
+
+      var min_string, max_string; //what to write in label when it is upto or morethan
+      if (entry.min == 0) {
+        min_string = "< ";
+        max_string = entry.max + " ";
+      } else if (entry.max == 0) {
+        min_string = "> " + entry.min;
+        max_string = " ";
+      } else {
+        min_string = entry.min + " - ";
+        max_string = entry.max + " ";
+      }
+      labelParent.innerHTML =
+        "<div style='font-size: 2rem;'>" +
+        entry.name +
+        "</div>" +
+        min_string +
+        max_string +
+        entry.unit.toString();
+
+      var new_input = document.createElement("input");
+      new_input.type = "number";
+      new_input.className = "entry_input";
+      new_input.name = entry.name;
+      new_input.style.background = entry.color;
+      if (entry.value != 0) new_input.value = entry.value;
+      new_input.step = entry.step;
+      entryParent.appendChild(new_input);
+
+      var new_output_frame = document.createElement("div");
+      new_output_frame.className = "entry_output_frame";
+      entryParent.appendChild(new_output_frame);
+
+      var warn_icon = document.createElement("img");
+      warn_icon.className = "warning_icon";
+      warn_icon.src =
+        "https://cdn-icons-png.flaticon.com/128/595/595067.png";
+      warn_icon.style.display = "none";
+      new_output_frame.appendChild(warn_icon);
+
+      var out_icon = document.createElement("img");
+      out_icon.className = "status_icon";
+      new_output_frame.appendChild(out_icon);
+
+      var new_output = document.createElement("div");
+      new_output.className = "entry_output_label";
+      if (entry.status != 0) new_output.innerHTML = entry.status;
+      new_output_frame.appendChild(new_output);
+
+      entry.min = entry.min;
+      entry.max = entry.max;
+      id_maker(index, entry.name);
+      inputIdArray[index] = entry.input_id;
+      outputIdArray[index] = entry.output_id;
+      new_input.id = inputIdArray[index];
+      new_output.id = outputIdArray[index];
+      out_icon.id = outputIdArray[index] + "_img";
+      warn_icon.id = outputIdArray[index] + "_warn";
+      out_icon.style.display = "none";
+      if (entry.status == 0) {
+        out_icon.style.display = "none";
+      } else if (entry.status.slice(-1) == "l") {
+        out_icon.style.display = "flex";
+        out_icon.src = nl_icon;
+      } else if (entry.status.slice(-1) == "x") {
+        out_icon.style.display = "flex";
+        out_icon.src = high_icon;
+      } else if (entry.status.slice(-1) == "n") {
+        out_icon.style.display = "flex";
+        out_icon.src = low_icon;
+      }
+      if (critValueArray[index] == 1) {
+        warn_icon.style.display = "flex";
+      } else {
+        warn_icon.style.display = "none";
+      }
+      new_input.onchange = whenAnInputChanges;
+      new_input.onkeyup = whenAnInputChanges;
+
+      return entryParent;
     }
+  }
+
+  function pinButtonMaker(index,entryId) {
+    var pinButton = document.createElement("img");
+    pinButton.className = "add";
+    pinButton.src =
+      "https://cdn-icons-png.flaticon.com/512/2972/2972186.png";
+    pinButton.id = index;
+    pinButton.onclick = add_search;
+    document.getElementById(entryId).appendChild(pinButton);
+  }
+
+  function unpinButtonMaker(index,entryId) {
+    var rem_button = document.createElement("img");
+    rem_button.className = "rem";
+    rem_button.src =
+      "https://cdn-icons-png.flaticon.com/128/6342/6342193.png";
+    rem_button.id = index;
+    document.getElementById(entryId).appendChild(rem_button);
+    rem_button.onclick = rem_search;
   }

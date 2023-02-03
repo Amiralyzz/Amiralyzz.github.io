@@ -2,10 +2,10 @@ function prevalenceChange() {
   let x = Number(this.value);
   let index = this.id.slice(11);
   conditions[index].prevalenceValue = x;
-  PosteriorCalc(index);
+  posteriorCalc(index);
 }
 
-function PosteriorCalc(ind) {
+function posteriorCalc(ind) {
   let index = statistics[ind].conditionIndex;
   let prevalenceValue = conditions[index].prevalenceValue;
   let currentLikelihoodRatio = 1;
@@ -70,7 +70,7 @@ function statisticsCalc(labItemIndex) {
         " times higher now";
       statistics[labItemIndex].currentLikelihoodRatio = currentLikelihoodRatio;
       statistics[labItemIndex].currentCutoffIndex = i;
-      PosteriorCalc(labItemIndex);
+      posteriorCalc(labItemIndex);
       return message;
     }
   }
@@ -86,6 +86,6 @@ function statisticsCalc(labItemIndex) {
     " times lower now";
   statistics[labItemIndex].currentLikelihoodRatio = currentLikelihoodRatio;
   statistics[labItemIndex].currentCutoffIndex = 0;
-  PosteriorCalc(labItemIndex);
+  posteriorCalc(labItemIndex);
   return message;
 }

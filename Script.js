@@ -332,25 +332,22 @@ function age_calc() {
     }
   }
   range_maker(selectedAgeGroup);
-
   for (var j = 0; j < labItems.length; j++) {
     x = Number(currentLabItem.value);
     id = currentLabItem.input_id;
     check_ranges(x, id);
   }
-
   tabContent(selectedTabId, selectedLabType);
-
 }
 
 function range_maker(key) {
   var i = 0;
-  for (var data of labItems) {
-    var array = data[key].slice(1, -1).split(","); //making key an array like ["1","2"]
+  for (var labItem of labItems) {
+    var array = labItem[key].slice(1, -1).split(","); //making key an array like ["1","2"]
     minArray[i] = array[genderCoef];
     maxArray[i] = array[genderCoef + 1];
-    data.min = array[genderCoef];
-    data.max = array[genderCoef + 1];
+    labItem.min = minArray[i];
+    labItem.max = maxArray[i]; 
     i++;
   }
 }
@@ -385,11 +382,7 @@ function weight_calc() {
     }
     gloalWeightGram = inp * 453.592;
   }
-
-
   tabContent(selectedTabId, selectedLabType);
-
-
 }
 
 function height_calc() {
@@ -431,23 +424,20 @@ function height_calc() {
     }
     globalHeightCm = feet * 30.48 + inch * 2.54;
   }
-
   tabContent(selectedTabId, selectedLabType);
-
-
 }
 
-function bmi_calc() {
+function bmiCalc() {
+  var bmi = 0;
   if (gloalWeightGram <= 0) gloalWeightGram = 0;
   if (globalHeightCm != 0) {
-    var bmi =
+    bmi =
       gloalWeightGram / 1000 / (globalHeightCm / 100) / (globalHeightCm / 100);
-    //document.getElementById("bmi_val").innerHTML = bmi.toFixed(1);
   }
   if (globalHeightCm == 0) {
-    var bmi = gloalWeightGram / 1000 / (1 / 100) / (1 / 100);
-    //document.getElementById("bmi_val").innerHTML = bmi.toFixed(1);
+    bmi = gloalWeightGram / 1000 / (1 / 100) / (1 / 100);
   }
+  measurements[0].value = bmi.toFixed(1);
 }
 
 function tooltip() {
@@ -462,13 +452,11 @@ function tooltip() {
     tooltip_text.innerHTML = measurements[this.id.slice(11)].tooltip;
   }
 }
+
 function tooltip_remove() {
   var tootltip_text = document.getElementById("tooltip");
   tootltip_text.innerHTML = "";
 }
-
-
-
 
 function show_path() {
   id = this.id.slice(4);
@@ -496,10 +484,10 @@ function prevalenceChange() {
   let x = Number(this.value);
   let index = this.id.slice(11);
   conditions[index].prevalenceValue = x;
-  PosteriorCalc(index);
+  posteriorCalc(index);
 }
 
-function PosteriorCalc(ind) {
+function posteriorCalc(ind) {
   let index = statistics[ind].conditionIndex;
   let prevalenceValue = conditions[index].prevalenceValue;
   let currentLikelihoodRatio = 1;
@@ -553,7 +541,6 @@ function whenAnInputChanges() {
   check_ranges(x, id);
 }
 
-
 function show_path() {
   id = this.id.slice(4);
   if (document.getElementById(this.id).innerHTML == " + ") {
@@ -576,17 +563,10 @@ function rem_search() {
   tabContent("tab_search", "searchbar");
 }
 
-
-
-
-
 function id_maker(i, name) {
   labItems[i].input_id = "in_" + name.toString();
   labItems[i].output_id = "out_" + name.toString();
 }
-
-
-
 
 function scientificNumber(number) {
   const numInSciNot = {};
@@ -604,19 +584,16 @@ function scientificNumber(number) {
 }
 
 function calc_measurements() {
-  //bmi
-  if (gloalWeightGram <= 0) gloalWeightGram = 0;
-  if (globalHeightCm != 0) {
-    var bmi =
-      gloalWeightGram / 1000 / (globalHeightCm / 100) / (globalHeightCm / 100);
-    measurements[0].value = bmi.toFixed(2);
-  }
-  if (globalHeightCm == 0) {
-    var bmi = 0;
-    measurements[0].value = bmi;
-  }
+  bmiCalc();
+  gfrCalc();
+  reticCalc();
+  tsatCalc();
+  astAltCalc();
+  weightPercentileCalc();
+  heightPercentileCalc();
+}
 
-  //gfr
+function gfrCalc() {
   cr_val = labItems[30].value;
   if (cr_val == 0 || gloalWeightGram == 0) {
     gfr_cg = 0;
@@ -658,53 +635,53 @@ function calc_measurements() {
   measurements[5].value = gfr_ckd.toFixed(3);
   measurements[6].value = gfr_mdrd.toFixed(3);
   measurements[7].value = gfr_cg.toFixed(3);
-
-  //CRC
+}
+function reticCalc() {
   var hct_val = labItems[4].value;
   var retic_val = labItems[11].value;
-  var crc_val = 0;
+  var crcVal = 0;
+  var rbcMaturation = 0,
+    rpiVal = 0;
   var normal_hct_gender = 45 - genderCoef * 2.5;
-  if (hct_val <= 0 || retic_val <= 0) {
-    crc = 0;
-  } else {
-    crc = retic_val * (hct_val / normal_hct_gender);
-  }
-  measurements[3].value = crc.toFixed(2);
-
-  //RPI
-
-  var maturation = 0,
-    rpi = 0;
   if (hct_val >= 40) {
-    maturation = 1;
+    rbcMaturation = 1;
   } else if (hct_val >= 30) {
-    maturation = 1.5;
+    rbcMaturation = 1.5;
   } else if (hct_val >= 20) {
-    maturation = 2;
+    rbcMaturation = 2;
   } else {
-    maturation = 2.5;
+    rbcMaturation = 2.5;
   }
   if (hct_val <= 0 || retic_val <= 0) {
-    rpi = 0;
+    crcVal = 0;
+    rpiVal = 0;
   } else {
-    rpi = ((hct_val / 45) * retic_val) / maturation;
+    crcVal = retic_val * (hct_val / normal_hct_gender);
+    rpiVal = ((hct_val / 45) * retic_val) / rbcMaturation;
   }
-  measurements[4].value = rpi.toFixed(2);
+  measurements[3].value = crcVal.toFixed(2);
+  measurements[4].value = rpiVal.toFixed(2);
 
-  //TSAT
+}
+function tsatCalc() {
   var iron_val = labItems[40].value;
   var tibc_val = labItems[42].value;
   if (iron_val > 0 && tibc_val > 0) {
     globalTSAT = (iron_val / tibc_val) * 100;
     measurements[8].value = globalTSAT.toFixed(2);
   }
-
-  //Percentiles
-  weightPercentileCalc();
-  heightPercentileCalc();
-
 }
-
+function astAltCalc() {
+  let p_ast = labItems[14].value;
+  let p_alt = labItems[15].value;
+  let astAltRatio = 0;
+  if (p_ast <= 0 || p_alt <= 0) {
+    astAltRatio = 0;
+  } else {
+    astAltRatio = p_ast / p_alt;
+  }
+  measurements[9].value = astAltRatio.toFixed(1);
+}
 function heightPercentileCalc() {
   if (globalAgeYears <= 3) {
     if (globalAgeMonths == 0) {
@@ -770,75 +747,4 @@ function weightPercentileCalc() {
   var weightPercentile = ztable_finder(weightZScore) * 100;
   measurements[1].value = weightPercentile.toFixed(2);
 }
-
-
-
-
-
-function heightPercentileCalc() {
-  if (globalAgeYears <= 3) {
-    if (globalAgeMonths == 0) {
-      var currentAgeObject = heightAgeInfantJSON.find(
-        (o) => o.Age === globalAgeMonths.toString()
-      );
-    } else {
-      var currentAgeObject = heightAgeInfantJSON.find(
-        (o) => o.Age === (globalAgeMonths - 0.5).toString()
-      );
-    }
-  } else if (globalAgeYears <= 20) {
-    var currentAgeObject = heightAgeJSON.find(
-      (o) => o.Age === globalAgeYears.toString()
-    );
-  } else {
-    measurements[2].value = 0;
-    return 0;
-  }
-  if (genderCoef == 0) {
-    var L = currentAgeObject.L;
-    var M = currentAgeObject.M;
-    var S = currentAgeObject.S;
-  } else {
-    var L = currentAgeObject.L2;
-    var M = currentAgeObject.M2;
-    var S = currentAgeObject.S2;
-  }
-  var heightZScore = ((globalHeightCm / M) ** L - 1) / (S * L);
-  var heightPercentile = ztable_finder(heightZScore) * 100;
-  measurements[2].value = heightPercentile.toFixed(2);
-}
-function weightPercentileCalc() {
-  if (globalAgeYears <= 3) {
-    if (globalAgeMonths != 36 && globalAgeMonths != 0) {
-      var currentAgeObject = weightAgeInfantJSON.find(
-        (o) => o.Age === (globalAgeMonths + 0.5).toString()
-      );
-    } else {
-      var currentAgeObject = weightAgeInfantJSON.find(
-        (o) => o.Age === globalAgeMonths.toString()
-      );
-    }
-  } else if (globalAgeYears <= 20) {
-    var currentAgeObject = weightAgeJSON.find(
-      (o) => o.Age === globalAgeYears.toString()
-    );
-  } else {
-    measurements[1].value = 0;
-    return 0;
-  }
-  if (genderCoef == 0) {
-    var L = currentAgeObject.L;
-    var M = currentAgeObject.M;
-    var S = currentAgeObject.S;
-  } else {
-    var L = currentAgeObject.L2;
-    var M = currentAgeObject.M2;
-    var S = currentAgeObject.S2;
-  }
-  var weightKg = gloalWeightGram / 1000;
-  var weightZScore = ((weightKg / M) ** L - 1) / (S * L);
-  var weightPercentile = ztable_finder(weightZScore) * 100;
-  measurements[1].value = weightPercentile.toFixed(2);
-}
-
 

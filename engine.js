@@ -646,6 +646,7 @@ function lft_engine() {
 }
 
 function lft_pattern(liverPanel, bilt, bild) {
+  let astCoef = liverPanel[0] / liverPanel[1];
   let altCoef = liverPanel[2] / liverPanel[3];
   let alpCoef = liverPanel[4] / liverPanel[5];
   let r_value = altCoef / alpCoef;
@@ -673,13 +674,13 @@ function lft_pattern(liverPanel, bilt, bild) {
   return [pattern, path];
 }
 
-function percentileFinder(x, min, max) {
+function percentileFinder(input, min, max) {
   min = Number(min);
   max = Number(max);
-  x = Number(x);
+  input = Number(input);
   let mean = (max + min) / 2;
   let standardDeviation = (max - mean) / 2;
-  let z_score = (x - mean) / standardDeviation;
+  let z_score = (input - mean) / standardDeviation;
   let percentile = ztable_finder(z_score) * 100;
   return percentile;
 }

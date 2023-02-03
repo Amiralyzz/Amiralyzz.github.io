@@ -76,62 +76,68 @@ var patient = [
   
   var measurements = [
     {
-      name: "BMI",
+      name: "BMI ",
       value: 0,
       color: "rgb(38, 3, 58)",
       tooltip: "Body Mass Index",
     },
     {
-      name: "Weight percentile",
+      name: "Weight percentile ",
       value: 0,
       color: "rgb(38, 3, 58)",
       tooltip: "Weight percentile based on gender and age",
     },
     {
-      name: "Height percentile",
+      name: "Height percentile ",
       value: 0,
       color: "rgb(38, 3, 58)",
       tooltip: "Height percentile based on gender and age",
     },
     {
-      name: "CRC",
+      name: "CRC ",
       value: 0,
       color: "darkslateblue",
       tooltip: "Corrected Reticulocyte Count",
     },
     {
-      name: "RPI",
+      name: "RPI ",
       value: 0,
       color: "darkslateblue",
       tooltip:
         "Reticulocyte Production Index (use when Polychromasia is present)",
     },
     {
-      name: "GFR (CKD-EPI)",
+      name: "GFR (CKD-EPI) ",
       value: 0,
       color: "rgb(128, 70, 32)",
       tooltip: "Estimated Glomerular Filtration Rate based on CKD-EPI Equations",
     },
     {
-      name: "GFR (MDRD)",
+      name: "GFR (MDRD) ",
       value: 0,
       color: "rgb(128, 70, 32)",
       tooltip: "Estimated Glomerular Filtration Rate based on MDRD Equation",
     },
     {
-      name: "GFR (Cockcroft)",
+      name: "GFR (Cockcroft) ",
       value: 0,
       color: "rgb(128, 70, 32)",
       tooltip:
         "Estimated Glomerular Filtration Rate based on Cockcroft-Gault Equation",
     },
-  
     {
-      name: "TSAT",
+      name: "TSAT ",
       value: 0,
       color: "rgb(102, 30, 52)",
       tooltip: "Transferin saturation (Iron / TIBC)",
     },
+    {
+      name: "AST/ALT ",
+      value: 0,
+      color: "darkslategray",
+      tooltip: "AST/ALT ratio",
+    }
+
   ];
   
   var weightAgeInfantJSON = [

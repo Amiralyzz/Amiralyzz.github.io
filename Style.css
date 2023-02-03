@@ -462,7 +462,7 @@ h1 {
   font-family: "Abel", sans-serif;
 }
 
-.entry_label {
+.labelParent {
   position: relative;
   text-align: center;
   width: 170px;
