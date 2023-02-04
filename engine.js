@@ -40,13 +40,13 @@ function whenAnInputChanges() {
 function minIsNotBiggerThanMax(x, id) {
   try {
     if (id == "in_Bil(D)") {
-      var bilt_val = labItems[17].value;
+      var bilt_val = Number(labItems[17].value);
       if (x > bilt_val && bilt_val != 0) {
         x = bilt_val;
         document.getElementById("in_Bil(D)").value = x;
       }
     } else if (id == "in_Bil(T)") {
-      var bild_val = labItems[18].value;
+      var bild_val = Number(labItems[18].value);
       if (x < bild_val) {
         document.getElementById("in_Bil(D)").value = x;
       }
@@ -93,7 +93,6 @@ function check_ranges(x, id) {
     } else {
         decimalPoint = 2;
     }
-    console.log(st, decimalPoint, decimalValue)
   }
   st = st.toFixed(decimalPoint);
   if (x != "") {
@@ -646,6 +645,7 @@ function lft_engine() {
 }
 
 function lft_pattern(liverPanel, bilt, bild) {
+  let astCoef = liverPanel[0] / liverPanel[1];
   let altCoef = liverPanel[2] / liverPanel[3];
   let alpCoef = liverPanel[4] / liverPanel[5];
   let r_value = altCoef / alpCoef;
@@ -673,14 +673,15 @@ function lft_pattern(liverPanel, bilt, bild) {
   return [pattern, path];
 }
 
-function percentileFinder(x, min, max) {
+function percentileFinder(input, min, max) {
   min = Number(min);
   max = Number(max);
-  x = Number(x);
+  input = Number(input);
   let mean = (max + min) / 2;
   let standardDeviation = (max - mean) / 2;
-  let z_score = (x - mean) / standardDeviation;
-  let percentile = ztable_finder(z_score) * 100;
+  let z_score = (input - mean) / standardDeviation;
+  let percentile = 0;
+  try{percentile = ztable_finder(z_score) * 100;} catch{}
   return percentile;
 }
 
