@@ -464,10 +464,62 @@ h1 {
 
 .labelParent {
   position: relative;
-  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   width: 170px;
 }
 
+.limitsParent {
+  display: flex;
+  
+}
+
+
+.limitsParent div {
+  padding: 2px;
+}
+
+
+
+.lowerLimitParent {
+  display: flex;
+  justify-content: space-between;
+}
+
+.upperLimitParent {
+  display: flex;
+  justify-content: space-between;
+}
+
+.unitParent{
+  display: flex;
+  justify-content: space-between;
+}
+
+.closeButton {
+  border-radius: 10px;
+  filter: brightness(80%);
+  border: none;
+  color: white;
+  font-family: inherit;
+  font-size: 1rem;
+}
+
+.lowerLimitInput{
+  width: 70px;
+  font-size: 1rem;
+  color: white;
+  font-family: inherit;
+  border: none;
+}
+.upperLimitInput{
+  width: 70px;
+  font-size: 1rem;
+  color: white;
+  font-family: inherit;
+  border: none;
+}
 .entry_input {
   position: relative;
   width: 140px;

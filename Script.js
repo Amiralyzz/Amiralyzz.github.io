@@ -1,8 +1,4 @@
-var minArray = [],
-  maxArray = [],
-  inputIdArray = [],
-  outputIdArray = [],
-  pinnedOrNotArray = [],
+var pinnedOrNotArray = [],
   critValueArray = [];
 var globalAgeYears = 40,
   globalAgeMonths,
@@ -310,31 +306,31 @@ function age_calc() {
     selectedAgeGroupIndex == 2
   ) {
     for (var j = 0; j < labItems.length; j++) {
-      if (currentLabItem["name"] == "Hb") {
-        currentLabItem["critmin"] = 9;
-        currentLabItem["critmax"] = 25;
+      if (labItems[j]["name"] == "Hb") {
+        labItems[j]["critmin"] = 9;
+        labItems[j]["critmax"] = 25;
       }
-      if (currentLabItem["name"] == "Hct") {
-        currentLabItem["critmin"] = 28;
-        currentLabItem["critmax"] = 67;
+      if (labItems[j]["name"] == "Hct") {
+        labItems[j]["critmin"] = 28;
+        labItems[j]["critmax"] = 67;
       }
     }
   } else {
     for (var j = 0; j < labItems.length; j++) {
-      if (currentLabItem["name"] == "Hb") {
-        currentLabItem["critmin"] = 7;
-        currentLabItem["critmax"] = 18;
+      if (labItems[j]["name"] == "Hb") {
+        labItems[j]["critmin"] = 7;
+        labItems[j]["critmax"] = 18;
       }
-      if (currentLabItem["name"] == "Hct") {
-        currentLabItem["critmin"] = 20;
-        currentLabItem["critmax"] = 55;
+      if (labItems[j]["name"] == "Hct") {
+        labItems[j]["critmin"] = 20;
+        labItems[j]["critmax"] = 55;
       }
     }
   }
   range_maker(selectedAgeGroup);
   for (var j = 0; j < labItems.length; j++) {
-    x = Number(currentLabItem.value);
-    id = currentLabItem.input_id;
+    x = Number(labItems[j].value);
+    id = labItems[j].input_id;
     check_ranges(x, id);
   }
   tabContent(selectedTabId, selectedLabType);
@@ -344,10 +340,8 @@ function range_maker(key) {
   var i = 0;
   for (var labItem of labItems) {
     var array = labItem[key].slice(1, -1).split(","); //making key an array like ["1","2"]
-    minArray[i] = array[genderCoef];
-    maxArray[i] = array[genderCoef + 1];
-    labItem.min = minArray[i];
-    labItem.max = maxArray[i]; 
+    labItem.min = array[genderCoef];
+    labItem.max = array[genderCoef + 1];
     i++;
   }
 }
