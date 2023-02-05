@@ -85,13 +85,12 @@ function check_ranges(x, id) {
   let st = percentileFinder(x, currentLabItem.min, currentLabItem.max);
   if (st >= 1) {
     decimalPoint = 0;
-  }
-  else {
+  } else {
     let decimalValue = Math.ceil(-1 * Math.log10(st));
     if (decimalValue < 3) {
-        decimalPoint = decimalValue;
+      decimalPoint = decimalValue;
     } else {
-        decimalPoint = 2;
+      decimalPoint = 2;
     }
   }
   st = st.toFixed(decimalPoint);
@@ -592,10 +591,12 @@ function lft_engine() {
   liverPanel[6] = labItems[17].value;
   liverPanel[7] = labItems[17].max;
   liverPanel[8] = labItems[18].value;
+  let p_ldh = labItems[80].value;
   let astCoef = liverPanel[0] / liverPanel[1];
   let altCoef = liverPanel[2] / liverPanel[3];
   let alpCoef = liverPanel[4] / liverPanel[5];
   let biltCoef = liverPanel[6] / liverPanel[7];
+  let deRitisRatio = measurements[9].value;
   let path = "";
   delete patient[0].signs[0][30];
   delete patient[0].signs[1][30];
@@ -605,7 +606,7 @@ function lft_engine() {
   delete patient[0].signs[2][31];
   patternReturnArray = lft_pattern(liverPanel);
   if (liverPanel[0] != "" && liverPanel[2] != "" && liverPanel[4] != "") {
-    if (astCoef/altCoef > 5 || astCoef/altCoef < 0.2) {
+    if (astCoef / altCoef > 5 || astCoef / altCoef < 0.2) {
       patient[0].signs[0][30] = "Liver tests not conclusive";
       patient[0].signs[1][30] = "AST and ALT are not compatible with eachother";
       patient[0].signs[2][30] = "darkslategray";
@@ -614,11 +615,65 @@ function lft_engine() {
     patient[0].signs[1][31] = patternReturnArray[1];
     patient[0].signs[2][31] = "darkslategray";
 
-    if (patternReturnArray[0] == "Hepato-cellular pattern") {
-      path += "Hepato-cellular pattern";
-      if (true){}
+    if (patternReturnArray[0] != "Cholestatic pattern") {
+      if (patternReturnArray[0] == "Mixed pattern") {
+        path += "Mixed pattern";
+      } else {
+        path += "Hepato-cellular pattern";
+      }
+      if (altCoef > 50 || astCoef > 50) {
+        path += " &#8594 rise more than 50 times the ULN";
+        if (p_ldh > labItems[80].max) {
+          path += " and LDH is elevated too";
+        }
+        patient[0].signs[0][30] = "Ischemic hepatitis";
+        patient[0].signs[1][30] = path;
+        patient[0].signs[2][30] = "darkslategray";
+      } else if (altCoef > 25 || astCoef > 25) {
+        path += " &#8594 rise more than 25 times the ULN";
+        //virals can be checked here
+        let prefix = ""; 
+        if (deRitisRatio>2) {
+          prefix = "Fulminant ";
+          path += " &#8594 De Ritis ratio is more than 2";
+        } else if (deRitisRatio<1) {
+          prefix = "Resolving ";
+          path += " &#8594 De Ritis ratio is less than 1";
+        }
+        patient[0].signs[0][30] = prefix + "Acute viral or toxin-related hepatits";
+        patient[0].signs[1][30] = path;
+        patient[0].signs[2][30] = "darkslategray";
+      } else if (altCoef > 5 && astCoef > 8) {
+        path +=
+          " &#8594 AST and ALT rise more than 8 and 5 times the ULN respectively";
+        patient[0].signs[0][30] = "Alcoholic fatty liver disease is unlikely";
+        patient[0].signs[1][30] = path;
+        patient[0].signs[2][30] = "darkslategray";
+      } else if (altCoef > 4 && astCoef > 4) {
+        path += " &#8594 AST and ALT rise more than 4 times the ULN";
+        //ast to alt is complicated here and needs another function
+        patient[0].signs[0][30] =
+          "Non-alcoholic fatty liver disease is unlikely";
+        patient[0].signs[1][30] = path;
+        patient[0].signs[2][30] = "darkslategray";
+      } else {
+        path +=
+          " &#8594 AST and ALT rise is " +
+          astCoef.toFixed(1) +
+          " and " +
+          altCoef.toFixed(1) +
+          " times the ULN respectively";
+        patient[0].signs[0][30] =
+          "Fatty liver disease | chronic Hepatitis";
+        patient[0].signs[1][30] = path;
+        patient[0].signs[2][30] = "darkslategray";
+      }
     }
-  } else if (liverPanel[0] == "" && liverPanel[2] == "" && liverPanel[4] == ""){
+  } else if (
+    liverPanel[0] == "" &&
+    liverPanel[2] == "" &&
+    liverPanel[4] == ""
+  ) {
     return 0;
   } else {
     patient[0].signs[0][30] = "Liver tests not conclusive";
@@ -665,15 +720,17 @@ function percentileFinder(input, min, max) {
   let standardDeviation = (max - mean) / 2;
   let z_score = (input - mean) / standardDeviation;
   let percentile = 0;
-  try{percentile = ztable_finder(z_score) * 100;} catch{}
+  try {
+    percentile = ztable_finder(z_score) * 100;
+  } catch {}
   return percentile;
 }
 
 function engineMain() {
+  calc_measurements();
   anemiaType();
   lft_engine();
   iron_profile();
   folate();
   b12();
-  calc_measurements();
 }
