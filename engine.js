@@ -199,24 +199,9 @@ function iron_profile() {
   } else {
     globalTSAT = 0;
   }
-  var signsLenght = patient[0].signs[0].length;
-  //to remove previous irons
-  var iron_string1 = new RegExp(/iron/, "i");
-  var iron_string2 = new RegExp(/chronic/, "i");
-  var iron_string3 = new RegExp(/MCV/, "i");
-  var iron_string4 = new RegExp(/thalassemia/, "i");
-  for (i = 0; i < signsLenght; i++) {
-    if (
-      iron_string1.test(patient[0].signs[0][i]) ||
-      iron_string2.test(patient[0].signs[0][i]) ||
-      iron_string3.test(patient[0].signs[0][i]) ||
-      iron_string4.test(patient[0].signs[0][i])
-    ) {
-      delete patient[0].signs[0][i];
-      delete patient[0].signs[1][i];
-      delete patient[0].signs[2][i];
-    }
-  }
+  delete patient[0].signs[0][10];
+  delete patient[0].signs[1][10];
+  delete patient[0].signs[2][10];
   //returns 0 = no assessment, 1 = IDA , 11 = IronStoreDeficiency , 111= IronDeficientEryPoes
   //        2 = ACD , 3 = Thal , 4 = others , 5 = maybe mcv is wrong , 6 = no crp , false = no def
   //        12 = 1 + 2
@@ -492,15 +477,9 @@ function anemiaType() {
   var p_rdw = labItems[8].value;
   var p_retic = labItems[11].value;
   var cbc_color = "darkslateblue";
-  //to remove previous anemias
-  anemia_string = new RegExp(/anemia/, "i");
-  for (i = 0; i < patient[0].signs[0].length; i++) {
-    if (anemia_string.test(patient[0].signs[0][i])) {
-      delete patient[0].signs[0][i];
-      delete patient[0].signs[1][i];
-      delete patient[0].signs[2][i];
-    }
-  }
+  delete patient[0].signs[0][2];
+  delete patient[0].signs[1][2];
+  delete patient[0].signs[2][2];
 
   //anemia algorithm based on RPI and MCV
   path = "";
@@ -565,15 +544,9 @@ function folate() {
   var p_b12 = labItems[44].value;
 
   if (p_fol <= 0) return false;
-  //to remove previous signs
-  folate_string = new RegExp(/folate/, "i");
-  for (i = 0; i < patient[0].signs[0].length; i++) {
-    if (folate_string.test(patient[0].signs[0][i])) {
-      delete patient[0].signs[0][i];
-      delete patient[0].signs[1][i];
-      delete patient[0].signs[2][i];
-    }
-  }
+  delete patient[0].signs[0][11];
+  delete patient[0].signs[1][11];
+  delete patient[0].signs[2][11];
 
   if (p_fol < labItems[43].min) {
     if (p_b12 < labItems[44].min && p_b12 > 0) {
@@ -592,15 +565,9 @@ function b12() {
   var p_b12 = labItems[44].value;
   var p_fol = labItems[43].value;
   if (p_b12 <= 0) return false;
-  //to remove previous signs
-  b12_string = new RegExp(/b12/, "i");
-  for (i = 0; i < patient[0].signs[0].length; i++) {
-    if (b12_string.test(patient[0].signs[0][i])) {
-      delete patient[0].signs[0][i];
-      delete patient[0].signs[1][i];
-      delete patient[0].signs[2][i];
-    }
-  }
+  delete patient[0].signs[1][11];
+  delete patient[0].signs[0][11];
+  delete patient[0].signs[2][11];
   if (p_b12 < labItems[44].min) {
     if (p_fol < labItems[43].min && p_fol > 0) {
       patient[0].signs[0][11] = "folate and b12 deficiency";
@@ -615,45 +582,62 @@ function b12() {
 }
 
 function lft_engine() {
-  let p_ast = labItems[14].value;
-  let p_alt = labItems[15].value;
-  let p_alp = labItems[16].value;
-  let p_bilt = labItems[17].value;
-  let p_bild = labItems[18].value;
   let liverPanel = [];
-  liverPanel[0] = p_ast;
+  liverPanel[0] = labItems[14].value;
   liverPanel[1] = labItems[14].max;
-  liverPanel[2] = p_alt;
+  liverPanel[2] = labItems[15].value;
   liverPanel[3] = labItems[15].max;
-  liverPanel[4] = p_alp;
+  liverPanel[4] = labItems[16].value;
   liverPanel[5] = labItems[16].max;
-
-  let lftString = new RegExp(/pattern/, "i");
-  for (i = 0; i < patient[0].signs[0].length; i++) {
-    if (lftString.test(patient[0].signs[0][i])) {
-      delete patient[0].signs[0][i];
-      delete patient[0].signs[1][i];
-      delete patient[0].signs[2][i];
-    }
-  }
-  patternReturnArray = lft_pattern(liverPanel, p_bilt, p_bild);
+  liverPanel[6] = labItems[17].value;
+  liverPanel[7] = labItems[17].max;
+  liverPanel[8] = labItems[18].value;
+  let astCoef = liverPanel[0] / liverPanel[1];
+  let altCoef = liverPanel[2] / liverPanel[3];
+  let alpCoef = liverPanel[4] / liverPanel[5];
+  let biltCoef = liverPanel[6] / liverPanel[7];
+  let path = "";
+  delete patient[0].signs[0][30];
+  delete patient[0].signs[1][30];
+  delete patient[0].signs[2][30];
+  delete patient[0].signs[0][31];
+  delete patient[0].signs[1][31];
+  delete patient[0].signs[2][31];
+  patternReturnArray = lft_pattern(liverPanel);
   if (liverPanel[0] != "" && liverPanel[2] != "" && liverPanel[4] != "") {
-    patient[0].signs[0][30] = patternReturnArray[0];
-    patient[0].signs[1][30] = patternReturnArray[1];
+    if (astCoef/altCoef > 5 || astCoef/altCoef < 0.2) {
+      patient[0].signs[0][30] = "Liver tests not conclusive";
+      patient[0].signs[1][30] = "AST and ALT are not compatible with eachother";
+      patient[0].signs[2][30] = "darkslategray";
+    }
+    patient[0].signs[0][31] = patternReturnArray[0];
+    patient[0].signs[1][31] = patternReturnArray[1];
+    patient[0].signs[2][31] = "darkslategray";
+
+    if (patternReturnArray[0] == "Hepato-cellular pattern") {
+      path += "Hepato-cellular pattern";
+      if (true){}
+    }
+  } else if (liverPanel[0] == "" && liverPanel[2] == "" && liverPanel[4] == ""){
+    return 0;
+  } else {
+    patient[0].signs[0][30] = "Liver tests not conclusive";
+    patient[0].signs[1][30] = "AST and/or ALT and/or ALP not entered";
     patient[0].signs[2][30] = "darkslategray";
   }
 }
 
-function lft_pattern(liverPanel, bilt, bild) {
+function lft_pattern(liverPanel) {
   let astCoef = liverPanel[0] / liverPanel[1];
   let altCoef = liverPanel[2] / liverPanel[3];
   let alpCoef = liverPanel[4] / liverPanel[5];
+  let biltCoef = liverPanel[6] / liverPanel[7];
   let r_value = altCoef / alpCoef;
   let pattern = "";
   let path = "(ALT &#247 ALT ULN) &#247 (ALP &#247 ALP ULN) ";
   if (
-    liverPanel[0] > liverPanel[1] &&
-    liverPanel[2] > liverPanel[3] &&
+    liverPanel[0] > liverPanel[1] ||
+    liverPanel[2] > liverPanel[3] ||
     liverPanel[4] > liverPanel[5]
   ) {
     if (r_value >= 5) {
@@ -667,7 +651,7 @@ function lft_pattern(liverPanel, bilt, bild) {
       pattern = "Mixed pattern";
     }
   } else {
-    path = "not all enzymes are elevated";
+    path = "no elevation";
     pattern = "no pattern";
   }
   return [pattern, path];

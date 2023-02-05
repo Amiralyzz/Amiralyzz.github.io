@@ -404,9 +404,6 @@ function height_calc() {
     if (inch >= 12) {
       inch = 11;
     }
-    // if(inch = "") {
-    //     inch = 0;
-    // }
     if (height_txtbox.value.length == 1) {
       inch = 0;
       height_txtbox.value = feet;

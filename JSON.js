@@ -132,10 +132,10 @@ var patient = [
       tooltip: "Transferin saturation (Iron / TIBC)",
     },
     {
-      name: "AST/ALT ",
+      name: "De Ritis ratio ",
       value: 0,
       color: "darkslategray",
-      tooltip: "AST/ALT ratio",
+      tooltip: "AST:ALT ratio",
     }
 
   ];

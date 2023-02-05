@@ -311,10 +311,10 @@ function labelParentMaker(entry) {
 
 function limitsExpand() {
   let id = this.id;
+  if (id.slice(0,12) == "limitchanged") return false;
   let index = id.slice(5);
   var entry = labItems.find((o) => o.name === index.toString());
   let limitsParent = document.getElementById(id);
-  console.log(entry);
   this.style.display = "block";
   this.style.width = "150px";
   var lowerLimitParent = document.createElement("div");

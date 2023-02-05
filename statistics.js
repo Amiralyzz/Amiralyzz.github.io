@@ -89,3 +89,18 @@ function statisticsCalc(labItemIndex) {
   posteriorCalc(labItemIndex);
   return message;
 }
+
+function calculateMean(values) {
+  const mean = (values.reduce((sum, current) => sum + current)) / values.length;
+  return mean;
+};
+
+function calculateSD(values) {
+  const average = calculateMean(values);
+  const squareDiffs = values.map((value) => {
+      const diff = value - average;
+      return diff * diff;
+  });
+  const variance = calculateMean(squareDiffs);
+  return Math.sqrt(variance);
+};
