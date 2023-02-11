@@ -632,15 +632,16 @@ function lft_engine() {
       } else if (altCoef > 25 || astCoef > 25) {
         path += " &#8594 rise more than 25 times the ULN";
         //virals can be checked here
-        let prefix = ""; 
-        if (deRitisRatio>2) {
+        let prefix = "";
+        if (deRitisRatio > 2) {
           prefix = "Fulminant ";
           path += " &#8594 De Ritis ratio is more than 2";
-        } else if (deRitisRatio<1) {
+        } else if (deRitisRatio < 1) {
           prefix = "Resolving ";
           path += " &#8594 De Ritis ratio is less than 1";
         }
-        patient[0].signs[0][30] = prefix + "Acute viral or toxin-related hepatits";
+        patient[0].signs[0][30] =
+          prefix + "Acute viral or toxin-related hepatits";
         patient[0].signs[1][30] = path;
         patient[0].signs[2][30] = "darkslategray";
       } else if (altCoef > 5 && astCoef > 8) {
@@ -663,8 +664,7 @@ function lft_engine() {
           " and " +
           altCoef.toFixed(1) +
           " times the ULN respectively";
-        patient[0].signs[0][30] =
-          "Fatty liver disease | chronic Hepatitis";
+        patient[0].signs[0][30] = "Fatty liver disease | chronic Hepatitis";
         patient[0].signs[1][30] = path;
         patient[0].signs[2][30] = "darkslategray";
       }

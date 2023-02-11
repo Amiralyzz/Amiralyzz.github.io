@@ -500,37 +500,6 @@ function posteriorCalc(ind) {
   } catch {}
 }
 
-function whenAnInputChanges() {
-  x = Number(this.value);
-  id = this.id;
-  if (x < 0) {
-    x = 0;
-  }
-  if (x != 0) {
-    switch (id) {
-      // case in_WBC :
-      case "in_RBC":
-      case "in_Hb":
-      case "in_MCV":
-        cbc_autocomplete();
-        anemiaType();
-        break;
-      case "in_MCH":
-      case "in_Hct":
-      case "in_MCHC":
-        anemiaType();
-        break;
-      case "in_Iron":
-      case "in_TIBC":
-      case "in_Ferritin":
-        iron_profile();
-        break;
-      default:
-    }
-  }
-
-  check_ranges(x, id);
-}
 
 function show_path() {
   id = this.id.slice(4);
