@@ -28,7 +28,8 @@ function whenAnInputChanges() {
       case "in_Iron":
       case "in_TIBC":
       case "in_Ferritin":
-        iron_profile();
+        // iron_profile();
+        testEngine(0);
         break;
       default:
     }
@@ -535,7 +536,7 @@ function anemiaType() {
     patient[0].signs[2][2] = cbc_color;
   }
 
-  iron_profile();
+  // iron_profile();
 }
 
 function folate() {
@@ -730,7 +731,25 @@ function engineMain() {
   calc_measurements();
   anemiaType();
   lft_engine();
-  iron_profile();
+  // iron_profile();
+  resultArray = testEngine(0);
+  signMaker(listMaker([...resultArray[0]].map((x) => x.value)),resultArray[1]);
   folate();
   b12();
+}
+
+function listMaker(array) {
+
+  let mainString = "<ul>";
+  for (let i=0; i<array.length ; i++) {
+    mainString += ("<li>" + array[i] + "</li>");
+  }
+  mainString += "</ul>";
+  return mainString;
+}
+
+function signMaker(listHTML,path) {
+  patient[0].signs[0][10] = listHTML;
+  patient[0].signs[1][10] = path;
+  patient[0].signs[2][10] = "rgb(102, 30, 52)";
 }
