@@ -551,10 +551,51 @@ function calc_measurements() {
   astAltCalc();
   weightPercentileCalc();
   heightPercentileCalc();
+  wbcCalc();
+}
+
+function wbcCalc() {
+  let wbcTotalVal = labItems[0].value;
+  let neuVal = labItems[45].value;
+  let lymVal = labItems[46].value;
+  let monVal = labItems[47].value;
+  let eosVal = labItems[48].value;
+  let basVal = labItems[49].value;
+  let bandVal = labItems[50].value;
+  measurements[10].value = 0.01 * neuVal * wbcTotalVal;
+  measurements[11].value = 0.01 * lymVal * wbcTotalVal;
+  measurements[12].value = 0.01 * monVal * wbcTotalVal;
+  measurements[13].value = 0.01 * eosVal * wbcTotalVal;
+  measurements[14].value = 0.01 * basVal * wbcTotalVal;
+  measurements[15].value = 0.01 * bandVal * wbcTotalVal;
+}
+
+function checkIfWBCDiffsAreLessThanHundred() {
+  var wbcDiff = [];
+  let totalVal = 0;
+  let labIndex = 45; //differentials start from [45]
+  while (labIndex<51) {
+    let diff = labItems[labIndex].value;
+    if (diff >= 100) {
+      labItems[labIndex].value = 0;
+      diff = 0;
+      let inputID = labItems[labIndex].input_id;
+      document.getElementById(inputID).value = 0;
+    }
+    totalVal += diff;
+    if (totalVal>100) {
+      totalVal -= diff;
+      labItems[labIndex].value = 0;
+      diff = 0;
+      let inputID = labItems[labIndex].input_id;
+      document.getElementById(inputID).value = 0;
+    }
+    labIndex++;
+  } 
 }
 
 function gfrCalc() {
-  cr_val = labItems[30].value;
+  let cr_val = labItems[30].value;
   if (cr_val == 0 || gloalWeightGram == 0) {
     gfr_cg = 0;
     gfr_mdrd = 0;

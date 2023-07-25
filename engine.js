@@ -6,7 +6,16 @@ function whenAnInputChanges() {
   }
   if (x != 0) {
     switch (id) {
-      // case in_WBC :
+      case "in_WBC":
+      case "in_Neu":
+      case "in_Lym":
+      case "in_Mono":
+      case "in_Eos":
+      case "in_Bas":
+        checkIfWBCDiffsAreLessThanHundred();  
+        wbcCalc();
+        isLeukocytosisOrLuekopenia();
+        break;
       case "in_RBC":
       case "in_Hb":
       case "in_MCV":
@@ -180,6 +189,29 @@ function cbc_autocomplete() {
       } catch {}
       check_ranges(c_mchc, "in_MCHC");
     }
+  }
+}
+
+function isLeukocytosisOrLuekopenia() {
+  let wbcTotalVal = labItems[0].value;
+  let wbcMaxVal = labItems[0].max;
+  let wbcMinVal = labItems[0].min;
+  let path = "";
+  let cbc_color = "darkslateblue";
+  delete patient[0].signs[0][0];
+  delete patient[0].signs[1][0];
+  delete patient[0].signs[2][0];
+
+  if (wbcTotalVal > wbcMaxVal) {
+    path += "WBC > " + wbcMaxVal;
+    patient[0].signs[0][0] = "Leukocytosis";
+    patient[0].signs[1][0] = path;
+    patient[0].signs[2][0] = cbc_color;
+  } else if (wbcTotalVal < wbcMinVal) {
+    path += "WBC < " + wbcMinVal;
+    patient[0].signs[0][0] = "Leukopenia";
+    patient[0].signs[1][0] = path;
+    patient[0].signs[2][0] = cbc_color;
   }
 }
 
@@ -482,7 +514,7 @@ function anemiaType() {
   delete patient[0].signs[2][2];
 
   //anemia algorithm based on RPI and MCV
-  path = "";
+  let path = "";
   statisticsMaker(1);
   conditionMaker(0);
   if (p_hb <= 0) {
@@ -727,20 +759,25 @@ function percentileFinder(input, min, max) {
   return percentile;
 }
 
-function engineMain() {
+function engineMain() {    //activates when user goes to analyse tab
   calc_measurements();
   anemiaType();
   lft_engine();
   // iron_profile();
-  resultArray = testEngine(0);
-  signMaker(listMaker([...resultArray[0]].map((x) => x.value)),resultArray[1]);
+  let resultArray = testEngine(0);
+  try {
+    signMaker(listMaker([...resultArray[0]].map((x) => x.value)),resultArray[1]);
+  }
+  catch {};
   folate();
   b12();
 }
 
 function listMaker(array) {
-
-  let mainString = "<ul>";
+  if (array[0] == undefined) {
+    return [undefined , ""];
+  }
+  let mainString = "Possible explanations include: <br><ul>";
   for (let i=0; i<array.length ; i++) {
     mainString += ("<li>" + array[i] + "</li>");
   }
