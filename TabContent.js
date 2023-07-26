@@ -90,7 +90,7 @@ function analyseTab() {
   var measurements_parent = document.createElement("div");
   measurements_parent.className = "measurements_parent";
   parentElement.appendChild(measurements_parent);
-  measurements_parent.innerHTML = "Found Measurements: ";
+  measurements_parent.innerHTML = "<img src='https://cdn-icons-png.flaticon.com/128/1225/1225656.png'  class='logo_table'  alt='measure'/> Found Measurements: ";
   for (i = 0; i < measurements.length; i++) {
     try {
       if (measurements[i].value != 0) {
@@ -110,7 +110,7 @@ function analyseTab() {
   var findings_parent = document.createElement("div");
   findings_parent.className = "findings_parent";
   parentElement.appendChild(findings_parent);
-  findings_parent.innerHTML = "Findings based on Clinical Guidelines: ";
+  findings_parent.innerHTML = "<img src='https://cdn-icons-png.flaticon.com/128/4251/4251962.png'  class='logo_table'  alt='guideline'/> Findings based on Clinical Guidelines: ";
   for (i = 0; i < patient[0].signs[0].length; i++) {
     var signs_section = document.createElement("div");
     signs_section.className = "signs_section";
@@ -131,7 +131,7 @@ function analyseTab() {
   var statisticsParent = document.createElement("div");
   statisticsParent.className = "statisticsParent";
   parentElement.appendChild(statisticsParent);
-  statisticsParent.innerHTML = "Evidence Based Statistics: ";
+  statisticsParent.innerHTML =  "<div style='display: block'> <img src='https://cdn-icons-png.flaticon.com/128/9596/9596720.png'  class='logo_table'  alt='ebm'/> Evidence Based Statistics: </div>";
   for (let i = 0; i < patient[0].statistics[0].length; i++) {
     var statisticsEntry = document.createElement("div");
     statisticsEntry.className = "statisticsEntry";

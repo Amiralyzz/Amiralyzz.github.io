@@ -13,7 +13,6 @@ function whenAnInputChanges() {
       case "in_Eos":
       case "in_Bas":
         checkIfWBCDiffsAreLessThanHundred();  
-        wbcCalc();
         isLeukocytosisOrLuekopenia();
         break;
       case "in_RBC":
@@ -39,6 +38,10 @@ function whenAnInputChanges() {
       case "in_Ferritin":
         // iron_profile();
         testEngine(0);
+        break;
+      case "in_pH":
+      case "in_HCO3":
+      case "in_PCO2":
         break;
       default:
     }
@@ -212,6 +215,27 @@ function isLeukocytosisOrLuekopenia() {
     patient[0].signs[0][0] = "Leukopenia";
     patient[0].signs[1][0] = path;
     patient[0].signs[2][0] = cbc_color;
+  }
+}
+
+function abgMain() {
+  let ph = labItems[87].value;
+  let abgColor = "rgb(3, 82, 156)";
+  let path = "";
+  delete patient[0].signs[0][60];
+  delete patient[0].signs[1][60];
+  delete patient[0].signs[2][60];
+
+  if (ph>7.45) {
+    path += "pH > 7.45"; 
+    patient[0].signs[0][0] = "Alkalosis";
+    patient[0].signs[1][0] = path;
+    patient[0].signs[2][0] = abgColor;
+  } else if (ph<7.35) {
+    path += "pH < 7.35"; 
+    patient[0].signs[0][0] = "Acidosis";
+    patient[0].signs[1][0] = path;
+    patient[0].signs[2][0] = abgColor;
   }
 }
 
@@ -631,22 +655,22 @@ function lft_engine() {
   let biltCoef = liverPanel[6] / liverPanel[7];
   let deRitisRatio = measurements[9].value;
   let path = "";
-  delete patient[0].signs[0][30];
-  delete patient[0].signs[1][30];
-  delete patient[0].signs[2][30];
-  delete patient[0].signs[0][31];
-  delete patient[0].signs[1][31];
-  delete patient[0].signs[2][31];
+  delete patient[0].signs[0][20];
+  delete patient[0].signs[1][20];
+  delete patient[0].signs[2][20];
+  delete patient[0].signs[0][21];
+  delete patient[0].signs[1][21];
+  delete patient[0].signs[2][21];
   patternReturnArray = lft_pattern(liverPanel);
   if (liverPanel[0] != "" && liverPanel[2] != "" && liverPanel[4] != "") {
     if (astCoef / altCoef > 5 || astCoef / altCoef < 0.2) {
-      patient[0].signs[0][30] = "Liver tests not conclusive";
-      patient[0].signs[1][30] = "AST and ALT are not compatible with eachother";
-      patient[0].signs[2][30] = "darkslategray";
+      patient[0].signs[0][20] = "Liver tests not conclusive";
+      patient[0].signs[1][20] = "AST and ALT are not compatible with eachother";
+      patient[0].signs[2][20] = "darkslategray";
     }
-    patient[0].signs[0][31] = patternReturnArray[0];
-    patient[0].signs[1][31] = patternReturnArray[1];
-    patient[0].signs[2][31] = "darkslategray";
+    patient[0].signs[0][21] = patternReturnArray[0];
+    patient[0].signs[1][21] = patternReturnArray[1];
+    patient[0].signs[2][21] = "darkslategray";
 
     if (patternReturnArray[0] != "Cholestatic pattern") {
       if (patternReturnArray[0] == "Mixed pattern") {
@@ -659,9 +683,9 @@ function lft_engine() {
         if (p_ldh > labItems[80].max) {
           path += " and LDH is elevated too";
         }
-        patient[0].signs[0][30] = "Ischemic hepatitis";
-        patient[0].signs[1][30] = path;
-        patient[0].signs[2][30] = "darkslategray";
+        patient[0].signs[0][20] = "Ischemic hepatitis";
+        patient[0].signs[1][20] = path;
+        patient[0].signs[2][20] = "darkslategray";
       } else if (altCoef > 25 || astCoef > 25) {
         path += " &#8594 rise more than 25 times the ULN";
         //virals can be checked here
@@ -673,23 +697,23 @@ function lft_engine() {
           prefix = "Resolving ";
           path += " &#8594 De Ritis ratio is less than 1";
         }
-        patient[0].signs[0][30] =
+        patient[0].signs[0][20] =
           prefix + "Acute viral or toxin-related hepatits";
-        patient[0].signs[1][30] = path;
-        patient[0].signs[2][30] = "darkslategray";
+        patient[0].signs[1][20] = path;
+        patient[0].signs[2][20] = "darkslategray";
       } else if (altCoef > 5 && astCoef > 8) {
         path +=
           " &#8594 AST and ALT rise more than 8 and 5 times the ULN respectively";
-        patient[0].signs[0][30] = "Alcoholic fatty liver disease is unlikely";
-        patient[0].signs[1][30] = path;
-        patient[0].signs[2][30] = "darkslategray";
+        patient[0].signs[0][20] = "Alcoholic fatty liver disease is unlikely";
+        patient[0].signs[1][20] = path;
+        patient[0].signs[2][20] = "darkslategray";
       } else if (altCoef > 4 && astCoef > 4) {
         path += " &#8594 AST and ALT rise more than 4 times the ULN";
         //ast to alt is complicated here and needs another function
-        patient[0].signs[0][30] =
+        patient[0].signs[0][20] =
           "Non-alcoholic fatty liver disease is unlikely";
-        patient[0].signs[1][30] = path;
-        patient[0].signs[2][30] = "darkslategray";
+        patient[0].signs[1][20] = path;
+        patient[0].signs[2][20] = "darkslategray";
       } else {
         path +=
           " &#8594 AST and ALT rise is " +
@@ -697,9 +721,9 @@ function lft_engine() {
           " and " +
           altCoef.toFixed(1) +
           " times the ULN respectively";
-        patient[0].signs[0][30] = "Fatty liver disease | chronic Hepatitis";
-        patient[0].signs[1][30] = path;
-        patient[0].signs[2][30] = "darkslategray";
+        patient[0].signs[0][20] = "Fatty liver disease | chronic Hepatitis";
+        patient[0].signs[1][20] = path;
+        patient[0].signs[2][20] = "darkslategray";
       }
     }
   } else if (
@@ -709,9 +733,9 @@ function lft_engine() {
   ) {
     return 0;
   } else {
-    patient[0].signs[0][30] = "Liver tests not conclusive";
-    patient[0].signs[1][30] = "AST and/or ALT and/or ALP not entered";
-    patient[0].signs[2][30] = "darkslategray";
+    patient[0].signs[0][20] = "Liver tests not conclusive";
+    patient[0].signs[1][20] = "AST and/or ALT and/or ALP not entered";
+    patient[0].signs[2][20] = "darkslategray";
   }
 }
 
@@ -763,6 +787,8 @@ function engineMain() {    //activates when user goes to analyse tab
   calc_measurements();
   anemiaType();
   lft_engine();
+  wbcCalc();
+  abgMain();
   // iron_profile();
   let resultArray = testEngine(0);
   try {
