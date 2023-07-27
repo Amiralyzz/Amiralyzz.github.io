@@ -563,19 +563,29 @@ function anionGapCalc() {
   let paco2 = labItems[89].value;
   let cl = labItems[90].value;
   let baseExcess = 0.02786 * paco2 * 10^(ph - 6.1) + 13.77 * ph - 124.58;
-  let ag = 0, agk = 0;
+  let deltaAnionGap = 0;
+  let deltaHco3 = 25 - hco3;
+  if (deltaHco3 == 0) deltaHco3 = 0.1;
+  let anionGap = 0, anionGapPotassium = 0;
   if (na != 0 && hco3 != 0 && cl != 0) {
-    ag = na - (cl + hco3);
-    agk = na + k - (cl + hco3);
-    measurements[16].value = ag;
+    anionGap = na - (cl + hco3);
+    deltaAnionGap = anionGap - 12;
+    anionGapPotassium = na + k - (cl + hco3);
+    measurements[16].value = anionGap;
     measurements[16].used = true;
-    measurements[17].value = agk;
+    measurements[17].value = anionGapPotassium;
     measurements[17].used = true;
+    measurements[19].value = deltaAnionGap - deltaHco3;
+    measurements[20].value = (deltaAnionGap / deltaHco3).toFixed(1);
+    measurements[19].used = true;
+    measurements[20].used = true;
   } else {
     measurements[16].value = 0;
     measurements[16].used = false;
     measurements[17].value = 0;
     measurements[17].used = false;
+    measurements[19].used = false;
+    measurements[20].used = false;
   }
   if (paco2!=0 && ph != 0) {
     measurements[18].used = true;
@@ -598,12 +608,12 @@ function wbcCalc() {
   if(eosVal > 0) {measurements[13].used = true;} else {measurements[13].used = false;}
   if(basVal > 0) {measurements[14].used = true;} else {measurements[14].used = false;}
   if(bandVal > 0) {measurements[15].used = true;} else {measurements[15].used = false;}
-  measurements[10].value = 0.01 * neuVal * wbcTotalVal;
-  measurements[11].value = 0.01 * lymVal * wbcTotalVal;
-  measurements[12].value = 0.01 * monVal * wbcTotalVal;
-  measurements[13].value = 0.01 * eosVal * wbcTotalVal;
-  measurements[14].value = 0.01 * basVal * wbcTotalVal;
-  measurements[15].value = 0.01 * bandVal * wbcTotalVal;
+  measurements[10].value = (0.01 * neuVal * wbcTotalVal).toFixed(1);
+  measurements[11].value = (0.01 * lymVal * wbcTotalVal).toFixed(1);
+  measurements[12].value = (0.01 * monVal * wbcTotalVal).toFixed(1);
+  measurements[13].value = (0.01 * eosVal * wbcTotalVal).toFixed(1);
+  measurements[14].value = (0.01 * basVal * wbcTotalVal).toFixed(1);
+  measurements[15].value = (0.01 * bandVal * wbcTotalVal).toFixed(1);
 }
 
 function checkIfWBCDiffsAreLessThanHundred() {

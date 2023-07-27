@@ -229,12 +229,12 @@ function abgMain() {
   let anionGapAvailable = measurements[16].used;
   let abgColor = "rgb(3, 82, 156)";
   let path = "";
-  let deltaAnionGap = anionGap - 12;
-  let deltaHco3 = hco3 - 25;
-  if (deltaHco3 == 0) {
-    deltaHco3 = 0.01; // to avoid infinity
+  let deltaGap = 0,
+    deltaRatio = 0;
+  if (anionGapAvailable) {
+    deltaGap = measurements[19].value;
+    deltaRatio = measurements[20].value;
   }
-  let deltaDelta = deltaAnionGap - deltaHco3;
   delete patient[0].signs[0][60];
   delete patient[0].signs[1][60];
   patient[0].signs[2][60] = abgColor;
@@ -254,21 +254,14 @@ function abgMain() {
       //simple acidosis
       path += "pH < 7.4 &#8594 ";
       if (
-        hco3 < 22 &&
+        hco3 < 25 &&
         (!anionGapAvailable || (anionGap <= 12 && anionGapAvailable))
       ) {
         //normal anion gap or no anion gap entered
-        path += "HCO3 < 22 &#8594 ";
-        if (ph > 7.45) {
-          //check if ph is wrongly high
-          path += "pH > 7.45";
-          patient[0].signs[0][60] = "pH and HCO3 are not compatible";
-          patient[0].signs[1][60] = path;
-          return 0;
-        }
-        if (paco2 > 40) {
+        path += "HCO3 < 25 &#8594 ";
+        if (paco2 > 40 && hco3 > 22) {
           //respiratory acidosis
-          path += "PaCO2 > 40";
+          path += "PaCO2 > 45";
           patient[0].signs[0][60] = "Respiratory Acidosis";
           patient[0].signs[1][60] = path;
           return 0;
@@ -277,16 +270,16 @@ function abgMain() {
         let predictedPaco2High = hco3 * 1.5 + 8 + 2;
         if (paco2 > predictedPaco2High) {
           // met acid + res acid
-          path += "PaCO2 > Winter's predicted PaCO2";
+          path += "PaCO2 > " + predictedPaco2High +" (Winter's predicted PaCO2)" ;
           patient[0].signs[0][60] = "Metabolic Acidosis + Respiratory Acidosis";
           patient[0].signs[1][60] = path;
         } else if (paco2 < predictedPaco2Low) {
-          path += "PaCO2 < Winter's predicted PaCO2";
+          path += "PaCO2 < " + predictedPaco2Low +" (Winter's predicted PaCO2)";
           patient[0].signs[0][60] =
             "Metabolic Acidosis + Respiratory Alkalosis";
           patient[0].signs[1][60] = path;
         } else {
-          path += "PaCO2 in Winter's predicted PaCO2 Range";
+          path += "PaCO2 in " + predictedPaco2Low + "-" + predictedPaco2High +" (Winter's predicted PaCO2 Range)";
           if (!anionGapAvailable) {
             patient[0].signs[0][60] = "Metabolic Acidosis";
           } else {
@@ -294,19 +287,12 @@ function abgMain() {
           }
           patient[0].signs[1][60] = path;
         }
-      } else if (hco3 < 22 && anionGapAvailable && anionGap > 12) {
+      } else if (hco3 < 25 && anionGapAvailable && anionGap > 12) {
         // metabolic and high anion gap
-        path += "HCO3 < 22 &#8594 ";
-        if (ph > 7.45) {
-          //check if ph is wrongly high
-          path += "pH > 7.45";
-          patient[0].signs[0][60] = "pH and HCO3 are not compatible";
-          patient[0].signs[1][60] = path;
-          return 0;
-        }
-        if (paco2 > 40) {
+        path += "HCO3 < 25 &#8594 ";
+        if (paco2 > 45 && hco3 > 22) {
           //respiratory acidosis
-          path += "PaCO2 > 40";
+          path += "PaCO2 > 45";
           patient[0].signs[0][60] =
             "Respiratory Acidosis (high anion gap non-compatible)";
           patient[0].signs[1][60] = path;
@@ -316,42 +302,53 @@ function abgMain() {
         let predictedPaco2High = hco3 * 1.5 + 8 + 2;
         if (paco2 > predictedPaco2High) {
           // met acid + res acid
-          path += "PaCO2 > Winter's predicted PaCO2";
+          path += "PaCO2 > " + predictedPaco2High +" (Winter's predicted PaCO2)";
           patient[0].signs[0][60] =
             "Metabolic Acidosis (high AG) + Respiratory Acidosis";
-          if (deltaDelta > 6) {
-            path += " &#8594 Delta AG - Delta HCO3 > 6";
-            patient[0].signs[0][60] += " + Metabolic Alkalosis";
-          } else if (deltaDelta < -6) {
-            path += " &#8594 Delta AG - Delta HCO3 < -6>";
-            patient[0].signs[0][60] += " + Metabolic Acidosis (normal AG)";
+          if (deltaGap > 6) {
+            path += " &#8594 &Delta;Gap > 6 and &Delta;Ratio > 1";
+            patient[0].signs[0][60] +=
+              " + Metabolic Alkalosis (based on both &Delta;Gap and &Delta;Ratio)";
+          } else if (deltaRatio > 1) {
+            path += " &#8594 Delta Ratio > 1";
+            patient[0].signs[0][60] +=
+              " + Metabolic Alkalosis (based on &Delta;Ratio only)";
+          } else if (deltaGap < -6) {
+            path += " &#8594 &Delta;Gap < -6 and &Delta;Ratio < 1";
+            patient[0].signs[0][60] +=
+              " + Metabolic Acidosis (normal AG) (based on both &Delta;Gap and &Delta;Ratio)";
+          } else if (deltaRatio < 1) {
+            path += " &#8594 &Delta;Ratio < 1";
+            patient[0].signs[0][60] +=
+              " + Metabolic Acidosis (normal AG) (based on &Delta;Ratio only)";
           }
           patient[0].signs[1][60] = path;
         } else if (paco2 < predictedPaco2Low) {
-          path += "PaCO2 < Winter's predicted PaCO2";
+          path += "PaCO2 < " + predictedPaco2Low +" (Winter's predicted PaCO2)";
           patient[0].signs[0][60] =
             "Metabolic Acidosis (high AG) + Respiratory Alkalosis";
-          if (deltaDelta > 6) {
+          if (deltaGap > 6) {
             path += " &#8594 Delta AG - Delta HCO3 > 6";
             patient[0].signs[0][60] += " + Metabolic Alkalosis";
-          } else if (deltaDelta < -6) {
+          } else if (deltaGap < -6) {
             path += " &#8594 Delta AG - Delta HCO3 < -6>";
             patient[0].signs[0][60] += " + Metabolic Acidosis (normal AG)";
           }
           patient[0].signs[1][60] = path;
         } else {
-          path += "PaCO2 in Winter's predicted PaCO2 Range";
+          path += "PaCO2 in " + predictedPaco2Low + "-" + predictedPaco2High +" (Winter's predicted PaCO2 Range)";
           patient[0].signs[0][60] = "Metabolic Acidosis with High AG";
-          if (deltaDelta > 6) {
+          if (deltaGap > 6) {
             path += " &#8594 Delta AG - Delta HCO3 > 6";
             patient[0].signs[0][60] += " + Metabolic Alkalosis";
-          } else if (deltaDelta < -6) {
+          } else if (deltaGap < -6) {
             path += " &#8594 Delta AG - Delta HCO3 < -6>";
             patient[0].signs[0][60] += " + Metabolic Acidosis (normal AG)";
           }
           patient[0].signs[1][60] = path;
         }
       }
+      return 0;
     }
     if (ph >= 7.35 && ph <= 7.45 && hco3 >= 22 && hco3 <= 28) {
       path = "";
@@ -365,17 +362,29 @@ function abgMain() {
         anionGap > 12
       ) {
         //mixed
-        if (deltaDelta > 6) {
+        if (deltaGap > 6) {
           path +=
-            "pH, PaCO2, and HCO3 are normal &#8594 AG > 12 &#8594 Delta AG - Delta HCO3 > 6";
+            "pH, PaCO2, and HCO3 are normal &#8594 AG > 12 &#8594 &Delta;Gap > 6 and &Delta;Ratio > 1";
           patient[0].signs[0][60] =
-            "Metabolic Acidosis with High AG + Metabolic Alkalosis";
+            "Metabolic Acidosis with High AG + Metabolic Alkalosis (based on both &Delta;Gap and &Delta;Ratio)";
           patient[0].signs[1][60] = path;
-        } else if (deltaDelta < -6) {
+        } else if (deltaRatio > 1) {
           path +=
-            "pH, PaCO2, and HCO3 are normal &#8594 AG > 12 &#8594 Delta AG - Delta HCO3 < -6>";
+            "pH, PaCO2, and HCO3 are normal &#8594 AG > 12 &#8594 &Delta;Ratio > 1";
           patient[0].signs[0][60] =
-            "Metabolic Acidosis with High AG + Metabolic Acidosis with normal AG";
+            "Metabolic Acidosis with High AG + Metabolic Alkalosis (based on &Delta;Ratio only)";
+          patient[0].signs[1][60] = path;
+        } else if (deltaGap < -6) {
+          path +=
+            "pH, PaCO2, and HCO3 are normal &#8594 AG > 12 &#8594 &Delta;Gap < -6 and &Delta;Ratio < 1";
+          patient[0].signs[0][60] =
+            "Metabolic Acidosis with High AG + Metabolic Acidosis with normal AG (based on both &Delta;Gap and &Delta;Ratio)";
+          patient[0].signs[1][60] = path;
+        } else if (deltaRatio < 1) {
+          path +=
+            "pH, PaCO2, and HCO3 are normal &#8594 AG > 12 &#8594 &Delta;Ratio < 1";
+          patient[0].signs[0][60] =
+            "Metabolic Acidosis with High AG + Metabolic Acidosis with normal AG (based on &Delta;Ratio only)";
           patient[0].signs[1][60] = path;
         }
       } else if (
@@ -386,8 +395,23 @@ function abgMain() {
         path += "pH, PaCO2, HCO3, and AG are normal";
         patient[0].signs[0][60] = "normal ABG";
         patient[0].signs[1][60] = path;
-      }
-      else {
+      } else if (
+        paco2 > predictedPaco2High &&
+        (!anionGapAvailable || (anionGapAvailable && anionGap <= 12))
+      ) {
+        path += "pH, HCO3, and AG are normal but PaCO2 > " + predictedPaco2High + " (Winter's predicted PaCO2)";
+        patient[0].signs[0][60] =
+          "PaCO2 is higher than predicted value ";
+        patient[0].signs[1][60] = path;
+      } else if (
+        paco2 < predictedPaco2Low &&
+        (!anionGapAvailable || (anionGapAvailable && anionGap <= 12))
+      ) {
+        path += "pH, HCO3, and AG are normal but PaCO2 < " + predictedPaco2Low + " (Winter's predicted PaCO2)";
+        patient[0].signs[0][60] =
+          "PaCO2 is lower than predicted value ";
+        patient[0].signs[1][60] = path;
+      } else {
         path += "pH, PaCO2, HCO3, and AG are not compatible";
         patient[0].signs[0][60] = "non-compatible ABG";
         patient[0].signs[1][60] = path;

@@ -210,6 +210,20 @@ var measurements = [
     color: "rgb(3, 82, 156)",
     tooltip: "Base Excess",
   },
+  { //[19]
+    name: "&Delta; Gap ",
+    value: 0,
+    used: false,
+    color: "rgb(3, 82, 156)",
+    tooltip: "Delta Gap (AG - normal AG) - (HCO3 - normal HCO3)",
+  },
+  {
+    name: "&Delta; Ratio ",
+    value: 0,
+    used: false,
+    color: "rgb(3, 82, 156)",
+    tooltip: "Delta Gap (AG - normal AG) / (HCO3 - normal HCO3)",
+  },
 
 ];
 
