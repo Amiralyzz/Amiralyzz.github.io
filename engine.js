@@ -12,7 +12,7 @@ function whenAnInputChanges() {
       case "in_Mono":
       case "in_Eos":
       case "in_Bas":
-        checkIfWBCDiffsAreLessThanHundred();  
+        checkIfWBCDiffsAreLessThanHundred();
         isLeukocytosisOrLuekopenia();
         break;
       case "in_RBC":
@@ -42,6 +42,9 @@ function whenAnInputChanges() {
       case "in_pH":
       case "in_HCO3":
       case "in_PCO2":
+        break;
+      case "in_Na":
+      case "in_Cl":
         break;
       default:
     }
@@ -220,22 +223,176 @@ function isLeukocytosisOrLuekopenia() {
 
 function abgMain() {
   let ph = labItems[87].value;
+  let hco3 = labItems[88].value;
+  let paco2 = labItems[89].value;
+  let anionGap = measurements[16].value;
+  let anionGapAvailable = measurements[16].used;
   let abgColor = "rgb(3, 82, 156)";
   let path = "";
+  let deltaAnionGap = anionGap - 12;
+  let deltaHco3 = hco3 - 25;
+  if (deltaHco3 == 0) {
+    deltaHco3 = 0.01; // to avoid infinity
+  }
+  let deltaDelta = deltaAnionGap - deltaHco3;
   delete patient[0].signs[0][60];
   delete patient[0].signs[1][60];
-  delete patient[0].signs[2][60];
-
-  if (ph>7.45) {
-    path += "pH > 7.45"; 
-    patient[0].signs[0][0] = "Alkalosis";
-    patient[0].signs[1][0] = path;
-    patient[0].signs[2][0] = abgColor;
-  } else if (ph<7.35) {
-    path += "pH < 7.35"; 
-    patient[0].signs[0][0] = "Acidosis";
-    patient[0].signs[1][0] = path;
-    patient[0].signs[2][0] = abgColor;
+  patient[0].signs[2][60] = abgColor;
+  if (hco3 == 0 && paco2 == 0 && ph != 0) {
+    if (ph > 7.45) {
+      path += "pH > 7.45";
+      patient[0].signs[0][60] = "Alkalosis";
+      patient[0].signs[1][60] = path;
+    } else if (ph < 7.35) {
+      path += "pH < 7.35";
+      patient[0].signs[0][60] = "Acidosis";
+      patient[0].signs[1][60] = path;
+    }
+  } else if (hco3 != 0 && paco2 != 0 && ph != 0) {
+    //all three entered
+    if (ph < 7.4) {
+      //simple acidosis
+      path += "pH < 7.4 &#8594 ";
+      if (
+        hco3 < 22 &&
+        (!anionGapAvailable || (anionGap <= 12 && anionGapAvailable))
+      ) {
+        //normal anion gap or no anion gap entered
+        path += "HCO3 < 22 &#8594 ";
+        if (ph > 7.45) {
+          //check if ph is wrongly high
+          path += "pH > 7.45";
+          patient[0].signs[0][60] = "pH and HCO3 are not compatible";
+          patient[0].signs[1][60] = path;
+          return 0;
+        }
+        if (paco2 > 40) {
+          //respiratory acidosis
+          path += "PaCO2 > 40";
+          patient[0].signs[0][60] = "Respiratory Acidosis";
+          patient[0].signs[1][60] = path;
+          return 0;
+        }
+        let predictedPaco2Low = hco3 * 1.5 + 8 - 2; //winter formula
+        let predictedPaco2High = hco3 * 1.5 + 8 + 2;
+        if (paco2 > predictedPaco2High) {
+          // met acid + res acid
+          path += "PaCO2 > Winter's predicted PaCO2";
+          patient[0].signs[0][60] = "Metabolic Acidosis + Respiratory Acidosis";
+          patient[0].signs[1][60] = path;
+        } else if (paco2 < predictedPaco2Low) {
+          path += "PaCO2 < Winter's predicted PaCO2";
+          patient[0].signs[0][60] =
+            "Metabolic Acidosis + Respiratory Alkalosis";
+          patient[0].signs[1][60] = path;
+        } else {
+          path += "PaCO2 in Winter's predicted PaCO2 Range";
+          if (!anionGapAvailable) {
+            patient[0].signs[0][60] = "Metabolic Acidosis";
+          } else {
+            patient[0].signs[0][60] = "Metabolic Acidosis with normal AG";
+          }
+          patient[0].signs[1][60] = path;
+        }
+      } else if (hco3 < 22 && anionGapAvailable && anionGap > 12) {
+        // metabolic and high anion gap
+        path += "HCO3 < 22 &#8594 ";
+        if (ph > 7.45) {
+          //check if ph is wrongly high
+          path += "pH > 7.45";
+          patient[0].signs[0][60] = "pH and HCO3 are not compatible";
+          patient[0].signs[1][60] = path;
+          return 0;
+        }
+        if (paco2 > 40) {
+          //respiratory acidosis
+          path += "PaCO2 > 40";
+          patient[0].signs[0][60] =
+            "Respiratory Acidosis (high anion gap non-compatible)";
+          patient[0].signs[1][60] = path;
+          return 0;
+        }
+        let predictedPaco2Low = hco3 * 1.5 + 8 - 2; //winter formula
+        let predictedPaco2High = hco3 * 1.5 + 8 + 2;
+        if (paco2 > predictedPaco2High) {
+          // met acid + res acid
+          path += "PaCO2 > Winter's predicted PaCO2";
+          patient[0].signs[0][60] =
+            "Metabolic Acidosis (high AG) + Respiratory Acidosis";
+          if (deltaDelta > 6) {
+            path += " &#8594 Delta AG - Delta HCO3 > 6";
+            patient[0].signs[0][60] += " + Metabolic Alkalosis";
+          } else if (deltaDelta < -6) {
+            path += " &#8594 Delta AG - Delta HCO3 < -6>";
+            patient[0].signs[0][60] += " + Metabolic Acidosis (normal AG)";
+          }
+          patient[0].signs[1][60] = path;
+        } else if (paco2 < predictedPaco2Low) {
+          path += "PaCO2 < Winter's predicted PaCO2";
+          patient[0].signs[0][60] =
+            "Metabolic Acidosis (high AG) + Respiratory Alkalosis";
+          if (deltaDelta > 6) {
+            path += " &#8594 Delta AG - Delta HCO3 > 6";
+            patient[0].signs[0][60] += " + Metabolic Alkalosis";
+          } else if (deltaDelta < -6) {
+            path += " &#8594 Delta AG - Delta HCO3 < -6>";
+            patient[0].signs[0][60] += " + Metabolic Acidosis (normal AG)";
+          }
+          patient[0].signs[1][60] = path;
+        } else {
+          path += "PaCO2 in Winter's predicted PaCO2 Range";
+          patient[0].signs[0][60] = "Metabolic Acidosis with High AG";
+          if (deltaDelta > 6) {
+            path += " &#8594 Delta AG - Delta HCO3 > 6";
+            patient[0].signs[0][60] += " + Metabolic Alkalosis";
+          } else if (deltaDelta < -6) {
+            path += " &#8594 Delta AG - Delta HCO3 < -6>";
+            patient[0].signs[0][60] += " + Metabolic Acidosis (normal AG)";
+          }
+          patient[0].signs[1][60] = path;
+        }
+      }
+    }
+    if (ph >= 7.35 && ph <= 7.45 && hco3 >= 22 && hco3 <= 28) {
+      path = "";
+      //ph,paco2,hco3 in normal range but high anion gap
+      let predictedPaco2Low = hco3 * 1.5 + 8 - 2; //winter formula
+      let predictedPaco2High = hco3 * 1.5 + 8 + 2;
+      if (
+        paco2 >= predictedPaco2Low &&
+        paco2 <= predictedPaco2High &&
+        anionGapAvailable &&
+        anionGap > 12
+      ) {
+        //mixed
+        if (deltaDelta > 6) {
+          path +=
+            "pH, PaCO2, and HCO3 are normal &#8594 AG > 12 &#8594 Delta AG - Delta HCO3 > 6";
+          patient[0].signs[0][60] =
+            "Metabolic Acidosis with High AG + Metabolic Alkalosis";
+          patient[0].signs[1][60] = path;
+        } else if (deltaDelta < -6) {
+          path +=
+            "pH, PaCO2, and HCO3 are normal &#8594 AG > 12 &#8594 Delta AG - Delta HCO3 < -6>";
+          patient[0].signs[0][60] =
+            "Metabolic Acidosis with High AG + Metabolic Acidosis with normal AG";
+          patient[0].signs[1][60] = path;
+        }
+      } else if (
+        paco2 >= predictedPaco2Low &&
+        paco2 <= predictedPaco2High &&
+        (!anionGapAvailable || (anionGapAvailable && anionGap <= 12))
+      ) {
+        path += "pH, PaCO2, HCO3, and AG are normal";
+        patient[0].signs[0][60] = "normal ABG";
+        patient[0].signs[1][60] = path;
+      }
+      else {
+        path += "pH, PaCO2, HCO3, and AG are not compatible";
+        patient[0].signs[0][60] = "non-compatible ABG";
+        patient[0].signs[1][60] = path;
+      }
+    }
   }
 }
 
@@ -783,35 +940,37 @@ function percentileFinder(input, min, max) {
   return percentile;
 }
 
-function engineMain() {    //activates when user goes to analyse tab
+function engineMain() {
+  //activates when user goes to analyse tab
   calc_measurements();
   anemiaType();
   lft_engine();
-  wbcCalc();
   abgMain();
   // iron_profile();
   let resultArray = testEngine(0);
   try {
-    signMaker(listMaker([...resultArray[0]].map((x) => x.value)),resultArray[1]);
-  }
-  catch {};
+    signMaker(
+      listMaker([...resultArray[0]].map((x) => x.value)),
+      resultArray[1]
+    );
+  } catch {}
   folate();
   b12();
 }
 
 function listMaker(array) {
   if (array[0] == undefined) {
-    return [undefined , ""];
+    return [undefined, ""];
   }
   let mainString = "Possible explanations include: <br><ul>";
-  for (let i=0; i<array.length ; i++) {
-    mainString += ("<li>" + array[i] + "</li>");
+  for (let i = 0; i < array.length; i++) {
+    mainString += "<li>" + array[i] + "</li>";
   }
   mainString += "</ul>";
   return mainString;
 }
 
-function signMaker(listHTML,path) {
+function signMaker(listHTML, path) {
   patient[0].signs[0][10] = listHTML;
   patient[0].signs[1][10] = path;
   patient[0].signs[2][10] = "rgb(102, 30, 52)";

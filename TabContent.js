@@ -93,7 +93,7 @@ function analyseTab() {
   measurements_parent.innerHTML = "<img src='https://cdn-icons-png.flaticon.com/128/1225/1225656.png'  class='logo_table'  alt='measure'/> Found Measurements: ";
   for (i = 0; i < measurements.length; i++) {
     try {
-      if (measurements[i].value != 0) {
+      if (measurements[i].used) {
         var measurements_section = document.createElement("div");
         measurements_section.id = "measurement" + i;
         measurements_section.className = "measurements_section";

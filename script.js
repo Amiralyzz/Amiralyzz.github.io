@@ -419,14 +419,14 @@ function height_calc() {
 }
 
 function bmiCalc() {
-  var bmi = 0;
+  let bmi = 0;
   if (gloalWeightGram <= 0) gloalWeightGram = 0;
-  if (globalHeightCm != 0) {
+  if (globalHeightCm > 0) {
+    measurements[0].used = true;
     bmi =
       gloalWeightGram / 1000 / (globalHeightCm / 100) / (globalHeightCm / 100);
-  }
-  if (globalHeightCm == 0) {
-    bmi = gloalWeightGram / 1000 / (1 / 100) / (1 / 100);
+  } else {
+    measurements[0].used = false;
   }
   measurements[0].value = bmi.toFixed(1);
 }
@@ -552,8 +552,38 @@ function calc_measurements() {
   weightPercentileCalc();
   heightPercentileCalc();
   wbcCalc();
+  anionGapCalc();
 }
 
+function anionGapCalc() {
+  let na = labItems[32].value;
+  let k = labItems[33].value;
+  let ph = labItems[87].value;
+  let hco3 = labItems[88].value;
+  let paco2 = labItems[89].value;
+  let cl = labItems[90].value;
+  let baseExcess = 0.02786 * paco2 * 10^(ph - 6.1) + 13.77 * ph - 124.58;
+  let ag = 0, agk = 0;
+  if (na != 0 && hco3 != 0 && cl != 0) {
+    ag = na - (cl + hco3);
+    agk = na + k - (cl + hco3);
+    measurements[16].value = ag;
+    measurements[16].used = true;
+    measurements[17].value = agk;
+    measurements[17].used = true;
+  } else {
+    measurements[16].value = 0;
+    measurements[16].used = false;
+    measurements[17].value = 0;
+    measurements[17].used = false;
+  }
+  if (paco2!=0 && ph != 0) {
+    measurements[18].used = true;
+    measurements[18].value = baseExcess;
+  } else {
+    measurements[18].used = false;
+  }
+}
 function wbcCalc() {
   let wbcTotalVal = labItems[0].value;
   let neuVal = labItems[45].value;
@@ -562,6 +592,12 @@ function wbcCalc() {
   let eosVal = labItems[48].value;
   let basVal = labItems[49].value;
   let bandVal = labItems[50].value;
+  if(neuVal > 0) {measurements[10].used = true;} else {measurements[10].used = false;}
+  if(lymVal > 0) {measurements[11].used = true;} else {measurements[11].used = false;}
+  if(monVal > 0) {measurements[12].used = true;} else {measurements[12].used = false;}
+  if(eosVal > 0) {measurements[13].used = true;} else {measurements[13].used = false;}
+  if(basVal > 0) {measurements[14].used = true;} else {measurements[14].used = false;}
+  if(bandVal > 0) {measurements[15].used = true;} else {measurements[15].used = false;}
   measurements[10].value = 0.01 * neuVal * wbcTotalVal;
   measurements[11].value = 0.01 * lymVal * wbcTotalVal;
   measurements[12].value = 0.01 * monVal * wbcTotalVal;
@@ -600,7 +636,13 @@ function gfrCalc() {
     gfr_cg = 0;
     gfr_mdrd = 0;
     gfr_ckd = 0;
+    measurements[5].used = false;
+    measurements[6].used = false;
+    measurements[7].used = false;
   } else {
+    measurements[5].used = true;
+    measurements[6].used = true;
+    measurements[7].used = true;
     var coef_cg = 1; //for male
     var coef_mdrd = 1;
     var coef_ckd = 1;
@@ -632,10 +674,10 @@ function gfrCalc() {
       cr_to_k_max ** -1.2 *
       0.9938 ** globalAgeYears *
       coef_ckd;
-  }
-  measurements[5].value = gfr_ckd.toFixed(3);
-  measurements[6].value = gfr_mdrd.toFixed(3);
-  measurements[7].value = gfr_cg.toFixed(3);
+    }
+    measurements[5].value = gfr_ckd.toFixed(3);
+    measurements[6].value = gfr_mdrd.toFixed(3);
+    measurements[7].value = gfr_cg.toFixed(3);
 }
 function reticCalc() {
   var hct_val = labItems[4].value;
@@ -656,7 +698,11 @@ function reticCalc() {
   if (hct_val <= 0 || retic_val <= 0) {
     crcVal = 0;
     rpiVal = 0;
+    measurements[3].used = false;
+    measurements[4].used = false;
   } else {
+    measurements[3].used = true;
+    measurements[4].used = true;
     crcVal = retic_val * (hct_val / normal_hct_gender);
     rpiVal = ((hct_val / 45) * retic_val) / rbcMaturation;
   }
@@ -670,6 +716,9 @@ function tsatCalc() {
   if (iron_val > 0 && tibc_val > 0) {
     globalTSAT = (iron_val / tibc_val) * 100;
     measurements[8].value = globalTSAT.toFixed(2);
+    measurements[8].used = true;
+  } else {
+    measurements[8].used = false;
   }
 }
 function astAltCalc() {
@@ -678,8 +727,10 @@ function astAltCalc() {
   let astAltRatio = 0;
   if (p_ast <= 0 || p_alt <= 0) {
     astAltRatio = 0;
+    measurements[9].used = false;
   } else {
     astAltRatio = p_ast / p_alt;
+    measurements[9].used = true;
   }
   measurements[9].value = astAltRatio.toFixed(1);
 }
@@ -699,7 +750,7 @@ function heightPercentileCalc() {
       (o) => o.Age === globalAgeYears.toString()
     );
   } else {
-    measurements[2].value = 0;
+    measurements[2].used = false;
     return 0;
   }
   if (genderCoef == 0) {
@@ -714,6 +765,7 @@ function heightPercentileCalc() {
   var heightZScore = ((globalHeightCm / M) ** L - 1) / (S * L);
   var heightPercentile = ztable_finder(heightZScore) * 100;
   measurements[2].value = heightPercentile.toFixed(2);
+  measurements[2].used = true;
 }
 function weightPercentileCalc() {
   if (globalAgeYears <= 3) {
@@ -731,7 +783,7 @@ function weightPercentileCalc() {
       (o) => o.Age === globalAgeYears.toString()
     );
   } else {
-    measurements[1].value = 0;
+    measurements[1].used = false;
     return 0;
   }
   if (genderCoef == 0) {
@@ -747,5 +799,6 @@ function weightPercentileCalc() {
   var weightZScore = ((weightKg / M) ** L - 1) / (S * L);
   var weightPercentile = ztable_finder(weightZScore) * 100;
   measurements[1].value = weightPercentile.toFixed(2);
+  measurements[1].used = true;
 }
 
