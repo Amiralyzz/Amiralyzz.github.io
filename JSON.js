@@ -224,6 +224,13 @@ var measurements = [
     color: "rgb(3, 82, 156)",
     tooltip: "Delta Gap (AG - normal AG) / (HCO3 - normal HCO3)",
   },
+  {
+    name: "FENa ",
+    value: 0,
+    used: false,
+    color: "rgb(3, 82, 156)",
+    tooltip: "Fractional Excretion of Sodium",
+  },
 
 ];
 

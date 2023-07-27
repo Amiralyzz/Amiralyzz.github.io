@@ -349,6 +349,8 @@ function abgMain() {
         }
       }
       return 0;
+    } else if (ph > 7.4) {
+      
     }
     if (ph >= 7.35 && ph <= 7.45 && hco3 >= 22 && hco3 <= 28) {
       path = "";
