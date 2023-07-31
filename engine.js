@@ -259,7 +259,7 @@ function abgMain() {
       ) {
         //normal anion gap or no anion gap entered
         path += "HCO3 < 25 &#8594 ";
-        if (paco2 > 40 && hco3 > 22) {
+        if (paco2 > 45 && hco3 > 22) {
           //respiratory acidosis
           path += "PaCO2 > 45";
           patient[0].signs[0][60] = "Respiratory Acidosis";
@@ -350,7 +350,35 @@ function abgMain() {
       }
       return 0;
     } else if (ph > 7.4) {
-      
+      path += "pH > 7.4 &#8594 ";
+      if (hco3>25) {
+        path += "HCO3 > 25 &#8594 ";
+        //met alkalosis
+        if (paco2 < 35 && hco3 < 28) {
+          //respiratory alkalosis
+          path += "PaCO2 < 35";
+          patient[0].signs[0][60] = "Respiratory Alkalosis";
+          patient[0].signs[1][60] = path;
+          return 0;
+        }
+        let predictedPaco2Low = hco3 * 0.7 + 20 - 5; 
+        let predictedPaco2High = hco3 * 0.7 + 20 + 5;
+        if (paco2 > predictedPaco2High) {
+          // met alkalosis + res acid
+          path += "PaCO2 > " + predictedPaco2High +" (predicted PaCO2)" ;
+          patient[0].signs[0][60] = "Metabolic Alkalosis + Respiratory Acidosis";
+          patient[0].signs[1][60] = path;
+        } else if (paco2 < predictedPaco2Low) {
+          path += "PaCO2 < " + predictedPaco2Low +" (predicted PaCO2)" ;
+          patient[0].signs[0][60] =
+            "Metabolic Alkalosis + Respiratory Alkalosis";
+          patient[0].signs[1][60] = path;
+        } else {
+          path += "PaCO2 in " + predictedPaco2Low + "-" + predictedPaco2High +" (predicted PaCO2 Range)";
+          patient[0].signs[0][60] = "Metabolic Alkalosis";
+          patient[0].signs[1][60] = path
+        }
+      }
     }
     if (ph >= 7.35 && ph <= 7.45 && hco3 >= 22 && hco3 <= 28) {
       path = "";
@@ -789,10 +817,10 @@ function folate() {
 
   if (p_fol < labItems[43].min) {
     if (p_b12 < labItems[44].min && p_b12 > 0) {
-      patient[0].signs[0][11] = "folate and b12 deficiency";
+      patient[0].signs[0][11] = "Folate and B12 deficiency";
       return true;
     } else {
-      patient[0].signs[0][11] = "folate deficiency";
+      patient[0].signs[0][11] = "Folate deficiency";
       return true;
     }
   } else {
@@ -809,10 +837,10 @@ function b12() {
   delete patient[0].signs[2][11];
   if (p_b12 < labItems[44].min) {
     if (p_fol < labItems[43].min && p_fol > 0) {
-      patient[0].signs[0][11] = "folate and b12 deficiency";
+      patient[0].signs[0][11] = "Folate and B12 deficiency";
       return true;
     } else {
-      patient[0].signs[0][11] = "b12 deficiency";
+      patient[0].signs[0][11] = "B12 deficiency";
       return true;
     }
   } else {

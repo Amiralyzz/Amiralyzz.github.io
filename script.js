@@ -553,8 +553,25 @@ function calc_measurements() {
   heightPercentileCalc();
   wbcCalc();
   anionGapCalc();
+  oxygenCalc();
 }
 
+function oxygenCalc() {
+  let PaCO2 = labItems[89].value;
+  let FIO2= labItems[92].value / 100;
+  let airPressure= labItems[93].value;
+  let waterPressure = 47;
+
+  if(FIO2 !=0 && airPressure != 0 && PaCO2 != 0) {
+    measurements[22].used = true;
+    let PIO2 = FIO2 * (airPressure - waterPressure);
+    let PAO2 = PIO2 - PaCO2 / 0.8;
+    measurements[22].value = PAO2.toFixed(1);
+  } else {
+    measurements[22].used = false;
+  }
+
+}
 function anionGapCalc() {
   let na = labItems[32].value;
   let k = labItems[33].value;

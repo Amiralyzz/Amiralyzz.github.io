@@ -231,6 +231,13 @@ var measurements = [
     color: "rgb(3, 82, 156)",
     tooltip: "Fractional Excretion of Sodium",
   },
+  {
+    name: "PAO2 ",
+    value: 0,
+    used: false,
+    color: "rgb(3, 82, 156)",
+    tooltip: "Partial Alveolar Pressure of Oxygen",
+  },
 
 ];
 
@@ -4100,7 +4107,7 @@ var labItems = [
   {
     "name": "FIO2",
     "tooltip": "Fraction of Inspired Oxygen",
-    "value": "",
+    "value": "21",
     "min": "",
     "max": "",
     "newborn3": "[20,22,20,22]",
