@@ -18,13 +18,13 @@ var statistics = [
     conditionIndex: 0,
     cutoffs: [30, 15],
     lessIsBad: true,
-    sensitivities: [0.92, 0.57],
+    sensitivities: [0.92, 0.59],
     specificities: [0.98, 0.99],
     myDataIndex: 41,
     currentLikelihoodRatio: 1,
     currentCutoffIndex: 0,
     color: "rgb(102, 30, 52)",
-    reference: ""
+    reference: "https://pubmed.ncbi.nlm.nih.gov/22157204/"
   },
   {
     name: "HbID",
