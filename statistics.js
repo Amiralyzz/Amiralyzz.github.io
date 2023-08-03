@@ -37,7 +37,7 @@ function conditionMaker(conditionIndex) {
 }
 
 function statisticsMaker(labItemIndex) {
-  if (labItems[statistics[labItemIndex].mydataIndex].value > 0) {
+  if (labItems[statistics[labItemIndex].myDataIndex].value > 0) {
     patient[0].statistics[0][labItemIndex] = statisticsCalc(labItemIndex);
     patient[0].statistics[1][labItemIndex] = statistics[labItemIndex].color;
     return 1;
@@ -51,14 +51,14 @@ function statisticsMaker(labItemIndex) {
 
 function statisticsCalc(labItemIndex) {
   let labItem = statistics[labItemIndex];
-  let mydataItem = labItems[labItem.mydataIndex];
+  let mydataItem = labItems[labItem.myDataIndex];
   let cutoffsLength = labItem.cutoffs.length;
   let currentLikelihoodRatio = 1;
   let message = "";
   if (mydataItem.value <= 0) return 0;
   for (let i = cutoffsLength - 1; i >= 0; i--) {
     if (mydataItem.value < labItem.cutoffs[i]) {
-      currentLikelihoodRatio = labItem.likelihoodPositive(i).toFixed(1);
+      currentLikelihoodRatio = likelihoodPositive(i, labItemIndex).toFixed(1);
       message =
         labItem.labItemName +
         " < " +
@@ -74,7 +74,7 @@ function statisticsCalc(labItemIndex) {
       return message;
     }
   }
-  currentLikelihoodRatio = labItem.likelihoodNegative(0);
+  currentLikelihoodRatio = likelihoodNegative(0, labItemIndex);
   message =
     labItem.labItemName +
     " > " +
@@ -104,3 +104,16 @@ function calculateSD(values) {
   const variance = calculateMean(squareDiffs);
   return Math.sqrt(variance);
 };
+
+function likelihoodNegative(cutoffIndex, labItemIndex) {
+  let sens = statistics[labItemIndex].sensitivities[cutoffIndex];
+  let spec = statistics[labItemIndex].specificities[cutoffIndex];
+  let lrn = (1 - sens) / spec;
+  return lrn;
+}
+function likelihoodPositive(cutoffIndex, labItemIndex) {
+  let sens = statistics[labItemIndex].sensitivities[cutoffIndex];
+  let spec = statistics[labItemIndex].specificities[cutoffIndex];
+  let lrp = sens / (1 - spec);
+  return lrp;
+}

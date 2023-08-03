@@ -823,3 +823,6 @@ option::selection {
   transition: width 2s;
 }
 
+li {
+  text-align: left;
+}

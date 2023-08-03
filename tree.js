@@ -1,124 +1,125 @@
-let algorithms = [               // [0] = anemia
+let algorithms = [
+  // [0] = anemia
   [
     {
       key: "1",
       value: "Hb low",
       parent: "",
       labitemsIndex: "3",
-      measurementsIndex: ""
+      measurementsIndex: "",
     },
     {
       key: "1-1",
       value: "MCV low",
       parent: "1",
       labitemsIndex: "41",
-      measurementsIndex: ""
+      measurementsIndex: "",
     },
     {
       key: "10",
       value: "MCV normal",
       parent: "1",
       labitemsIndex: "41",
-      measurementsIndex: ""
+      measurementsIndex: "",
     },
     {
       key: "11",
       value: "MCV high",
       parent: "1",
       labitemsIndex: "",
-      measurementsIndex: ""
+      measurementsIndex: "",
     },
     {
       key: "110",
       value: "Iron deficiency not probable",
       parent: "11",
       labitemsIndex: "",
-      measurementsIndex: ""
+      measurementsIndex: "",
     },
     {
       key: "10-1",
       value: "Ferritin low",
       parent: "10",
       labitemsIndex: "",
-      measurementsIndex: ""
+      measurementsIndex: "",
     },
     {
       key: "10-10",
       value: "Iron deficiency anemia",
       parent: "10-1",
       labitemsIndex: "",
-      measurementsIndex: ""
+      measurementsIndex: "",
     },
     {
       key: "100",
       value: "Ferritin normal",
       parent: "10",
       labitemsIndex: "13",
-      measurementsIndex: ""
+      measurementsIndex: "",
     },
     {
       key: "1000",
       value: "CRP normal",
       parent: "100",
       labitemsIndex: "",
-      measurementsIndex: ""
+      measurementsIndex: "",
     },
     {
       key: "1001",
       value: "CRP high",
       parent: "100",
       labitemsIndex: "",
-      measurementsIndex: ""
+      measurementsIndex: "",
     },
     {
       key: "1-1-1",
       value: "Ferritin low",
       parent: "1-1",
       labitemsIndex: "",
-      measurementsIndex: ""
+      measurementsIndex: "",
     },
     {
       key: "1-1-10",
       value: "Iron deficiency anemia",
       parent: "1-1-1",
       labitemsIndex: "",
-      measurementsIndex: ""
+      measurementsIndex: "",
     },
     {
       key: "1-10",
       value: "Ferritin normal",
       parent: "1-1",
       labitemsIndex: "13",
-      measurementsIndex: ""
+      measurementsIndex: "",
     },
     {
       key: "1-100",
       value: "Suspect Thalassemia",
       parent: "1-10",
       labitemsIndex: "",
-      measurementsIndex: ""
+      measurementsIndex: "",
     },
     {
       key: "1-101",
       value: "CRP high",
       parent: "1-10",
       labitemsIndex: "",
-      measurementsIndex: "8"
+      measurementsIndex: "8",
     },
     {
       key: "1-101-1",
       value: "Anemia of chronic disease",
       parent: "1-101",
       labitemsIndex: "",
-      measurementsIndex: ""
+      measurementsIndex: "",
     },
     {
       key: "1-1010",
       value: "Iron deficiency anemia or Anemia of chronic disease",
       parent: "1-101",
       labitemsIndex: "",
-      measurementsIndex: ""
-    }
+      measurementsIndex: "",
+    },
   ],
 ];
 class TreeNode {
@@ -242,36 +243,41 @@ function testEngine(key) {
   while (true) {
     let node = tree.find(keyString);
     let item = {};
-    if (keyString != "1") {
-      path += " &#8594 " + node.value;
-    } else {
-      path += node.value;
-    }
-    if (node.labitemsIndex != "") {
-      item = labItems[node.labitemsIndex];
-    } else if (node.measurementsIndex != "") {
-      item = measurements[node.measurementsIndex];
-    } else {
-      leaves = tree.findLeavesFrom(keyString);
-      return [leaves, path];
-    }
-    if (item.value <= 0) {
-      path += " &#8594 " + item.name + " not entered";
-      leaves = tree.findLeavesFrom(keyString);
-      if (keyString == "1") {
-        return [ undefined , undefined];
+    try {
+      if (keyString != "1") {
+        path += " &#8594 " + node.value;
+      } else {
+        path += node.value;
       }
-      return [leaves, path];
+
+      if (node.labitemsIndex != "") {
+        item = labItems[node.labitemsIndex];
+      } else if (node.measurementsIndex != "") {
+        item = measurements[node.measurementsIndex];
+      } else {
+        leaves = tree.findLeavesFrom(keyString);
+        return [leaves, path];
+      }
+      if (item.value <= 0) {
+        path += " &#8594 " + item.name + " not entered";
+        leaves = tree.findLeavesFrom(keyString);
+        if (keyString == "1") {
+          return [undefined, undefined];
+        }
+        return [leaves, path];
+      }
+      if (item.value > item.max) {
+        keyString += "1";
+      } else if (item.value < item.min) {
+        keyString += "-1";
+      } else {
+        keyString += "0";
+      }
+
+      //   leaves = tree.findLeavesFrom("1-10");
+      // console.log([...leaves].map((x) => x.value));
+    } catch {
+      return [undefined, undefined];
     }
-    if (item.value > item.max) {
-      keyString += "1";
-    } else if (item.value < item.min) {
-      keyString += "-1";
-    } else {
-      keyString += "0";
-    }
-    
-    //   leaves = tree.findLeavesFrom("1-10");
-    // console.log([...leaves].map((x) => x.value));
   }
 }

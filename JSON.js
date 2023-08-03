@@ -19,19 +19,7 @@ var statistics = [
     cutoffs: [30, 15],
     sensitivities: [0.92, 0.57],
     specificities: [0.98, 0.99],
-    likelihoodPositive(cutoffIndex) {
-      let sens = this.sensitivities[cutoffIndex];
-      let spec = this.specificities[cutoffIndex];
-      let lrp = sens / (1 - spec);
-      return lrp;
-    },
-    likelihoodNegative(cutoffIndex) {
-      let sens = this.sensitivities[cutoffIndex];
-      let spec = this.specificities[cutoffIndex];
-      let lrn = (1 - sens) / spec;
-      return lrn;
-    },
-    mydataIndex: 41,
+    myDataIndex: 41,
     currentLikelihoodRatio: 1,
     currentCutoffIndex: 0,
     color: "rgb(102, 30, 52)",
@@ -44,19 +32,7 @@ var statistics = [
     cutoffs: [12.8],
     sensitivities: [0.713],
     specificities: [0.793],
-    likelihoodPositive(cutoffIndex) {
-      let sens = this.sensitivities[cutoffIndex];
-      let spec = this.specificities[cutoffIndex];
-      let lrp = sens / (1 - spec);
-      return lrp;
-    },
-    likelihoodNegative(cutoffIndex) {
-      let sens = this.sensitivities[cutoffIndex];
-      let spec = this.specificities[cutoffIndex];
-      let lrn = (1 - sens) / spec;
-      return lrn;
-    },
-    mydataIndex: 2,
+    myDataIndex: 2,
     currentLikelihoodRatio: 1,
     currentCutoffIndex: 0,
     color: "darkslateblue",

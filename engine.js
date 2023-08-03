@@ -250,9 +250,9 @@ function abgMain() {
     }
   } else if (hco3 != 0 && paco2 != 0 && ph != 0) {
     //all three entered
-    if (ph < 7.4) {
+    if (ph <= 7.4) {
       //simple acidosis
-      path += "pH < 7.4 &#8594 ";
+      path += "pH &le; 7.4 &#8594 ";
       if (
         hco3 < 25 &&
         (!anionGapAvailable || (anionGap <= 12 && anionGapAvailable))
@@ -273,11 +273,13 @@ function abgMain() {
           path += "PaCO2 > " + predictedPaco2High +" (Winter's predicted PaCO2)" ;
           patient[0].signs[0][60] = "Metabolic Acidosis + Respiratory Acidosis";
           patient[0].signs[1][60] = path;
+          return 0;
         } else if (paco2 < predictedPaco2Low) {
           path += "PaCO2 < " + predictedPaco2Low +" (Winter's predicted PaCO2)";
           patient[0].signs[0][60] =
             "Metabolic Acidosis + Respiratory Alkalosis";
           patient[0].signs[1][60] = path;
+          return 0;
         } else {
           path += "PaCO2 in " + predictedPaco2Low + "-" + predictedPaco2High +" (Winter's predicted PaCO2 Range)";
           if (!anionGapAvailable) {
@@ -286,6 +288,7 @@ function abgMain() {
             patient[0].signs[0][60] = "Metabolic Acidosis with normal AG";
           }
           patient[0].signs[1][60] = path;
+          return 0;
         }
       } else if (hco3 < 25 && anionGapAvailable && anionGap > 12) {
         // metabolic and high anion gap
@@ -323,6 +326,7 @@ function abgMain() {
               " + Metabolic Acidosis (normal AG) (based on &Delta;Ratio only)";
           }
           patient[0].signs[1][60] = path;
+          return 0;
         } else if (paco2 < predictedPaco2Low) {
           path += "PaCO2 < " + predictedPaco2Low +" (Winter's predicted PaCO2)";
           patient[0].signs[0][60] =
@@ -331,10 +335,11 @@ function abgMain() {
             path += " &#8594 Delta AG - Delta HCO3 > 6";
             patient[0].signs[0][60] += " + Metabolic Alkalosis";
           } else if (deltaGap < -6) {
-            path += " &#8594 Delta AG - Delta HCO3 < -6>";
+            path += " &#8594 Delta AG - Delta HCO3 < -6";
             patient[0].signs[0][60] += " + Metabolic Acidosis (normal AG)";
           }
           patient[0].signs[1][60] = path;
+          return 0;
         } else {
           path += "PaCO2 in " + predictedPaco2Low + "-" + predictedPaco2High +" (Winter's predicted PaCO2 Range)";
           patient[0].signs[0][60] = "Metabolic Acidosis with High AG";
@@ -342,15 +347,17 @@ function abgMain() {
             path += " &#8594 Delta AG - Delta HCO3 > 6";
             patient[0].signs[0][60] += " + Metabolic Alkalosis";
           } else if (deltaGap < -6) {
-            path += " &#8594 Delta AG - Delta HCO3 < -6>";
+            path += " &#8594 Delta AG - Delta HCO3 < -6";
             patient[0].signs[0][60] += " + Metabolic Acidosis (normal AG)";
           }
           patient[0].signs[1][60] = path;
+          return 0;
         }
       }
-      return 0;
-    } else if (ph > 7.4) {
-      path += "pH > 7.4 &#8594 ";
+      
+    }
+    if (ph >= 7.4) {
+      path = "pH &ge; 7.4 &#8594 ";
       if (hco3>25) {
         path += "HCO3 > 25 &#8594 ";
         //met alkalosis
@@ -368,16 +375,20 @@ function abgMain() {
           path += "PaCO2 > " + predictedPaco2High +" (predicted PaCO2)" ;
           patient[0].signs[0][60] = "Metabolic Alkalosis + Respiratory Acidosis";
           patient[0].signs[1][60] = path;
+          return 0;
         } else if (paco2 < predictedPaco2Low) {
           path += "PaCO2 < " + predictedPaco2Low +" (predicted PaCO2)" ;
           patient[0].signs[0][60] =
             "Metabolic Alkalosis + Respiratory Alkalosis";
           patient[0].signs[1][60] = path;
+          return 0;
         } else {
           path += "PaCO2 in " + predictedPaco2Low + "-" + predictedPaco2High +" (predicted PaCO2 Range)";
           patient[0].signs[0][60] = "Metabolic Alkalosis";
-          patient[0].signs[1][60] = path
+          patient[0].signs[1][60] = path;
+          return 0;
         }
+        
       }
     }
     if (ph >= 7.35 && ph <= 7.45 && hco3 >= 22 && hco3 <= 28) {
@@ -1005,7 +1016,7 @@ function engineMain() {
   try {
     signMaker(
       listMaker([...resultArray[0]].map((x) => x.value)),
-      resultArray[1]
+      resultArray[1] //path
     );
   } catch {}
   folate();
