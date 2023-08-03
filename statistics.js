@@ -56,34 +56,66 @@ function statisticsCalc(labItemIndex) {
   let currentLikelihoodRatio = 1;
   let message = "";
   if (mydataItem.value <= 0) return 0;
-  for (let i = cutoffsLength - 1; i >= 0; i--) {
-    if (mydataItem.value < labItem.cutoffs[i]) {
-      currentLikelihoodRatio = likelihoodPositive(i, labItemIndex).toFixed(1);
-      message =
-        labItem.labItemName +
-        " < " +
-        labItem.cutoffs[i] +
-        " &#8594 chance of " +
-        labItem.conditionName +
-        " is " +
-        currentLikelihoodRatio +
-        " times higher now";
-      statistics[labItemIndex].currentLikelihoodRatio = currentLikelihoodRatio;
-      statistics[labItemIndex].currentCutoffIndex = i;
-      posteriorCalc(labItemIndex);
-      return message;
+  if (labItem.lessIsBad) {
+    for (let i = cutoffsLength - 1; i >= 0; i--) {
+      if (mydataItem.value < labItem.cutoffs[i]) {
+        currentLikelihoodRatio = likelihoodPositive(i, labItemIndex).toFixed(1);
+        message =
+          labItem.labItemName +
+          " < " +
+          labItem.cutoffs[i] +
+          " &#8594 chance of " +
+          labItem.conditionName +
+          " is " +
+          currentLikelihoodRatio +
+          " times higher now";
+        statistics[labItemIndex].currentLikelihoodRatio = currentLikelihoodRatio;
+        statistics[labItemIndex].currentCutoffIndex = i;
+        posteriorCalc(labItemIndex);
+        return message;
+      }
     }
+    currentLikelihoodRatio = likelihoodNegative(0, labItemIndex);
+    message =
+      labItem.labItemName +
+      " > " +
+      labItem.cutoffs[0] +
+      " &#8594 chance of " +
+      labItem.conditionName +
+      " is " +
+      scientificNumber(currentLikelihoodRatio) +
+      " times lower now";
   }
-  currentLikelihoodRatio = likelihoodNegative(0, labItemIndex);
-  message =
-    labItem.labItemName +
-    " > " +
-    labItem.cutoffs[0] +
-    " &#8594 chance of " +
-    labItem.conditionName +
-    " is " +
-    scientificNumber(currentLikelihoodRatio) +
-    " times lower now";
+  if (!labItem.lessIsBad) {
+    for (let i = cutoffsLength - 1; i >= 0; i--) {
+      if (mydataItem.value > labItem.cutoffs[i]) {
+        currentLikelihoodRatio = likelihoodPositive(i, labItemIndex).toFixed(1);
+        message =
+          labItem.labItemName +
+          " > " +
+          labItem.cutoffs[i] +
+          " &#8594 chance of " +
+          labItem.conditionName +
+          " is " +
+          currentLikelihoodRatio +
+          " times higher now";
+        statistics[labItemIndex].currentLikelihoodRatio = currentLikelihoodRatio;
+        statistics[labItemIndex].currentCutoffIndex = i;
+        posteriorCalc(labItemIndex);
+        return message;
+      }
+    }
+    currentLikelihoodRatio = likelihoodNegative(0, labItemIndex);
+    message =
+      labItem.labItemName +
+      " < " +
+      labItem.cutoffs[0] +
+      " &#8594 chance of " +
+      labItem.conditionName +
+      " is " +
+      scientificNumber(currentLikelihoodRatio) +
+      " times lower now";
+  }
   statistics[labItemIndex].currentLikelihoodRatio = currentLikelihoodRatio;
   statistics[labItemIndex].currentCutoffIndex = 0;
   posteriorCalc(labItemIndex);

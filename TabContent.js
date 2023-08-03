@@ -90,7 +90,8 @@ function analyseTab() {
   var measurements_parent = document.createElement("div");
   measurements_parent.className = "measurements_parent";
   parentElement.appendChild(measurements_parent);
-  measurements_parent.innerHTML = "<img src='https://cdn-icons-png.flaticon.com/128/1225/1225656.png'  class='logo_table'  alt='measure'/> Found Measurements: ";
+  measurements_parent.innerHTML =
+    "<img src='https://cdn-icons-png.flaticon.com/128/1225/1225656.png'  class='logo_table'  alt='measure'/> Found Measurements: ";
   for (i = 0; i < measurements.length; i++) {
     try {
       if (measurements[i].used) {
@@ -110,7 +111,8 @@ function analyseTab() {
   var findings_parent = document.createElement("div");
   findings_parent.className = "findings_parent";
   parentElement.appendChild(findings_parent);
-  findings_parent.innerHTML = "<img src='https://cdn-icons-png.flaticon.com/128/4251/4251962.png'  class='logo_table'  alt='guideline'/> Findings based on Clinical Guidelines: ";
+  findings_parent.innerHTML =
+    "<img src='https://cdn-icons-png.flaticon.com/128/4251/4251962.png'  class='logo_table'  alt='guideline'/> Findings based on Clinical Guidelines: ";
   for (i = 0; i < patient[0].signs[0].length; i++) {
     var signs_section = document.createElement("div");
     signs_section.className = "signs_section";
@@ -131,7 +133,8 @@ function analyseTab() {
   var statisticsParent = document.createElement("div");
   statisticsParent.className = "statisticsParent";
   parentElement.appendChild(statisticsParent);
-  statisticsParent.innerHTML =  "<div style='display: block'> <img src='https://cdn-icons-png.flaticon.com/128/9596/9596720.png'  class='logo_table'  alt='ebm'/> Evidence Based Statistics: </div>";
+  statisticsParent.innerHTML =
+    "<div style='display: block'> <img src='https://cdn-icons-png.flaticon.com/128/9596/9596720.png'  class='logo_table'  alt='ebm'/> Evidence Based Statistics: </div>";
   for (let i = 0; i < patient[0].statistics[0].length; i++) {
     var statisticsEntry = document.createElement("div");
     statisticsEntry.className = "statisticsEntry";
@@ -140,7 +143,13 @@ function analyseTab() {
       statisticsEntry.style.backgroundColor = patient[0].statistics[1][i];
       var statisticsFirstLabel = document.createElement("div");
       statisticsFirstLabel.className = "statisticsFirstLabel";
-      statisticsFirstLabel.innerHTML = patient[0].statistics[0][i] + "<br>";
+      let reference = statistics[i].reference;
+      let referenceHTML =
+        "<a target='_blank' href='" +
+        reference +
+        "'><img src='https://cdn-icons-png.flaticon.com/128/1323/1323734.png' alt='Reference' class='referenceIcon'></a>";
+      statisticsFirstLabel.innerHTML =
+        patient[0].statistics[0][i] + referenceHTML + "<br>";
       statisticsEntry.appendChild(statisticsFirstLabel);
 
       let currentCutoffIndex = statistics[i].currentCutoffIndex;
@@ -311,7 +320,7 @@ function labelParentMaker(entry) {
 
 function limitsExpand() {
   let id = this.id;
-  if (id.slice(0,12) == "limitchanged") return false;
+  if (id.slice(0, 12) == "limitchanged") return false;
   let index = id.slice(5);
   var entry = labItems.find((o) => o.name === index.toString());
   let limitsParent = document.getElementById(id);
@@ -378,7 +387,8 @@ function limitCollapse() {
   entry.min = Number(minElement.value);
   entry.max = Number(maxElement.value);
   let entryInput = Number(document.getElementById(entry.input_id).value);
-  if (document.getElementById(entry.input_id).value != "") check_ranges(entryInput,entry.input_id);
+  if (document.getElementById(entry.input_id).value != "")
+    check_ranges(entryInput, entry.input_id);
   entryParent.firstElementChild.replaceWith(labelParentMaker(entry));
 }
 
@@ -387,7 +397,10 @@ function minIsNotBiggerThanMaxForLimits(entryName) {
   let maxElementId = "upperLimitInput" + entryName;
   let minElement = document.getElementById(minElementId);
   let maxElement = document.getElementById(maxElementId);
-  if (Number(minElement.value) > Number(maxElement.value) && Number(maxElement.value)!= 0) {
+  if (
+    Number(minElement.value) > Number(maxElement.value) &&
+    Number(maxElement.value) != 0
+  ) {
     minElement.value = maxElement.value;
   }
 }

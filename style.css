@@ -826,3 +826,15 @@ option::selection {
 li {
   text-align: left;
 }
+
+.linkAndSensSpec {
+  display: flex;
+}
+
+.referenceIcon {
+  height: 20px;
+  width: 20px;
+  padding: 5px;
+  vertical-align: middle;
+  display: inline-block;
+}

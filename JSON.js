@@ -17,12 +17,14 @@ var statistics = [
     conditionName: "iron deficiency",
     conditionIndex: 0,
     cutoffs: [30, 15],
+    lessIsBad: true,
     sensitivities: [0.92, 0.57],
     specificities: [0.98, 0.99],
     myDataIndex: 41,
     currentLikelihoodRatio: 1,
     currentCutoffIndex: 0,
     color: "rgb(102, 30, 52)",
+    reference: ""
   },
   {
     name: "HbID",
@@ -30,19 +32,36 @@ var statistics = [
     conditionName: "iron deficiency",
     conditionIndex: 0,
     cutoffs: [12.8],
+    lessIsBad: true,
     sensitivities: [0.713],
     specificities: [0.793],
     myDataIndex: 2,
     currentLikelihoodRatio: 1,
     currentCutoffIndex: 0,
     color: "darkslateblue",
+    reference: ""
+  },
+  {
+    name: "RDWID",
+    labItemName: "RDW",
+    conditionName: "iron deficiency",
+    conditionIndex: 0,
+    cutoffs: [17.4],
+    lessIsBad: false,
+    sensitivities: [0.81],
+    specificities: [0.534],
+    myDataIndex: 8,
+    currentLikelihoodRatio: 1,
+    currentCutoffIndex: 0,
+    color: "darkslateblue",
+    reference: "https://link.springer.com/article/10.1007/s12098-009-0014-4"
   },
 ];
 
 var conditions = [
   {
     name: "iron deficiency",
-    statisticsParameteresRelated: [0, 1],
+    statisticsParameteresRelated: [0, 1, 2],
     likelihoodRatio: 1,
     prevalenceValue: 13.5,
     posteriorDistribution: 13.5,
