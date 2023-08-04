@@ -4498,7 +4498,7 @@ var labItems = [
     "firstTrim": "",
     "secondTrim": "",
     "thirdTrim": "",
-    "entered": "0"
+    "entered": "1"
   },
   {
     "name": "PB",
@@ -4531,7 +4531,7 @@ var labItems = [
     "firstTrim": "",
     "secondTrim": "",
     "thirdTrim": "",
-    "entered": "0"
+    "entered": "1"
   },
   {
     "name": "UCl",
