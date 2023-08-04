@@ -26,13 +26,13 @@ var selectedAgeGroup = "adult";
 var pregnancySituation = 0; //0 for not pregnant
 var selectedTabId = "test_types_cbc";
 var selectedLabType = "cbc";
-var low_icon = "/Art/downArrow.png";
-var high_icon = "/Art/upArrow.png";
+var lowIcon = "https://cdn-icons-png.flaticon.com/128/8532/8532500.png";
+var highIcon = "https://cdn-icons-png.flaticon.com/128/8532/8532463.png";
 var sup_low_icon =
   "https://www.iconsdb.com/icons/download/red/arrow-211-512.png";
 var sup_high_icon =
   "https://www.iconsdb.com/icons/download/red/arrow-149-512.png";
-var nl_icon = "/Art/normal.png";
+var normalIcon = "https://cdn-icons-png.flaticon.com/128/8532/8532661.png";
 
 var searchbar_show = "none";
 
@@ -339,9 +339,9 @@ function age_calc() {
   }
   rangeMaker(selectedAgeGroup);
   for (var j = 0; j < labItems.length; j++) {
-    x = Number(labItems[j].value);
-    id = labItems[j].input_id;
-    check_ranges(x, id);
+    let value = Number(labItems[j].value);
+    let id = labItems[j].input_id;
+    check_ranges(value, id, true);
   }
   tabContent(selectedTabId, selectedLabType);
 }

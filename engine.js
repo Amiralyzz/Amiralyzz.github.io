@@ -91,44 +91,50 @@ function check_ranges(value, id , enteredStatus) {
   } else {
     currentLabItem.entered = 1;
   }
-  if (value > currentLabItem.max && currentLabItem.max != 0) {
-    y = value / currentLabItem.max;
-    try {
-      document.getElementById(currentLabItem.output_id + "_img").src =
-        high_icon;
-      document.getElementById(currentLabItem.output_id + "_img").style.display =
-        "flex";
-    } catch {}
-  } else if (value < currentLabItem.min) {
-    y = value / currentLabItem.min;
-    try {
-      document.getElementById(currentLabItem.output_id + "_img").src = low_icon;
-      document.getElementById(currentLabItem.output_id + "_img").style.display =
-        "flex";
-    } catch {}
-  } else {
-    y = -1;
-    try {
-      document.getElementById(currentLabItem.output_id + "_img").src = nl_icon;
-      document.getElementById(currentLabItem.output_id + "_img").style.display =
-        "flex";
-    } catch {}
-  }
   let decimalPoint = 0;
-  let st = percentileFinder(value, currentLabItem.min, currentLabItem.max);
-  if (st >= 1) {
+  let percentile = percentileFinder(value, currentLabItem.min, currentLabItem.max);
+  if (percentile >= 1) {
     decimalPoint = 0;
   } else {
-    let decimalValue = Math.ceil(-1 * Math.log10(st));
+    let decimalValue = Math.ceil(-1 * Math.log10(percentile));
     if (decimalValue < 3) {
       decimalPoint = decimalValue;
     } else {
       decimalPoint = 2;
     }
   }
-  st = st.toFixed(decimalPoint);
-  if (value != "") {
-    currentLabItem.status = "% = " + st.toString();
+  percentile = percentile.toFixed(decimalPoint);
+  if (enteredStatus) {
+    currentLabItem.status = "%ile = " + percentile.toString();
+  }
+  if (value > currentLabItem.max && currentLabItem.max != 0) {
+    let timesMax = (value / currentLabItem.max).toFixed(1);
+    try {
+      document.getElementById(currentLabItem.output_id + "_img").src =
+        highIcon;
+      document.getElementById(currentLabItem.output_id + "_img").style.display =
+        "flex";
+      currentLabItem.status = timesMax + " &times; Maximum" ;
+    } catch {}
+  } else if (value < currentLabItem.min) {
+    let timesMax = value / currentLabItem.min;
+    if (timesMax <= 0.01) {
+      currentLabItem.status = "<0.01 &times; Minimum" ;
+    } else {
+      currentLabItem.status = timesMax.toFixed(2) + " &times; Minimum" ;
+    }
+    try {
+      document.getElementById(currentLabItem.output_id + "_img").src = lowIcon;
+      document.getElementById(currentLabItem.output_id + "_img").style.display =
+        "flex";
+    } catch {}
+  } else {
+    y = -1;
+    try {
+      document.getElementById(currentLabItem.output_id + "_img").src = normalIcon;
+      document.getElementById(currentLabItem.output_id + "_img").style.display =
+        "flex";
+    } catch {}
   }
   try {
     if (value > currentLabItem.critmax && currentLabItem.critmax != 0) {
@@ -180,7 +186,7 @@ function cbc_autocomplete() {
     try {
       document.getElementById("in_Hct").value = c_hct;
     } catch {}
-    check_ranges(c_hct, "in_Hct");
+    check_ranges(c_hct, "in_Hct",true);
   } else {
     mcv_isnotzero = false;
   }
@@ -191,7 +197,7 @@ function cbc_autocomplete() {
     try {
       document.getElementById("in_MCH").value = c_mch;
     } catch {}
-    check_ranges(c_mch, "in_MCH");
+    check_ranges(c_mch, "in_MCH",true);
     if (mcv_isnotzero) {
       c_mchc = (p_hb * 100) / c_hct;
       c_mchc = c_mchc.toFixed(1);
@@ -199,7 +205,7 @@ function cbc_autocomplete() {
       try {
         document.getElementById("in_MCHC").value = c_mchc;
       } catch {}
-      check_ranges(c_mchc, "in_MCHC");
+      check_ranges(c_mchc, "in_MCHC",true);
     }
   }
 }

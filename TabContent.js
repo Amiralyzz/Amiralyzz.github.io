@@ -211,14 +211,12 @@ function analyseTab() {
 function buildUsualEntry(index) {
   {
     var entry = labItems[index];
-
     var entryParent = document.createElement("div");
     entryParent.className = "entry_box";
     entryParent.style.background = entry.color;
     entryParent.id = entry.name;
     entryParent.onmouseover = tooltip;
     entryParent.onmouseleave = tooltip_remove;
-
     entryParent.appendChild(labelParentMaker(entry));
 
     var new_input = document.createElement("input");
@@ -257,15 +255,15 @@ function buildUsualEntry(index) {
     out_icon.style.display = "none";
     if (entry.status == 0) {
       out_icon.style.display = "none";
-    } else if (entry.status.slice(-1) == "l") {
+    } else if (entry.status.slice(-5) == "ximum") {
       out_icon.style.display = "flex";
-      out_icon.src = nl_icon;
-    } else if (entry.status.slice(-1) == "x") {
+      out_icon.src = highIcon;
+    } else if (entry.status.slice(-5) == "nimum") {
       out_icon.style.display = "flex";
-      out_icon.src = high_icon;
-    } else if (entry.status.slice(-1) == "n") {
+      out_icon.src = lowIcon;
+    } else {
       out_icon.style.display = "flex";
-      out_icon.src = low_icon;
+      out_icon.src = normalIcon;
     }
     if (critValueArray[index] == 1) {
       warn_icon.style.display = "flex";
@@ -387,8 +385,9 @@ function limitCollapse() {
   entry.min = Number(minElement.value);
   entry.max = Number(maxElement.value);
   let entryInput = Number(document.getElementById(entry.input_id).value);
-  if (document.getElementById(entry.input_id).value != "")
-    check_ranges(entryInput, entry.input_id);
+  if (entry.entered != 0) {
+    check_ranges(entryInput, entry.input_id,true);
+  }
   entryParent.firstElementChild.replaceWith(labelParentMaker(entry));
 }
 
