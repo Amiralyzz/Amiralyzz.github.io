@@ -27,19 +27,34 @@ var statistics = [
     reference: "https://pubmed.ncbi.nlm.nih.gov/22157204/"
   },
   {
-    name: "HbID",
-    labItemName: "Hemoglobin",
+    name: "ironID",
+    labItemName: "Iron",
     conditionName: "iron deficiency",
     conditionIndex: 0,
-    cutoffs: [12.8],
+    cutoffs: [72],
     lessIsBad: true,
-    sensitivities: [0.713],
-    specificities: [0.793],
-    myDataIndex: 2,
+    sensitivities: [0.94],
+    specificities: [0.88],
+    myDataIndex: 40,
     currentLikelihoodRatio: 1,
     currentCutoffIndex: 0,
     color: "darkslateblue",
-    reference: ""
+    reference: "https://pubmed.ncbi.nlm.nih.gov/29382661/"
+  },
+  {
+    name: "TSATID",
+    labItemName: "Transferin saturation (TSAT)",
+    conditionName: "iron deficiency",
+    conditionIndex: 0,
+    cutoffs: [19.8],
+    lessIsBad: true,
+    sensitivities: [0.94],
+    specificities: [0.84],
+    myDataIndex: -8, //if negative it is a measurement
+    currentLikelihoodRatio: 1,
+    currentCutoffIndex: 0,
+    color: "darkslateblue",
+    reference: "https://pubmed.ncbi.nlm.nih.gov/29382661/"
   },
   {
     name: "RDWID",

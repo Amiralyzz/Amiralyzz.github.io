@@ -37,7 +37,16 @@ function conditionMaker(conditionIndex) {
 }
 
 function statisticsMaker(labItemIndex) {
-  if (labItems[statistics[labItemIndex].myDataIndex].value > 0) {
+  let value = 0;
+  let statisticsItem = statistics[labItemIndex];
+  let mydataItem = labItems[1];
+  if (statisticsItem.myDataIndex >= 0) {
+    mydataItem = labItems[statisticsItem.myDataIndex];
+  } else {
+    mydataItem = measurements[statisticsItem.myDataIndex * -1];
+  }
+  value = mydataItem.value;
+  if (value > 0) {
     patient[0].statistics[0][labItemIndex] = statisticsCalc(labItemIndex);
     patient[0].statistics[1][labItemIndex] = statistics[labItemIndex].color;
     return 1;
@@ -51,7 +60,12 @@ function statisticsMaker(labItemIndex) {
 
 function statisticsCalc(labItemIndex) {
   let labItem = statistics[labItemIndex];
-  let mydataItem = labItems[labItem.myDataIndex];
+  let mydataItem = labItems[1];
+  if (labItem.myDataIndex >= 0) {
+    mydataItem = labItems[labItem.myDataIndex];
+  } else {
+    mydataItem = measurements[labItem.myDataIndex * -1];
+  }
   let cutoffsLength = labItem.cutoffs.length;
   let currentLikelihoodRatio = 1;
   let message = "";
