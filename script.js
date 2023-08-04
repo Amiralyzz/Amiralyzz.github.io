@@ -23,7 +23,7 @@ var ageGroupsArray = [
 ];
 var selectedAgeGroupIndex = 12;
 var selectedAgeGroup = "adult";
-var preg_situation = 0; //0 for not pregnant
+var pregnancySituation = 0; //0 for not pregnant
 var selectedTabId = "test_types_cbc";
 var selectedLabType = "cbc";
 var low_icon = "/Art/downArrow.png";
@@ -182,7 +182,7 @@ function expand_info() {
     more_button.innerHTML = "show";
   }
 }
-
+var lastPregnancySituation = 0;
 function gender() {
   var malelogo = "https://cdn-icons-png.flaticon.com/512/3001/3001764.png";
   var femalelogo = "https://cdn-icons-png.flaticon.com/512/2922/2922561.png";
@@ -192,43 +192,53 @@ function gender() {
     document.getElementById("gen_logo").src = femalelogo;
     document.getElementById("gen_logo").alt = "female";
     genderCoef = 2;
+    pregnancySituation = lastPregnancySituation;
   } else {
     document.getElementById("preg").disabled = true;
     document.getElementById("gender").value = "male";
     document.getElementById("gen_logo").src = malelogo;
     document.getElementById("gen_logo").alt = "male";
     genderCoef = 0;
+    lastPregnancySituation = pregnancySituation;
+    pregnancySituation = 0 ;
   }
   age_calc();
 }
 
 
 function pregnancy() {
-  preg_val = document.getElementById("preg").value;
-  switch (preg_val) {
-    case "preg1":
-      preg_situation = 0;
-    case "preg2":
-      preg_situation = 1;
-    case "preg3":
-      preg_situation = 2;
-    case "preg4":
-      preg_situation = 3;
+  let pregnancyVal = document.getElementById("preg").value;
+  switch (pregnancyVal) {
+    case "notPregnant":
+      pregnancySituation = 0;
+      break;
+    case "firstTrimester":
+      pregnancySituation = 1;
+      break;
+    case "secondTrimester":
+      pregnancySituation = 2;
+      break;
+    case "thirdTrimester":
+      pregnancySituation = 3;
+      break;
+    default:
   }
+  rangeMaker(selectedAgeGroup);
+  tabContent(selectedTabId, selectedLabType);
 }
 
 function age_calc() {
-  var age_txtbox = document.getElementById("age");
-  var age_unit_selected = document.getElementById("age_unit");
-  var inp = Number(age_txtbox.value);
-  var age_unit = age_unit_selected.value;
+  let age = document.getElementById("age");
+  let ageUnitSelected = document.getElementById("age_unit");
+  let inp = Number(age.value);
+  let ageUnit = ageUnitSelected.value;
   if (inp < 0) {
-    age_txtbox.value = 0;
+    age.value = 0;
     inp = 0;
   }
-  if (age_unit == "day") {
+  if (ageUnit == "day") {
     if (inp > 60) {
-      age_txtbox.value = 60;
+      age.value = 60;
       inp = 60;
     }
     if (inp <= 3) {
@@ -243,13 +253,13 @@ function age_calc() {
     globalAgeYears = 0;
     globalAgeMonths = Math.floor(inp / 30);
   }
-  if (age_unit == "mon") {
+  if (ageUnit == "mon") {
     if (inp < 1) {
-      age_txtbox.value = 1;
+      age.value = 1;
       inp = 1;
     }
     if (inp >= 36) {
-      age_txtbox.value = 36;
+      age.value = 36;
       inp = 36;
     }
     if (inp <= 6) {
@@ -264,12 +274,12 @@ function age_calc() {
     globalAgeMonths = inp;
     globalAgeYears = Math.floor(inp / 12);
   }
-  if (age_unit == "year") {
+  if (ageUnit == "year") {
     if (inp < 1) {
       inp = 1;
     }
     if (inp > 139) {
-      age_txtbox.value = 139;
+      age.value = 139;
       inp = 139;
     }
     globalAgeYears = inp;
@@ -327,7 +337,7 @@ function age_calc() {
       }
     }
   }
-  range_maker(selectedAgeGroup);
+  rangeMaker(selectedAgeGroup);
   for (var j = 0; j < labItems.length; j++) {
     x = Number(labItems[j].value);
     id = labItems[j].input_id;
@@ -336,13 +346,25 @@ function age_calc() {
   tabContent(selectedTabId, selectedLabType);
 }
 
-function range_maker(key) {
-  var i = 0;
+function rangeMaker(key) {
+  let pregKey = "";
+  if (pregnancySituation == 1) {
+    pregKey = 'firstTrim';
+  } else if (pregnancySituation == 2) {
+    pregKey = 'secondTrim';
+  } else if (pregnancySituation == 3) {
+    pregKey = 'thirdTrim';
+  } 
   for (var labItem of labItems) {
-    var array = labItem[key].slice(1, -1).split(","); //making key an array like ["1","2"]
-    labItem.min = array[genderCoef];
-    labItem.max = array[genderCoef + 1];
-    i++;
+    if (pregnancySituation != 0 && labItem['firstTrim'] != "" && labItem['secondTrim'] != "" && labItem['thirdTrim'] != "") {
+      let array = labItem[pregKey].slice(1, -1).split(","); //making key an array like ["1","2"]
+      labItem.min = array[0];
+      labItem.max= array[1];
+    } else {
+      let array = labItem[key].slice(1, -1).split(","); //making key an array like ["1","2"]
+      labItem.min = array[genderCoef];
+      labItem.max = array[genderCoef + 1];
+    }
   }
 }
 

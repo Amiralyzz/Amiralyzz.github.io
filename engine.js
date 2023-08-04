@@ -1,10 +1,12 @@
 function whenAnInputChanges() {
-  x = Number(this.value);
-  id = this.id;
-  if (x < 0) {
-    x = 0;
+  let value = Number(this.value);
+  let enteredStatus = true;
+  if (this.value === "") {
+    enteredStatus = false;
   }
-  if (x != 0) {
+  console.log(enteredStatus);
+  let id = this.id;
+  if (enteredStatus) {
     switch (id) {
       case "in_WBC":
       case "in_Neu":
@@ -50,7 +52,7 @@ function whenAnInputChanges() {
     }
   }
 
-  check_ranges(x, id);
+  check_ranges(value, id , enteredStatus);
 }
 
 function minIsNotBiggerThanMax(x, id) {
@@ -71,19 +73,34 @@ function minIsNotBiggerThanMax(x, id) {
   } catch {}
 }
 
-function check_ranges(x, id) {
+function check_ranges(value, id , enteredStatus) {
   var currentLabItem = labItems.find((o) => o.input_id === id.toString());
-  minIsNotBiggerThanMax(x, id);
-  if (x > currentLabItem.max && currentLabItem.max != 0) {
-    y = x / currentLabItem.max;
+  minIsNotBiggerThanMax(value, id);
+  if (!enteredStatus) {
+    try {
+      document.getElementById(currentLabItem.output_id).innerHTML = "";
+      document.getElementById(currentLabItem.output_id + "_img").style.display =
+        "none";
+      document.getElementById(
+        currentLabItem.output_id + "_warn"
+      ).style.display = "none";
+    } catch {}
+    currentLabItem.status = 0;
+    currentLabItem.entered = 0;
+    return 0;
+  } else {
+    currentLabItem.entered = 1;
+  }
+  if (value > currentLabItem.max && currentLabItem.max != 0) {
+    y = value / currentLabItem.max;
     try {
       document.getElementById(currentLabItem.output_id + "_img").src =
         high_icon;
       document.getElementById(currentLabItem.output_id + "_img").style.display =
         "flex";
     } catch {}
-  } else if (x < currentLabItem.min) {
-    y = x / currentLabItem.min;
+  } else if (value < currentLabItem.min) {
+    y = value / currentLabItem.min;
     try {
       document.getElementById(currentLabItem.output_id + "_img").src = low_icon;
       document.getElementById(currentLabItem.output_id + "_img").style.display =
@@ -98,7 +115,7 @@ function check_ranges(x, id) {
     } catch {}
   }
   let decimalPoint = 0;
-  let st = percentileFinder(x, currentLabItem.min, currentLabItem.max);
+  let st = percentileFinder(value, currentLabItem.min, currentLabItem.max);
   if (st >= 1) {
     decimalPoint = 0;
   } else {
@@ -110,16 +127,16 @@ function check_ranges(x, id) {
     }
   }
   st = st.toFixed(decimalPoint);
-  if (x != "") {
+  if (value != "") {
     currentLabItem.status = "% = " + st.toString();
   }
   try {
-    if (x > currentLabItem.critmax && currentLabItem.critmax != 0) {
+    if (value > currentLabItem.critmax && currentLabItem.critmax != 0) {
       document.getElementById(
         currentLabItem.output_id + "_warn"
       ).style.display = "flex";
       critValueArray[j] = 1;
-    } else if (x < currentLabItem.critmin && x != 0) {
+    } else if (value < currentLabItem.critmin && value != 0) {
       document.getElementById(
         currentLabItem.output_id + "_warn"
       ).style.display = "flex";
@@ -131,22 +148,11 @@ function check_ranges(x, id) {
       critValueArray[j] = 0;
     }
   } catch {}
-  currentLabItem.value = x;
+  currentLabItem.value = value;
   try {
     document.getElementById(currentLabItem.output_id).innerHTML =
       currentLabItem.status;
   } catch {}
-  if (x == 0) {
-    try {
-      document.getElementById(currentLabItem.output_id).innerHTML = "";
-      document.getElementById(currentLabItem.output_id + "_img").style.display =
-        "none";
-      document.getElementById(
-        currentLabItem.output_id + "_warn"
-      ).style.display = "none";
-    } catch {}
-    currentLabItem.status = 0;
-  }
 }
 function cbc_autocomplete() {
   try {
@@ -783,7 +789,7 @@ function anemiaType() {
   if (p_mcv > 0) {
     path += "Hb < " + labItems[2].min + " &#8594 ";
     // we have mcv and we approach
-    if (genderCoef == 0 || preg_situation == 0) {
+    if (genderCoef == 0 || pregnancySituation == 0) {
       //this approach only for non-pregnants
       if (p_mcv < labItems[3].min) {
         //microcytic anemia

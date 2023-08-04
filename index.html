@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="style.css" />
     <title>LAB|ENTER</title>
   </head>
-  <body onload="range_maker('adult');">
+  <body onload="rangeMaker('adult');">
     <script defer src="script.js"></script>
     <script defer src="JSON.js"></script>
     <script defer src="TabContent.js"></script>
@@ -77,12 +77,12 @@
                 name="preg"
                 id="preg"
                 disabled="true"
-                onchange="pregnancy()"
+                oninput="pregnancy()"
               >
-                <option value="preg1" selected>Not pregnant</option>
-                <option value="preg2">First trimester</option>
-                <option value="preg3">Second trimester</option>
-                <option value="preg4">Third trimester</option>
+                <option value="notPregnant" selected>Not pregnant</option>
+                <option value="firstTrimester">First trimester</option>
+                <option value="secondTrimester">Second trimester</option>
+                <option value="thirdTrimester">Third trimester</option>
               </select>
             </div>
           </div>

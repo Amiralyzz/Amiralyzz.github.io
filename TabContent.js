@@ -226,7 +226,7 @@ function buildUsualEntry(index) {
     new_input.className = "entry_input";
     new_input.name = entry.name;
     new_input.style.background = entry.color;
-    if (entry.value != 0) new_input.value = entry.value;
+    if (entry.entered != 0) new_input.value = entry.value;
     new_input.step = entry.step;
     entryParent.appendChild(new_input);
 

@@ -1458,7 +1458,11 @@ var labItems = [
     "critmin": "2,000",
     "critmax": "30,000",
     "input_id": "",
-    "output_id": ""
+    "output_id": "",
+    "firstTrim": "",
+    "secondTrim": "",
+    "thirdTrim": "",
+    "entered": "0"
   },
   {
     "name": "RBC",
@@ -1487,7 +1491,11 @@ var labItems = [
     "critmin": "",
     "critmax": "",
     "input_id": "",
-    "output_id": ""
+    "output_id": "",
+    "firstTrim": "",
+    "secondTrim": "",
+    "thirdTrim": "",
+    "entered": "0"
   },
   {
     "name": "Hb",
@@ -1516,7 +1524,11 @@ var labItems = [
     "critmin": "7",
     "critmax": "18",
     "input_id": "",
-    "output_id": ""
+    "output_id": "",
+    "firstTrim": "[11,13]",
+    "secondTrim": "[10.5,13]",
+    "thirdTrim": "[11,13]",
+    "entered": "0"
   },
   {
     "name": "MCV",
@@ -1545,7 +1557,11 @@ var labItems = [
     "critmin": "",
     "critmax": "",
     "input_id": "",
-    "output_id": ""
+    "output_id": "",
+    "firstTrim": "",
+    "secondTrim": "",
+    "thirdTrim": "",
+    "entered": "0"
   },
   {
     "name": "Hct",
@@ -1574,7 +1590,11 @@ var labItems = [
     "critmin": "20",
     "critmax": "55",
     "input_id": "",
-    "output_id": ""
+    "output_id": "",
+    "firstTrim": "",
+    "secondTrim": "",
+    "thirdTrim": "",
+    "entered": "0"
   },
   {
     "name": "MCH",
@@ -1603,7 +1623,11 @@ var labItems = [
     "critmin": "",
     "critmax": "",
     "input_id": "",
-    "output_id": ""
+    "output_id": "",
+    "firstTrim": "",
+    "secondTrim": "",
+    "thirdTrim": "",
+    "entered": "0"
   },
   {
     "name": "MCHC",
@@ -1632,7 +1656,11 @@ var labItems = [
     "critmin": "",
     "critmax": "",
     "input_id": "",
-    "output_id": ""
+    "output_id": "",
+    "firstTrim": "",
+    "secondTrim": "",
+    "thirdTrim": "",
+    "entered": "0"
   },
   {
     "name": "Plt",
@@ -1661,7 +1689,11 @@ var labItems = [
     "critmin": "20,000",
     "critmax": "1,000,000",
     "input_id": "",
-    "output_id": ""
+    "output_id": "",
+    "firstTrim": "",
+    "secondTrim": "",
+    "thirdTrim": "",
+    "entered": "0"
   },
   {
     "name": "RDW",
@@ -1690,7 +1722,11 @@ var labItems = [
     "critmin": "",
     "critmax": "",
     "input_id": "",
-    "output_id": ""
+    "output_id": "",
+    "firstTrim": "",
+    "secondTrim": "",
+    "thirdTrim": "",
+    "entered": "0"
   },
   {
     "name": "MPV",
@@ -1719,7 +1755,11 @@ var labItems = [
     "critmin": "",
     "critmax": "",
     "input_id": "",
-    "output_id": ""
+    "output_id": "",
+    "firstTrim": "",
+    "secondTrim": "",
+    "thirdTrim": "",
+    "entered": "0"
   },
   {
     "name": "NRBC",
@@ -1748,7 +1788,11 @@ var labItems = [
     "critmin": "",
     "critmax": "",
     "input_id": "",
-    "output_id": ""
+    "output_id": "",
+    "firstTrim": "",
+    "secondTrim": "",
+    "thirdTrim": "",
+    "entered": "0"
   },
   {
     "name": "Retic",
@@ -1777,7 +1821,11 @@ var labItems = [
     "critmin": "",
     "critmax": "",
     "input_id": "",
-    "output_id": ""
+    "output_id": "",
+    "firstTrim": "",
+    "secondTrim": "",
+    "thirdTrim": "",
+    "entered": "0"
   },
   {
     "name": "ESR",
@@ -1806,7 +1854,11 @@ var labItems = [
     "critmin": "",
     "critmax": "",
     "input_id": "",
-    "output_id": ""
+    "output_id": "",
+    "firstTrim": "",
+    "secondTrim": "",
+    "thirdTrim": "",
+    "entered": "0"
   },
   {
     "name": "CRP",
@@ -1835,7 +1887,11 @@ var labItems = [
     "critmin": "",
     "critmax": "",
     "input_id": "",
-    "output_id": ""
+    "output_id": "",
+    "firstTrim": "",
+    "secondTrim": "",
+    "thirdTrim": "",
+    "entered": "0"
   },
   {
     "name": "AST",
@@ -1864,7 +1920,11 @@ var labItems = [
     "critmin": "",
     "critmax": "",
     "input_id": "",
-    "output_id": ""
+    "output_id": "",
+    "firstTrim": "",
+    "secondTrim": "",
+    "thirdTrim": "",
+    "entered": "0"
   },
   {
     "name": "ALT",
@@ -1893,7 +1953,11 @@ var labItems = [
     "critmin": "",
     "critmax": "",
     "input_id": "",
-    "output_id": ""
+    "output_id": "",
+    "firstTrim": "",
+    "secondTrim": "",
+    "thirdTrim": "",
+    "entered": "0"
   },
   {
     "name": "ALP",
@@ -1922,7 +1986,11 @@ var labItems = [
     "critmin": "",
     "critmax": "",
     "input_id": "",
-    "output_id": ""
+    "output_id": "",
+    "firstTrim": "",
+    "secondTrim": "",
+    "thirdTrim": "",
+    "entered": "0"
   },
   {
     "name": "Bil(T)",
@@ -1951,7 +2019,11 @@ var labItems = [
     "critmin": "",
     "critmax": "",
     "input_id": "",
-    "output_id": ""
+    "output_id": "",
+    "firstTrim": "",
+    "secondTrim": "",
+    "thirdTrim": "",
+    "entered": "0"
   },
   {
     "name": "Bil(D)",
@@ -1980,7 +2052,11 @@ var labItems = [
     "critmin": "",
     "critmax": "",
     "input_id": "",
-    "output_id": ""
+    "output_id": "",
+    "firstTrim": "",
+    "secondTrim": "",
+    "thirdTrim": "",
+    "entered": "0"
   },
   {
     "name": "Alb",
@@ -2009,7 +2085,11 @@ var labItems = [
     "critmin": "",
     "critmax": "",
     "input_id": "",
-    "output_id": ""
+    "output_id": "",
+    "firstTrim": "",
+    "secondTrim": "",
+    "thirdTrim": "",
+    "entered": "0"
   },
   {
     "name": "GGT",
@@ -2038,7 +2118,11 @@ var labItems = [
     "critmin": "",
     "critmax": "",
     "input_id": "",
-    "output_id": ""
+    "output_id": "",
+    "firstTrim": "",
+    "secondTrim": "",
+    "thirdTrim": "",
+    "entered": "0"
   },
   {
     "name": "TSH",
@@ -2067,7 +2151,11 @@ var labItems = [
     "critmin": "",
     "critmax": "",
     "input_id": "",
-    "output_id": ""
+    "output_id": "",
+    "firstTrim": "",
+    "secondTrim": "",
+    "thirdTrim": "",
+    "entered": "0"
   },
   {
     "name": "FT4",
@@ -2096,7 +2184,11 @@ var labItems = [
     "critmin": "",
     "critmax": "",
     "input_id": "",
-    "output_id": ""
+    "output_id": "",
+    "firstTrim": "",
+    "secondTrim": "",
+    "thirdTrim": "",
+    "entered": "0"
   },
   {
     "name": "T4",
@@ -2125,7 +2217,11 @@ var labItems = [
     "critmin": "",
     "critmax": "",
     "input_id": "",
-    "output_id": ""
+    "output_id": "",
+    "firstTrim": "",
+    "secondTrim": "",
+    "thirdTrim": "",
+    "entered": "0"
   },
   {
     "name": "FT3",
@@ -2154,7 +2250,11 @@ var labItems = [
     "critmin": "",
     "critmax": "",
     "input_id": "",
-    "output_id": ""
+    "output_id": "",
+    "firstTrim": "",
+    "secondTrim": "",
+    "thirdTrim": "",
+    "entered": "0"
   },
   {
     "name": "T3",
@@ -2183,7 +2283,11 @@ var labItems = [
     "critmin": "",
     "critmax": "",
     "input_id": "",
-    "output_id": ""
+    "output_id": "",
+    "firstTrim": "",
+    "secondTrim": "",
+    "thirdTrim": "",
+    "entered": "0"
   },
   {
     "name": "RIA",
@@ -2212,7 +2316,11 @@ var labItems = [
     "critmin": "",
     "critmax": "",
     "input_id": "",
-    "output_id": ""
+    "output_id": "",
+    "firstTrim": "",
+    "secondTrim": "",
+    "thirdTrim": "",
+    "entered": "0"
   },
   {
     "name": "TSI",
@@ -2241,7 +2349,11 @@ var labItems = [
     "critmin": "",
     "critmax": "",
     "input_id": "",
-    "output_id": ""
+    "output_id": "",
+    "firstTrim": "",
+    "secondTrim": "",
+    "thirdTrim": "",
+    "entered": "0"
   },
   {
     "name": "TBG",
@@ -2270,7 +2382,11 @@ var labItems = [
     "critmin": "",
     "critmax": "",
     "input_id": "",
-    "output_id": ""
+    "output_id": "",
+    "firstTrim": "",
+    "secondTrim": "",
+    "thirdTrim": "",
+    "entered": "0"
   },
   {
     "name": "Tg",
@@ -2299,7 +2415,11 @@ var labItems = [
     "critmin": "",
     "critmax": "",
     "input_id": "",
-    "output_id": ""
+    "output_id": "",
+    "firstTrim": "",
+    "secondTrim": "",
+    "thirdTrim": "",
+    "entered": "0"
   },
   {
     "name": "Cr",
@@ -2328,7 +2448,11 @@ var labItems = [
     "critmin": "",
     "critmax": "",
     "input_id": "",
-    "output_id": ""
+    "output_id": "",
+    "firstTrim": "",
+    "secondTrim": "",
+    "thirdTrim": "",
+    "entered": "0"
   },
   {
     "name": "BUN",
@@ -2357,7 +2481,11 @@ var labItems = [
     "critmin": "",
     "critmax": "",
     "input_id": "",
-    "output_id": ""
+    "output_id": "",
+    "firstTrim": "",
+    "secondTrim": "",
+    "thirdTrim": "",
+    "entered": "0"
   },
   {
     "name": "Na",
@@ -2386,7 +2514,11 @@ var labItems = [
     "critmin": "",
     "critmax": "",
     "input_id": "",
-    "output_id": ""
+    "output_id": "",
+    "firstTrim": "",
+    "secondTrim": "",
+    "thirdTrim": "",
+    "entered": "0"
   },
   {
     "name": "K",
@@ -2415,7 +2547,11 @@ var labItems = [
     "critmin": "",
     "critmax": "",
     "input_id": "",
-    "output_id": ""
+    "output_id": "",
+    "firstTrim": "",
+    "secondTrim": "",
+    "thirdTrim": "",
+    "entered": "0"
   },
   {
     "name": "Uric Acid",
@@ -2444,7 +2580,11 @@ var labItems = [
     "critmin": "",
     "critmax": "",
     "input_id": "",
-    "output_id": ""
+    "output_id": "",
+    "firstTrim": "",
+    "secondTrim": "",
+    "thirdTrim": "",
+    "entered": "0"
   },
   {
     "name": "FBS",
@@ -2473,7 +2613,11 @@ var labItems = [
     "critmin": "60",
     "critmax": "400",
     "input_id": "",
-    "output_id": ""
+    "output_id": "",
+    "firstTrim": "",
+    "secondTrim": "",
+    "thirdTrim": "",
+    "entered": "0"
   },
   {
     "name": "TG",
@@ -2502,7 +2646,11 @@ var labItems = [
     "critmin": "",
     "critmax": "",
     "input_id": "",
-    "output_id": ""
+    "output_id": "",
+    "firstTrim": "",
+    "secondTrim": "",
+    "thirdTrim": "",
+    "entered": "0"
   },
   {
     "name": "Chol",
@@ -2531,7 +2679,11 @@ var labItems = [
     "critmin": "",
     "critmax": "",
     "input_id": "",
-    "output_id": ""
+    "output_id": "",
+    "firstTrim": "",
+    "secondTrim": "",
+    "thirdTrim": "",
+    "entered": "0"
   },
   {
     "name": "LDL",
@@ -2560,7 +2712,11 @@ var labItems = [
     "critmin": "",
     "critmax": "",
     "input_id": "",
-    "output_id": ""
+    "output_id": "",
+    "firstTrim": "",
+    "secondTrim": "",
+    "thirdTrim": "",
+    "entered": "0"
   },
   {
     "name": "HDL",
@@ -2589,7 +2745,11 @@ var labItems = [
     "critmin": "",
     "critmax": "",
     "input_id": "",
-    "output_id": ""
+    "output_id": "",
+    "firstTrim": "",
+    "secondTrim": "",
+    "thirdTrim": "",
+    "entered": "0"
   },
   {
     "name": "Iron",
@@ -2618,7 +2778,11 @@ var labItems = [
     "critmin": "",
     "critmax": "",
     "input_id": "",
-    "output_id": ""
+    "output_id": "",
+    "firstTrim": "",
+    "secondTrim": "",
+    "thirdTrim": "",
+    "entered": "0"
   },
   {
     "name": "Ferritin",
@@ -2647,7 +2811,11 @@ var labItems = [
     "critmin": "",
     "critmax": "",
     "input_id": "",
-    "output_id": ""
+    "output_id": "",
+    "firstTrim": "",
+    "secondTrim": "",
+    "thirdTrim": "",
+    "entered": "0"
   },
   {
     "name": "TIBC",
@@ -2676,7 +2844,11 @@ var labItems = [
     "critmin": "",
     "critmax": "",
     "input_id": "",
-    "output_id": ""
+    "output_id": "",
+    "firstTrim": "",
+    "secondTrim": "",
+    "thirdTrim": "",
+    "entered": "0"
   },
   {
     "name": "Folate",
@@ -2705,7 +2877,11 @@ var labItems = [
     "critmin": "",
     "critmax": "",
     "input_id": "",
-    "output_id": ""
+    "output_id": "",
+    "firstTrim": "",
+    "secondTrim": "",
+    "thirdTrim": "",
+    "entered": "0"
   },
   {
     "name": "B12",
@@ -2734,7 +2910,11 @@ var labItems = [
     "critmin": "",
     "critmax": "",
     "input_id": "",
-    "output_id": ""
+    "output_id": "",
+    "firstTrim": "",
+    "secondTrim": "",
+    "thirdTrim": "",
+    "entered": "0"
   },
   {
     "name": "Neu",
@@ -2763,7 +2943,11 @@ var labItems = [
     "critmin": "",
     "critmax": "",
     "input_id": "",
-    "output_id": ""
+    "output_id": "",
+    "firstTrim": "",
+    "secondTrim": "",
+    "thirdTrim": "",
+    "entered": "0"
   },
   {
     "name": "Lym",
@@ -2792,7 +2976,11 @@ var labItems = [
     "critmin": "",
     "critmax": "",
     "input_id": "",
-    "output_id": ""
+    "output_id": "",
+    "firstTrim": "",
+    "secondTrim": "",
+    "thirdTrim": "",
+    "entered": "0"
   },
   {
     "name": "Mono",
@@ -2821,7 +3009,11 @@ var labItems = [
     "critmin": "",
     "critmax": "",
     "input_id": "",
-    "output_id": ""
+    "output_id": "",
+    "firstTrim": "",
+    "secondTrim": "",
+    "thirdTrim": "",
+    "entered": "0"
   },
   {
     "name": "Eos",
@@ -2850,7 +3042,11 @@ var labItems = [
     "critmin": "",
     "critmax": "",
     "input_id": "",
-    "output_id": ""
+    "output_id": "",
+    "firstTrim": "",
+    "secondTrim": "",
+    "thirdTrim": "",
+    "entered": "0"
   },
   {
     "name": "Baso",
@@ -2879,7 +3075,11 @@ var labItems = [
     "critmin": "",
     "critmax": "",
     "input_id": "",
-    "output_id": ""
+    "output_id": "",
+    "firstTrim": "",
+    "secondTrim": "",
+    "thirdTrim": "",
+    "entered": "0"
   },
   {
     "name": "Band",
@@ -2908,7 +3108,11 @@ var labItems = [
     "critmin": "",
     "critmax": "",
     "input_id": "",
-    "output_id": ""
+    "output_id": "",
+    "firstTrim": "",
+    "secondTrim": "",
+    "thirdTrim": "",
+    "entered": "0"
   },
   {
     "name": "Sphero",
@@ -2937,7 +3141,11 @@ var labItems = [
     "critmin": "",
     "critmax": "",
     "input_id": "",
-    "output_id": ""
+    "output_id": "",
+    "firstTrim": "",
+    "secondTrim": "",
+    "thirdTrim": "",
+    "entered": "0"
   },
   {
     "name": "Ovalo",
@@ -2966,7 +3174,11 @@ var labItems = [
     "critmin": "",
     "critmax": "",
     "input_id": "",
-    "output_id": ""
+    "output_id": "",
+    "firstTrim": "",
+    "secondTrim": "",
+    "thirdTrim": "",
+    "entered": "0"
   },
   {
     "name": "Stomato",
@@ -2995,7 +3207,11 @@ var labItems = [
     "critmin": "",
     "critmax": "",
     "input_id": "",
-    "output_id": ""
+    "output_id": "",
+    "firstTrim": "",
+    "secondTrim": "",
+    "thirdTrim": "",
+    "entered": "0"
   },
   {
     "name": "Rouleaux",
@@ -3024,7 +3240,11 @@ var labItems = [
     "critmin": "",
     "critmax": "",
     "input_id": "",
-    "output_id": ""
+    "output_id": "",
+    "firstTrim": "",
+    "secondTrim": "",
+    "thirdTrim": "",
+    "entered": "0"
   },
   {
     "name": "Bite",
@@ -3053,7 +3273,11 @@ var labItems = [
     "critmin": "",
     "critmax": "",
     "input_id": "",
-    "output_id": ""
+    "output_id": "",
+    "firstTrim": "",
+    "secondTrim": "",
+    "thirdTrim": "",
+    "entered": "0"
   },
   {
     "name": "Helmet",
@@ -3082,7 +3306,11 @@ var labItems = [
     "critmin": "",
     "critmax": "",
     "input_id": "",
-    "output_id": ""
+    "output_id": "",
+    "firstTrim": "",
+    "secondTrim": "",
+    "thirdTrim": "",
+    "entered": "0"
   },
   {
     "name": "Schisto",
@@ -3111,7 +3339,11 @@ var labItems = [
     "critmin": "",
     "critmax": "",
     "input_id": "",
-    "output_id": ""
+    "output_id": "",
+    "firstTrim": "",
+    "secondTrim": "",
+    "thirdTrim": "",
+    "entered": "0"
   },
   {
     "name": "Target",
@@ -3140,7 +3372,11 @@ var labItems = [
     "critmin": "",
     "critmax": "",
     "input_id": "",
-    "output_id": ""
+    "output_id": "",
+    "firstTrim": "",
+    "secondTrim": "",
+    "thirdTrim": "",
+    "entered": "0"
   },
   {
     "name": "Mushroom",
@@ -3169,7 +3405,11 @@ var labItems = [
     "critmin": "",
     "critmax": "",
     "input_id": "",
-    "output_id": ""
+    "output_id": "",
+    "firstTrim": "",
+    "secondTrim": "",
+    "thirdTrim": "",
+    "entered": "0"
   },
   {
     "name": "Burr",
@@ -3198,7 +3438,11 @@ var labItems = [
     "critmin": "",
     "critmax": "",
     "input_id": "",
-    "output_id": ""
+    "output_id": "",
+    "firstTrim": "",
+    "secondTrim": "",
+    "thirdTrim": "",
+    "entered": "0"
   },
   {
     "name": "Spur",
@@ -3227,7 +3471,11 @@ var labItems = [
     "critmin": "",
     "critmax": "",
     "input_id": "",
-    "output_id": ""
+    "output_id": "",
+    "firstTrim": "",
+    "secondTrim": "",
+    "thirdTrim": "",
+    "entered": "0"
   },
   {
     "name": "Basket",
@@ -3256,7 +3504,11 @@ var labItems = [
     "critmin": "",
     "critmax": "",
     "input_id": "",
-    "output_id": ""
+    "output_id": "",
+    "firstTrim": "",
+    "secondTrim": "",
+    "thirdTrim": "",
+    "entered": "0"
   },
   {
     "name": "Tear",
@@ -3285,7 +3537,11 @@ var labItems = [
     "critmin": "",
     "critmax": "",
     "input_id": "",
-    "output_id": ""
+    "output_id": "",
+    "firstTrim": "",
+    "secondTrim": "",
+    "thirdTrim": "",
+    "entered": "0"
   },
   {
     "name": "Howell-jolly",
@@ -3314,7 +3570,11 @@ var labItems = [
     "critmin": "",
     "critmax": "",
     "input_id": "",
-    "output_id": ""
+    "output_id": "",
+    "firstTrim": "",
+    "secondTrim": "",
+    "thirdTrim": "",
+    "entered": "0"
   },
   {
     "name": "Heinz",
@@ -3343,7 +3603,11 @@ var labItems = [
     "critmin": "",
     "critmax": "",
     "input_id": "",
-    "output_id": ""
+    "output_id": "",
+    "firstTrim": "",
+    "secondTrim": "",
+    "thirdTrim": "",
+    "entered": "0"
   },
   {
     "name": "Strippling",
@@ -3372,7 +3636,11 @@ var labItems = [
     "critmin": "",
     "critmax": "",
     "input_id": "",
-    "output_id": ""
+    "output_id": "",
+    "firstTrim": "",
+    "secondTrim": "",
+    "thirdTrim": "",
+    "entered": "0"
   },
   {
     "name": "Cobot",
@@ -3401,7 +3669,11 @@ var labItems = [
     "critmin": "",
     "critmax": "",
     "input_id": "",
-    "output_id": ""
+    "output_id": "",
+    "firstTrim": "",
+    "secondTrim": "",
+    "thirdTrim": "",
+    "entered": "0"
   },
   {
     "name": "HbCrystals",
@@ -3430,7 +3702,11 @@ var labItems = [
     "critmin": "",
     "critmax": "",
     "input_id": "",
-    "output_id": ""
+    "output_id": "",
+    "firstTrim": "",
+    "secondTrim": "",
+    "thirdTrim": "",
+    "entered": "0"
   },
   {
     "name": "Ghosts",
@@ -3459,7 +3735,11 @@ var labItems = [
     "critmin": "",
     "critmax": "",
     "input_id": "",
-    "output_id": ""
+    "output_id": "",
+    "firstTrim": "",
+    "secondTrim": "",
+    "thirdTrim": "",
+    "entered": "0"
   },
   {
     "name": "Atyp-lym",
@@ -3488,7 +3768,11 @@ var labItems = [
     "critmin": "",
     "critmax": "",
     "input_id": "",
-    "output_id": ""
+    "output_id": "",
+    "firstTrim": "",
+    "secondTrim": "",
+    "thirdTrim": "",
+    "entered": "0"
   },
   {
     "name": "Hyperseg-N",
@@ -3517,7 +3801,11 @@ var labItems = [
     "critmin": "",
     "critmax": "",
     "input_id": "",
-    "output_id": ""
+    "output_id": "",
+    "firstTrim": "",
+    "secondTrim": "",
+    "thirdTrim": "",
+    "entered": "0"
   },
   {
     "name": "Hyposeg-N",
@@ -3546,7 +3834,11 @@ var labItems = [
     "critmin": "",
     "critmax": "",
     "input_id": "",
-    "output_id": ""
+    "output_id": "",
+    "firstTrim": "",
+    "secondTrim": "",
+    "thirdTrim": "",
+    "entered": "0"
   },
   {
     "name": "Dohle",
@@ -3575,7 +3867,11 @@ var labItems = [
     "critmin": "",
     "critmax": "",
     "input_id": "",
-    "output_id": ""
+    "output_id": "",
+    "firstTrim": "",
+    "secondTrim": "",
+    "thirdTrim": "",
+    "entered": "0"
   },
   {
     "name": "Smudge",
@@ -3604,7 +3900,11 @@ var labItems = [
     "critmin": "",
     "critmax": "",
     "input_id": "",
-    "output_id": ""
+    "output_id": "",
+    "firstTrim": "",
+    "secondTrim": "",
+    "thirdTrim": "",
+    "entered": "0"
   },
   {
     "name": "Blast",
@@ -3633,7 +3933,11 @@ var labItems = [
     "critmin": "",
     "critmax": "",
     "input_id": "",
-    "output_id": ""
+    "output_id": "",
+    "firstTrim": "",
+    "secondTrim": "",
+    "thirdTrim": "",
+    "entered": "0"
   },
   {
     "name": "Auer",
@@ -3662,7 +3966,11 @@ var labItems = [
     "critmin": "",
     "critmax": "",
     "input_id": "",
-    "output_id": ""
+    "output_id": "",
+    "firstTrim": "",
+    "secondTrim": "",
+    "thirdTrim": "",
+    "entered": "0"
   },
   {
     "name": "Sezary",
@@ -3691,7 +3999,11 @@ var labItems = [
     "critmin": "",
     "critmax": "",
     "input_id": "",
-    "output_id": ""
+    "output_id": "",
+    "firstTrim": "",
+    "secondTrim": "",
+    "thirdTrim": "",
+    "entered": "0"
   },
   {
     "name": "PlasmaC",
@@ -3720,7 +4032,11 @@ var labItems = [
     "critmin": "",
     "critmax": "",
     "input_id": "",
-    "output_id": ""
+    "output_id": "",
+    "firstTrim": "",
+    "secondTrim": "",
+    "thirdTrim": "",
+    "entered": "0"
   },
   {
     "name": "Giant-plt",
@@ -3749,7 +4065,11 @@ var labItems = [
     "critmin": "",
     "critmax": "",
     "input_id": "",
-    "output_id": ""
+    "output_id": "",
+    "firstTrim": "",
+    "secondTrim": "",
+    "thirdTrim": "",
+    "entered": "0"
   },
   {
     "name": "LDH",
@@ -3778,7 +4098,11 @@ var labItems = [
     "critmin": "",
     "critmax": "",
     "input_id": "",
-    "output_id": ""
+    "output_id": "",
+    "firstTrim": "",
+    "secondTrim": "",
+    "thirdTrim": "",
+    "entered": "0"
   },
   {
     "name": "UNa",
@@ -3807,7 +4131,11 @@ var labItems = [
     "critmin": "",
     "critmax": "",
     "input_id": "",
-    "output_id": ""
+    "output_id": "",
+    "firstTrim": "",
+    "secondTrim": "",
+    "thirdTrim": "",
+    "entered": "0"
   },
   {
     "name": "UK",
@@ -3836,7 +4164,11 @@ var labItems = [
     "critmin": "",
     "critmax": "",
     "input_id": "",
-    "output_id": ""
+    "output_id": "",
+    "firstTrim": "",
+    "secondTrim": "",
+    "thirdTrim": "",
+    "entered": "0"
   },
   {
     "name": "UCa",
@@ -3865,7 +4197,11 @@ var labItems = [
     "critmin": "",
     "critmax": "",
     "input_id": "",
-    "output_id": ""
+    "output_id": "",
+    "firstTrim": "",
+    "secondTrim": "",
+    "thirdTrim": "",
+    "entered": "0"
   },
   {
     "name": "UCr",
@@ -3894,7 +4230,11 @@ var labItems = [
     "critmin": "",
     "critmax": "",
     "input_id": "",
-    "output_id": ""
+    "output_id": "",
+    "firstTrim": "",
+    "secondTrim": "",
+    "thirdTrim": "",
+    "entered": "0"
   },
   {
     "name": "Posm",
@@ -3923,7 +4263,11 @@ var labItems = [
     "critmin": "",
     "critmax": "",
     "input_id": "",
-    "output_id": ""
+    "output_id": "",
+    "firstTrim": "",
+    "secondTrim": "",
+    "thirdTrim": "",
+    "entered": "0"
   },
   {
     "name": "Uosm",
@@ -3952,7 +4296,11 @@ var labItems = [
     "critmin": "",
     "critmax": "",
     "input_id": "",
-    "output_id": ""
+    "output_id": "",
+    "firstTrim": "",
+    "secondTrim": "",
+    "thirdTrim": "",
+    "entered": "0"
   },
   {
     "name": "pH",
@@ -3981,7 +4329,11 @@ var labItems = [
     "critmin": "7.2",
     "critmax": "7.6",
     "input_id": "",
-    "output_id": ""
+    "output_id": "",
+    "firstTrim": "",
+    "secondTrim": "",
+    "thirdTrim": "",
+    "entered": "0"
   },
   {
     "name": "HCO3",
@@ -4010,7 +4362,11 @@ var labItems = [
     "critmin": "",
     "critmax": "",
     "input_id": "",
-    "output_id": ""
+    "output_id": "",
+    "firstTrim": "",
+    "secondTrim": "",
+    "thirdTrim": "",
+    "entered": "0"
   },
   {
     "name": "PaCO2",
@@ -4039,7 +4395,11 @@ var labItems = [
     "critmin": "",
     "critmax": "",
     "input_id": "",
-    "output_id": ""
+    "output_id": "",
+    "firstTrim": "",
+    "secondTrim": "",
+    "thirdTrim": "",
+    "entered": "0"
   },
   {
     "name": "Cl",
@@ -4068,7 +4428,11 @@ var labItems = [
     "critmin": "",
     "critmax": "",
     "input_id": "",
-    "output_id": ""
+    "output_id": "",
+    "firstTrim": "",
+    "secondTrim": "",
+    "thirdTrim": "",
+    "entered": "0"
   },
   {
     "name": "PaO2",
@@ -4097,7 +4461,11 @@ var labItems = [
     "critmin": "40",
     "critmax": "",
     "input_id": "",
-    "output_id": ""
+    "output_id": "",
+    "firstTrim": "",
+    "secondTrim": "",
+    "thirdTrim": "",
+    "entered": "0"
   },
   {
     "name": "FIO2",
@@ -4126,7 +4494,11 @@ var labItems = [
     "critmin": "",
     "critmax": "",
     "input_id": "",
-    "output_id": ""
+    "output_id": "",
+    "firstTrim": "",
+    "secondTrim": "",
+    "thirdTrim": "",
+    "entered": "0"
   },
   {
     "name": "PB",
@@ -4155,7 +4527,11 @@ var labItems = [
     "critmin": "",
     "critmax": "",
     "input_id": "",
-    "output_id": ""
+    "output_id": "",
+    "firstTrim": "",
+    "secondTrim": "",
+    "thirdTrim": "",
+    "entered": "0"
   },
   {
     "name": "UCl",
@@ -4184,6 +4560,10 @@ var labItems = [
     "critmin": "",
     "critmax": "",
     "input_id": "",
-    "output_id": ""
+    "output_id": "",
+    "firstTrim": "",
+    "secondTrim": "",
+    "thirdTrim": "",
+    "entered": "0"
   }
 ];
