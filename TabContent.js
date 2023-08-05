@@ -224,7 +224,11 @@ function buildUsualEntry(index) {
     new_input.className = "entry_input";
     new_input.name = entry.name;
     new_input.style.background = entry.color;
-    if (entry.entered != 0) new_input.value = entry.value;
+    if (entry.entered != 0) {
+      new_input.value = entry.value;
+    } else {
+      new_input.value = "";
+    }
     new_input.step = entry.step;
     entryParent.appendChild(new_input);
 
@@ -265,11 +269,17 @@ function buildUsualEntry(index) {
       out_icon.style.display = "flex";
       out_icon.src = normalIcon;
     }
-    if (critValueArray[index] == 1) {
-      warn_icon.style.display = "flex";
-    } else {
-      warn_icon.style.display = "none";
-    }
+    let value = entry.value;
+    try {
+      if (value > entry.critmax && entry.critmax != 0) {
+        warn_icon.style.display = "flex";
+      } else if (value < entry.critmin && entry.entered != 0) {
+        warn_icon.style.display = "flex";
+      } else {
+        warn_icon.style.display = "none";
+      }
+    } catch {}
+
     new_input.onchange = whenAnInputChanges;
     new_input.onkeyup = whenAnInputChanges;
 

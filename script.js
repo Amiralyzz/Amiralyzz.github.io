@@ -1,5 +1,4 @@
-var pinnedOrNotArray = [],
-  critValueArray = [];
+var pinnedOrNotArray = [];
 var globalAgeYears = 40,
   globalAgeMonths,
   gloalWeightGram = 70000,
@@ -228,84 +227,84 @@ function pregnancy() {
 }
 
 function age_calc() {
-  let age = document.getElementById("age");
+  let ageTextbox = document.getElementById("age");
   let ageUnitSelected = document.getElementById("age_unit");
-  let inp = Number(age.value);
+  let ageNumber = Number(ageTextbox.value);
   let ageUnit = ageUnitSelected.value;
-  if (inp < 0) {
-    age.value = 0;
-    inp = 0;
+  if (ageNumber < 0) {
+    ageTextbox.value = 0;
+    ageNumber = 0;
   }
   if (ageUnit == "day") {
-    if (inp > 60) {
-      age.value = 60;
-      inp = 60;
+    if (ageNumber > 60) {
+      ageTextbox.value = 60;
+      ageNumber = 60;
     }
-    if (inp <= 3) {
+    if (ageNumber <= 3) {
       selectedAgeGroupIndex = 0;
-    } else if (inp <= 14) {
+    } else if (ageNumber <= 14) {
       selectedAgeGroupIndex = 1;
-    } else if (inp <= 30) {
+    } else if (ageNumber <= 30) {
       selectedAgeGroupIndex = 2;
     } else {
       selectedAgeGroupIndex = 3;
     }
     globalAgeYears = 0;
-    globalAgeMonths = Math.floor(inp / 30);
+    globalAgeMonths = Math.floor(ageNumber / 30);
   }
   if (ageUnit == "mon") {
-    if (inp < 1) {
-      age.value = 1;
-      inp = 1;
+    if (ageNumber < 1) {
+      ageTextbox.value = 1;
+      ageNumber = 1;
     }
-    if (inp >= 36) {
-      age.value = 36;
-      inp = 36;
+    if (ageNumber >= 36) {
+      ageTextbox.value = 36;
+      ageNumber = 36;
     }
-    if (inp <= 6) {
+    if (ageNumber <= 6) {
       selectedAgeGroupIndex = 4;
-    } else if (inp <= 12) {
+    } else if (ageNumber <= 12) {
       selectedAgeGroupIndex = 5;
-    } else if (inp < 36) {
+    } else if (ageNumber < 36) {
       selectedAgeGroupIndex = 6;
     } else {
       selectedAgeGroupIndex = 7;
     }
-    globalAgeMonths = inp;
-    globalAgeYears = Math.floor(inp / 12);
+    globalAgeMonths = ageNumber;
+    globalAgeYears = Math.floor(ageNumber / 12);
   }
   if (ageUnit == "year") {
-    if (inp < 1) {
-      inp = 1;
+    if (ageNumber < 1) {
+      ageNumber = 1;
     }
-    if (inp > 139) {
-      age.value = 139;
-      inp = 139;
+    if (ageNumber > 139) {
+      ageTextbox.value = 139;
+      ageNumber = 139;
     }
-    globalAgeYears = inp;
-    if (inp < 2) {
+    globalAgeYears = ageNumber;
+    if (ageNumber < 2) {
       selectedAgeGroupIndex = 5;
       globalAgeMonths = 12;
-    } else if (inp < 3) {
+    } else if (ageNumber < 3) {
       selectedAgeGroupIndex = 6;
       globalAgeMonths = 24;
-    } else if (inp == 3) {
+    } else if (ageNumber == 3) {
       selectedAgeGroupIndex = 7;
       globalAgeMonths = 36;
-    } else if (inp <= 6) {
+    } else if (ageNumber <= 6) {
       selectedAgeGroupIndex = 7;
-    } else if (inp <= 9) {
+    } else if (ageNumber <= 9) {
       selectedAgeGroupIndex = 8;
-    } else if (inp <= 10) {
+    } else if (ageNumber <= 10) {
       selectedAgeGroupIndex = 9;
-    } else if (inp <= 12) {
+    } else if (ageNumber <= 12) {
       selectedAgeGroupIndex = 10;
-    } else if (inp <= 18) {
+    } else if (ageNumber <= 18) {
       selectedAgeGroupIndex = 11;
     } else {
       selectedAgeGroupIndex = 12;
     }
-    globalAgeYears = inp;
+    globalAgeYears = ageNumber;
   }
   selectedAgeGroup = ageGroupsArray[selectedAgeGroupIndex];
 
@@ -315,7 +314,7 @@ function age_calc() {
     selectedAgeGroupIndex == 1 ||
     selectedAgeGroupIndex == 2
   ) {
-    for (var j = 0; j < labItems.length; j++) {
+    for (let j = 0; j < labItems.length; j++) {
       if (labItems[j]["name"] == "Hb") {
         labItems[j]["critmin"] = 9;
         labItems[j]["critmax"] = 25;
@@ -326,7 +325,7 @@ function age_calc() {
       }
     }
   } else {
-    for (var j = 0; j < labItems.length; j++) {
+    for (let j = 0; j < labItems.length; j++) {
       if (labItems[j]["name"] == "Hb") {
         labItems[j]["critmin"] = 7;
         labItems[j]["critmax"] = 18;
@@ -338,10 +337,12 @@ function age_calc() {
     }
   }
   rangeMaker(selectedAgeGroup);
-  for (var j = 0; j < labItems.length; j++) {
+  for (let j = 0; j < labItems.length; j++) {
     let value = Number(labItems[j].value);
     let id = labItems[j].input_id;
-    check_ranges(value, id, true);
+    let enteredStatus = false;
+    if (labItems[j].entered==1) enteredStatus = true;
+    check_ranges(value, id, enteredStatus);
   }
   tabContent(selectedTabId, selectedLabType);
 }

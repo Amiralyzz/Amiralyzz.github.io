@@ -141,17 +141,14 @@ function check_ranges(value, id , enteredStatus) {
       document.getElementById(
         currentLabItem.output_id + "_warn"
       ).style.display = "flex";
-      critValueArray[j] = 1;
     } else if (value < currentLabItem.critmin && value != 0) {
       document.getElementById(
         currentLabItem.output_id + "_warn"
       ).style.display = "flex";
-      critValueArray[j] = 1;
     } else {
       document.getElementById(
         currentLabItem.output_id + "_warn"
       ).style.display = "none";
-      critValueArray[j] = 0;
     }
   } catch {}
   currentLabItem.value = value;
