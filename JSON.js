@@ -31,7 +31,7 @@ var statistics = [
     labItemName: "Iron",
     conditionName: "iron deficiency",
     conditionIndex: 0,
-    cutoffs: [72],
+    cutoffs: [72.63],
     lessIsBad: true,
     sensitivities: [0.94],
     specificities: [0.88],

@@ -39,7 +39,7 @@ function conditionMaker(conditionIndex) {
 function statisticsMaker(labItemIndex) {
   let value = 0;
   let statisticsItem = statistics[labItemIndex];
-  let mydataItem = labItems[1];
+  let mydataItem = labItems[1]; //just to define as object
   if (statisticsItem.myDataIndex >= 0) {
     mydataItem = labItems[statisticsItem.myDataIndex];
   } else {
@@ -60,7 +60,7 @@ function statisticsMaker(labItemIndex) {
 
 function statisticsCalc(labItemIndex) {
   let labItem = statistics[labItemIndex];
-  let mydataItem = labItems[1];
+  let mydataItem = labItems[1]; //just to define as object
   if (labItem.myDataIndex >= 0) {
     mydataItem = labItems[labItem.myDataIndex];
   } else {
