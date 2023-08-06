@@ -4,7 +4,6 @@ function whenAnInputChanges() {
   if (this.value === "") {
     enteredStatus = false;
   }
-  console.log(enteredStatus);
   let id = this.id;
   if (enteredStatus) {
     switch (id) {
@@ -15,25 +14,21 @@ function whenAnInputChanges() {
       case "in_Eos":
       case "in_Bas":
         checkIfWBCDiffsAreLessThanHundred();
-        isLeukocytosisOrLuekopenia();
         break;
       case "in_RBC":
       case "in_Hb":
       case "in_MCV":
-        cbc_autocomplete();
-        anemiaType();
+        cbcAutoComplete();
         break;
       case "in_MCH":
       case "in_Hct":
       case "in_MCHC":
-        anemiaType();
         break;
       case "in_AST":
       case "in_ALT":
       case "in_ALP":
       case "in_Bil(T)":
       case "in_Bil(D)":
-        lft_engine();
         break;
       case "in_Iron":
       case "in_TIBC":
@@ -156,7 +151,7 @@ function checkRanges(value, id , enteredStatus) {
       currentLabItem.status;
   } catch {}
 }
-function cbc_autocomplete() {
+function cbcAutoComplete() {
   try {
     var p_rbc = Number(document.getElementById("in_RBC").value); //p = patient's
   } catch {
@@ -206,26 +201,26 @@ function cbc_autocomplete() {
   }
 }
 
-function isLeukocytosisOrLuekopenia() {
+function wbcCount() {
   let wbcTotalVal = labItems[0].value;
   let wbcMaxVal = labItems[0].max;
   let wbcMinVal = labItems[0].min;
   let path = "";
-  let cbc_color = "darkslateblue";
+  let cbcColor = "darkslateblue";
   delete patient[0].signs[0][0];
   delete patient[0].signs[1][0];
   delete patient[0].signs[2][0];
-
+  if (labItems[0].entered == 0) return 0;
   if (wbcTotalVal > wbcMaxVal) {
     path += "WBC > " + wbcMaxVal;
     patient[0].signs[0][0] = "Leukocytosis";
     patient[0].signs[1][0] = path;
-    patient[0].signs[2][0] = cbc_color;
+    patient[0].signs[2][0] = cbcColor;
   } else if (wbcTotalVal < wbcMinVal) {
     path += "WBC < " + wbcMinVal;
     patient[0].signs[0][0] = "Leukopenia";
     patient[0].signs[1][0] = path;
-    patient[0].signs[2][0] = cbc_color;
+    patient[0].signs[2][0] = cbcColor;
   }
 }
 
@@ -479,7 +474,7 @@ function abgMain() {
   }
 }
 
-function iron_profile() {
+function ironProfile() {
   var p_hb = labItems[2].value; //p = patient's
   var p_mcv = labItems[3].value;
   var p_mch = labItems[5].value;
@@ -835,49 +830,48 @@ function anemiaType() {
   // iron_profile();
 }
 
-function folate() {
-  var p_fol = labItems[43].value;
-  var p_b12 = labItems[44].value;
+function folateAndB12() {
+  var folate = Number(labItems[43].value);
+  var b12 = Number(labItems[44].value);
+  var folateMin = Number(labItems[43].min);
+  var b12Min = Number(labItems[44].min);
 
-  if (p_fol <= 0) return false;
   delete patient[0].signs[0][11];
   delete patient[0].signs[1][11];
-  delete patient[0].signs[2][11];
+  patient[0].signs[2][11] = "rgb(102, 30, 52)";
+  delete patient[0].signs[3][11];
+  patient[0].signs[4][11] = "b12 or folate";
 
-  if (p_fol < labItems[43].min) {
-    if (p_b12 < labItems[44].min && p_b12 > 0) {
-      patient[0].signs[0][11] = "Folate and B12 deficiency";
-      return true;
-    } else {
-      patient[0].signs[0][11] = "Folate deficiency";
-      return true;
-    }
-  } else {
-    return false;
-  }
-}
-
-function b12() {
-  var p_b12 = labItems[44].value;
-  var p_fol = labItems[43].value;
-  if (p_b12 <= 0) return false;
-  delete patient[0].signs[1][11];
-  delete patient[0].signs[0][11];
-  delete patient[0].signs[2][11];
-  if (p_b12 < labItems[44].min) {
-    if (p_fol < labItems[43].min && p_fol > 0) {
-      patient[0].signs[0][11] = "Folate and B12 deficiency";
-      return true;
-    } else {
+  
+  if (labItems[43].entered == "1") {
+    if (folate < folateMin) {
+      if (labItems[44].entered == "1" && b12 < b12Min) {
+        patient[0].signs[0][11] = "Folate and B12 deficiency";
+        patient[0].signs[3][11] = 1;
+      } else {
+        patient[0].signs[0][11] = "Folate deficiency";
+        patient[0].signs[3][11] = 1;
+      }
+    } else if (labItems[44].entered == "1" && b12 < b12Min) {
       patient[0].signs[0][11] = "B12 deficiency";
-      return true;
+      patient[0].signs[3][11] = 1;
+    } else {
+      patient[0].signs[3][11] = 0;
+    }
+  } else if (labItems[44].entered == "1") {
+    if (b12 < b12Min) {
+      patient[0].signs[0][11] = "B12 deficiency";
+      patient[0].signs[3][11] = 1;
+    } else {
+      patient[0].signs[3][11] = 0;
     }
   } else {
-    return false;
+    patient[0].signs[3][11] = undefined;
   }
+  
 }
 
-function lft_engine() {
+function lftEngine() {
   let liverPanel = [];
   liverPanel[0] = labItems[14].value;
   liverPanel[1] = labItems[14].max;
@@ -901,7 +895,7 @@ function lft_engine() {
   delete patient[0].signs[0][21];
   delete patient[0].signs[1][21];
   delete patient[0].signs[2][21];
-  patternReturnArray = lft_pattern(liverPanel);
+  patternReturnArray = lftPattern(liverPanel);
   if (liverPanel[0] != "" && liverPanel[2] != "" && liverPanel[4] != "") {
     if (astCoef / altCoef > 5 || astCoef / altCoef < 0.2) {
       patient[0].signs[0][20] = "Liver tests not conclusive";
@@ -979,7 +973,7 @@ function lft_engine() {
   }
 }
 
-function lft_pattern(liverPanel) {
+function lftPattern(liverPanel) {
   let astCoef = liverPanel[0] / liverPanel[1];
   let altCoef = liverPanel[2] / liverPanel[3];
   let alpCoef = liverPanel[4] / liverPanel[5];
@@ -1027,8 +1021,9 @@ function engineMain() {
   //activates when user goes to analyse tab
   measurementsCalc();
   anemiaType();
-  lft_engine();
+  lftEngine();
   abgMain();
+  wbcCount();
   // iron_profile();
   let resultArray = testEngine(0);
   try {
@@ -1037,8 +1032,7 @@ function engineMain() {
       resultArray[1] //path
     );
   } catch {}
-  folate();
-  b12();
+  folateAndB12();
 }
 
 function listMaker(array) {

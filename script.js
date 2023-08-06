@@ -37,16 +37,15 @@ var normalIcon = "https://cdn-icons-png.flaticon.com/128/1722/1722017.png";
 var searchbar_show = "none";
 
 function searchBarSize() {
-  var searchbar = document.getElementById('searchbar');
-  if(searchbar.value.length > 5) {
-    searchbar.style.minWidth = ((searchbar.value.length + 1) * 25) + 'px'; 
+  var searchbar = document.getElementById("searchbar");
+  if (searchbar.value.length > 5) {
+    searchbar.style.minWidth = (searchbar.value.length + 1) * 25 + "px";
+  } else {
+    searchbar.style.minWidth = "100px";
   }
-  else {
-    searchbar.style.minWidth = '100px';
-  }
-  if (searchbar.style.minWidth > '270px') {
-    searchbar.style.minWidth = '270px';
-    searchbar.style.maxWidth = '1vw';
+  if (searchbar.style.minWidth > "270px") {
+    searchbar.style.minWidth = "270px";
+    searchbar.style.maxWidth = "1vw";
   }
 }
 
@@ -124,11 +123,10 @@ function gender() {
     document.getElementById("gen_logo").alt = "male";
     genderCoef = 0;
     lastPregnancySituation = pregnancySituation;
-    pregnancySituation = 0 ;
+    pregnancySituation = 0;
   }
   ageCalc(); //contains rangeMaker and tabContent and checkRanges
 }
-
 
 function pregnancy() {
   let pregnancyVal = document.getElementById("preg").value;
@@ -265,7 +263,7 @@ function ageCalc() {
     let value = Number(labItems[j].value);
     let id = labItems[j].input_id;
     let enteredStatus = false;
-    if (labItems[j].entered==1) enteredStatus = true;
+    if (labItems[j].entered == 1) enteredStatus = true;
     checkRanges(value, id, enteredStatus);
   }
   tabContent(selectedTabId, selectedLabType);
@@ -274,21 +272,42 @@ function ageCalc() {
 function rangeMaker(key) {
   let pregKey = "";
   if (pregnancySituation == 1) {
-    pregKey = 'firstTrim';
+    pregKey = "firstTrim";
   } else if (pregnancySituation == 2) {
-    pregKey = 'secondTrim';
+    pregKey = "secondTrim";
   } else if (pregnancySituation == 3) {
-    pregKey = 'thirdTrim';
-  } 
-  for (var labItem of labItems) {
-    if (pregnancySituation != 0 && labItem['firstTrim'] != "" && labItem['secondTrim'] != "" && labItem['thirdTrim'] != "") {
+    pregKey = "thirdTrim";
+  }
+  for (let labItem of labItems) {
+    if (
+      pregnancySituation != 0 &&
+      labItem["firstTrim"] != "" &&
+      labItem["secondTrim"] != "" &&
+      labItem["thirdTrim"] != ""
+    ) {
       let array = labItem[pregKey].slice(1, -1).split(","); //making key an array like ["1","2"]
       labItem.min = array[0];
-      labItem.max= array[1];
+      labItem.max = array[1];
     } else {
       let array = labItem[key].slice(1, -1).split(","); //making key an array like ["1","2"]
       labItem.min = array[genderCoef];
       labItem.max = array[genderCoef + 1];
+    }
+  }
+
+  for (let measurement of measurements) {
+    if (measurement.minArray === "" && measurement.maxArray === "") {
+    } else if (measurement.maxArray === "") {
+      let array = measurement.minArray.slice(1, -1).split(",");
+      measurement.min = array[genderCoef / 2];
+    } else if (measurement.minArray === "") {
+      let array = measurement.maxArray.slice(1, -1).split(",");
+      measurement.max = array[genderCoef / 2];
+    } else {
+      let array = measurement.minArray.slice(1, -1).split(",");
+      measurement.min = array[genderCoef / 2];
+      let maxArray = measurement.maxArray.slice(1, -1).split(",");
+      measurement.max = maxArray[genderCoef / 2];
     }
   }
 }
@@ -374,7 +393,7 @@ function bmiCalc() {
     measurements[23].used = true;
     bmi =
       gloalWeightGram / 1000 / (globalHeightCm / 100) / (globalHeightCm / 100);
-    bsa = Math.sqrt(gloalWeightGram / 1000 * globalHeightCm / 3600);
+    bsa = Math.sqrt(((gloalWeightGram / 1000) * globalHeightCm) / 3600);
   } else {
     measurements[0].used = false;
     measurements[23].used = false;
@@ -447,7 +466,6 @@ function scientificNumber(number) {
     numInSciNot.exponent +
     "</sup> "
   );
-
 }
 
 function measurementsCalc() {
@@ -465,11 +483,11 @@ function measurementsCalc() {
 
 function oxygenCalc() {
   let PaCO2 = labItems[89].value;
-  let FIO2= labItems[92].value / 100;
-  let airPressure= labItems[93].value;
+  let FIO2 = labItems[92].value / 100;
+  let airPressure = labItems[93].value;
   let waterPressure = 47;
 
-  if(FIO2 !=0 && airPressure != 0 && PaCO2 != 0) {
+  if (FIO2 != 0 && airPressure != 0 && PaCO2 != 0) {
     measurements[22].used = true;
     let PIO2 = FIO2 * (airPressure - waterPressure);
     let PAO2 = PIO2 - PaCO2 / 0.8;
@@ -477,7 +495,6 @@ function oxygenCalc() {
   } else {
     measurements[22].used = false;
   }
-
 }
 function anionGapCalc() {
   let na = labItems[32].value;
@@ -486,11 +503,12 @@ function anionGapCalc() {
   let hco3 = labItems[88].value;
   let paco2 = labItems[89].value;
   let cl = labItems[90].value;
-  let baseExcess = 0.02786 * paco2 * 10**(ph - 6.1) + 13.77 * ph - 124.58;
+  let baseExcess = 0.02786 * paco2 * 10 ** (ph - 6.1) + 13.77 * ph - 124.58;
   let deltaAnionGap = 0;
   let deltaHco3 = 25 - hco3;
   if (deltaHco3 == 0) deltaHco3 = 0.1;
-  let anionGap = 0, anionGapPotassium = 0;
+  let anionGap = 0,
+    anionGapPotassium = 0;
   if (na != 0 && hco3 != 0 && cl != 0) {
     anionGap = na - (cl + hco3);
     deltaAnionGap = anionGap - 12;
@@ -511,7 +529,7 @@ function anionGapCalc() {
     measurements[19].used = false;
     measurements[20].used = false;
   }
-  if (paco2!=0 && ph != 0) {
+  if (paco2 != 0 && ph != 0) {
     measurements[18].used = true;
     measurements[18].value = baseExcess.toFixed(2);
   } else {
@@ -526,12 +544,36 @@ function wbcCalc() {
   let eosVal = labItems[48].value;
   let basVal = labItems[49].value;
   let bandVal = labItems[50].value;
-  if(neuVal > 0) {measurements[10].used = true;} else {measurements[10].used = false;}
-  if(lymVal > 0) {measurements[11].used = true;} else {measurements[11].used = false;}
-  if(monVal > 0) {measurements[12].used = true;} else {measurements[12].used = false;}
-  if(eosVal > 0) {measurements[13].used = true;} else {measurements[13].used = false;}
-  if(basVal > 0) {measurements[14].used = true;} else {measurements[14].used = false;}
-  if(bandVal > 0) {measurements[15].used = true;} else {measurements[15].used = false;}
+  if (neuVal > 0) {
+    measurements[10].used = true;
+  } else {
+    measurements[10].used = false;
+  }
+  if (lymVal > 0) {
+    measurements[11].used = true;
+  } else {
+    measurements[11].used = false;
+  }
+  if (monVal > 0) {
+    measurements[12].used = true;
+  } else {
+    measurements[12].used = false;
+  }
+  if (eosVal > 0) {
+    measurements[13].used = true;
+  } else {
+    measurements[13].used = false;
+  }
+  if (basVal > 0) {
+    measurements[14].used = true;
+  } else {
+    measurements[14].used = false;
+  }
+  if (bandVal > 0) {
+    measurements[15].used = true;
+  } else {
+    measurements[15].used = false;
+  }
   measurements[10].value = (0.01 * neuVal * wbcTotalVal).toFixed(1);
   measurements[11].value = (0.01 * lymVal * wbcTotalVal).toFixed(1);
   measurements[12].value = (0.01 * monVal * wbcTotalVal).toFixed(1);
@@ -544,7 +586,7 @@ function checkIfWBCDiffsAreLessThanHundred() {
   var wbcDiff = [];
   let totalVal = 0;
   let labIndex = 45; //differentials start from [45]
-  while (labIndex<51) {
+  while (labIndex < 51) {
     let diff = labItems[labIndex].value;
     if (diff >= 100) {
       labItems[labIndex].value = 0;
@@ -553,7 +595,7 @@ function checkIfWBCDiffsAreLessThanHundred() {
       document.getElementById(inputID).value = 0;
     }
     totalVal += diff;
-    if (totalVal>100) {
+    if (totalVal > 100) {
       totalVal -= diff;
       labItems[labIndex].value = 0;
       diff = 0;
@@ -561,7 +603,7 @@ function checkIfWBCDiffsAreLessThanHundred() {
       document.getElementById(inputID).value = 0;
     }
     labIndex++;
-  } 
+  }
 }
 
 function gfrCalc() {
@@ -608,10 +650,10 @@ function gfrCalc() {
       cr_to_k_max ** -1.2 *
       0.9938 ** globalAgeYears *
       coef_ckd;
-    }
-    measurements[5].value = gfr_ckd.toFixed(3);
-    measurements[6].value = gfr_mdrd.toFixed(3);
-    measurements[7].value = gfr_cg.toFixed(3);
+  }
+  measurements[5].value = gfr_ckd.toFixed(3);
+  measurements[6].value = gfr_mdrd.toFixed(3);
+  measurements[7].value = gfr_cg.toFixed(3);
 }
 function reticCalc() {
   var hct_val = labItems[4].value;
@@ -642,7 +684,6 @@ function reticCalc() {
   }
   measurements[3].value = crcVal.toFixed(2);
   measurements[4].value = rpiVal.toFixed(2);
-
 }
 function tsatCalc() {
   var iron_val = labItems[40].value;
@@ -735,4 +776,3 @@ function weightPercentileCalc() {
   measurements[1].value = weightPercentile.toFixed(2);
   measurements[1].used = true;
 }
-

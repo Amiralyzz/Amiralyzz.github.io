@@ -2,124 +2,341 @@ let algorithms = [
   // [0] = anemia
   [
     {
-      key: "1",
-      value: "Hb low",
-      parent: "",
-      labitemsIndex: "3",
-      measurementsIndex: "",
+      "key": "1",
+      "value": "Hb low",
+      "parent": "",
+      "labitemsIndex": "3",
+      "measurementsIndex": "",
+      "signsIndex": ""
     },
     {
-      key: "1-1",
-      value: "MCV low",
-      parent: "1",
-      labitemsIndex: "41",
-      measurementsIndex: "",
+      "key": "1-1",
+      "value": "MCV low",
+      "parent": "1",
+      "labitemsIndex": "41",
+      "measurementsIndex": "",
+      "signsIndex": ""
     },
     {
-      key: "10",
-      value: "MCV normal",
-      parent: "1",
-      labitemsIndex: "41",
-      measurementsIndex: "",
+      "key": "10",
+      "value": "MCV normal",
+      "parent": "1",
+      "labitemsIndex": "41",
+      "measurementsIndex": "",
+      "signsIndex": ""
     },
     {
-      key: "11",
-      value: "MCV high",
-      parent: "1",
-      labitemsIndex: "",
-      measurementsIndex: "",
+      "key": "11",
+      "value": "MCV high",
+      "parent": "1",
+      "labitemsIndex": "57",
+      "measurementsIndex": "",
+      "signsIndex": ""
     },
     {
-      key: "110",
-      value: "Iron deficiency not probable",
-      parent: "11",
-      labitemsIndex: "",
-      measurementsIndex: "",
+      "key": "110",
+      "value": "no Schistocytes",
+      "parent": "11",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": "11"
     },
     {
-      key: "10-1",
-      value: "Ferritin low",
-      parent: "10",
-      labitemsIndex: "",
-      measurementsIndex: "",
+      "key": "1100",
+      "value": "Folate or B12 normal",
+      "parent": "110",
+      "labitemsIndex": "0",
+      "measurementsIndex": "",
+      "signsIndex": ""
     },
     {
-      key: "10-10",
-      value: "Iron deficiency anemia",
-      parent: "10-1",
-      labitemsIndex: "",
-      measurementsIndex: "",
+      "key": "11001",
+      "value": "no Leukopenia",
+      "parent": "1100",
+      "labitemsIndex": "7",
+      "measurementsIndex": "",
+      "signsIndex": ""
     },
     {
-      key: "100",
-      value: "Ferritin normal",
-      parent: "10",
-      labitemsIndex: "13",
-      measurementsIndex: "",
+      "key": "11000",
+      "value": "no Leukopenia",
+      "parent": "1100",
+      "labitemsIndex": "7",
+      "measurementsIndex": "",
+      "signsIndex": ""
     },
     {
-      key: "1000",
-      value: "CRP normal",
-      parent: "100",
-      labitemsIndex: "",
-      measurementsIndex: "",
+      "key": "110011",
+      "value": "no Thrombocytopenia",
+      "parent": "11001",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
     },
     {
-      key: "1001",
-      value: "CRP high",
-      parent: "100",
-      labitemsIndex: "",
-      measurementsIndex: "",
+      "key": "110010",
+      "value": "no Thrombocytopenia",
+      "parent": "11001",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
     },
     {
-      key: "1-1-1",
-      value: "Ferritin low",
-      parent: "1-1",
-      labitemsIndex: "",
-      measurementsIndex: "",
+      "key": "110001",
+      "value": "no Thrombocytopenia",
+      "parent": "11000",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
     },
     {
-      key: "1-1-10",
-      value: "Iron deficiency anemia",
-      parent: "1-1-1",
-      labitemsIndex: "",
-      measurementsIndex: "",
+      "key": "110000",
+      "value": "no Thrombocytopenia",
+      "parent": "11000",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
     },
     {
-      key: "1-10",
-      value: "Ferritin normal",
-      parent: "1-1",
-      labitemsIndex: "13",
-      measurementsIndex: "",
+      "key": "11001-1",
+      "value": "Thrombocytopenia",
+      "parent": "11001",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
     },
     {
-      key: "1-100",
-      value: "Suspect Thalassemia",
-      parent: "1-10",
-      labitemsIndex: "",
-      measurementsIndex: "",
+      "key": "11000-1",
+      "value": "Thrombocytopenia",
+      "parent": "11000",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
     },
     {
-      key: "1-101",
-      value: "CRP high",
-      parent: "1-10",
-      labitemsIndex: "",
-      measurementsIndex: "8",
+      "key": "1100-1",
+      "value": "Leukopenia",
+      "parent": "1100",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
     },
     {
-      key: "1-101-1",
-      value: "Anemia of chronic disease",
-      parent: "1-101",
-      labitemsIndex: "",
-      measurementsIndex: "",
+      "key": "110010",
+      "value": "Macrocytic Anemia (Drugs, Liver , Alcohol , Endocrine)",
+      "parent": "11001",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
     },
     {
-      key: "1-1010",
-      value: "Iron deficiency anemia or Anemia of chronic disease",
-      parent: "1-101",
-      labitemsIndex: "",
-      measurementsIndex: "",
+      "key": "110000",
+      "value": "Macrocytic Anemia (Drugs, Liver , Alcohol , Endocrine)",
+      "parent": "11000",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
     },
+    {
+      "key": "1100110",
+      "value": "Macrocytic Anemia (Drugs, Liver , Alcohol , Endocrine)",
+      "parent": "110011",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "1100100",
+      "value": "Macrocytic Anemia (Drugs, Liver , Alcohol , Endocrine)",
+      "parent": "110010",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "1100010",
+      "value": "Macrocytic Anemia (Drugs, Liver , Alcohol , Endocrine)",
+      "parent": "110001",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "1100000",
+      "value": "Macrocytic Anemia (Drugs, Liver , Alcohol , Endocrine)",
+      "parent": "110000",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "11001-10",
+      "value": "Macrocytic Anemia (suspect Aplastic Anemia or MDS)",
+      "parent": "11001-1",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "11000-10",
+      "value": "Macrocytic Anemia (suspect Aplastic Anemia or MDS)",
+      "parent": "11000-1",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "1100-10",
+      "value": "Macrocytic Anemia (suspect Aplastic Anemia or MDS)",
+      "parent": "1100-1",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "1101",
+      "value": "Folate or B12 low",
+      "parent": "110",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "11010",
+      "value": "Megaloblastic Anemia",
+      "parent": "1101",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "1101",
+      "value": "Schistocytes",
+      "parent": "110",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "11010",
+      "value": "Hemolysis",
+      "parent": "1101",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "10-1",
+      "value": "Ferritin low",
+      "parent": "10",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "10-10",
+      "value": "Iron deficiency anemia",
+      "parent": "10-1",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "100",
+      "value": "Ferritin normal",
+      "parent": "10",
+      "labitemsIndex": "13",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "1000",
+      "value": "CRP normal",
+      "parent": "100",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "1001",
+      "value": "CRP high",
+      "parent": "100",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "1-1-1",
+      "value": "Ferritin low",
+      "parent": "1-1",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "1-1-10",
+      "value": "Iron deficiency anemia",
+      "parent": "1-1-1",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "1-10",
+      "value": "Ferritin normal",
+      "parent": "1-1",
+      "labitemsIndex": "13",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "1-100",
+      "value": "Suspect Thalassemia",
+      "parent": "1-10",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "1-101",
+      "value": "CRP high",
+      "parent": "1-10",
+      "labitemsIndex": "",
+      "measurementsIndex": "8",
+      "signsIndex": ""
+    },
+    {
+      "key": "1-101-1",
+      "value": "TSAT low",
+      "parent": "1-101",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "1-1010",
+      "value": "TSAT normal",
+      "parent": "1-101",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "1-101-10",
+      "value": "Anemia of chronic disease",
+      "parent": "1-101-1",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "1-10100",
+      "value": "Iron deficiency anemia or Anemia of chronic disease",
+      "parent": "1-1010",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    }
   ],
 ];
 class TreeNode {
@@ -254,11 +471,24 @@ function testEngine(key) {
         item = labItems[node.labitemsIndex];
       } else if (node.measurementsIndex != "") {
         item = measurements[node.measurementsIndex];
-      } else {
+      } else if (node.signsIndex != "") {
+        let value = patient[0].signs[3][node.signsIndex];
+        let name = patient[0].signs[4][node.signsIndex];
+        let entered = 0;
+        if (value != undefined) entered = 1;
+        item = {
+          "name": name,
+          "entered": entered,
+          "value": value,
+          "min": -1,
+          "max": 0.5 
+        }
+      }
+      else {
         leaves = tree.findLeavesFrom(keyString);
         return [leaves, path];
       }
-      if (item.value <= 0) {
+      if (item.entered == 0) {
         path += " &#8594 " + item.name + " not entered";
         leaves = tree.findLeavesFrom(keyString);
         if (keyString == "1") {
@@ -266,14 +496,48 @@ function testEngine(key) {
         }
         return [leaves, path];
       }
-      if (item.value > item.max) {
-        keyString += "1";
-      } else if (item.value < item.min) {
-        keyString += "-1";
-      } else {
-        keyString += "0";
+      if (item.used == false) {
+        path += " &#8594 " + item.name + " not entered";
+        leaves = tree.findLeavesFrom(keyString);
+        if (keyString == "1") {
+          return [undefined, undefined];
+        }
+        return [leaves, path];
       }
+      let value = Number(item.value);
+      let max = Number(item.max);
+      let min = Number(item.min);
 
+      if (item.max == "") {
+        if (item.min == "") {
+          return [leaves, path];
+        } else if (value < min) {
+          keyString += "-1";
+        } else {
+          keyString += "0";
+        }
+      } else {
+        if (value > max) {
+          keyString += "1";
+        } else if (item.min == "") {
+            keyString += "0";
+        } else if (value < min) {
+          keyString += "-1";
+        } else {
+          keyString += "0";
+        }
+          
+      }
+      
+
+
+      // if (Number(item.value) > Number(item.max)) {
+      //   keyString += "1";
+      // } else if (Number(item.value) < Number(item.min)) {
+      //   keyString += "-1";
+      // } else {
+      //   keyString += "0";
+      // }
       //   leaves = tree.findLeavesFrom("1-10");
       // console.log([...leaves].map((x) => x.value));
     } catch {

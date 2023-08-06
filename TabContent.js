@@ -100,6 +100,33 @@ function analyseTab() {
         measurements_section.className = "measurements_section";
         measurements_section.innerHTML =
           measurements[i].name + "= " + measurements[i].value;
+        let highOrLowIcon = "";
+        let value = Number(measurements[i].value);
+        let min = Number(measurements[i].min);
+        let max = Number(measurements[i].max);
+        if (measurements[i].max == "") {
+          if (measurements[i].min == "") {
+            highOrLowIcon = "";
+          } else if (value < min) {
+            highOrLowIcon = lowIcon;
+          } else {
+            highOrLowIcon = normalIcon;
+          }
+        } else {
+          if (value > max) {
+            highOrLowIcon = highIcon;
+          } else if (measurements[i].min == "") {
+              highOrLowIcon = normalIcon;
+          } else if (value < min){
+            highOrLowIcon = lowIcon;
+          } else {
+            highOrLowIcon = normalIcon;
+          }
+        }
+    
+        if (highOrLowIcon != "") {
+          measurements_section.innerHTML += "<img src=" + highOrLowIcon + "  class='referenceIcon'  alt='measure'/>";
+        }
         measurements_parent.appendChild(measurements_section);
         measurements_section.style.backgroundColor = measurements[i].color;
         measurements_section.onmouseover = tooltip;
