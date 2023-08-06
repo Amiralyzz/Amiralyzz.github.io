@@ -23,6 +23,7 @@ var ageGroupsArray = [
 var selectedAgeGroupIndex = 12;
 var selectedAgeGroup = "adult";
 var pregnancySituation = 0; //0 for not pregnant
+var lastPregnancySituation = 0;
 var selectedTabId = "test_types_cbc";
 var selectedLabType = "cbc";
 var lowIcon = "https://cdn-icons-png.flaticon.com/128/8532/8532500.png";
@@ -49,7 +50,7 @@ function searchBarSize() {
   }
 }
 
-function change_table_caller() {
+function changeTableCaller() {
   var id = this.id.slice(0, -1);
   if (id != "test_types_cbc") var type = id.slice(11);
   else type = "hemato";
@@ -62,7 +63,7 @@ function close() {
   document.body.removeChild(document.getElementById("burger"));
   document.getElementById("show_tab").style.display = "flex";
 }
-function burger_menu() {
+function burgerMenu() {
   document.getElementById("show_tab").style.display = "none";
   var burger_parent = document.createElement("div");
   burger_parent.className = "burger";
@@ -81,7 +82,7 @@ function burger_menu() {
       burger_parent.appendChild(burger_tab);
       burger_tab.id = tab.id + "b";
       burger_tab.innerHTML = tab.innerHTML;
-      burger_tab.onclick = change_table_caller;
+      burger_tab.onclick = changeTableCaller;
       var selected = tab.id;
       document.getElementById(selected).style.display = "none";
     }
@@ -94,7 +95,7 @@ function burger_menu() {
   burger_parent.appendChild(close_btn);
 }
 
-function expand_info() {
+function expandInfo() {
   var more_button = document.getElementById("expand_info");
   var info = document.getElementById("gen_a_w_h");
   if (more_button.innerHTML == "show") {
@@ -106,82 +107,6 @@ function expand_info() {
   }
 }
 
-function gender() {
-  var malelogo = "https://cdn-icons-png.flaticon.com/512/3001/3001764.png";
-  var femalelogo = "https://cdn-icons-png.flaticon.com/512/2922/2922561.png";
-  if (genderCoef == 0) {
-    document.getElementById("preg").disabled = false;
-    document.getElementById("gender").value = "female";
-    document.getElementById("gen_logo").src = femalelogo;
-    document.getElementById("gen_logo").alt = "female";
-    genderCoef = 2;
-  } else {
-    document.getElementById("preg").disabled = true;
-    document.getElementById("gender").value = "male";
-    document.getElementById("gen_logo").src = malelogo;
-    document.getElementById("gen_logo").alt = "male";
-    genderCoef = 0;
-  }
-  age_calc();
-}
-
-function change_table_caller() {
-  var id = this.id.slice(0, -1);
-  if (id != "test_types_cbc") var type = id.slice(11);
-  else type = "hemato";
-  tabContent(id, type);
-  document.body.removeChild(document.getElementById("burger"));
-  document.getElementById("show_tab").style.display = "flex";
-}
-
-function close() {
-  document.body.removeChild(document.getElementById("burger"));
-  document.getElementById("show_tab").style.display = "flex";
-}
-function burger_menu() {
-  document.getElementById("show_tab").style.display = "none";
-  var burger_parent = document.createElement("div");
-  burger_parent.className = "burger";
-  burger_parent.id = "burger";
-  document.body.appendChild(burger_parent);
-
-  var tabs = document.getElementsByClassName("tab");
-  for (const tab of tabs) {
-    if (
-      tab.id != "tab_search" &&
-      tab.id != "tab_analyse" &&
-      tab.id != "show_tab"
-    ) {
-      var burger_tab = document.createElement("div");
-      burger_tab.className = "burger_tab";
-      burger_parent.appendChild(burger_tab);
-      burger_tab.id = tab.id + "b";
-      burger_tab.innerHTML = tab.innerHTML;
-      burger_tab.onclick = change_table_caller;
-      var selected = tab.id;
-      document.getElementById(selected).style.display = "none";
-    }
-  }
-
-  var close_btn = document.createElement("label");
-  close_btn.innerHTML = "&times";
-  close_btn.className = "close_btn";
-  close_btn.onclick = close;
-  burger_parent.appendChild(close_btn);
-}
-
-function expand_info() {
-  var more_button = document.getElementById("expand_info");
-  var info = document.getElementById("gen_a_w_h");
-  if (more_button.innerHTML == "show") {
-    more_button.innerHTML = "hide";
-    info.style.display = "flex";
-  } else {
-    info.style.display = "none";
-    more_button.innerHTML = "show";
-  }
-}
-var lastPregnancySituation = 0;
 function gender() {
   var malelogo = "https://cdn-icons-png.flaticon.com/512/3001/3001764.png";
   var femalelogo = "https://cdn-icons-png.flaticon.com/512/2922/2922561.png";
@@ -201,7 +126,7 @@ function gender() {
     lastPregnancySituation = pregnancySituation;
     pregnancySituation = 0 ;
   }
-  age_calc();
+  ageCalc(); //contains rangeMaker and tabContent and checkRanges
 }
 
 
@@ -222,10 +147,10 @@ function pregnancy() {
       break;
     default:
   }
-  age_calc();
+  ageCalc(); //contains rangeMaker and tabContent and checkRanges
 }
 
-function age_calc() {
+function ageCalc() {
   let ageTextbox = document.getElementById("age");
   let ageUnitSelected = document.getElementById("age_unit");
   let ageNumber = Number(ageTextbox.value);
@@ -341,7 +266,7 @@ function age_calc() {
     let id = labItems[j].input_id;
     let enteredStatus = false;
     if (labItems[j].entered==1) enteredStatus = true;
-    check_ranges(value, id, enteredStatus);
+    checkRanges(value, id, enteredStatus);
   }
   tabContent(selectedTabId, selectedLabType);
 }
@@ -368,7 +293,7 @@ function rangeMaker(key) {
   }
 }
 
-function weight_calc() {
+function weightCalc() {
   var weight_txtbox = document.getElementById("weight");
   var weight_select = document.getElementById("weight_unit");
   var inp = Number(weight_txtbox.value);
@@ -401,36 +326,36 @@ function weight_calc() {
   tabContent(selectedTabId, selectedLabType);
 }
 
-function height_calc() {
-  var height_txtbox = document.getElementById("height");
+function heightCalc() {
+  var heightTextbox = document.getElementById("height");
   var height_select = document.getElementById("height_unit");
-  var inp = Number(height_txtbox.value);
-  var height_unit = height_select.value;
+  var inp = Number(heightTextbox.value);
+  var heightUnit = height_select.value;
   if (inp < 0) {
-    height_txtbox.value = 0;
+    heightTextbox.value = 0;
     inp = 0;
   }
-  if (height_unit == "cm") {
+  if (heightUnit == "cm") {
     if (inp > 270) {
-      height_txtbox.value = 270;
+      heightTextbox.value = 270;
       inp = 270;
     }
     globalHeightCm = inp;
   }
-  if (height_unit == "ft") {
-    var feet = height_txtbox.value.slice(0, 1);
-    var inch = height_txtbox.value.slice(1);
+  if (heightUnit == "ft") {
+    var feet = heightTextbox.value.slice(0, 1);
+    var inch = heightTextbox.value.slice(1);
     if (feet < 0) {
       feet = 0;
     }
     if (inch >= 12) {
       inch = 11;
     }
-    if (height_txtbox.value.length == 1) {
+    if (heightTextbox.value.length == 1) {
       inch = 0;
-      height_txtbox.value = feet;
-    } else if (height_txtbox.value.length > 1) {
-      height_txtbox.value = feet + inch;
+      heightTextbox.value = feet;
+    } else if (heightTextbox.value.length > 1) {
+      heightTextbox.value = feet + inch;
     } else {
       feet = 0;
       inch = 0;
@@ -471,31 +396,9 @@ function tooltip() {
   }
 }
 
-function tooltip_remove() {
+function tooltipRemove() {
   var tootltip_text = document.getElementById("tooltip");
   tootltip_text.innerHTML = "";
-}
-
-function show_path() {
-  id = this.id.slice(4);
-  if (document.getElementById(this.id).innerHTML == " + ") {
-    document.getElementById(this.id).innerHTML =
-      patient[0].signs[1][Number(id)];
-  } else {
-    document.getElementById(this.id).innerHTML = " + ";
-  }
-}
-
-function add_search() {
-  let id = this.id;
-  pinnedOrNotArray[id] = 1;
-  tabContent("tab_search", "searchbar");
-}
-
-function rem_search() {
-  let id = this.id;
-  pinnedOrNotArray[id] = 0;
-  tabContent("tab_search", "searchbar");
 }
 
 function prevalenceChange() {
@@ -505,30 +408,7 @@ function prevalenceChange() {
   posteriorCalc(index);
 }
 
-function posteriorCalc(ind) {
-  let index = statistics[ind].conditionIndex;
-  let prevalenceValue = conditions[index].prevalenceValue;
-  let currentLikelihoodRatio = 1;
-  for (let i in conditions[index].statisticsParameteresRelated) {
-    currentLikelihoodRatio =
-      currentLikelihoodRatio * statistics[i].currentLikelihoodRatio;
-  }
-  let currentRatio = prevalenceValue / (100 - prevalenceValue);
-  let posteriorRatio = currentRatio * currentLikelihoodRatio;
-  let posteriorDistribution = (100 / (1 + posteriorRatio)) * posteriorRatio;
-  conditions[index].posteriorDistribution = posteriorDistribution;
-  try {
-    if (posteriorDistribution < 1)
-      document.getElementById("prevalenceResult_" + index).innerHTML =
-        scientificNumber(posteriorDistribution) + "%";
-    else
-      document.getElementById("prevalenceResult_" + index).innerHTML =
-        posteriorDistribution.toFixed(2) + "%";
-  } catch {}
-}
-
-
-function show_path() {
+function showPath() {
   id = this.id.slice(4);
   if (document.getElementById(this.id).innerHTML == " + ") {
     document.getElementById(this.id).innerHTML =
@@ -538,19 +418,19 @@ function show_path() {
   }
 }
 
-function add_search() {
+function addSearch() {
   let id = this.id;
   pinnedOrNotArray[id] = 1;
   tabContent("tab_search", "searchbar");
 }
 
-function rem_search() {
+function removeSearch() {
   let id = this.id;
   pinnedOrNotArray[id] = 0;
   tabContent("tab_search", "searchbar");
 }
 
-function id_maker(i, name) {
+function idMaker(i, name) {
   labItems[i].input_id = "in_" + name.toString();
   labItems[i].output_id = "out_" + name.toString();
 }
@@ -570,7 +450,7 @@ function scientificNumber(number) {
 
 }
 
-function calc_measurements() {
+function measurementsCalc() {
   bmiCalc();
   gfrCalc();
   reticCalc();

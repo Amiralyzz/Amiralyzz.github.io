@@ -103,7 +103,7 @@ function analyseTab() {
         measurements_parent.appendChild(measurements_section);
         measurements_section.style.backgroundColor = measurements[i].color;
         measurements_section.onmouseover = tooltip;
-        measurements_section.onmouseleave = tooltip_remove;
+        measurements_section.onmouseleave = tooltipRemove;
       }
     } catch {}
   }
@@ -125,7 +125,7 @@ function analyseTab() {
       signs_section.innerHTML = patient[0].signs[0][i];
       signs_section.appendChild(path_section);
       path_section.innerHTML = " + ";
-      path_section.onclick = show_path;
+      path_section.onclick = showPath;
       signs_section.style.backgroundColor = patient[0].signs[2][i];
       //signs_section.style.backgroundColor = '#'+(0x1000000+Math.random()*0xffffff).toString(16).substr(1,6);
     }
@@ -216,7 +216,7 @@ function buildUsualEntry(index) {
     entryParent.style.background = entry.color;
     entryParent.id = entry.name;
     entryParent.onmouseover = tooltip;
-    entryParent.onmouseleave = tooltip_remove;
+    entryParent.onmouseleave = tooltipRemove;
     entryParent.appendChild(labelParentMaker(entry));
 
     var new_input = document.createElement("input");
@@ -251,7 +251,7 @@ function buildUsualEntry(index) {
     if (entry.status != 0) new_output.innerHTML = entry.status;
     new_output_frame.appendChild(new_output);
 
-    id_maker(index, entry.name);
+    idMaker(index, entry.name);
     new_input.id = entry.input_id;
     new_output.id = entry.output_id;
     out_icon.id = entry.output_id + "_img";
@@ -396,7 +396,7 @@ function limitCollapse() {
   entry.max = Number(maxElement.value);
   let entryInput = Number(document.getElementById(entry.input_id).value);
   if (entry.entered != 0) {
-    check_ranges(entryInput, entry.input_id,true);
+    checkRanges(entryInput, entry.input_id,true);
   }
   entryParent.firstElementChild.replaceWith(labelParentMaker(entry));
 }
@@ -435,7 +435,7 @@ function pinButtonMaker(index, entryId) {
   pinButton.className = "add";
   pinButton.src = "https://cdn-icons-png.flaticon.com/512/2972/2972186.png";
   pinButton.id = index;
-  pinButton.onclick = add_search;
+  pinButton.onclick = addSearch;
   document.getElementById(entryId).appendChild(pinButton);
 }
 
@@ -445,5 +445,5 @@ function unpinButtonMaker(index, entryId) {
   rem_button.src = "https://cdn-icons-png.flaticon.com/128/6342/6342193.png";
   rem_button.id = index;
   document.getElementById(entryId).appendChild(rem_button);
-  rem_button.onclick = rem_search;
+  rem_button.onclick = removeSearch;
 }

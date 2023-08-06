@@ -52,7 +52,7 @@ function whenAnInputChanges() {
     }
   }
 
-  check_ranges(value, id , enteredStatus);
+  checkRanges(value, id , enteredStatus);
 }
 
 function minIsNotBiggerThanMax(x, id) {
@@ -73,7 +73,7 @@ function minIsNotBiggerThanMax(x, id) {
   } catch {}
 }
 
-function check_ranges(value, id , enteredStatus) {
+function checkRanges(value, id , enteredStatus) {
   var currentLabItem = labItems.find((o) => o.input_id === id.toString());
   minIsNotBiggerThanMax(value, id);
   if (!enteredStatus) {
@@ -182,7 +182,7 @@ function cbc_autocomplete() {
     try {
       document.getElementById("in_Hct").value = c_hct;
     } catch {}
-    check_ranges(c_hct, "in_Hct",true);
+    checkRanges(c_hct, "in_Hct",true);
   } else {
     mcv_isnotzero = false;
   }
@@ -193,7 +193,7 @@ function cbc_autocomplete() {
     try {
       document.getElementById("in_MCH").value = c_mch;
     } catch {}
-    check_ranges(c_mch, "in_MCH",true);
+    checkRanges(c_mch, "in_MCH",true);
     if (mcv_isnotzero) {
       c_mchc = (p_hb * 100) / c_hct;
       c_mchc = c_mchc.toFixed(1);
@@ -201,7 +201,7 @@ function cbc_autocomplete() {
       try {
         document.getElementById("in_MCHC").value = c_mchc;
       } catch {}
-      check_ranges(c_mchc, "in_MCHC",true);
+      checkRanges(c_mchc, "in_MCHC",true);
     }
   }
 }
@@ -491,7 +491,7 @@ function iron_profile() {
   var path = "";
   var bio_color = "rgb(102, 30, 52)";
   if (p_si > 0 && p_tibc > 0) {
-    calc_measurements(); //to calc TSAT
+    measurementsCalc(); //to calc TSAT
   } else {
     globalTSAT = 0;
   }
@@ -794,7 +794,7 @@ function anemiaType() {
   }
 
   if (p_hct > 0 && p_retic > 0) {
-    calc_measurements(); // to access RPI
+    measurementsCalc(); // to access RPI
   } else {
     // we dont have rpi
   }
@@ -1025,7 +1025,7 @@ function percentileFinder(input, min, max) {
 
 function engineMain() {
   //activates when user goes to analyse tab
-  calc_measurements();
+  measurementsCalc();
   anemiaType();
   lft_engine();
   abgMain();
