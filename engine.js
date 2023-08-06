@@ -357,11 +357,21 @@ function abgMain() {
           path += "PaCO2 in " + predictedPaco2Low + "-" + predictedPaco2High +" (Winter's predicted PaCO2 Range)";
           patient[0].signs[0][60] = "Metabolic Acidosis with High AG";
           if (deltaGap > 6) {
-            path += " &#8594 Delta AG - Delta HCO3 > 6";
-            patient[0].signs[0][60] += " + Metabolic Alkalosis";
+            path += " &#8594 &Delta;Gap > 6 and &Delta;Ratio > 1";
+            patient[0].signs[0][60] +=
+              " + Metabolic Alkalosis (based on both &Delta;Gap and &Delta;Ratio)";
+          } else if (deltaRatio > 1) {
+            path += " &#8594 Delta Ratio > 1";
+            patient[0].signs[0][60] +=
+              " + Metabolic Alkalosis (based on &Delta;Ratio only)";
           } else if (deltaGap < -6) {
-            path += " &#8594 Delta AG - Delta HCO3 < -6";
-            patient[0].signs[0][60] += " + Metabolic Acidosis (normal AG)";
+            path += " &#8594 &Delta;Gap < -6 and &Delta;Ratio < 1";
+            patient[0].signs[0][60] +=
+              " + Metabolic Acidosis (normal AG) (based on both &Delta;Gap and &Delta;Ratio)";
+          } else if (deltaRatio < 1) {
+            path += " &#8594 &Delta;Ratio < 1";
+            patient[0].signs[0][60] +=
+              " + Metabolic Acidosis (normal AG) (based on &Delta;Ratio only)";
           }
           patient[0].signs[1][60] = path;
           return 0;
