@@ -31,7 +31,7 @@ var sup_low_icon =
   "https://www.iconsdb.com/icons/download/red/arrow-211-512.png";
 var sup_high_icon =
   "https://www.iconsdb.com/icons/download/red/arrow-149-512.png";
-var normalIcon = "https://cdn-icons-png.flaticon.com/128/8532/8532661.png";
+var normalIcon = "https://cdn-icons-png.flaticon.com/128/1722/1722017.png";
 
 var searchbar_show = "none";
 
@@ -443,15 +443,20 @@ function height_calc() {
 
 function bmiCalc() {
   let bmi = 0;
+  let bsa = 0;
   if (gloalWeightGram <= 0) gloalWeightGram = 0;
   if (globalHeightCm > 0) {
     measurements[0].used = true;
+    measurements[23].used = true;
     bmi =
       gloalWeightGram / 1000 / (globalHeightCm / 100) / (globalHeightCm / 100);
+    bsa = Math.sqrt(gloalWeightGram / 1000 * globalHeightCm / 3600);
   } else {
     measurements[0].used = false;
+    measurements[23].used = false;
   }
   measurements[0].value = bmi.toFixed(1);
+  measurements[23].value = bsa.toFixed(3);
 }
 
 function tooltip() {
@@ -602,7 +607,7 @@ function anionGapCalc() {
   let hco3 = labItems[88].value;
   let paco2 = labItems[89].value;
   let cl = labItems[90].value;
-  let baseExcess = 0.02786 * paco2 * 10^(ph - 6.1) + 13.77 * ph - 124.58;
+  let baseExcess = 0.02786 * paco2 * 10**(ph - 6.1) + 13.77 * ph - 124.58;
   let deltaAnionGap = 0;
   let deltaHco3 = 25 - hco3;
   if (deltaHco3 == 0) deltaHco3 = 0.1;
@@ -629,7 +634,7 @@ function anionGapCalc() {
   }
   if (paco2!=0 && ph != 0) {
     measurements[18].used = true;
-    measurements[18].value = baseExcess;
+    measurements[18].value = baseExcess.toFixed(2);
   } else {
     measurements[18].used = false;
   }

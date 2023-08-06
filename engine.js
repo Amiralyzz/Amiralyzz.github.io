@@ -117,11 +117,11 @@ function check_ranges(value, id , enteredStatus) {
       currentLabItem.status = timesMax + " &times; Maximum" ;
     } catch {}
   } else if (value < currentLabItem.min) {
-    let timesMax = value / currentLabItem.min;
-    if (timesMax <= 0.01) {
+    let timesMin = value / currentLabItem.min;
+    if (timesMin <= 0.01) {
       currentLabItem.status = "<0.01 &times; Minimum" ;
     } else {
-      currentLabItem.status = timesMax.toFixed(2) + " &times; Minimum" ;
+      currentLabItem.status = timesMin.toFixed(2) + " &times; Minimum" ;
     }
     try {
       document.getElementById(currentLabItem.output_id + "_img").src = lowIcon;
@@ -129,7 +129,6 @@ function check_ranges(value, id , enteredStatus) {
         "flex";
     } catch {}
   } else {
-    y = -1;
     try {
       document.getElementById(currentLabItem.output_id + "_img").src = normalIcon;
       document.getElementById(currentLabItem.output_id + "_img").style.display =
@@ -141,7 +140,7 @@ function check_ranges(value, id , enteredStatus) {
       document.getElementById(
         currentLabItem.output_id + "_warn"
       ).style.display = "flex";
-    } else if (value < currentLabItem.critmin && value != 0) {
+    } else if (value < currentLabItem.critmin && currentLabItem.entered != 0) {
       document.getElementById(
         currentLabItem.output_id + "_warn"
       ).style.display = "flex";
@@ -340,13 +339,23 @@ function abgMain() {
           path += "PaCO2 < " + predictedPaco2Low +" (Winter's predicted PaCO2)";
           patient[0].signs[0][60] =
             "Metabolic Acidosis (high AG) + Respiratory Alkalosis";
-          if (deltaGap > 6) {
-            path += " &#8594 Delta AG - Delta HCO3 > 6";
-            patient[0].signs[0][60] += " + Metabolic Alkalosis";
-          } else if (deltaGap < -6) {
-            path += " &#8594 Delta AG - Delta HCO3 < -6";
-            patient[0].signs[0][60] += " + Metabolic Acidosis (normal AG)";
-          }
+            if (deltaGap > 6) {
+              path += " &#8594 &Delta;Gap > 6 and &Delta;Ratio > 1";
+              patient[0].signs[0][60] +=
+                " + Metabolic Alkalosis (based on both &Delta;Gap and &Delta;Ratio)";
+            } else if (deltaRatio > 1) {
+              path += " &#8594 Delta Ratio > 1";
+              patient[0].signs[0][60] +=
+                " + Metabolic Alkalosis (based on &Delta;Ratio only)";
+            } else if (deltaGap < -6) {
+              path += " &#8594 &Delta;Gap < -6 and &Delta;Ratio < 1";
+              patient[0].signs[0][60] +=
+                " + Metabolic Acidosis (normal AG) (based on both &Delta;Gap and &Delta;Ratio)";
+            } else if (deltaRatio < 1) {
+              path += " &#8594 &Delta;Ratio < 1";
+              patient[0].signs[0][60] +=
+                " + Metabolic Acidosis (normal AG) (based on &Delta;Ratio only)";
+            }
           patient[0].signs[1][60] = path;
           return 0;
         } else {

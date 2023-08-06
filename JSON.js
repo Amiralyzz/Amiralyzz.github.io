@@ -248,7 +248,13 @@ var measurements = [
     color: "rgb(3, 82, 156)",
     tooltip: "Partial Alveolar Pressure of Oxygen",
   },
-
+  {
+    name: "BSA ",
+    value: 0,
+    used: false,
+    color: "rgb(38, 3, 58)",
+    tooltip: "Body Surface Area (Mosteller's formula)",
+  },
 ];
 
 var weightAgeInfantJSON = [
