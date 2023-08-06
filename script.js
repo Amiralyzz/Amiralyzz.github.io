@@ -222,8 +222,7 @@ function pregnancy() {
       break;
     default:
   }
-  rangeMaker(selectedAgeGroup);
-  tabContent(selectedTabId, selectedLabType);
+  age_calc();
 }
 
 function age_calc() {
