@@ -45,77 +45,21 @@ let algorithms = [
       "key": "1100",
       "value": "Folate or B12 normal",
       "parent": "110",
-      "labitemsIndex": "0",
+      "labitemsIndex": "",
       "measurementsIndex": "",
-      "signsIndex": ""
+      "signsIndex": "1"
     },
     {
       "key": "11001",
-      "value": "no Leukopenia",
+      "value": "Pancytopenia",
       "parent": "1100",
-      "labitemsIndex": "7",
+      "labitemsIndex": "",
       "measurementsIndex": "",
       "signsIndex": ""
     },
     {
       "key": "11000",
-      "value": "no Leukopenia",
-      "parent": "1100",
-      "labitemsIndex": "7",
-      "measurementsIndex": "",
-      "signsIndex": ""
-    },
-    {
-      "key": "110011",
-      "value": "no Thrombocytopenia",
-      "parent": "11001",
-      "labitemsIndex": "",
-      "measurementsIndex": "",
-      "signsIndex": ""
-    },
-    {
-      "key": "110010",
-      "value": "no Thrombocytopenia",
-      "parent": "11001",
-      "labitemsIndex": "",
-      "measurementsIndex": "",
-      "signsIndex": ""
-    },
-    {
-      "key": "110001",
-      "value": "no Thrombocytopenia",
-      "parent": "11000",
-      "labitemsIndex": "",
-      "measurementsIndex": "",
-      "signsIndex": ""
-    },
-    {
-      "key": "110000",
-      "value": "no Thrombocytopenia",
-      "parent": "11000",
-      "labitemsIndex": "",
-      "measurementsIndex": "",
-      "signsIndex": ""
-    },
-    {
-      "key": "11001-1",
-      "value": "Thrombocytopenia",
-      "parent": "11001",
-      "labitemsIndex": "",
-      "measurementsIndex": "",
-      "signsIndex": ""
-    },
-    {
-      "key": "11000-1",
-      "value": "Thrombocytopenia",
-      "parent": "11000",
-      "labitemsIndex": "",
-      "measurementsIndex": "",
-      "signsIndex": ""
-    },
-    {
-      "key": "1100-1",
-      "value": "Leukopenia",
+      "value": "no Pancytopenia",
       "parent": "1100",
       "labitemsIndex": "",
       "measurementsIndex": "",
@@ -123,7 +67,7 @@ let algorithms = [
     },
     {
       "key": "110010",
-      "value": "Macrocytic Anemia (Drugs, Liver , Alcohol , Endocrine)",
+      "value": "Macrocytic Anemia (Leukemia, Aplastic Anemia or MDS)",
       "parent": "11001",
       "labitemsIndex": "",
       "measurementsIndex": "",
@@ -133,62 +77,6 @@ let algorithms = [
       "key": "110000",
       "value": "Macrocytic Anemia (Drugs, Liver , Alcohol , Endocrine)",
       "parent": "11000",
-      "labitemsIndex": "",
-      "measurementsIndex": "",
-      "signsIndex": ""
-    },
-    {
-      "key": "1100110",
-      "value": "Macrocytic Anemia (Drugs, Liver , Alcohol , Endocrine)",
-      "parent": "110011",
-      "labitemsIndex": "",
-      "measurementsIndex": "",
-      "signsIndex": ""
-    },
-    {
-      "key": "1100100",
-      "value": "Macrocytic Anemia (Drugs, Liver , Alcohol , Endocrine)",
-      "parent": "110010",
-      "labitemsIndex": "",
-      "measurementsIndex": "",
-      "signsIndex": ""
-    },
-    {
-      "key": "1100010",
-      "value": "Macrocytic Anemia (Drugs, Liver , Alcohol , Endocrine)",
-      "parent": "110001",
-      "labitemsIndex": "",
-      "measurementsIndex": "",
-      "signsIndex": ""
-    },
-    {
-      "key": "1100000",
-      "value": "Macrocytic Anemia (Drugs, Liver , Alcohol , Endocrine)",
-      "parent": "110000",
-      "labitemsIndex": "",
-      "measurementsIndex": "",
-      "signsIndex": ""
-    },
-    {
-      "key": "11001-10",
-      "value": "Macrocytic Anemia (suspect Aplastic Anemia or MDS)",
-      "parent": "11001-1",
-      "labitemsIndex": "",
-      "measurementsIndex": "",
-      "signsIndex": ""
-    },
-    {
-      "key": "11000-10",
-      "value": "Macrocytic Anemia (suspect Aplastic Anemia or MDS)",
-      "parent": "11000-1",
-      "labitemsIndex": "",
-      "measurementsIndex": "",
-      "signsIndex": ""
-    },
-    {
-      "key": "1100-10",
-      "value": "Macrocytic Anemia (suspect Aplastic Anemia or MDS)",
-      "parent": "1100-1",
       "labitemsIndex": "",
       "measurementsIndex": "",
       "signsIndex": ""
@@ -210,17 +98,17 @@ let algorithms = [
       "signsIndex": ""
     },
     {
-      "key": "1101",
+      "key": "111",
       "value": "Schistocytes",
-      "parent": "110",
+      "parent": "11",
       "labitemsIndex": "",
       "measurementsIndex": "",
       "signsIndex": ""
     },
     {
-      "key": "11010",
+      "key": "1110",
       "value": "Hemolysis",
-      "parent": "1101",
+      "parent": "111",
       "labitemsIndex": "",
       "measurementsIndex": "",
       "signsIndex": ""
@@ -245,13 +133,13 @@ let algorithms = [
       "key": "100",
       "value": "Ferritin normal",
       "parent": "10",
-      "labitemsIndex": "13",
+      "labitemsIndex": "",
       "measurementsIndex": "",
       "signsIndex": ""
     },
     {
       "key": "1000",
-      "value": "CRP normal",
+      "value": "Marrow damage",
       "parent": "100",
       "labitemsIndex": "",
       "measurementsIndex": "",
@@ -259,7 +147,7 @@ let algorithms = [
     },
     {
       "key": "1001",
-      "value": "CRP high",
+      "value": "decreased stimulation (Renal disease, Inflammation)",
       "parent": "100",
       "labitemsIndex": "",
       "measurementsIndex": "",
@@ -345,15 +233,16 @@ class TreeNode {
     value = key,
     parent = null,
     labitemsIndex,
-    measurementsIndex
+    measurementsIndex,
+    signsIndex
   ) {
     this.key = key;
     this.value = value;
     this.parent = parent;
     this.labitemsIndex = labitemsIndex;
     this.measurementsIndex = measurementsIndex;
+    this.signsIndex = signsIndex;
     this.children = [];
-    measurementsIndex;
   }
 
   get isLeaf() {
@@ -366,13 +255,14 @@ class TreeNode {
 }
 
 class Tree {
-  constructor(key, value = key, labitemsIndex, measurementsIndex) {
+  constructor(key, value = key, labitemsIndex, measurementsIndex, signsIndex) {
     this.root = new TreeNode(
       key,
       value,
       null,
       labitemsIndex,
-      measurementsIndex
+      measurementsIndex,
+      signsIndex
     );
   }
 
@@ -394,11 +284,11 @@ class Tree {
     yield node;
   }
 
-  insert(parentNodeKey, key, value = key, labitemsIndex, measurementsIndex) {
+  insert(parentNodeKey, key, value = key, labitemsIndex, measurementsIndex, signsIndex) {
     for (let node of this.preOrderTraversal()) {
       if (node.key === parentNodeKey) {
         node.children.push(
-          new TreeNode(key, value, node, labitemsIndex, measurementsIndex)
+          new TreeNode(key, value, node, labitemsIndex, measurementsIndex, signsIndex)
         );
         return true;
       }
@@ -441,7 +331,8 @@ function testEngine(key) {
     algorithms[selectedTreeIndex][0].key,
     algorithms[selectedTreeIndex][0].value,
     algorithms[selectedTreeIndex][0].labitemsIndex,
-    algorithms[selectedTreeIndex][0].measurementsIndex
+    algorithms[selectedTreeIndex][0].measurementsIndex,
+    algorithms[selectedTreeIndex][0].signsIndex
   );
   let algorithmLength = algorithms[selectedTreeIndex].length;
   for (let i = 1; i < algorithmLength; i++) {
@@ -450,7 +341,8 @@ function testEngine(key) {
       algorithms[selectedTreeIndex][i].key,
       algorithms[selectedTreeIndex][i].value,
       algorithms[selectedTreeIndex][i].labitemsIndex,
-      algorithms[selectedTreeIndex][i].measurementsIndex
+      algorithms[selectedTreeIndex][i].measurementsIndex,
+      algorithms[selectedTreeIndex][i].signsIndex
     );
   }
 
@@ -475,7 +367,10 @@ function testEngine(key) {
         let value = patient[0].signs[3][node.signsIndex];
         let name = patient[0].signs[4][node.signsIndex];
         let entered = 0;
-        if (value != undefined) entered = 1;
+        if (value != undefined) {
+          entered = 1;
+          console.log("folate entered");
+        }
         item = {
           "name": name,
           "entered": entered,
@@ -496,7 +391,7 @@ function testEngine(key) {
         }
         return [leaves, path];
       }
-      if (item.used == false) {
+      if (item.used === false) {
         path += " &#8594 " + item.name + " not entered";
         leaves = tree.findLeavesFrom(keyString);
         if (keyString == "1") {

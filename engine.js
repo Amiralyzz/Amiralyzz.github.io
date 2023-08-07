@@ -47,7 +47,7 @@ function whenAnInputChanges() {
     }
   }
 
-  checkRanges(value, id , enteredStatus);
+  checkRanges(value, id, enteredStatus);
 }
 
 function minIsNotBiggerThanMax(x, id) {
@@ -68,7 +68,7 @@ function minIsNotBiggerThanMax(x, id) {
   } catch {}
 }
 
-function checkRanges(value, id , enteredStatus) {
+function checkRanges(value, id, enteredStatus) {
   var currentLabItem = labItems.find((o) => o.input_id === id.toString());
   minIsNotBiggerThanMax(value, id);
   if (!enteredStatus) {
@@ -81,13 +81,18 @@ function checkRanges(value, id , enteredStatus) {
       ).style.display = "none";
     } catch {}
     currentLabItem.status = 0;
+    currentLabItem.value = 0;
     currentLabItem.entered = 0;
     return 0;
   } else {
     currentLabItem.entered = 1;
   }
   let decimalPoint = 0;
-  let percentile = percentileFinder(value, currentLabItem.min, currentLabItem.max);
+  let percentile = percentileFinder(
+    value,
+    currentLabItem.min,
+    currentLabItem.max
+  );
   if (percentile >= 1) {
     decimalPoint = 0;
   } else {
@@ -105,18 +110,17 @@ function checkRanges(value, id , enteredStatus) {
   if (value > currentLabItem.max && currentLabItem.max != 0) {
     let timesMax = (value / currentLabItem.max).toFixed(1);
     try {
-      document.getElementById(currentLabItem.output_id + "_img").src =
-        highIcon;
+      document.getElementById(currentLabItem.output_id + "_img").src = highIcon;
       document.getElementById(currentLabItem.output_id + "_img").style.display =
         "flex";
-      currentLabItem.status = timesMax + " &times; Maximum" ;
+      currentLabItem.status = timesMax + " &times; Maximum";
     } catch {}
   } else if (value < currentLabItem.min) {
     let timesMin = value / currentLabItem.min;
     if (timesMin <= 0.01) {
-      currentLabItem.status = "<0.01 &times; Minimum" ;
+      currentLabItem.status = "<0.01 &times; Minimum";
     } else {
-      currentLabItem.status = timesMin.toFixed(2) + " &times; Minimum" ;
+      currentLabItem.status = timesMin.toFixed(2) + " &times; Minimum";
     }
     try {
       document.getElementById(currentLabItem.output_id + "_img").src = lowIcon;
@@ -125,7 +129,8 @@ function checkRanges(value, id , enteredStatus) {
     } catch {}
   } else {
     try {
-      document.getElementById(currentLabItem.output_id + "_img").src = normalIcon;
+      document.getElementById(currentLabItem.output_id + "_img").src =
+        normalIcon;
       document.getElementById(currentLabItem.output_id + "_img").style.display =
         "flex";
     } catch {}
@@ -177,7 +182,7 @@ function cbcAutoComplete() {
     try {
       document.getElementById("in_Hct").value = c_hct;
     } catch {}
-    checkRanges(c_hct, "in_Hct",true);
+    checkRanges(c_hct, "in_Hct", true);
   } else {
     mcv_isnotzero = false;
   }
@@ -188,7 +193,7 @@ function cbcAutoComplete() {
     try {
       document.getElementById("in_MCH").value = c_mch;
     } catch {}
-    checkRanges(c_mch, "in_MCH",true);
+    checkRanges(c_mch, "in_MCH", true);
     if (mcv_isnotzero) {
       c_mchc = (p_hb * 100) / c_hct;
       c_mchc = c_mchc.toFixed(1);
@@ -196,7 +201,7 @@ function cbcAutoComplete() {
       try {
         document.getElementById("in_MCHC").value = c_mchc;
       } catch {}
-      checkRanges(c_mchc, "in_MCHC",true);
+      checkRanges(c_mchc, "in_MCHC", true);
     }
   }
 }
@@ -273,18 +278,25 @@ function abgMain() {
         let predictedPaco2High = hco3 * 1.5 + 8 + 2;
         if (paco2 > predictedPaco2High) {
           // met acid + res acid
-          path += "PaCO2 > " + predictedPaco2High +" (Winter's predicted PaCO2)" ;
+          path +=
+            "PaCO2 > " + predictedPaco2High + " (Winter's predicted PaCO2)";
           patient[0].signs[0][60] = "Metabolic Acidosis + Respiratory Acidosis";
           patient[0].signs[1][60] = path;
           return 0;
         } else if (paco2 < predictedPaco2Low) {
-          path += "PaCO2 < " + predictedPaco2Low +" (Winter's predicted PaCO2)";
+          path +=
+            "PaCO2 < " + predictedPaco2Low + " (Winter's predicted PaCO2)";
           patient[0].signs[0][60] =
             "Metabolic Acidosis + Respiratory Alkalosis";
           patient[0].signs[1][60] = path;
           return 0;
         } else {
-          path += "PaCO2 in " + predictedPaco2Low + "-" + predictedPaco2High +" (Winter's predicted PaCO2 Range)";
+          path +=
+            "PaCO2 in " +
+            predictedPaco2Low +
+            "-" +
+            predictedPaco2High +
+            " (Winter's predicted PaCO2 Range)";
           if (!anionGapAvailable) {
             patient[0].signs[0][60] = "Metabolic Acidosis";
           } else {
@@ -308,7 +320,8 @@ function abgMain() {
         let predictedPaco2High = hco3 * 1.5 + 8 + 2;
         if (paco2 > predictedPaco2High) {
           // met acid + res acid
-          path += "PaCO2 > " + predictedPaco2High +" (Winter's predicted PaCO2)";
+          path +=
+            "PaCO2 > " + predictedPaco2High + " (Winter's predicted PaCO2)";
           patient[0].signs[0][60] =
             "Metabolic Acidosis (high AG) + Respiratory Acidosis";
           if (deltaGap > 6) {
@@ -331,30 +344,36 @@ function abgMain() {
           patient[0].signs[1][60] = path;
           return 0;
         } else if (paco2 < predictedPaco2Low) {
-          path += "PaCO2 < " + predictedPaco2Low +" (Winter's predicted PaCO2)";
+          path +=
+            "PaCO2 < " + predictedPaco2Low + " (Winter's predicted PaCO2)";
           patient[0].signs[0][60] =
             "Metabolic Acidosis (high AG) + Respiratory Alkalosis";
-            if (deltaGap > 6) {
-              path += " &#8594 &Delta;Gap > 6 and &Delta;Ratio > 1";
-              patient[0].signs[0][60] +=
-                " + Metabolic Alkalosis (based on both &Delta;Gap and &Delta;Ratio)";
-            } else if (deltaRatio > 1) {
-              path += " &#8594 Delta Ratio > 1";
-              patient[0].signs[0][60] +=
-                " + Metabolic Alkalosis (based on &Delta;Ratio only)";
-            } else if (deltaGap < -6) {
-              path += " &#8594 &Delta;Gap < -6 and &Delta;Ratio < 1";
-              patient[0].signs[0][60] +=
-                " + Metabolic Acidosis (normal AG) (based on both &Delta;Gap and &Delta;Ratio)";
-            } else if (deltaRatio < 1) {
-              path += " &#8594 &Delta;Ratio < 1";
-              patient[0].signs[0][60] +=
-                " + Metabolic Acidosis (normal AG) (based on &Delta;Ratio only)";
-            }
+          if (deltaGap > 6) {
+            path += " &#8594 &Delta;Gap > 6 and &Delta;Ratio > 1";
+            patient[0].signs[0][60] +=
+              " + Metabolic Alkalosis (based on both &Delta;Gap and &Delta;Ratio)";
+          } else if (deltaRatio > 1) {
+            path += " &#8594 Delta Ratio > 1";
+            patient[0].signs[0][60] +=
+              " + Metabolic Alkalosis (based on &Delta;Ratio only)";
+          } else if (deltaGap < -6) {
+            path += " &#8594 &Delta;Gap < -6 and &Delta;Ratio < 1";
+            patient[0].signs[0][60] +=
+              " + Metabolic Acidosis (normal AG) (based on both &Delta;Gap and &Delta;Ratio)";
+          } else if (deltaRatio < 1) {
+            path += " &#8594 &Delta;Ratio < 1";
+            patient[0].signs[0][60] +=
+              " + Metabolic Acidosis (normal AG) (based on &Delta;Ratio only)";
+          }
           patient[0].signs[1][60] = path;
           return 0;
         } else {
-          path += "PaCO2 in " + predictedPaco2Low + "-" + predictedPaco2High +" (Winter's predicted PaCO2 Range)";
+          path +=
+            "PaCO2 in " +
+            predictedPaco2Low +
+            "-" +
+            predictedPaco2High +
+            " (Winter's predicted PaCO2 Range)";
           patient[0].signs[0][60] = "Metabolic Acidosis with High AG";
           if (deltaGap > 6) {
             path += " &#8594 &Delta;Gap > 6 and &Delta;Ratio > 1";
@@ -377,11 +396,10 @@ function abgMain() {
           return 0;
         }
       }
-      
     }
     if (ph >= 7.4) {
       path = "pH &ge; 7.4 &#8594 ";
-      if (hco3>25) {
+      if (hco3 > 25) {
         path += "HCO3 > 25 &#8594 ";
         //met alkalosis
         if (paco2 < 35 && hco3 < 28) {
@@ -391,27 +409,32 @@ function abgMain() {
           patient[0].signs[1][60] = path;
           return 0;
         }
-        let predictedPaco2Low = hco3 * 0.7 + 20 - 5; 
+        let predictedPaco2Low = hco3 * 0.7 + 20 - 5;
         let predictedPaco2High = hco3 * 0.7 + 20 + 5;
         if (paco2 > predictedPaco2High) {
           // met alkalosis + res acid
-          path += "PaCO2 > " + predictedPaco2High +" (predicted PaCO2)" ;
-          patient[0].signs[0][60] = "Metabolic Alkalosis + Respiratory Acidosis";
+          path += "PaCO2 > " + predictedPaco2High + " (predicted PaCO2)";
+          patient[0].signs[0][60] =
+            "Metabolic Alkalosis + Respiratory Acidosis";
           patient[0].signs[1][60] = path;
           return 0;
         } else if (paco2 < predictedPaco2Low) {
-          path += "PaCO2 < " + predictedPaco2Low +" (predicted PaCO2)" ;
+          path += "PaCO2 < " + predictedPaco2Low + " (predicted PaCO2)";
           patient[0].signs[0][60] =
             "Metabolic Alkalosis + Respiratory Alkalosis";
           patient[0].signs[1][60] = path;
           return 0;
         } else {
-          path += "PaCO2 in " + predictedPaco2Low + "-" + predictedPaco2High +" (predicted PaCO2 Range)";
+          path +=
+            "PaCO2 in " +
+            predictedPaco2Low +
+            "-" +
+            predictedPaco2High +
+            " (predicted PaCO2 Range)";
           patient[0].signs[0][60] = "Metabolic Alkalosis";
           patient[0].signs[1][60] = path;
           return 0;
         }
-        
       }
     }
     if (ph >= 7.35 && ph <= 7.45 && hco3 >= 22 && hco3 <= 28) {
@@ -463,17 +486,21 @@ function abgMain() {
         paco2 > predictedPaco2High &&
         (!anionGapAvailable || (anionGapAvailable && anionGap <= 12))
       ) {
-        path += "pH, HCO3, and AG are normal but PaCO2 > " + predictedPaco2High + " (Winter's predicted PaCO2)";
-        patient[0].signs[0][60] =
-          "PaCO2 is higher than predicted value ";
+        path +=
+          "pH, HCO3, and AG are normal but PaCO2 > " +
+          predictedPaco2High +
+          " (Winter's predicted PaCO2)";
+        patient[0].signs[0][60] = "PaCO2 is higher than predicted value ";
         patient[0].signs[1][60] = path;
       } else if (
         paco2 < predictedPaco2Low &&
         (!anionGapAvailable || (anionGapAvailable && anionGap <= 12))
       ) {
-        path += "pH, HCO3, and AG are normal but PaCO2 < " + predictedPaco2Low + " (Winter's predicted PaCO2)";
-        patient[0].signs[0][60] =
-          "PaCO2 is lower than predicted value ";
+        path +=
+          "pH, HCO3, and AG are normal but PaCO2 < " +
+          predictedPaco2Low +
+          " (Winter's predicted PaCO2)";
+        patient[0].signs[0][60] = "PaCO2 is lower than predicted value ";
         patient[0].signs[1][60] = path;
       } else {
         path += "pH, PaCO2, HCO3, and AG are not compatible";
@@ -758,26 +785,53 @@ function ironProfile() {
 }
 
 function isAnemia() {
-  var p_hb = labItems[2].value;
-  if (p_hb <= 0) {
+  let Hb = Number(labItems[2].value);
+  let HbMin = Number(labItems[2].min);
+  if (Hb <= 0) {
     return false;
   }
-  if (p_hb < labItems[2].min) {
+  if (Hb < HbMin) {
     return true;
   } else {
     return false;
   }
 }
 
+function isPancytopenia() {
+  patient[0].signs[4][1] = "Pancytopenia";
+  let wbc = Number(labItems[0].value);
+  let wbcMin = Number(labItems[0].min);
+  let hb = Number(labItems[2].value);
+  let hbMin = Number(labItems[2].min);
+  let plt = Number(labItems[7].value);
+  let pltMin = Number(labItems[7].min);
+  let peniaCount = 0;
+  if (wbc < wbcMin && labItems[0].entered == 1) peniaCount++;
+  if (hb < hbMin && labItems[2].entered == 1) peniaCount++;
+  if (plt < pltMin && labItems[7].entered == 1) peniaCount++;
+  if (peniaCount > 1) {
+    patient[0].signs[0][1] = "Pancytopenia";
+    patient[0].signs[1][1] = "two or more lineages are low";
+    patient[0].signs[2][1] = "darkslateblue";
+    patient[0].signs[3][1] = 1;
+    return true;
+  } else {
+    delete patient[0].signs[0][1];
+    delete patient[0].signs[1][1];
+    delete patient[0].signs[2][1];
+    patient[0].signs[3][1] = 0;
+    return false;
+  }
+}
 function anemiaType() {
-  var p_rbc = labItems[1].value; //p = patient's
-  var p_hb = labItems[2].value;
-  var p_mcv = labItems[3].value;
-  var p_hct = labItems[4].value;
-  var p_mch = labItems[5].value;
-  var p_rdw = labItems[8].value;
-  var p_retic = labItems[11].value;
-  var cbc_color = "darkslateblue";
+  let RBC = labItems[1].value; //p = patient's
+  let Hb = labItems[2].value;
+  let MCV = labItems[3].value;
+  let Hct = labItems[4].value;
+  let MCH = labItems[5].value;
+  let RDW = labItems[8].value;
+  let retic = labItems[11].value;
+  let cbc_color = "darkslateblue";
   delete patient[0].signs[0][2];
   delete patient[0].signs[1][2];
   delete patient[0].signs[2][2];
@@ -786,11 +840,11 @@ function anemiaType() {
   let path = "";
   statisticsMaker(1);
   conditionMaker(0);
-  if (p_hb <= 0) {
+  if (Hb <= 0) {
     //we need to check this in the function calling this function -
     return 0; //no need to access  //and if there is no hb entered unlike mcv, check for macrocytosis
   }
-  if (p_hb >= labItems[2].min) {
+  if (Hb >= labItems[2].min) {
     path += "Hb > " + labItems[2].min;
     patient[0].signs[0][2] = "no anemia";
     patient[0].signs[1][2] = path;
@@ -798,24 +852,24 @@ function anemiaType() {
     return false; //no anemia
   }
 
-  if (p_hct > 0 && p_retic > 0) {
+  if (Hct > 0 && retic > 0) {
     measurementsCalc(); // to access RPI
   } else {
     // we dont have rpi
   }
-  if (p_mcv > 0) {
+  if (MCV > 0) {
     path += "Hb < " + labItems[2].min + " &#8594 ";
     // we have mcv and we approach
     if (genderCoef == 0 || pregnancySituation == 0) {
       //this approach only for non-pregnants
-      if (p_mcv < labItems[3].min) {
+      if (MCV < labItems[3].min) {
         //microcytic anemia
         path += " MCV < " + labItems[3].min;
         patient[0].signs[0][2] = "Microcytic anemia";
         patient[0].signs[1][2] = path;
         patient[0].signs[2][2] = cbc_color;
         //now we have to check Iron profile , RDW , RBC count , MCH , if we have PBS
-      } else if (p_mcv < labItems[3].max) {
+      } else if (MCV < labItems[3].max) {
         //normocytic anemia
         path += labItems[3].min + " < MCV < " + labItems[3].max;
         patient[0].signs[0][2] = "Normocytic anemia";
@@ -845,32 +899,39 @@ function folateAndB12() {
   var b12 = Number(labItems[44].value);
   var folateMin = Number(labItems[43].min);
   var b12Min = Number(labItems[44].min);
-
+  let path = "";
   delete patient[0].signs[0][11];
   delete patient[0].signs[1][11];
   patient[0].signs[2][11] = "rgb(102, 30, 52)";
   delete patient[0].signs[3][11];
-  patient[0].signs[4][11] = "b12 or folate";
+  patient[0].signs[4][11] = "B12 or Folate";
 
-  
   if (labItems[43].entered == "1") {
     if (folate < folateMin) {
+      path += "Folate < " + folateMin;
       if (labItems[44].entered == "1" && b12 < b12Min) {
+        path += " &#8594 B12 < " + b12Min;
         patient[0].signs[0][11] = "Folate and B12 deficiency";
+        patient[0].signs[1][11] = path;
         patient[0].signs[3][11] = 1;
       } else {
         patient[0].signs[0][11] = "Folate deficiency";
+        patient[0].signs[1][11] = path;
         patient[0].signs[3][11] = 1;
       }
     } else if (labItems[44].entered == "1" && b12 < b12Min) {
+      path += "B12 < " + b12Min;
       patient[0].signs[0][11] = "B12 deficiency";
+      patient[0].signs[1][11] = path;
       patient[0].signs[3][11] = 1;
     } else {
       patient[0].signs[3][11] = 0;
     }
   } else if (labItems[44].entered == "1") {
     if (b12 < b12Min) {
+      path += "B12 < " + b12Min;
       patient[0].signs[0][11] = "B12 deficiency";
+      patient[0].signs[1][11] = path;
       patient[0].signs[3][11] = 1;
     } else {
       patient[0].signs[3][11] = 0;
@@ -878,7 +939,6 @@ function folateAndB12() {
   } else {
     patient[0].signs[3][11] = undefined;
   }
-  
 }
 
 function lftEngine() {
@@ -1034,15 +1094,26 @@ function engineMain() {
   lftEngine();
   abgMain();
   wbcCount();
-  // iron_profile();
-  let resultArray = testEngine(0);
-  try {
-    signMaker(
-      listMaker([...resultArray[0]].map((x) => x.value)),
-      resultArray[1] //path
-    );
-  } catch {}
   folateAndB12();
+  isPancytopenia();
+  // iron_profile();
+  if (isAnemia()) {
+    let resultArray = testEngine(0);
+    try {
+      signMaker(
+        listMaker([...resultArray[0]].map((x) => x.value)),
+        resultArray[1] //path
+      );
+    } catch {
+      delete patient[0].signs[0][10];
+      delete patient[0].signs[1][10];
+      delete patient[0].signs[2][10];
+    }
+  } else {
+    delete patient[0].signs[0][10];
+    delete patient[0].signs[1][10];
+    delete patient[0].signs[2][10];
+  }
 }
 
 function listMaker(array) {
