@@ -28,11 +28,34 @@
   #show_tab {
     display: none;
   }
-  .expand_info {
+  /* .expand_info {
     display: none;
   }
   #gen_a_w_h {
     display: flex;
+  } */
+  .patientSummary {
+    font-size: 1.6rem;
+  }
+  .expand_info {
+    display: inline;
+    margin-left: 10px;
+    margin-right: 20px;
+    padding: 0px 5px;
+    font-size: medium;
+    width: -moz-fit-content;
+    width: fit-content;
+    vertical-align: middle;
+    cursor: pointer;
+    -webkit-backdrop-filter: brightness(90%);
+    backdrop-filter: brightness(90%);
+    filter: brightness(80%);
+    border-radius: 5px;
+  }
+  #gen_a_w_h {
+    display: none;
+    flex-direction: column;
+    align-items: center;
   }
   #searched {
     gap: 10px;
@@ -73,7 +96,9 @@
     animation: slideFromLeft 0.5s;
     border-radius: 0px 30px 30px 0px;
   }
-
+  .patientSummary {
+    font-size: 1rem;
+  }
   .burger_tab {
     -webkit-overflow-scrolling: touch;
     width: 150px;
@@ -115,12 +140,16 @@
   #test_types_bio {
     display: none;
   }
+  #test_types_abg {
+    display: none;
+  }
   #tab_analyse .tab_label {
     padding-left: 5px;
   }
   .expand_info {
     display: inline;
     margin-left: 10px;
+    margin-right: 20px;
     padding: 0px 5px;
     font-size: medium;
     width: -moz-fit-content;
@@ -298,6 +327,7 @@ h1 {
   margin: 10px;
 }
 
+
 #gen_a_w_h {
   position: relative;
   color: white;
@@ -331,7 +361,7 @@ h1 {
 
 .id_tab {
   min-width: 150px;
-  max-width: 150;
+  max-width: 150px;
   position: relative;
   display: flex;
   flex-grow: 1;
@@ -354,6 +384,8 @@ h1 {
   padding: 5px;
   font-size: 20px;
   background-color: rgb(38, 3, 58);
+  border: none;
+  font-family: "Abel", sans-serif;
 }
 
 .tooltip_parent {
@@ -805,12 +837,14 @@ select {
   margin: 0px 10px 0px 0px;
   transition: transform 0.2s;
   float: right;
+  font-family: "Abel", sans-serif;
 }
 
 option {
   color: darkslategray;
   background-color: white;
   cursor: pointer;
+  font-family: "Abel", sans-serif;
 }
 
 option::selection {

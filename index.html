@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="style.css" />
     <title>LAB|ENTER</title>
   </head>
-  <body onload="rangeMaker('adult');">
+  <body onload="rangeMaker('adult'); summaryMaker();">
     <script defer src="script.js"></script>
     <script defer src="JSON.js"></script>
     <script defer src="TabContent.js"></script>
@@ -44,23 +44,31 @@
               alt="male"
             />
           </div>
-          <div
+          <!-- <div
             style="
               text-align: left;
-              font-size: 30px;
+              font-size: 1.5rem;
               margin-left: 5px;
               height: fit-content;
               position: relative;
             "
           >
             Patient Info
-          </div>
-          <div class="expand_info" id="expand_info" onclick="expand_info()">
-            show
+          </div> -->
+          <div class="patientSummary" id="patientSummary">
+
+          </div>  
+          <div class="expand_info" id="expand_info" onclick="expandInfo()">
+            change
           </div>
         </div>
+        
+        
         <div id="gen_a_w_h">
           <div id="sex_id" class="id_tab">
+            <label for="gender" style="margin: 5px 10px; font-size: 1.3rem; font-family: 'Abel', sans-serif;"
+              >Gender</label
+            >
             <div
               style="flex-wrap: wrap; display: flex; justify-content: center"
             >
@@ -88,7 +96,7 @@
             </div>
           </div>
           <div class="id_tab" id="age_id">
-            <label for="age" style="margin: 5px 10px; font-size: 25px"
+            <label for="age" style="margin: 5px 10px; font-size: 1.3rem; font-family: 'Abel', sans-serif;"
               >Age</label
             >
             <div
@@ -117,7 +125,7 @@
             </div>
           </div>
           <div class="id_tab" id="weight_id">
-            <label for="weight" style="margin: 5px 10px; font-size: 25px"
+            <label for="weight" style="margin: 5px 10px; font-size: 1.3rem; font-family: 'Abel', sans-serif;"
               >Weight</label
             >
             <div
@@ -147,7 +155,7 @@
             </div>
           </div>
           <div class="id_tab" id="height_id">
-            <label for="height" style="margin: 5px 10px; font-size: 25px"
+            <label for="height" style="margin: 5px 10px; font-size: 1.3rem; font-family: 'Abel', sans-serif;"
               >Height</label
             >
             <div
@@ -183,7 +191,7 @@
           class="tab"
           id="show_tab"
           style="background-color: rgb(30, 102, 96)"
-          onclick="burger_menu()"
+          onclick="burgerMenu()"
         >
           <div class="tab_label" id="show_label">Tabs</div>
         </div>

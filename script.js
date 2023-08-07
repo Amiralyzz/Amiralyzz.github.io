@@ -94,28 +94,51 @@ function burgerMenu() {
   burger_parent.appendChild(close_btn);
 }
 
+function summaryMaker() {
+  let genderString = ["Male" , "Female"];
+  let pregnancyString = ["", "Pregnant ", "Pregnant ","Pregnant "];
+  let ageTextbox = document.getElementById("age");
+  let ageUnitSelected = document.getElementById("age_unit");
+  let ageNumber = ageTextbox.value;
+  let ageUnit = ageUnitSelected.value;
+  let ageUnitString = "";
+  if (ageUnit == "day") ageUnitString= "day";
+  if (ageUnit == "mon") ageUnitString= "month";
+  if (ageUnit == "year") ageUnitString= "year";
+  let ageString = ageNumber + " " + ageUnitString;
+  if (Number(ageNumber)>1) ageString += "s";
+  let summary = ageString + " " + pregnancyString[pregnancySituation] + genderString[genderCoef/2];
+  document.getElementById("patientSummary").innerHTML = summary;
+}
+
 function expandInfo() {
-  var more_button = document.getElementById("expand_info");
-  var info = document.getElementById("gen_a_w_h");
-  if (more_button.innerHTML == "show") {
+  let more_button = document.getElementById("expand_info");
+  let info = document.getElementById("gen_a_w_h");
+  if (more_button.innerHTML == "change") {
     more_button.innerHTML = "hide";
     info.style.display = "flex";
   } else {
     info.style.display = "none";
-    more_button.innerHTML = "show";
+    more_button.innerHTML = "change";
   }
 }
 
 function gender() {
-  var malelogo = "https://cdn-icons-png.flaticon.com/512/3001/3001764.png";
-  var femalelogo = "https://cdn-icons-png.flaticon.com/512/2922/2922561.png";
+  let malelogo = "https://cdn-icons-png.flaticon.com/512/3001/3001764.png";
+  let femalelogo = "https://cdn-icons-png.flaticon.com/512/2922/2922561.png";
+  let ageTextbox = document.getElementById("age");
+  let ageUnitSelected = document.getElementById("age_unit");
+  let ageNumber = Number(ageTextbox.value);
+  let ageUnit = ageUnitSelected.value;
   if (genderCoef == 0) {
-    document.getElementById("preg").disabled = false;
     document.getElementById("gender").value = "female";
     document.getElementById("gen_logo").src = femalelogo;
     document.getElementById("gen_logo").alt = "female";
     genderCoef = 2;
-    pregnancySituation = lastPregnancySituation;
+    if (ageNumber > 12 && ageUnit=="year") {
+      pregnancySituation = lastPregnancySituation;
+      document.getElementById("preg").disabled = false;
+    }
   } else {
     document.getElementById("preg").disabled = true;
     document.getElementById("gender").value = "male";
@@ -158,6 +181,9 @@ function ageCalc() {
     ageNumber = 0;
   }
   if (ageUnit == "day") {
+    lastPregnancySituation = pregnancySituation;
+    pregnancySituation = 0;
+    document.getElementById("preg").disabled = true;
     if (ageNumber > 60) {
       ageTextbox.value = 60;
       ageNumber = 60;
@@ -175,6 +201,9 @@ function ageCalc() {
     globalAgeMonths = Math.floor(ageNumber / 30);
   }
   if (ageUnit == "mon") {
+    lastPregnancySituation = pregnancySituation;
+    pregnancySituation = 0;
+    document.getElementById("preg").disabled = true;
     if (ageNumber < 1) {
       ageTextbox.value = 1;
       ageNumber = 1;
@@ -197,6 +226,7 @@ function ageCalc() {
   }
   if (ageUnit == "year") {
     if (ageNumber < 1) {
+      
       ageNumber = 1;
     }
     if (ageNumber > 139) {
@@ -204,6 +234,13 @@ function ageCalc() {
       ageNumber = 139;
     }
     globalAgeYears = ageNumber;
+    if (ageNumber<12) {
+      lastPregnancySituation = pregnancySituation;
+      pregnancySituation = 0;
+      document.getElementById("preg").disabled = true;
+    } else if(genderCoef==2){
+      document.getElementById("preg").disabled = false;
+    } 
     if (ageNumber < 2) {
       selectedAgeGroupIndex = 5;
       globalAgeMonths = 12;
@@ -267,6 +304,7 @@ function ageCalc() {
     checkRanges(value, id, enteredStatus);
   }
   tabContent(selectedTabId, selectedLabType);
+  summaryMaker();
 }
 
 function rangeMaker(key) {

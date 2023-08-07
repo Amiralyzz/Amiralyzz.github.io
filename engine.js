@@ -824,7 +824,7 @@ function isPancytopenia() {
   }
 }
 function anemiaType() {
-  let RBC = labItems[1].value; //p = patient's
+  let RBC = labItems[1].value; 
   let Hb = labItems[2].value;
   let MCV = labItems[3].value;
   let Hct = labItems[4].value;
