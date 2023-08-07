@@ -24,6 +24,7 @@ var selectedAgeGroupIndex = 12;
 var selectedAgeGroup = "adult";
 var pregnancySituation = 0; //0 for not pregnant
 var lastPregnancySituation = 0;
+var globalVolumeStatus = 0; //-1 hypo , +1 hyper , 0 euvolumic
 var selectedTabId = "test_types_cbc";
 var selectedLabType = "cbc";
 var lowIcon = "https://cdn-icons-png.flaticon.com/128/8532/8532500.png";
@@ -116,7 +117,12 @@ function expandInfo() {
   let info = document.getElementById("gen_a_w_h");
   if (more_button.innerHTML == "change") {
     more_button.innerHTML = "hide";
-    info.style.display = "flex";
+    info.style.display = "grid";
+    if(window.innerWidth<800) {
+      info.style.gridTemplateColumns = "auto auto";
+    } else {
+      info.style.gridTemplateColumns = "auto auto auto auto";
+    }
   } else {
     info.style.display = "none";
     more_button.innerHTML = "change";
@@ -422,6 +428,13 @@ function heightCalc() {
   tabContent(selectedTabId, selectedLabType);
 }
 
+function volume() {
+  let volumeStatus = document.getElementById("volume").value;
+  if (volumeStatus == "euvolumic") globalVolumeStatus= 0;
+  if (volumeStatus == "hypovolumic") globalVolumeStatus= -1;
+  if (volumeStatus == "hypervolumic") globalVolumeStatus= 1;
+  ageCalc();
+}
 function bmiCalc() {
   let bmi = 0;
   let bsa = 0;

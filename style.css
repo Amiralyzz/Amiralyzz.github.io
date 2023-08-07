@@ -28,17 +28,11 @@
   #show_tab {
     display: none;
   }
-  /* .expand_info {
-    display: none;
-  }
-  #gen_a_w_h {
-    display: flex;
-  } */
   .patientSummary {
     font-size: 1.6rem;
   }
   .expand_info {
-    display: inline;
+    display: flex;
     margin-left: 10px;
     margin-right: 20px;
     padding: 0px 5px;
@@ -52,11 +46,7 @@
     filter: brightness(80%);
     border-radius: 5px;
   }
-  #gen_a_w_h {
-    display: none;
-    flex-direction: column;
-    align-items: center;
-  }
+
   #searched {
     gap: 10px;
     grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
@@ -147,7 +137,7 @@
     padding-left: 5px;
   }
   .expand_info {
-    display: inline;
+    display: flex;
     margin-left: 10px;
     margin-right: 20px;
     padding: 0px 5px;
@@ -161,11 +151,7 @@
     filter: brightness(80%);
     border-radius: 5px;
   }
-  #gen_a_w_h {
-    display: none;
-    flex-direction: column;
-    align-items: center;
-  }
+
 
   #analyse_logo {
     display: none;
@@ -329,6 +315,8 @@ h1 {
 
 
 #gen_a_w_h {
+  display: none;
+  box-sizing: border-box;
   position: relative;
   color: white;
   flex-direction: row;
@@ -357,6 +345,7 @@ h1 {
   vertical-align: middle;
   flex-wrap: wrap;
   background-color: rgb(38, 3, 58);
+  padding-right: 5px;
 }
 
 .id_tab {
@@ -373,6 +362,13 @@ h1 {
   flex-direction: column;
   font-size: 20px;
   align-items: center;
+  /* -webkit-backdrop-filter: brightness(105%);
+  backdrop-filter: brightness(105%);
+  filter: brightness(105%); */
+  border-radius: 10px;
+  margin: 0px 5px;
+  padding: 5px;
+  height: 72px;
 }
 .input_id {
   border-radius: 20px;
@@ -871,4 +867,15 @@ li {
   padding: 5px;
   vertical-align: middle;
   display: inline-block;
+}
+
+.idLabels {
+  margin: 5px 10px; 
+  font-size: 1.3rem; 
+  font-family: 'Abel', sans-serif;
+  -webkit-backdrop-filter: brightness(90%);
+  backdrop-filter: brightness(90%);
+  filter: brightness(80%);
+  border-radius: 5px;
+  padding: 0px 5px;
 }

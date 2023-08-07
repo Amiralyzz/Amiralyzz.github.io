@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="style.css" />
     <title>LAB|ENTER</title>
   </head>
-  <body onload="rangeMaker('adult'); summaryMaker();">
+  <body onload="rangeMaker('adult'); summaryMaker(); expandInfo();">
     <script defer src="script.js"></script>
     <script defer src="JSON.js"></script>
     <script defer src="TabContent.js"></script>
@@ -44,61 +44,41 @@
               alt="male"
             />
           </div>
-          <!-- <div
-            style="
-              text-align: left;
-              font-size: 1.5rem;
-              margin-left: 5px;
-              height: fit-content;
-              position: relative;
-            "
-          >
-            Patient Info
-          </div> -->
-          <div class="patientSummary" id="patientSummary">
-
-          </div>  
+          <div class="patientSummary" id="patientSummary"></div>
           <div class="expand_info" id="expand_info" onclick="expandInfo()">
             change
           </div>
         </div>
-        
-        
         <div id="gen_a_w_h">
           <div id="sex_id" class="id_tab">
-            <label for="gender" style="margin: 5px 10px; font-size: 1.3rem; font-family: 'Abel', sans-serif;"
-              >Gender</label
+            <label for="gender" class="idLabels">Gender</label>
+            <select
+              title="gender"
+              name="gender"
+              id="gender"
+              onchange="gender()"
             >
-            <div
-              style="flex-wrap: wrap; display: flex; justify-content: center"
+              <option value="male" selected>Male</option>
+              <option value="female">Female</option>
+            </select>
+          </div>
+          <div id="preg_id" class="id_tab">
+            <label for="preg" class="idLabels">Pregnancy</label>
+            <select
+              title="preg"
+              name="preg"
+              id="preg"
+              disabled="true"
+              oninput="pregnancy()"
             >
-              <select
-                title="gender"
-                name="gender"
-                id="gender"
-                onchange="gender()"
-              >
-                <option value="male" selected>Male</option>
-                <option value="female">Female</option>
-              </select>
-              <select
-                title="preg"
-                name="preg"
-                id="preg"
-                disabled=true
-                oninput="pregnancy()"
-              >
-                <option value="notPregnant" selected>Not pregnant</option>
-                <option value="firstTrimester">First trimester</option>
-                <option value="secondTrimester">Second trimester</option>
-                <option value="thirdTrimester">Third trimester</option>
-              </select>
-            </div>
+              <option value="notPregnant" selected>Not pregnant</option>
+              <option value="firstTrimester">First trimester</option>
+              <option value="secondTrimester">Second trimester</option>
+              <option value="thirdTrimester">Third trimester</option>
+            </select>
           </div>
           <div class="id_tab" id="age_id">
-            <label for="age" style="margin: 5px 10px; font-size: 1.3rem; font-family: 'Abel', sans-serif;"
-              >Age</label
-            >
+            <label for="age" class="idLabels">Age</label>
             <div
               style="flex-wrap: nowrap; display: flex; justify-content: center"
             >
@@ -125,9 +105,7 @@
             </div>
           </div>
           <div class="id_tab" id="weight_id">
-            <label for="weight" style="margin: 5px 10px; font-size: 1.3rem; font-family: 'Abel', sans-serif;"
-              >Weight</label
-            >
+            <label for="weight" class="idLabels">Weight</label>
             <div
               style="flex-wrap: nowrap; display: flex; justify-content: center"
             >
@@ -155,9 +133,7 @@
             </div>
           </div>
           <div class="id_tab" id="height_id">
-            <label for="height" style="margin: 5px 10px; font-size: 1.3rem; font-family: 'Abel', sans-serif;"
-              >Height</label
-            >
+            <label for="height" class="idLabels">Height</label>
             <div
               style="flex-wrap: nowrap; display: flex; justify-content: center"
             >
@@ -182,6 +158,19 @@
                 <option value="ft">ft</option>
               </select>
             </div>
+          </div>
+          <div id="volume_id" class="id_tab">
+            <label for="volume" class="idLabels">Volume</label>
+            <select
+              title="volume"
+              name="volume"
+              id="volume"
+              onchange="volume()"
+            >
+              <option value="euvolumic" selected>Euvolumic</option>
+              <option value="hypovolumic">Hypovolumic</option>
+              <option value="hypervolumic">Hypervolumic</option>
+            </select>
           </div>
         </div>
       </div>
@@ -309,7 +298,7 @@
           />
           <div class="tab_label">ABG</div>
         </div>
-        
+
         <div
           style="background-color: rgb(30, 102, 42)"
           id="tab_analyse"
