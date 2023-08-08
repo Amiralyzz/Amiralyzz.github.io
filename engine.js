@@ -1072,23 +1072,73 @@ function lftPattern(liverPanel) {
 }
 
 function sodiumMain() {
-  let na = Number(labItems[32].value);
+  let na = measurements[25].value;
   let naMin = Number(labItems[32].min);
   let naMax = Number(labItems[32].max);
   let enteredStatus = labItems[32].entered;
   if (enteredStatus == 1) {
-    if (na < naMin) {
-      conditionMaker(1);
-      hyponatremia(na, naMin);
-    }
+    console.log("na entered");
+    return na , naMin;
   }
 }
 
-function hyponatremia(na, naMin) {
-  
+function hyponatremia() {
+  patient[0].signs[3][45] = 0;
+  let na = measurements[25].value;
+  let naMin = Number(labItems[32].min);
+  let enteredStatus = labItems[32].entered;
+  if (enteredStatus == 1) {
+    conditionMaker(1);
+    if (na < naMin) {
+      return true;
+    } else {
+      return false;
+    }
+  } else return false;
   
 }
 
+function serumOsmolarity() {
+  let plasmaOsm = Number(labItems[85].value);
+  let plasmaOsmEntered = labItems[85].entered;
+  let urineOsm = Number(labItems[86].value);
+  let urineOsmEntered = labItems[86].entered;
+  patient[0].signs[4][41] = "Plasma Osmolarity";
+  patient[0].signs[4][43] = "Urine Osmolarity";
+  if (plasmaOsmEntered != 1) {
+    plasmaOsm = 285;
+  }
+  if (urineOsmEntered != 1) {
+    patient[0].signs[3][43] = undefined;
+  }
+  if (plasmaOsm< 280) {
+    patient[0].signs[3][41] = 1;
+  } else {
+    patient[0].signs[3][41] = 0;
+  }
+  if (urineOsm < 100) {
+    patient[0].signs[3][43] = 1;
+  } else {
+    patient[0].signs[3][43] = 0;
+  }
+  if (urineOsmEntered != 1) {
+    patient[0].signs[3][43] = undefined;
+  }
+}
+
+function severeHypothyroidism() {
+  let TSH = Number(labItems[21].value);
+  let TSHEntered = labItems[21].entered;
+  patient[0].signs[4][30] = "TSH";
+  if (TSH > 10) {
+    patient[0].signs[3][30] = 1;
+  } else {
+    patient[0].signs[3][30] = 0;
+  }
+  if (TSHEntered == 0) {
+    patient[0].signs[3][30] = undefined;
+  }
+}
 
 function percentileFinder(input, min, max) {
   min = Number(min);
@@ -1107,20 +1157,24 @@ function percentileFinder(input, min, max) {
 function engineMain() {
   //activates when user goes to analyse tab
   measurementsCalc();
+  serumOsmolarity();
+  severeHypothyroidism();
   anemiaType();
   lftEngine();
   abgMain();
   wbcCount();
   folateAndB12();
   isPancytopenia();
-  sodiumMain();
+  // sodiumMain();
   // iron_profile();
   if (isAnemia()) {
     let resultArray = testEngine(0);
     try {
       signMaker(
         listMaker([...resultArray[0]].map((x) => x.value)),
-        resultArray[1] //path
+        resultArray[1], //path
+        10,
+        "rgb(102, 30, 52)"
       );
     } catch {
       delete patient[0].signs[0][10];
@@ -1131,6 +1185,25 @@ function engineMain() {
     delete patient[0].signs[0][10];
     delete patient[0].signs[1][10];
     delete patient[0].signs[2][10];
+  }
+  if (hyponatremia()) {
+    let resultArray = testEngine(1);
+    try {
+      signMaker(
+        listMaker([...resultArray[0]].map((x) => x.value)),
+        resultArray[1], //path
+        44,
+        "rgb(128, 70, 32)"
+      );
+    } catch {
+      delete patient[0].signs[0][44];
+      delete patient[0].signs[1][44];
+      delete patient[0].signs[2][44];
+    }
+  } else {
+    delete patient[0].signs[0][44];
+    delete patient[0].signs[1][44];
+    delete patient[0].signs[2][44];
   }
 }
 
@@ -1146,8 +1219,8 @@ function listMaker(array) {
   return mainString;
 }
 
-function signMaker(listHTML, path) {
-  patient[0].signs[0][10] = listHTML;
-  patient[0].signs[1][10] = path;
-  patient[0].signs[2][10] = "rgb(102, 30, 52)";
+function signMaker(listHTML, path, signID , color) {
+  patient[0].signs[0][signID] = listHTML;
+  patient[0].signs[1][signID] = path;
+  patient[0].signs[2][signID] = color;
 }

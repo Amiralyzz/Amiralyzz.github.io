@@ -226,6 +226,313 @@ let algorithms = [
       "signsIndex": ""
     }
   ],
+  // [1] = hyponatremia
+  [
+    {
+      "key": "1",
+      "value": "Corrected Na low",
+      "parent": "",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": "41"
+    },
+    {
+      "key": "11",
+      "value": "Plasma Osmolarity < 280",
+      "parent": "1",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "110",
+      "value": "Pseudohyponatremia (lipids, proteins , etc)",
+      "parent": "11",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "111",
+      "value": "TURP",
+      "parent": "11",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "112",
+      "value": "Hystrescopy",
+      "parent": "11",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "10",
+      "value": "Plasma Osmolarity >280",
+      "parent": "1",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": "40"
+    },
+    {
+      "key": "101",
+      "value": "GFR &le; 15",
+      "parent": "10",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "1010",
+      "value": "Renal Failure",
+      "parent": "101",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "100",
+      "value": "GFR > 15",
+      "parent": "10",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": "42"
+    },
+    {
+      "key": "1001",
+      "value": "on diuretics",
+      "parent": "100",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "10010",
+      "value": "Diuretic use",
+      "parent": "1001",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "1000",
+      "value": "not on diuretics",
+      "parent": "100",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": "45"
+    },
+    {
+      "key": "10001",
+      "value": "Edema",
+      "parent": "1000",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "100010",
+      "value": "Nephrotic Syndrome",
+      "parent": "10001",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "100011",
+      "value": "Cirrhosis",
+      "parent": "10001",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "100012",
+      "value": "Heart Failure",
+      "parent": "10001",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "10000",
+      "value": "Euvolumic",
+      "parent": "1000",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": "43"
+    },
+    {
+      "key": "1000-1",
+      "value": "Hypovolumic",
+      "parent": "1000",
+      "labitemsIndex": "81",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "1000-1-1",
+      "value": "UNa < 25",
+      "parent": "1000-1",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "1000-1-10",
+      "value": "External Losses (GI loss, third space loss)",
+      "parent": "1000-1-1",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "1000-10",
+      "value": "UNa normal ",
+      "parent": "1000-1",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "1000-100",
+      "value": "remeasure UNa after another IV Fluid",
+      "parent": "1000-10",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "1000-11",
+      "value": "UNa > 40",
+      "parent": "1000-1",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "1000-110",
+      "value": "Cerebral Salt Wasting",
+      "parent": "1000-11",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "1000-111",
+      "value": "Primary Adrenal Insufficency",
+      "parent": "1000-11",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "100001",
+      "value": "Uosm < 100",
+      "parent": "10000",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "1000010",
+      "value": "Water intoxication",
+      "parent": "100001",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "1000011",
+      "value": "Beer potomania",
+      "parent": "100001",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "1000012",
+      "value": "tea and toast diet",
+      "parent": "100001",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "100000",
+      "value": "Uosm normal",
+      "parent": "10000",
+      "labitemsIndex": "81",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "1000001",
+      "value": "UNa > 40",
+      "parent": "100000",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": "30"
+    },
+    {
+      "key": "10000011",
+      "value": "TSH > 10",
+      "parent": "1000001",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "100000110",
+      "value": "Severe Hypothyroidism",
+      "parent": "10000011",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "10000010",
+      "value": "TSH &le; 10",
+      "parent": "1000001",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "100000101",
+      "value": "SIADH",
+      "parent": "10000010",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "100000102",
+      "value": "Glucocorticoid deficiency",
+      "parent": "10000010",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "100000103",
+      "value": "reset osmostat",
+      "parent": "10000010",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "1000000",
+      "value": "remeasure UNa after another IV Fluid",
+      "parent": "100000",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    }
+  ]
 ];
 class TreeNode {
   constructor(
@@ -365,17 +672,18 @@ function testEngine(key) {
         item = measurements[node.measurementsIndex];
       } else if (node.signsIndex != "") {
         let value = patient[0].signs[3][node.signsIndex];
+        let min = -1;
         let name = patient[0].signs[4][node.signsIndex];
+        if (value == -1) min= -0.5;
         let entered = 0;
         if (value != undefined) {
           entered = 1;
-          console.log("folate entered");
         }
         item = {
           "name": name,
           "entered": entered,
           "value": value,
-          "min": -1,
+          "min": min,
           "max": 0.5 
         }
       }

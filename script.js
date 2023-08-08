@@ -26,6 +26,7 @@ var pregnancySituation = 0; //0 for not pregnant
 var lastPregnancySituation = 0;
 var globalVolumeStatus = 0; //-1 hypo , +1 hyper , 0 euvolumic
 var globalSmokingStatus = 0; //-1 former, +1 smoker, 0 never
+var globalDiureticStatus = 0; // 0 no 1 yes
 var selectedTabId = "test_types_cbc";
 var selectedLabType = "cbc";
 var lowIcon = "https://cdn-icons-png.flaticon.com/128/8532/8532500.png";
@@ -159,7 +160,7 @@ function gender() {
     lastPregnancySituation = pregnancySituation;
     pregnancySituation = 0;
   }
-  ageCalc(); //contains rangeMaker and tabContent and checkRanges
+  refresh();
 }
 
 function pregnancy() {
@@ -179,7 +180,7 @@ function pregnancy() {
       break;
     default:
   }
-  ageCalc(); //contains rangeMaker and tabContent and checkRanges
+  refresh();
 }
 
 function ageCalc() {
@@ -305,6 +306,10 @@ function ageCalc() {
       }
     }
   }
+  
+}
+
+function refresh() {
   rangeMaker(selectedAgeGroup);
   for (let j = 0; j < labItems.length; j++) {
     let value = Number(labItems[j].value);
@@ -316,8 +321,9 @@ function ageCalc() {
   tabContent(selectedTabId, selectedLabType);
   summaryMaker();
 }
-
 function rangeMaker(key) {
+  patient[0].signs[4][42] = "Diuretic use";
+  patient[0].signs[3][42] = 0;
   let pregKey = "";
   if (pregnancySituation == 1) {
     pregKey = "firstTrim";
@@ -434,26 +440,40 @@ function heightCalc() {
 
 function volume() {
   let volumeStatus = document.getElementById("volume").value;
+  patient[0].signs[4][45] = "Volume status";
   if (volumeStatus == "euvolumic") {
     globalVolumeStatus = 0;
-    measurements[24].value = 0;
+    patient[0].signs[3][45] = 0;
   }
   if (volumeStatus == "hypovolumic") {
     globalVolumeStatus = -1;
-    measurements[24].value = -1;
+    patient[0].signs[3][45] = -1;
   }
   if (volumeStatus == "hypervolumic") {
     globalVolumeStatus = 1;
-    measurements[24].value = 1;
+    patient[0].signs[3][45] = 1;
   }
-  ageCalc();
+  refresh();
 }
 function smoke() {
   let smokeStatus = document.getElementById("smoke").value;
   if (smokeStatus == "never") globalSmokingStatus = 0;
   if (smokeStatus == "smoker") globalSmokingStatus = 1;
   if (smokeStatus == "former") globalSmokingStatus = -1;
-  ageCalc();
+  refresh();
+}
+function diuretic() {
+  let diureticStatus = document.getElementById("diuretic").value;
+  patient[0].signs[4][42] = "Diuretic use"
+  if (diureticStatus == "no") {
+    globalDiureticStatus = 0;
+    patient[0].signs[3][42] = 0;
+  }
+  if (diureticStatus == "yes") {
+    globalDiureticStatus = 1;
+    patient[0].signs[3][42] = 1;
+  }
+  refresh();
 }
 function bmiCalc() {
   let bmi = 0;
@@ -545,6 +565,22 @@ function measurementsCalc() {
   wbcCalc();
   anionGapCalc();
   oxygenCalc();
+  naCalc();
+}
+function naCalc() {
+  let na = Number(labItems[32].value);
+  let naEntered = labItems[32].entered;
+  if (naEntered != 1) {
+    measurements[25].used = false;
+    measurements[25].value = 0;
+    return 0;
+  }
+  let glucose = Number(labItems[35].value);
+  let glucoseEntered = labItems[35].entered;
+  if (glucoseEntered == 0) glucose = 100;
+  na = na + (2 * (glucose - 100)) / 100;
+  measurements[25].value = na;
+  measurements[25].used = true;
 }
 
 function oxygenCalc() {
@@ -674,6 +710,8 @@ function checkIfWBCDiffsAreLessThanHundred() {
 
 function gfrCalc() {
   let cr_val = labItems[30].value;
+  patient[0].signs[4][40] = "GFR";
+
   if (cr_val == 0 || gloalWeightGram == 0) {
     gfr_cg = 0;
     gfr_mdrd = 0;
@@ -681,6 +719,8 @@ function gfrCalc() {
     measurements[5].used = false;
     measurements[6].used = false;
     measurements[7].used = false;
+    patient[0].signs[3][40] = undefined;
+    return 0;
   } else {
     measurements[5].used = true;
     measurements[6].used = true;
@@ -720,6 +760,11 @@ function gfrCalc() {
   measurements[5].value = gfr_ckd.toFixed(3);
   measurements[6].value = gfr_mdrd.toFixed(3);
   measurements[7].value = gfr_cg.toFixed(3);
+  if (gfr_ckd <= 15) {
+    patient[0].signs[3][40] = 1;
+  } else {
+    patient[0].signs[3][40] = 0;
+  }
 }
 function reticCalc() {
   var hct_val = labItems[4].value;
