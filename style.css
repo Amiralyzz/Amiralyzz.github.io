@@ -30,6 +30,7 @@
   }
   .patientSummary {
     font-size: 1.6rem;
+    font-family: "Abel", sans-serif;
   }
   .expand_info {
     display: flex;
@@ -88,6 +89,7 @@
   }
   .patientSummary {
     font-size: 1rem;
+    font-family: "Abel", sans-serif;
   }
   .burger_tab {
     -webkit-overflow-scrolling: touch;
@@ -590,7 +592,7 @@ h1 {
   color: white;
   width: 97%;
   display: flex;
-
+  font-family: "Abel", sans-serif;
   flex-direction: column;
   box-sizing: border-box;
   position: relative;
@@ -606,6 +608,7 @@ h1 {
 }
 
 .prevalenceParent {
+  font-family: "Abel", sans-serif;
   margin: 5px 10px;
   text-align: center;
   font-size: 25px;
@@ -689,6 +692,7 @@ h1 {
   flex-direction: column;
   box-sizing: border-box;
   position: relative;
+  font-family: "Abel", sans-serif;
 }
 
 .signs_section {
@@ -731,6 +735,7 @@ h1 {
   grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
   box-sizing: border-box;
   position: relative;
+  font-family: "Abel", sans-serif;
 }
 .measurements_section {
   margin: 5px 10px;

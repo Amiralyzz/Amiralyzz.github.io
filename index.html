@@ -172,6 +172,19 @@
               <option value="hypervolumic">Hypervolumic</option>
             </select>
           </div>
+          <div id="smoke_id" class="id_tab">
+            <label for="smoke" class="idLabels">Smoking</label>
+            <select
+              title="smoke"
+              name="smoke"
+              id="smoke"
+              onchange="smoke()"
+            >
+              <option value="never" selected>Never</option>
+              <option value="smoker">Smoker</option>
+              <option value="former">Former</option>
+            </select>
+          </div>
         </div>
       </div>
       <div class="tooltip_parent" id="tooltip">Select a tab</div>

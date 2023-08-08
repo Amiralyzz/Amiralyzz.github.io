@@ -1,66 +1,83 @@
 function prevalenceChange() {
   let x = Number(this.value);
   let index = this.id.slice(11);
+  console.log(index);
   conditions[index].prevalenceValue = x;
   posteriorCalc(index);
 }
 
 function posteriorCalc(ind) {
-  let index = statistics[ind].conditionIndex;
-  let prevalenceValue = conditions[index].prevalenceValue;
+  // let conditionIndex = statistics[ind].conditionIndex;
+  let conditionIndex = ind;
+  console.log("condition id = " + ind);
+  let prevalenceValue = conditions[conditionIndex].prevalenceValue;
   let currentLikelihoodRatio = 1;
-  for (let i in conditions[index].statisticsParameteresRelated) {
-    currentLikelihoodRatio =
-      currentLikelihoodRatio * statistics[i].currentLikelihoodRatio;
+  let parameters = conditions[conditionIndex].statisticsParameteresRelated;
+  for (let i = 0; i < parameters.length; i++) {
+    let statisticsLikelihoodRatio =
+      statistics[parameters[i]].currentLikelihoodRatio;
+    currentLikelihoodRatio = currentLikelihoodRatio * statisticsLikelihoodRatio;
   }
   let currentRatio = prevalenceValue / (100 - prevalenceValue);
   let posteriorRatio = currentRatio * currentLikelihoodRatio;
   let posteriorDistribution = (100 / (1 + posteriorRatio)) * posteriorRatio;
-  conditions[index].posteriorDistribution = posteriorDistribution;
+  conditions[conditionIndex].posteriorDistribution = posteriorDistribution;
   try {
     if (posteriorDistribution < 1)
-      document.getElementById("prevalenceResult_" + index).innerHTML =
+      document.getElementById("prevalenceResult_" + conditionIndex).innerHTML =
         scientificNumber(posteriorDistribution) + "%";
     else
-      document.getElementById("prevalenceResult_" + index).innerHTML =
+      document.getElementById("prevalenceResult_" + conditionIndex).innerHTML =
         posteriorDistribution.toFixed(2) + "%";
   } catch {}
 }
+
 function conditionMaker(conditionIndex) {
   let parameters = conditions[conditionIndex].statisticsParameteresRelated;
   let oneWereMet = 0;
-  for (let parameter in parameters) {
-    if (statisticsMaker(parameter)) oneWereMet = 1;
+  for (let index = 0; index < parameters.length; index++) {
+    if (statisticsMaker(parameters[index])) oneWereMet = 1;
   }
-  if (oneWereMet == 1) patient[0].conditions[conditionIndex] = 1;
-  else patient[0].conditions[conditionIndex] = 0;
+  if (oneWereMet == 1) {
+    patient[0].conditions[conditionIndex] = 1;
+  } else {
+    patient[0].conditions[conditionIndex] = 0;
+  }
 }
 
-function statisticsMaker(labItemIndex) {
+function statisticsMaker(parameterIndex) {
   let value = 0;
-  let statisticsItem = statistics[labItemIndex];
-  let mydataItem = labItems[1]; //just to define as object
+  let statisticsItem = statistics[parameterIndex];
+  let enteredStatus;
+  let mydataItem = {};
   if (statisticsItem.myDataIndex >= 0) {
     mydataItem = labItems[statisticsItem.myDataIndex];
+    enteredStatus = mydataItem.entered;
   } else {
     mydataItem = measurements[statisticsItem.myDataIndex * -1];
+    enteredStatus = mydataItem.used;
+    if (enteredStatus) {
+      enteredStatus = 1;
+    } else {
+      enteredStatus = 0;
+    }
   }
   value = mydataItem.value;
-  if (value > 0) {
-    patient[0].statistics[0][labItemIndex] = statisticsCalc(labItemIndex);
-    patient[0].statistics[1][labItemIndex] = statistics[labItemIndex].color;
+  if (enteredStatus == 1) {
+    patient[0].statistics[0][parameterIndex] = statisticsCalc(parameterIndex);
+    patient[0].statistics[1][parameterIndex] = statistics[parameterIndex].color;
     return 1;
   } else {
-    statistics[labItemIndex].currentLikelihoodRatio = 1;
-    delete patient[0].statistics[0][labItemIndex];
-    delete patient[0].statistics[1][labItemIndex];
+    statistics[parameterIndex].currentLikelihoodRatio = 1;
+    delete patient[0].statistics[0][parameterIndex];
+    delete patient[0].statistics[1][parameterIndex];
     return 0;
   }
 }
 
 function statisticsCalc(labItemIndex) {
   let labItem = statistics[labItemIndex];
-  let mydataItem = labItems[1]; //just to define as object
+  let mydataItem = {};
   if (labItem.myDataIndex >= 0) {
     mydataItem = labItems[labItem.myDataIndex];
   } else {
@@ -72,84 +89,110 @@ function statisticsCalc(labItemIndex) {
   if (mydataItem.value <= 0) return 0;
   if (labItem.lessIsBad) {
     for (let i = cutoffsLength - 1; i >= 0; i--) {
-      if (mydataItem.value < labItem.cutoffs[i]) {
+      if (Number(mydataItem.value) < Number(labItem.cutoffs[i])) {
         currentLikelihoodRatio = likelihoodPositive(i, labItemIndex).toFixed(1);
         message =
           labItem.labItemName +
           " < " +
-          labItem.cutoffs[i] +
+          labItem.cutoffs[0] +
           " &#8594 chance of " +
-          labItem.conditionName +
-          " is " +
-          currentLikelihoodRatio +
-          " times higher now";
-        statistics[labItemIndex].currentLikelihoodRatio = currentLikelihoodRatio;
+          labItem.conditionName;
+        if (currentLikelihoodRatio == 0) {
+          message += " is zero";
+        } else if (currentLikelihoodRatio == 1) {
+          message += " doesn't change";
+        } else {
+          message +=
+            " is " +
+            scientificNumber(currentLikelihoodRatio) +
+            " times lower now";
+        }
+        statistics[labItemIndex].currentLikelihoodRatio =
+          currentLikelihoodRatio;
         statistics[labItemIndex].currentCutoffIndex = i;
-        posteriorCalc(labItemIndex);
+        posteriorCalc(statistics[labItemIndex].conditionIndex);
         return message;
       }
     }
     currentLikelihoodRatio = likelihoodNegative(0, labItemIndex);
     message =
       labItem.labItemName +
-      " > " +
+      " &ge; " +
       labItem.cutoffs[0] +
       " &#8594 chance of " +
-      labItem.conditionName +
-      " is " +
-      scientificNumber(currentLikelihoodRatio) +
-      " times lower now";
+      labItem.conditionName;
+    if (currentLikelihoodRatio == 0) {
+      message += " is zero";
+    } else if (currentLikelihoodRatio == 1) {
+      message += " doesn't change";
+    } else {
+      message +=
+        " is " + scientificNumber(currentLikelihoodRatio) + " times lower now";
+    }
   }
   if (!labItem.lessIsBad) {
     for (let i = cutoffsLength - 1; i >= 0; i--) {
-      if (mydataItem.value > labItem.cutoffs[i]) {
+      if (Number(mydataItem.value) > Number(labItem.cutoffs[i])) {
         currentLikelihoodRatio = likelihoodPositive(i, labItemIndex).toFixed(1);
         message =
           labItem.labItemName +
           " > " +
-          labItem.cutoffs[i] +
+          labItem.cutoffs[0] +
           " &#8594 chance of " +
-          labItem.conditionName +
-          " is " +
-          currentLikelihoodRatio +
-          " times higher now";
-        statistics[labItemIndex].currentLikelihoodRatio = currentLikelihoodRatio;
+          labItem.conditionName;
+        if (currentLikelihoodRatio == 0) {
+          message += " is zero";
+        } else if (currentLikelihoodRatio == 1) {
+          message += " doesn't change";
+        } else {
+          message +=
+            " is " +
+            scientificNumber(currentLikelihoodRatio) +
+            " times higher now";
+        }
+        statistics[labItemIndex].currentLikelihoodRatio =
+          currentLikelihoodRatio;
         statistics[labItemIndex].currentCutoffIndex = i;
-        posteriorCalc(labItemIndex);
+        posteriorCalc(statistics[labItemIndex].conditionIndex);
         return message;
       }
     }
     currentLikelihoodRatio = likelihoodNegative(0, labItemIndex);
     message =
       labItem.labItemName +
-      " < " +
+      " &le; " +
       labItem.cutoffs[0] +
       " &#8594 chance of " +
-      labItem.conditionName +
-      " is " +
-      scientificNumber(currentLikelihoodRatio) +
-      " times lower now";
+      labItem.conditionName;
+    if ((currentLikelihoodRatio == 0)) {
+      message += " is zero";
+    } else if ((currentLikelihoodRatio == 1)) {
+      message += " doesn't change";
+    } else {
+      message +=
+        " is " + scientificNumber(currentLikelihoodRatio) + " times lower now";
+    }
   }
   statistics[labItemIndex].currentLikelihoodRatio = currentLikelihoodRatio;
   statistics[labItemIndex].currentCutoffIndex = 0;
-  posteriorCalc(labItemIndex);
+  posteriorCalc(statistics[labItemIndex].conditionIndex);
   return message;
 }
 
 function calculateMean(values) {
-  const mean = (values.reduce((sum, current) => sum + current)) / values.length;
+  const mean = values.reduce((sum, current) => sum + current) / values.length;
   return mean;
-};
+}
 
 function calculateSD(values) {
   const average = calculateMean(values);
   const squareDiffs = values.map((value) => {
-      const diff = value - average;
-      return diff * diff;
+    const diff = value - average;
+    return diff * diff;
   });
   const variance = calculateMean(squareDiffs);
   return Math.sqrt(variance);
-};
+}
 
 function likelihoodNegative(cutoffIndex, labItemIndex) {
   let sens = statistics[labItemIndex].sensitivities[cutoffIndex];

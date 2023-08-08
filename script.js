@@ -25,6 +25,7 @@ var selectedAgeGroup = "adult";
 var pregnancySituation = 0; //0 for not pregnant
 var lastPregnancySituation = 0;
 var globalVolumeStatus = 0; //-1 hypo , +1 hyper , 0 euvolumic
+var globalSmokingStatus = 0; //-1 former, +1 smoker, 0 never
 var selectedTabId = "test_types_cbc";
 var selectedLabType = "cbc";
 var lowIcon = "https://cdn-icons-png.flaticon.com/128/8532/8532500.png";
@@ -96,19 +97,23 @@ function burgerMenu() {
 }
 
 function summaryMaker() {
-  let genderString = ["Male" , "Female"];
-  let pregnancyString = ["", "Pregnant ", "Pregnant ","Pregnant "];
+  let genderString = ["Male", "Female"];
+  let pregnancyString = ["", "Pregnant ", "Pregnant ", "Pregnant "];
   let ageTextbox = document.getElementById("age");
   let ageUnitSelected = document.getElementById("age_unit");
   let ageNumber = ageTextbox.value;
   let ageUnit = ageUnitSelected.value;
   let ageUnitString = "";
-  if (ageUnit == "day") ageUnitString= "day";
-  if (ageUnit == "mon") ageUnitString= "month";
-  if (ageUnit == "year") ageUnitString= "year";
+  if (ageUnit == "day") ageUnitString = "day";
+  if (ageUnit == "mon") ageUnitString = "month";
+  if (ageUnit == "year") ageUnitString = "year";
   let ageString = ageNumber + " " + ageUnitString;
-  if (Number(ageNumber)>1) ageString += "s";
-  let summary = ageString + " " + pregnancyString[pregnancySituation] + genderString[genderCoef/2];
+  if (Number(ageNumber) > 1) ageString += "s";
+  ageString += " old ";
+  let summary =
+    ageString +
+    pregnancyString[pregnancySituation] +
+    genderString[genderCoef / 2];
   document.getElementById("patientSummary").innerHTML = summary;
 }
 
@@ -118,7 +123,7 @@ function expandInfo() {
   if (more_button.innerHTML == "change") {
     more_button.innerHTML = "hide";
     info.style.display = "grid";
-    if(window.innerWidth<800) {
+    if (window.innerWidth < 800) {
       info.style.gridTemplateColumns = "auto auto";
     } else {
       info.style.gridTemplateColumns = "auto auto auto auto";
@@ -141,7 +146,7 @@ function gender() {
     document.getElementById("gen_logo").src = femalelogo;
     document.getElementById("gen_logo").alt = "female";
     genderCoef = 2;
-    if (ageNumber > 12 && ageUnit=="year") {
+    if (ageNumber > 12 && ageUnit == "year") {
       pregnancySituation = lastPregnancySituation;
       document.getElementById("preg").disabled = false;
     }
@@ -232,7 +237,6 @@ function ageCalc() {
   }
   if (ageUnit == "year") {
     if (ageNumber < 1) {
-      
       ageNumber = 1;
     }
     if (ageNumber > 139) {
@@ -240,13 +244,13 @@ function ageCalc() {
       ageNumber = 139;
     }
     globalAgeYears = ageNumber;
-    if (ageNumber<12) {
+    if (ageNumber < 12) {
       lastPregnancySituation = pregnancySituation;
       pregnancySituation = 0;
       document.getElementById("preg").disabled = true;
-    } else if(genderCoef==2){
+    } else if (genderCoef == 2) {
       document.getElementById("preg").disabled = false;
-    } 
+    }
     if (ageNumber < 2) {
       selectedAgeGroupIndex = 5;
       globalAgeMonths = 12;
@@ -430,9 +434,25 @@ function heightCalc() {
 
 function volume() {
   let volumeStatus = document.getElementById("volume").value;
-  if (volumeStatus == "euvolumic") globalVolumeStatus= 0;
-  if (volumeStatus == "hypovolumic") globalVolumeStatus= -1;
-  if (volumeStatus == "hypervolumic") globalVolumeStatus= 1;
+  if (volumeStatus == "euvolumic") {
+    globalVolumeStatus = 0;
+    measurements[24].value = 0;
+  }
+  if (volumeStatus == "hypovolumic") {
+    globalVolumeStatus = -1;
+    measurements[24].value = -1;
+  }
+  if (volumeStatus == "hypervolumic") {
+    globalVolumeStatus = 1;
+    measurements[24].value = 1;
+  }
+  ageCalc();
+}
+function smoke() {
+  let smokeStatus = document.getElementById("smoke").value;
+  if (smokeStatus == "never") globalSmokingStatus = 0;
+  if (smokeStatus == "smoker") globalSmokingStatus = 1;
+  if (smokeStatus == "former") globalSmokingStatus = -1;
   ageCalc();
 }
 function bmiCalc() {
@@ -471,13 +491,6 @@ function tooltipRemove() {
   tootltip_text.innerHTML = "";
 }
 
-function prevalenceChange() {
-  let x = Number(this.value);
-  let index = this.id.slice(11);
-  conditions[index].prevalenceValue = x;
-  posteriorCalc(index);
-}
-
 function showPath() {
   id = this.id.slice(4);
   if (document.getElementById(this.id).innerHTML == " + ") {
@@ -505,8 +518,10 @@ function idMaker(i, name) {
   labItems[i].output_id = "out_" + name.toString();
 }
 
-function scientificNumber(number) {
+function scientificNumber(numberString) {
   const numInSciNot = {};
+  let number = Number(numberString);
+  if (number == 0) return "0";
   [numInSciNot.coefficient, numInSciNot.exponent] = number
     .toExponential()
     .split("e")

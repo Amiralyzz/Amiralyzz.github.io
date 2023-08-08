@@ -533,7 +533,6 @@ function ironProfile() {
   //returns 0 = no assessment, 1 = IDA , 11 = IronStoreDeficiency , 111= IronDeficientEryPoes
   //        2 = ACD , 3 = Thal , 4 = others , 5 = maybe mcv is wrong , 6 = no crp , false = no def
   //        12 = 1 + 2
-  statisticsMaker(0);
   conditionMaker(0);
   if (p_fe <= 0) return 0; //we cant assess iron profile without ferritin
   if (p_fe < labItems[41].min) {
@@ -838,7 +837,6 @@ function anemiaType() {
 
   //anemia algorithm based on RPI and MCV
   let path = "";
-  statisticsMaker(1);
   conditionMaker(0);
   if (Hb <= 0) {
     //we need to check this in the function calling this function -
@@ -1073,6 +1071,25 @@ function lftPattern(liverPanel) {
   return [pattern, path];
 }
 
+function sodiumMain() {
+  let na = Number(labItems[32].value);
+  let naMin = Number(labItems[32].min);
+  let naMax = Number(labItems[32].max);
+  let enteredStatus = labItems[32].entered;
+  if (enteredStatus == 1) {
+    if (na < naMin) {
+      conditionMaker(1);
+      hyponatremia(na, naMin);
+    }
+  }
+}
+
+function hyponatremia(na, naMin) {
+  
+  
+}
+
+
 function percentileFinder(input, min, max) {
   min = Number(min);
   max = Number(max);
@@ -1096,6 +1113,7 @@ function engineMain() {
   wbcCount();
   folateAndB12();
   isPancytopenia();
+  sodiumMain();
   // iron_profile();
   if (isAnemia()) {
     let resultArray = testEngine(0);

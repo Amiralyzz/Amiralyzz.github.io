@@ -116,16 +116,19 @@ function analyseTab() {
           if (value > max) {
             highOrLowIcon = highIcon;
           } else if (measurements[i].min == "") {
-              highOrLowIcon = normalIcon;
-          } else if (value < min){
+            highOrLowIcon = normalIcon;
+          } else if (value < min) {
             highOrLowIcon = lowIcon;
           } else {
             highOrLowIcon = normalIcon;
           }
         }
-    
+
         if (highOrLowIcon != "") {
-          measurements_section.innerHTML += "<img src=" + highOrLowIcon + "  class='referenceIcon'  alt='measure'/>";
+          measurements_section.innerHTML +=
+            "<img src=" +
+            highOrLowIcon +
+            "  class='referenceIcon'  alt='measure'/>";
         }
         measurements_parent.appendChild(measurements_section);
         measurements_section.style.backgroundColor = measurements[i].color;
@@ -223,12 +226,13 @@ function analyseTab() {
         "probability of " + conditions[i].name + " is now: ";
       var prevalenceResult = document.createElement("div");
       prevalenceResult.className = "prevalenceResult";
-      if (conditions[i].posteriorDistribution < 1)
+      if (conditions[i].posteriorDistribution < 1) {
         prevalenceResult.innerHTML =
           scientificNumber(conditions[i].posteriorDistribution) + "%";
-      else
+      } else {
         prevalenceResult.innerHTML =
           conditions[i].posteriorDistribution.toFixed(2) + "%";
+      }
       prevalenceResult.id = "prevalenceResult_" + i;
       prevalenceParent.appendChild(prevalenceResult);
     }
@@ -423,7 +427,7 @@ function limitCollapse() {
   entry.max = Number(maxElement.value);
   let entryInput = Number(document.getElementById(entry.input_id).value);
   if (entry.entered != 0) {
-    checkRanges(entryInput, entry.input_id,true);
+    checkRanges(entryInput, entry.input_id, true);
   }
   entryParent.firstElementChild.replaceWith(labelParentMaker(entry));
 }
