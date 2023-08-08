@@ -1171,7 +1171,7 @@ function engineMain() {
     let resultArray = testEngine(0);
     try {
       signMaker(
-        listMaker([...resultArray[0]].map((x) => x.value)),
+        listMaker([...resultArray[0]].map((x) => x.value), "Anemia"),
         resultArray[1], //path
         10,
         "rgb(102, 30, 52)"
@@ -1190,7 +1190,7 @@ function engineMain() {
     let resultArray = testEngine(1);
     try {
       signMaker(
-        listMaker([...resultArray[0]].map((x) => x.value)),
+        listMaker([...resultArray[0]].map((x) => x.value), "Hyponatremia"),
         resultArray[1], //path
         44,
         "rgb(128, 70, 32)"
@@ -1207,11 +1207,11 @@ function engineMain() {
   }
 }
 
-function listMaker(array) {
+function listMaker(array,condition) {
   if (array[0] == undefined) {
     return [undefined, ""];
   }
-  let mainString = "Possible explanations include: <br><ul>";
+  let mainString = "Possible explanations for "+ condition+" <br><ul>";
   for (let i = 0; i < array.length; i++) {
     mainString += "<li>" + array[i] + "</li>";
   }
