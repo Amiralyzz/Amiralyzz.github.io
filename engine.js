@@ -1082,7 +1082,7 @@ function sodiumMain() {
   }
 }
 
-function hyponatremia() {
+function isHyponatremia() {
   patient[0].signs[3][45] = 0;
   let na = measurements[25].value;
   let naMin = Number(labItems[32].min);
@@ -1186,7 +1186,7 @@ function engineMain() {
     delete patient[0].signs[1][10];
     delete patient[0].signs[2][10];
   }
-  if (hyponatremia()) {
+  if (isHyponatremia()) {
     let resultArray = testEngine(1);
     try {
       signMaker(
