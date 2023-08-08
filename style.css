@@ -28,6 +28,13 @@
   #show_tab {
     display: none;
   }
+  .id_tab {
+    margin: 0px 5px;
+    padding: 5px;
+  }
+  select {
+    font-size: 20px;
+  }
   .patientSummary {
     font-size: 1.6rem;
     font-family: "Abel", sans-serif;
@@ -73,7 +80,9 @@
     gap: 5px;
     grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
   }
-
+  select {
+    font-size: 17px;
+  }
   .burger {
     background-color: rgba(0, 0, 0, 1);
     display: block;
@@ -136,7 +145,12 @@
     display: none;
   }
   #tab_analyse .tab_label {
-    padding-left: 5px;
+    /* padding-left: 5px; */
+    display: none;
+  }
+  .id_tab {
+    margin: none;
+    padding: none;
   }
   .expand_info {
     display: flex;
@@ -155,9 +169,7 @@
   }
 
 
-  #analyse_logo {
-    display: none;
-  }
+
   #top {
     color: rgb(156, 156, 156);
     text-align: left;
@@ -317,6 +329,14 @@ h1 {
 
 
 #gen_a_w_h {
+  box-shadow: rgba(0, 0, 0, 0.17) 0px -23px 25px 0px inset,
+    rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset,
+    rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px,
+    rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px,
+    rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;
+  border-radius: 20px;
+  margin: 20px;
+  padding: 5px 0px;
   display: none;
   box-sizing: border-box;
   position: relative;
@@ -327,7 +347,7 @@ h1 {
   justify-content: space-evenly;
   vertical-align: middle;
   flex-wrap: wrap;
-  /* background-color: rgb(38, 3, 58); */
+  background-color: rgb(38, 3, 58);
 }
 #patient_info_parent {
   box-shadow: rgba(0, 0, 0, 0.17) 0px -23px 25px 0px inset,
@@ -362,14 +382,11 @@ h1 {
   vertical-align: middle;
   flex-wrap: nowrap;
   flex-direction: column;
-  font-size: 20px;
   align-items: center;
   /* -webkit-backdrop-filter: brightness(105%);
   backdrop-filter: brightness(105%);
   filter: brightness(105%); */
   border-radius: 10px;
-  margin: 0px 5px;
-  padding: 5px;
   height: 72px;
 }
 .input_id {
@@ -378,9 +395,9 @@ h1 {
   text-align: center;
   color: white;
   position: relative;
-  width: 60px;
-  padding: 5px;
-  font-size: 20px;
+  width: 55px;
+  padding: 0px 1px;
+  font-size: 18px;
   background-color: rgb(38, 3, 58);
   border: none;
   font-family: "Abel", sans-serif;
@@ -829,7 +846,6 @@ h1 {
 }
 
 select {
-  font-size: 20px;
   background-color: transparent;
   color: white;
   border: transparent;

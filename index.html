@@ -49,154 +49,155 @@
             change
           </div>
         </div>
-        <div id="gen_a_w_h">
-          <div id="sex_id" class="id_tab">
-            <label for="gender" class="idLabels">Gender</label>
+        
+      </div>
+      <div id="gen_a_w_h">
+        <div id="sex_id" class="id_tab">
+          <label for="gender" class="idLabels">Gender</label>
+          <select
+            title="gender"
+            name="gender"
+            id="gender"
+            onchange="gender()"
+          >
+            <option value="male" selected>Male</option>
+            <option value="female">Female</option>
+          </select>
+        </div>
+        <div id="preg_id" class="id_tab">
+          <label for="preg" class="idLabels">Pregnancy</label>
+          <select
+            title="preg"
+            name="preg"
+            id="preg"
+            disabled="true"
+            oninput="pregnancy()"
+          >
+            <option value="notPregnant" selected>Not pregnant</option>
+            <option value="firstTrimester">First trimester</option>
+            <option value="secondTrimester">Second trimester</option>
+            <option value="thirdTrimester">Third trimester</option>
+          </select>
+        </div>
+        <div class="id_tab" id="age_id">
+          <label for="age" class="idLabels">Age</label>
+          <div
+            style="flex-wrap: nowrap; display: flex; justify-content: center"
+          >
+            <input
+              type="number"
+              name="age"
+              id="age"
+              min="0"
+              class="input_id"
+              value="40"
+              onkeyup="ageCalc()"
+              onchange="ageCalc()"
+            />
             <select
-              title="gender"
-              name="gender"
-              id="gender"
-              onchange="gender()"
+              title="age_unit"
+              name="age_unit"
+              id="age_unit"
+              onchange="ageCalc()"
             >
-              <option value="male" selected>Male</option>
-              <option value="female">Female</option>
+              <option value="day">Days</option>
+              <option value="mon">Months</option>
+              <option value="year" selected>Years</option>
             </select>
           </div>
-          <div id="preg_id" class="id_tab">
-            <label for="preg" class="idLabels">Pregnancy</label>
+        </div>
+        <div class="id_tab" id="weight_id">
+          <label for="weight" class="idLabels">Weight</label>
+          <div
+            style="flex-wrap: nowrap; display: flex; justify-content: center"
+          >
+            <input
+              type="number"
+              name="weight"
+              id="weight"
+              min="0"
+              step="0.1"
+              class="input_id"
+              value="70"
+              onkeyup="weightCalc()"
+              onchange="weightCalc()"
+            />
             <select
-              title="preg"
-              name="preg"
-              id="preg"
-              disabled="true"
-              oninput="pregnancy()"
+              title="weight_unit"
+              name="weight_unit"
+              id="weight_unit"
+              onchange="weightCalc()"
             >
-              <option value="notPregnant" selected>Not pregnant</option>
-              <option value="firstTrimester">First trimester</option>
-              <option value="secondTrimester">Second trimester</option>
-              <option value="thirdTrimester">Third trimester</option>
+              <option value="kg" selected>Kg</option>
+              <option value="gr">gram</option>
+              <option value="lb">lb</option>
             </select>
           </div>
-          <div class="id_tab" id="age_id">
-            <label for="age" class="idLabels">Age</label>
-            <div
-              style="flex-wrap: nowrap; display: flex; justify-content: center"
-            >
-              <input
-                type="number"
-                name="age"
-                id="age"
-                min="0"
-                class="input_id"
-                value="40"
-                onkeyup="ageCalc()"
-                onchange="ageCalc()"
-              />
-              <select
-                title="age_unit"
-                name="age_unit"
-                id="age_unit"
-                onchange="ageCalc()"
-              >
-                <option value="day">Days</option>
-                <option value="mon">Months</option>
-                <option value="year" selected>Years</option>
-              </select>
-            </div>
-          </div>
-          <div class="id_tab" id="weight_id">
-            <label for="weight" class="idLabels">Weight</label>
-            <div
-              style="flex-wrap: nowrap; display: flex; justify-content: center"
-            >
-              <input
-                type="number"
-                name="weight"
-                id="weight"
-                min="0"
-                step="0.1"
-                class="input_id"
-                value="70"
-                onkeyup="weightCalc()"
-                onchange="weightCalc()"
-              />
-              <select
-                title="weight_unit"
-                name="weight_unit"
-                id="weight_unit"
-                onchange="weightCalc()"
-              >
-                <option value="kg" selected>Kg</option>
-                <option value="gr">gram</option>
-                <option value="lb">lb</option>
-              </select>
-            </div>
-          </div>
-          <div class="id_tab" id="height_id">
-            <label for="height" class="idLabels">Height</label>
-            <div
-              style="flex-wrap: nowrap; display: flex; justify-content: center"
-            >
-              <input
-                type="number"
-                name="height"
-                id="height"
-                min="0"
-                step="0.1"
-                class="input_id"
-                value="170"
-                onkeyup="heightCalc()"
-                onchange="heightCalc()"
-              />
-              <select
-                title="height_unit"
-                name="height_unit"
-                id="height_unit"
-                onchange="heightCalc()"
-              >
-                <option value="cm" selected>cm</option>
-                <option value="ft">ft</option>
-              </select>
-            </div>
-          </div>
-          <div id="volume_id" class="id_tab">
-            <label for="volume" class="idLabels">Volume</label>
+        </div>
+        <div class="id_tab" id="height_id">
+          <label for="height" class="idLabels">Height</label>
+          <div
+            style="flex-wrap: nowrap; display: flex; justify-content: center"
+          >
+            <input
+              type="number"
+              name="height"
+              id="height"
+              min="0"
+              step="0.1"
+              class="input_id"
+              value="170"
+              onkeyup="heightCalc()"
+              onchange="heightCalc()"
+            />
             <select
-              title="volume"
-              name="volume"
-              id="volume"
-              onchange="volume()"
+              title="height_unit"
+              name="height_unit"
+              id="height_unit"
+              onchange="heightCalc()"
             >
-              <option value="euvolumic" selected>Euvolumic</option>
-              <option value="hypovolumic">Hypovolumic</option>
-              <option value="hypervolumic">Hypervolumic</option>
+              <option value="cm" selected>cm</option>
+              <option value="ft">ft</option>
             </select>
           </div>
-          <div id="smoke_id" class="id_tab">
-            <label for="smoke" class="idLabels">Smoking</label>
-            <select
-              title="smoke"
-              name="smoke"
-              id="smoke"
-              onchange="smoke()"
-            >
-              <option value="never" selected>Never</option>
-              <option value="smoker">Smoker</option>
-              <option value="former">Former</option>
-            </select>
-          </div>
-          <div id="diuretic_id" class="id_tab">
-            <label for="diuretic" class="idLabels">Diuretics</label>
-            <select
-              title="diuretic"
-              name="diuretic"
-              id="diuretic"
-              onchange="diuretic()"
-            >
-              <option value="no" selected>No</option>
-              <option value="yes">Yes</option>
-            </select>
-          </div>
+        </div>
+        <div id="volume_id" class="id_tab">
+          <label for="volume" class="idLabels">Volume</label>
+          <select
+            title="volume"
+            name="volume"
+            id="volume"
+            onchange="volume()"
+          >
+            <option value="euvolumic" selected>Euvolumic</option>
+            <option value="hypovolumic">Hypovolumic</option>
+            <option value="hypervolumic">Hypervolumic</option>
+          </select>
+        </div>
+        <div id="smoke_id" class="id_tab">
+          <label for="smoke" class="idLabels">Smoking</label>
+          <select
+            title="smoke"
+            name="smoke"
+            id="smoke"
+            onchange="smoke()"
+          >
+            <option value="never" selected>Never</option>
+            <option value="smoker">Smoker</option>
+            <option value="former">Former</option>
+          </select>
+        </div>
+        <div id="diuretic_id" class="id_tab">
+          <label for="diuretic" class="idLabels">Diuretics</label>
+          <select
+            title="diuretic"
+            name="diuretic"
+            id="diuretic"
+            onchange="diuretic()"
+          >
+            <option value="no" selected>No</option>
+            <option value="yes">Yes</option>
+          </select>
         </div>
       </div>
       <div class="tooltip_parent" id="tooltip">Select a tab</div>
