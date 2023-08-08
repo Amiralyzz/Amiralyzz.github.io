@@ -70,10 +70,9 @@ function minIsNotBiggerThanMax(x, id) {
 
 function checkRanges(value, id, enteredStatus) {
   let labData = JSON.stringify(labItems);
-      if (labData != "" && labData != null) {
-        setCookie("labData", labData, 365);
-        console.log("set");
-      }
+  if (labData != "" && labData != null) {
+    writeData(labData);
+  }
   var currentLabItem = labItems.find((o) => o.input_id === id.toString());
   minIsNotBiggerThanMax(value, id);
   if (!enteredStatus) {
