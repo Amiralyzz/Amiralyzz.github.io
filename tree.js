@@ -532,6 +532,121 @@ let algorithms = [
       "measurementsIndex": "",
       "signsIndex": ""
     }
+  ],
+  // [2] = hypernatremia
+  [
+    {
+      "key": "1",
+      "value": "Corrected Na high",
+      "parent": "",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": "46"
+    },
+    {
+      "key": "11",
+      "value": "ECF volume increased",
+      "parent": "1",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "110",
+      "value": "Administration of Hypertonic Na",
+      "parent": "11",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "10",
+      "value": "ECF volume not increased",
+      "parent": "1",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": "48"
+    },
+    {
+      "key": "101",
+      "value": "Urine volume < 500 and Urine Osmolarity > 800",
+      "parent": "10",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "1010",
+      "value": "Insensible water loss",
+      "parent": "101",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "1011",
+      "value": "GI water loss",
+      "parent": "101",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "1012",
+      "value": "Remote renal water loss",
+      "parent": "101",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "100",
+      "value": "Urine not minimal volume while maximal concentration",
+      "parent": "10",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": "49"
+    },
+    {
+      "key": "1001",
+      "value": "Urine osmolarity > 750",
+      "parent": "100",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": "42"
+    },
+    {
+      "key": "10010",
+      "value": "Osmotic Diuresis",
+      "parent": "1001",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "10011",
+      "value": "Diuretics",
+      "parent": "1001",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "1000",
+      "value": "Urine osmolarity &le; 750",
+      "parent": "100",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "10000",
+      "value": "Diabetes Insipidus (central or nephrogenic)",
+      "parent": "1000",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    }
   ]
 ];
 class TreeNode {

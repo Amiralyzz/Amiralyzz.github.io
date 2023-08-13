@@ -94,7 +94,7 @@ function statisticsCalc(labItemIndex) {
         message =
           labItem.labItemName +
           " < " +
-          labItem.cutoffs[0] +
+          labItem.cutoffs[i] +
           " &#8594 chance of " +
           labItem.conditionName;
         if (currentLikelihoodRatio == 0) {
@@ -137,7 +137,7 @@ function statisticsCalc(labItemIndex) {
         message =
           labItem.labItemName +
           " > " +
-          labItem.cutoffs[0] +
+          labItem.cutoffs[i] +
           " &#8594 chance of " +
           labItem.conditionName;
         if (currentLikelihoodRatio == 0) {

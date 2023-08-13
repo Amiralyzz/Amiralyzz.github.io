@@ -116,6 +116,7 @@ function summaryMaker() {
     pregnancyString[pregnancySituation] +
     genderString[genderCoef / 2];
   document.getElementById("patientSummary").innerHTML = summary;
+  patient[0].signs[3][45] = 0;
 }
 
 function expandInfo() {
@@ -306,7 +307,7 @@ function ageCalc() {
       }
     }
   }
-  
+  refresh();
 }
 
 function refresh() {
@@ -323,7 +324,6 @@ function refresh() {
 }
 function rangeMaker(key) {
   patient[0].signs[4][42] = "Diuretic use";
-  patient[0].signs[3][42] = 0;
   let pregKey = "";
   if (pregnancySituation == 1) {
     pregKey = "firstTrim";
@@ -441,17 +441,21 @@ function heightCalc() {
 function volume() {
   let volumeStatus = document.getElementById("volume").value;
   patient[0].signs[4][45] = "Volume status";
+  patient[0].signs[4][46] = "hypervolume or not";
   if (volumeStatus == "euvolumic") {
     globalVolumeStatus = 0;
     patient[0].signs[3][45] = 0;
+    patient[0].signs[3][46] = 0;
   }
   if (volumeStatus == "hypovolumic") {
     globalVolumeStatus = -1;
     patient[0].signs[3][45] = -1;
+    patient[0].signs[3][46] = 0;
   }
   if (volumeStatus == "hypervolumic") {
     globalVolumeStatus = 1;
     patient[0].signs[3][45] = 1;
+    patient[0].signs[3][46] = 1;
   }
   refresh();
 }
@@ -474,6 +478,12 @@ function diuretic() {
     patient[0].signs[3][42] = 1;
   }
   refresh();
+}
+
+function startup() {
+  patient[0].signs[3][42] = 0; //diuretic
+  patient[0].signs[3][45] = 0; //volume
+  patient[0].signs[3][46] = 0; //volume
 }
 function bmiCalc() {
   let bmi = 0;
