@@ -367,53 +367,53 @@ function rangeMaker(key) {
 }
 
 function weightCalc() {
-  var weight_txtbox = document.getElementById("weight");
-  var weight_select = document.getElementById("weight_unit");
-  var inp = Number(weight_txtbox.value);
-  var weight_unit = weight_select.value;
-  if (inp < 0) {
-    weight_txtbox.value = 0;
-    inp = 0;
+  var weightTextbox = document.getElementById("weight");
+  var weightUnitSelect = document.getElementById("weight_unit");
+  var weight = Number(weightTextbox.value);
+  var weightUnit = weightUnitSelect.value;
+  if (weight < 0) {
+    weightTextbox.value = 0;
+    weight = 0;
   }
-  if (weight_unit == "kg") {
-    if (inp > 500) {
-      weight_txtbox.value = 500;
-      inp = 500;
+  if (weightUnit == "kg") {
+    if (weight > 500) {
+      weightTextbox.value = 500;
+      weight = 500;
     }
-    gloalWeightGram = inp * 1000;
+    gloalWeightGram = weight * 1000;
   }
-  if (weight_unit == "gr") {
-    if (inp > 10000) {
-      weight_txtbox.value = 10000;
-      inp = 10000;
+  if (weightUnit == "gr") {
+    if (weight > 10000) {
+      weightTextbox.value = 10000;
+      weight = 10000;
     }
-    gloalWeightGram = inp;
+    gloalWeightGram = weight;
   }
-  if (weight_unit == "lb") {
-    if (inp > 1000) {
-      weight_txtbox.value = 1000;
-      inp = 1000;
+  if (weightUnit == "lb") {
+    if (weight > 1000) {
+      weightTextbox.value = 1000;
+      weight = 1000;
     }
-    gloalWeightGram = inp * 453.592;
+    gloalWeightGram = weight * 453.592;
   }
   tabContent(selectedTabId, selectedLabType);
 }
 
 function heightCalc() {
   var heightTextbox = document.getElementById("height");
-  var height_select = document.getElementById("height_unit");
-  var inp = Number(heightTextbox.value);
-  var heightUnit = height_select.value;
-  if (inp < 0) {
+  var heightUnitSelect = document.getElementById("height_unit");
+  var height = Number(heightTextbox.value);
+  var heightUnit = heightUnitSelect.value;
+  if (height < 0) {
     heightTextbox.value = 0;
-    inp = 0;
+    height = 0;
   }
   if (heightUnit == "cm") {
-    if (inp > 270) {
+    if (height > 270) {
       heightTextbox.value = 270;
-      inp = 270;
+      height = 270;
     }
-    globalHeightCm = inp;
+    globalHeightCm = height;
   }
   if (heightUnit == "ft") {
     var feet = heightTextbox.value.slice(0, 1);
@@ -484,7 +484,9 @@ function startup() {
   patient[0].signs[3][42] = 0; //diuretic
   patient[0].signs[3][45] = 0; //volume
   patient[0].signs[3][46] = 0; //volume
+  patient[0].signs[3][141] = 0; //BP
 }
+
 function bmiCalc() {
   let bmi = 0;
   let bsa = 0;
@@ -576,6 +578,56 @@ function measurementsCalc() {
   anionGapCalc();
   oxygenCalc();
   naCalc();
+  ttkgCalc();
+  caCrCalc();
+}
+function bloodPressure() {
+  let SBPTextbox = document.getElementById("SBP");
+  let DBPTextbox = document.getElementById("DBP");
+  let SBP = Number(SBPTextbox.value);
+  let DBP = Number(DBPTextbox.value);
+  if (SBP < DBP) {
+    DBP = SBP;
+    DBPTextbox.value = SBP;
+  }
+  patient[0].signs[4][141] = "Blood Pressure";
+  patient[0].signs[3][141] = undefined;
+  if (SBP != 0 && DBP != 0) {
+    if (SBP >= 130) patient[0].signs[3][141] = 1;
+    else patient[0].signs[3][141] = 0;
+  }
+  refresh();
+}
+function caCrCalc() {
+  let urineCa = Number(labItems[83].value);
+  let urineCaEntered = Number(labItems[83].entered);
+  let urineCr = Number(labItems[84].value);
+  let urineCrEntered = Number(labItems[84].entered);
+  if (urineCaEntered + urineCrEntered  == 2) {
+    let caCrRatio = urineCa / urineCr;
+    measurements[27].value = caCrRatio.toFixed(2);
+    measurements[27].used = true;
+  } else {
+    measurements[27].used = false;
+  }
+}
+
+function ttkgCalc() {
+  let k = Number(labItems[33].value);
+  let kEntered = Number(labItems[33].entered);
+  let urineK = Number(labItems[82].value);
+  let urineKEntered = Number(labItems[82].entered);
+  let plasmaOsm = Number(labItems[85].value);
+  let plasmaOsmEntered = Number(labItems[85].entered);
+  let urineOsm = Number(labItems[86].value);
+  let urineOsmEntered = Number(labItems[86].entered);
+  if (kEntered + urineKEntered + plasmaOsmEntered + urineOsmEntered == 4) {
+    let ttkg = (urineK * plasmaOsm) / (k * urineOsm);
+    measurements[26].value = ttkg.toFixed(1);
+    measurements[26].used = true;
+  } else {
+    measurements[26].used = false;
+  }
 }
 function naCalc() {
   let na = Number(labItems[32].value);

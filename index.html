@@ -199,7 +199,36 @@
             <option value="yes">Yes</option>
           </select>
         </div>
+        <div class="id_tab" id="bloodPressure_id">
+          <label for="bloodPressure" class="idLabels">Blood Pressure</label>
+          <div
+            style="flex-wrap: nowrap; display: flex; justify-content: center"
+          >
+            <input
+              type="number"
+              name="SBP"
+              id="SBP"
+              min="0"
+              step="10"
+              class="input_id"
+              value="120"
+              onchange="bloodPressure()"
+            />
+            /
+            <input
+              type="number"
+              name="DBP"
+              id="DBP"
+              min="0"
+              step="10"
+              class="input_id"
+              value="80"
+              onchange="bloodPressure()"
+            />
+          </div>
+        </div>
       </div>
+
       <div class="tooltip_parent" id="tooltip">Select a tab</div>
       <div class="tab_parent">
         <div
@@ -283,7 +312,7 @@
             class="logo_table"
             alt="Thyroid"
           />
-          <div class="tab_label">TFT</div>
+          <div class="tab_label">End</div>
         </div>
         <div
           style="background-color: rgb(128, 70, 32)"

@@ -647,6 +647,409 @@ let algorithms = [
       "measurementsIndex": "",
       "signsIndex": ""
     }
+  ],
+  // [3] = hypokalemia
+  [
+    {
+      "key": "1",
+      "value": "K low",
+      "parent": "",
+      "labitemsIndex": "82",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "10",
+      "value": "Urine K &le; 15",
+      "parent": "1",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": "61"
+    },
+    {
+      "key": "101",
+      "value": "Metabolic Acidosis",
+      "parent": "10",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "100",
+      "value": "ABG normal",
+      "parent": "10",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "1000",
+      "value": "Profuse sweating",
+      "parent": "100",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "10-1",
+      "value": "Metabolic Alkalosis",
+      "parent": "10",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "11",
+      "value": "urine K > 15",
+      "parent": "1",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": "140"
+    },
+    {
+      "key": "110",
+      "value": "TTKG normal",
+      "parent": "11",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "1100",
+      "value": "Renal wasting",
+      "parent": "110",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "11-1",
+      "value": "TTKG < 2",
+      "parent": "11",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "11-10",
+      "value": "Osmotic diuresis",
+      "parent": "11-1",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "111",
+      "value": "TTKG > 4",
+      "parent": "11",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": "141"
+    },
+    {
+      "key": "1111",
+      "value": "High BP",
+      "parent": "111",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": "142"
+    },
+    {
+      "key": "11111",
+      "value": "Aldosterone High",
+      "parent": "1111",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": "143"
+    },
+    {
+      "key": "111111",
+      "value": "Renin High",
+      "parent": "11111",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "1111110",
+      "value": "Renal Arteris Stenosis",
+      "parent": "111111",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "1111111",
+      "value": "Renin Secreting Tumor",
+      "parent": "111111",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "1111112",
+      "value": "Malignant HTN",
+      "parent": "111111",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "111110",
+      "value": "Renin not High",
+      "parent": "11111",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "1111100",
+      "value": "Primary Aldosteronism",
+      "parent": "111110",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "1111101",
+      "value": "Familial HyperAldosteronism I",
+      "parent": "111110",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "11110",
+      "value": "Aldosterone not High",
+      "parent": "1111",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": "144"
+    },
+    {
+      "key": "111101",
+      "value": "Cortisol High",
+      "parent": "11110",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "1111010",
+      "value": "Cushing's Syndrome",
+      "parent": "111101",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "111100",
+      "value": "Cortisol not High",
+      "parent": "11110",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "1111000",
+      "value": "Liddle's Syndrome",
+      "parent": "111100",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "1111001",
+      "value": "Licorice",
+      "parent": "111100",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "1111002",
+      "value": "Syndrome of Apparent Mineralocorticoid Excess",
+      "parent": "111100",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "1110",
+      "value": "no High BP",
+      "parent": "111",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": "61"
+    },
+    {
+      "key": "11100",
+      "value": "Variable Acid Base status",
+      "parent": "1110",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "111000",
+      "value": "Non-reabsorbable Anions other than Bicarbonate",
+      "parent": "11100",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "11101",
+      "value": "Metabolic Acidosis",
+      "parent": "1110",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": "62"
+    },
+    {
+      "key": "111011",
+      "value": "high AG",
+      "parent": "11101",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "1110110",
+      "value": "DKA",
+      "parent": "111011",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "1110111",
+      "value": "Amphotericin B",
+      "parent": "111011",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "1110112",
+      "value": "Acetazolamide",
+      "parent": "111011",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "111010",
+      "value": "normal AG",
+      "parent": "11101",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "1110100",
+      "value": "Distal RTA",
+      "parent": "111010",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "1110101",
+      "value": "Proximal RTA",
+      "parent": "111010",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "1110-1",
+      "value": "Metabolic Alkalosis",
+      "parent": "1110",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": "145"
+    },
+    {
+      "key": "1110-10",
+      "value": "Urine Chloride low",
+      "parent": "1110-1",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "1110-100",
+      "value": "Vomiting",
+      "parent": "1110-10",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "1110-101",
+      "value": "Chloride Diarrhea",
+      "parent": "1110-10",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "1110-11",
+      "value": "Urine Chloride > 20",
+      "parent": "1110-1",
+      "labitemsIndex": "",
+      "measurementsIndex": "27",
+      "signsIndex": ""
+    },
+    {
+      "key": "1110-110",
+      "value": "Ca/Cr Ratio normal",
+      "parent": "1110-11",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "1110-1100",
+      "value": "Thiazide Diuretics",
+      "parent": "1110-110",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "1110-1101",
+      "value": "Gitelman's Syndrome",
+      "parent": "1110-110",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "1110-111",
+      "value": "Ca/Cr Ratio > 0.2",
+      "parent": "1110-11",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "1110-1110",
+      "value": "Loop Diuretics",
+      "parent": "1110-111",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "1110-1111",
+      "value": "Bartter's Syndrome",
+      "parent": "1110-111",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    }
   ]
 ];
 class TreeNode {
