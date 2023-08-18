@@ -117,12 +117,17 @@ function checkRanges(value, id, enteredStatus) {
       document.getElementById(currentLabItem.output_id + "_img").src = highIcon;
       document.getElementById(currentLabItem.output_id + "_img").style.display =
         "flex";
-      currentLabItem.status = timesMax + " &times; Maximum";
+      if (timesMax > 500) {
+        currentLabItem.status =  " > 500 &times; Maximum";
+      } else {
+        currentLabItem.status = timesMax + " &times; Maximum";
+      }
+      
     } catch {}
   } else if (value < currentLabItem.min) {
     let timesMin = value / currentLabItem.min;
-    if (timesMin <= 0.01) {
-      currentLabItem.status = "<0.01 &times; Minimum";
+    if (timesMin < 0.01) {
+      currentLabItem.status = " < 0.01 &times; Minimum";
     } else {
       currentLabItem.status = timesMin.toFixed(2) + " &times; Minimum";
     }
@@ -1392,6 +1397,10 @@ function dyslipidemia() {
 
 }
 
+function pbsMain() {
+  conditionMaker(2);
+  conditionMaker(3);
+}
 function percentileFinder(input, min, max) {
   min = Number(min);
   max = Number(max);
@@ -1420,6 +1429,7 @@ function engineMain() {
   sodiumMain();
   potassiumMain();
   dyslipidemia();
+  pbsMain();
   // iron_profile();
   if (isAnemia()) {
     let resultArray = testEngine(0);

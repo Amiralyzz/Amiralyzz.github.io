@@ -21,6 +21,7 @@ function posteriorCalc(ind) {
   let currentRatio = prevalenceValue / (100 - prevalenceValue);
   let posteriorRatio = currentRatio * currentLikelihoodRatio;
   let posteriorDistribution = (100 / (1 + posteriorRatio)) * posteriorRatio;
+  if (currentLikelihoodRatio == Infinity) posteriorDistribution= 100;
   conditions[conditionIndex].posteriorDistribution = posteriorDistribution;
   try {
     if (posteriorDistribution < 1)
@@ -101,6 +102,8 @@ function statisticsCalc(labItemIndex) {
           message += " is zero";
         } else if (currentLikelihoodRatio == 1) {
           message += " doesn't change";
+        } else if (currentLikelihoodRatio == Infinity) {
+          message += " is 100%";
         } else {
           message +=
             " is " +
@@ -125,6 +128,8 @@ function statisticsCalc(labItemIndex) {
       message += " is zero";
     } else if (currentLikelihoodRatio == 1) {
       message += " doesn't change";
+    } else if (currentLikelihoodRatio == Infinity) {
+      message += " is 100%";
     } else {
       message +=
         " is " + scientificNumber(currentLikelihoodRatio) + " times lower now";
@@ -144,6 +149,8 @@ function statisticsCalc(labItemIndex) {
           message += " is zero";
         } else if (currentLikelihoodRatio == 1) {
           message += " doesn't change";
+        } else if (currentLikelihoodRatio == Infinity) {
+          message += " is 100%";
         } else {
           message +=
             " is " +
@@ -168,7 +175,9 @@ function statisticsCalc(labItemIndex) {
       message += " is zero";
     } else if ((currentLikelihoodRatio == 1)) {
       message += " doesn't change";
-    } else {
+    } else if (currentLikelihoodRatio == Infinity) {
+      message += " is 100%";
+    }else {
       message +=
         " is " + scientificNumber(currentLikelihoodRatio) + " times lower now";
     }
