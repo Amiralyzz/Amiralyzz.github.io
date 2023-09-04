@@ -194,9 +194,9 @@
           </select>
         </div>
         <div class="id_tab" id="bloodPressure_id">
-          <label for="bloodPressure" class="idLabels">Blood Pressure</label>
+          <label for="SBP" class="idLabels">Blood Pressure</label>
           <div
-            style="flex-wrap: nowrap; display: flex; justify-content: center"
+            style="flex-wrap: nowrap; display: flex; justify-content: center" 
           >
             <input
               type="number"
@@ -221,6 +221,18 @@
             />
             <div style="font-family: 'Abel', sans-serif">mmHg</div>
           </div>
+        </div>
+        <div id="respiratoryDisorder_id" class="id_tab">
+          <label for="respiratoryDisorder" class="idLabels">Respiratory Disorder</label>
+          <select
+            title="respiratoryDisorder"
+            name="respiratoryDisorder"
+            id="respiratoryDisorder"
+            onchange="respiratoryDisorder()"
+          >
+            <option value="acute" selected>Acute</option>
+            <option value="chronic">Chronic</option>
+          </select>
         </div>
       </div>
 

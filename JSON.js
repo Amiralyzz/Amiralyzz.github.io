@@ -4004,7 +4004,7 @@ var labItems = [
     "firstTrim": "",
     "secondTrim": "",
     "thirdTrim": "",
-    "entered": "1"
+    "entered": "0"
   },
   {
     "name": "Echino",

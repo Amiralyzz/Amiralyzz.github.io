@@ -70,8 +70,8 @@ function statisticsMaker(parameterIndex) {
     return 1;
   } else {
     statistics[parameterIndex].currentLikelihoodRatio = 1;
-    delete patient[0].statistics[0][parameterIndex];
-    delete patient[0].statistics[1][parameterIndex];
+    patient[0].statistics[0][parameterIndex] = undefined;
+    patient[0].statistics[1][parameterIndex] = undefined;
     return 0;
   }
 }
@@ -87,7 +87,6 @@ function statisticsCalc(labItemIndex) {
   let cutoffsLength = labItem.cutoffs.length;
   let currentLikelihoodRatio = 1;
   let message = "";
-  if (mydataItem.value <= 0) return 0;
   if (labItem.lessIsBad) {
     for (let i = cutoffsLength - 1; i >= 0; i--) {
       if (Number(mydataItem.value) < Number(labItem.cutoffs[i])) {

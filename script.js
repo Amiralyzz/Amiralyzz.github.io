@@ -27,6 +27,7 @@ var lastPregnancySituation = 0;
 var globalVolumeStatus = 0; //-1 hypo , +1 hyper , 0 euvolumic
 var globalSmokingStatus = 0; //-1 former, +1 smoker, 0 never
 var globalDiureticStatus = 0; // 0 no 1 yes
+var globalRespiratoryChronicity = 0; //0 acute 1 chronic
 var selectedTabId = "test_types_cbc";
 var selectedLabType = "cbc";
 var lowIcon = "https://cdn-icons-png.flaticon.com/128/8532/8532500.png";
@@ -479,7 +480,16 @@ function diuretic() {
   }
   refresh();
 }
-
+function respiratoryDisorder() {
+  let chronicityStatus = document.getElementById("respiratoryDisorder").value;
+  if (chronicityStatus == "acute") {
+    globalRespiratoryChronicity = 0;
+  }
+  if (chronicityStatus == "chronic") {
+    globalRespiratoryChronicity = 1;
+  }
+  refresh();
+}
 function startup() {
   patient[0].signs[3][42] = 0; //diuretic
   patient[0].signs[3][45] = 0; //volume

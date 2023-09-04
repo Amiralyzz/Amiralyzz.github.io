@@ -29,7 +29,7 @@ let algorithms = [
       "key": "11",
       "value": "MCV high",
       "parent": "1",
-      "labitemsIndex": "57",
+      "labitemsIndex": "63",
       "measurementsIndex": "",
       "signsIndex": ""
     },
