@@ -1134,6 +1134,22 @@ let algorithms = [
       "signsIndex": ""
     },
     {
+      "key": "10-114",
+      "value": "Assay Interference",
+      "parent": "10-11",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "10-115",
+      "value": "Sick Euthyroid Syndrome ",
+      "parent": "10-11",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
       "key": "101",
       "value": "TSH high",
       "parent": "10",
@@ -1175,6 +1191,22 @@ let algorithms = [
     },
     {
       "key": "1014",
+      "value": "Assay Interference",
+      "parent": "101",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "1015",
+      "value": "Sick Euthyroid Syndrome Recovery Phase",
+      "parent": "101",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "1016",
       "value": "TSH resistance",
       "parent": "101",
       "labitemsIndex": "",
@@ -1366,6 +1398,30 @@ let algorithms = [
       "signsIndex": ""
     },
     {
+      "key": "11114",
+      "value": "Amiodarone",
+      "parent": "1111",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "11115",
+      "value": "Heparine",
+      "parent": "1111",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "11116",
+      "value": "Sick Euthyroid Syndrome ",
+      "parent": "1111",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
       "key": "110",
       "value": "TSH low",
       "parent": "11",
@@ -1399,7 +1455,7 @@ let algorithms = [
     },
     {
       "key": "1103",
-      "value": "Thyroiditis",
+      "value": "Thyroiditis (Post-viral, Post-partum)",
       "parent": "110",
       "labitemsIndex": "",
       "measurementsIndex": "",
@@ -1416,6 +1472,14 @@ let algorithms = [
     {
       "key": "1105",
       "value": "Congenital Hyperthyroidism",
+      "parent": "110",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "1106",
+      "value": "Amiodarone",
       "parent": "110",
       "labitemsIndex": "",
       "measurementsIndex": "",
@@ -1551,7 +1615,7 @@ let algorithms = [
     },
     {
       "key": "1-110",
-      "value": "Central Hypothyroidism",
+      "value": "Sick Euthyroid Syndrome",
       "parent": "1-11",
       "labitemsIndex": "",
       "measurementsIndex": "",
@@ -1559,6 +1623,14 @@ let algorithms = [
     },
     {
       "key": "1-111",
+      "value": "Central Hypothyroidism",
+      "parent": "1-11",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "1-112",
       "value": "Isolated TSH deficiency",
       "parent": "1-11",
       "labitemsIndex": "",
@@ -1566,9 +1638,9 @@ let algorithms = [
       "signsIndex": ""
     },
     {
-      "key": "",
-      "value": "",
-      "parent": "",
+      "key": "1-113",
+      "value": "Assay Interference",
+      "parent": "1-11",
       "labitemsIndex": "",
       "measurementsIndex": "",
       "signsIndex": ""

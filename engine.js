@@ -1334,7 +1334,7 @@ function sodiumMain() {
     try {
       signMaker(
         listMaker(
-          [...resultArray[0]].map((x) => x.value),
+          arrayDuplicateRemover([...resultArray[0]].map((x) => x.value)),
           "Hyponatremia"
         ),
         resultArray[1], //path
@@ -1356,7 +1356,7 @@ function sodiumMain() {
     try {
       signMaker(
         listMaker(
-          [...resultArray[0]].map((x) => x.value),
+          arrayDuplicateRemover([...resultArray[0]].map((x) => x.value)),
           "Hypernatremia"
         ),
         resultArray[1], //path
@@ -1479,7 +1479,7 @@ function potassiumMain() {
     try {
       signMaker(
         listMaker(
-          [...resultArray[0]].map((x) => x.value),
+          arrayDuplicateRemover([...resultArray[0]].map((x) => x.value)),
           "Hypokalemia"
         ),
         resultArray[1], //path
@@ -1773,10 +1773,11 @@ function thyroidMain() {
 
   if (TSHEntered == 1 && FT4Entered == 1) {
     let resultArray = testEngine(4);
+    // resultArray[0] = arrayDuplicateRemover(resultArray[0]);
     try {
       signMaker(
         listMaker(
-          [...resultArray[0]].map((x) => x.value),
+          arrayDuplicateRemover([...resultArray[0]].map((x) => x.value)),
           "Thyroid Function Tests"
         ),
         resultArray[1], //path
@@ -1834,7 +1835,7 @@ function engineMain() {
     try {
       signMaker(
         listMaker(
-          [...resultArray[0]].map((x) => x.value),
+          arrayDuplicateRemover([...resultArray[0]].map((x) => x.value)),
           "Anemia"
         ),
         resultArray[1], //path
@@ -1869,4 +1870,9 @@ function signMaker(listHTML, path, signID, color) {
   patient[0].signs[0][signID] = listHTML;
   patient[0].signs[1][signID] = path;
   patient[0].signs[2][signID] = color;
+}
+
+function arrayDuplicateRemover(array) {
+  let noDuplicateArray = [...new Set(array)];
+  return noDuplicateArray;
 }
