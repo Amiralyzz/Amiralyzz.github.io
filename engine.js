@@ -1280,7 +1280,7 @@ function lftEngine() {
           " and " +
           altCoef.toFixed(1) +
           " times the ULN respectively";
-        patient[0].signs[0][20] = "Fatty liver disease | chronic Hepatitis";
+        patient[0].signs[0][20] = "Fatty liver disease or chronic Hepatitis";
         patient[0].signs[1][20] = path;
         patient[0].signs[2][20] = "darkslategray";
       }
@@ -1619,7 +1619,181 @@ function dyslipidemia() {
   }
   return false;
 }
+function thyroidMain() {
+  let TSH = Number(labItems[21].value);
+  let FT4 = Number(labItems[22].value);
+  let T4 = Number(labItems[23].value);
+  let FT3 = Number(labItems[24].value);
+  let T3 = Number(labItems[25].value);
+  let RIU = Number(labItems[26].value);
+  let TBG = Number(labItems[28].value);
+  let TSHEntered = labItems[21].entered;
+  let FT4Entered = labItems[22].entered;
+  let T4Entered = labItems[23].entered;
+  let FT3Entered = labItems[24].entered;
+  let T3Entered = labItems[25].entered;
+  let RIUEntered = labItems[26].entered;
+  let TBGEntered = labItems[28].entered;
+  let TSHMax = Number(labItems[21].max);
+  let FT4Max = Number(labItems[22].max);
+  let T4Max = Number(labItems[23].max);
+  let FT3Max = Number(labItems[24].max);
+  let T3Max = Number(labItems[25].max);
+  let RIUMax = Number(labItems[26].max);
+  let TBGMax = Number(labItems[28].max);
+  let TSHMin = Number(labItems[21].min);
+  let FT4Min = Number(labItems[22].min);
+  let T4Min = Number(labItems[23].min);
+  let FT3Min = Number(labItems[24].min);
+  let T3Min = Number(labItems[25].min);
+  let RIUMin = Number(labItems[26].min);
+  let TBGMin = Number(labItems[28].min);
+  patient[0].signs[4][300] = "TSH"; //TSH not low
+  patient[0].signs[3][300] = undefined;
+  patient[0].signs[4][301] = "TSH"; //TSH not high
+  patient[0].signs[3][301] = undefined;
+  patient[0].signs[4][302] = "Free T4"; //FT4 not low
+  patient[0].signs[3][302] = undefined;
+  patient[0].signs[4][303] = "Free T4"; //FT4 not high
+  patient[0].signs[3][303] = undefined;
+  patient[0].signs[4][304] = "Free T3"; //FT3 not low
+  patient[0].signs[3][304] = undefined;
+  patient[0].signs[4][305] = "Free T3"; //FT3 not high
+  patient[0].signs[3][305] = undefined;
+  patient[0].signs[4][306] = "Total T4"; //Total T4 not high
+  patient[0].signs[3][306] = undefined;
+  patient[0].signs[4][307] = "Total T4 and Total T3 non-compatible or "; //Total T3 or T4
+  patient[0].signs[3][307] = undefined;
+  patient[0].signs[4][308] = "TBG"; // TBG not high
+  patient[0].signs[3][308] = undefined;
+  patient[0].signs[4][309] = "TBG"; // TBG not low
+  patient[0].signs[3][309] = undefined;
 
+  if (TSHEntered == 1) {
+    if (TSH < TSHMin) {
+      patient[0].signs[3][300] = 0;
+      patient[0].signs[3][301] = 1;
+    } else if (TSH > TSHMax) {
+      patient[0].signs[3][300] = 1;
+      patient[0].signs[3][301] = 0;
+    } else {
+      patient[0].signs[3][300] = 1;
+      patient[0].signs[3][301] = 1;
+    }
+  }
+  if (FT4Entered == 1) {
+    if (FT4 < FT4Min) {
+      patient[0].signs[3][302] = 0;
+      patient[0].signs[3][303] = 1;
+    } else if (FT4 > FT4Max) {
+      patient[0].signs[3][302] = 1;
+      patient[0].signs[3][303] = 0;
+    } else {
+      patient[0].signs[3][302] = 1;
+      patient[0].signs[3][303] = 1;
+    }
+  }
+  if (FT3Entered == 1) {
+    if (FT3 < FT3Min) {
+      patient[0].signs[3][304] = 0;
+      patient[0].signs[3][305] = 1;
+    } else if (FT3 > FT3Max) {
+      patient[0].signs[3][304] = 1;
+      patient[0].signs[3][305] = 0;
+    } else {
+      patient[0].signs[3][304] = 1;
+      patient[0].signs[3][305] = 1;
+    }
+  }
+  if (T4Entered == 1) {
+    if (T4 > T4Max) {
+      patient[0].signs[3][306] = 0;
+    } else {
+      patient[0].signs[3][306] = 1;
+    }
+  }
+  if (T3Entered == 1 && T4Entered == 1) {
+    if (T4 > T4Max) {
+      if (T3 >= T3Min) {
+        patient[0].signs[3][307] = 1;
+      }
+    } else if (T4 < T4Min) {
+      if (T3 <= T3Max) {
+        patient[0].signs[3][307] = -1;
+      }
+    } else {
+      if (T3 > T3Max) {
+        patient[0].signs[3][307] = 1;
+      } else if (T3 < T3Min) {
+        patient[0].signs[3][307] = -1;
+      } else {
+        patient[0].signs[3][307] = 0;
+      }
+    }
+  }
+  if (TBGEntered == 1) {
+    if (TBG > TBGMax) {
+      patient[0].signs[3][308] = 0;
+      patient[0].signs[3][309] = 1;
+    } else if (TBG < TBGMin) {
+      patient[0].signs[3][308] = 1;
+      patient[0].signs[3][309] = 0;
+    } else {
+      patient[0].signs[3][308] = 1;
+      patient[0].signs[3][309] = 1;
+    }
+  }
+  patient[0].signs[0][31] = undefined;
+  patient[0].signs[1][31] = undefined;
+  patient[0].signs[2][31] = undefined;
+  if (RIUEntered == 1 && FT4Entered == 1) {
+    if (FT4 > FT4Max && RIU < RIUMin) {
+      try {
+        signMaker(
+          listMaker(
+            [
+              "Subacute Thyroiditis",
+              "Factitious Thyroiditis",
+              "Viral or Post-partum Thyroiditis",
+              "Increased Exogenous Iodine Intake",
+            ],
+            "RIU"
+          ),
+          "Thyrotoxicosis and Low RIU",
+          31,
+          "rgb(65, 87, 65)"
+        );
+      } catch {
+        delete patient[0].signs[0][31];
+        delete patient[0].signs[1][31];
+        delete patient[0].signs[2][31];
+      }
+    }
+  }
+
+  if (TSHEntered == 1 && FT4Entered == 1) {
+    let resultArray = testEngine(4);
+    try {
+      signMaker(
+        listMaker(
+          [...resultArray[0]].map((x) => x.value),
+          "Thyroid Function Tests"
+        ),
+        resultArray[1], //path
+        30,
+        "rgb(65, 87, 65)"
+      );
+    } catch {
+      delete patient[0].signs[0][30];
+      delete patient[0].signs[1][30];
+      delete patient[0].signs[2][30];
+    }
+  } else {
+    delete patient[0].signs[0][30];
+    delete patient[0].signs[1][30];
+    delete patient[0].signs[2][30];
+  }
+}
 function pbsMain() {
   conditionMaker(2);
   conditionMaker(3);
@@ -1651,6 +1825,7 @@ function engineMain() {
   isPancytopenia();
   sodiumMain();
   potassiumMain();
+  thyroidMain();
   dyslipidemia();
   pbsMain();
   // iron_profile();

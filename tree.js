@@ -1050,6 +1050,537 @@ let algorithms = [
       "measurementsIndex": "",
       "signsIndex": ""
     }
+  ],
+  // [4] = TFT
+  [
+    {
+      "key": "1",
+      "value": "Free T4 ",
+      "parent": "",
+      "labitemsIndex": "22",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "10",
+      "value": "Free T4 normal",
+      "parent": "1",
+      "labitemsIndex": "21",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "10-1",
+      "value": "TSH low",
+      "parent": "10",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": "305"
+    },
+    {
+      "key": "10-10",
+      "value": "Free T3 high",
+      "parent": "10-1",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "10-100",
+      "value": "T3 Thyrotoxicosis",
+      "parent": "10-10",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "10-11",
+      "value": "Free T3 not high",
+      "parent": "10-1",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "10-110",
+      "value": "Subclinical Hyperthyroidism",
+      "parent": "10-11",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "10-111",
+      "value": "recent treatment of Hyperthyroidism",
+      "parent": "10-11",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "10-112",
+      "value": "Streoids",
+      "parent": "10-11",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "10-113",
+      "value": "Dopamine",
+      "parent": "10-11",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "101",
+      "value": "TSH high",
+      "parent": "10",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "1010",
+      "value": "Subclinical Hypothyroidism",
+      "parent": "101",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "1011",
+      "value": "Poor Thyroxine Compliance",
+      "parent": "101",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "1012",
+      "value": "Thyroxine Malabsorption",
+      "parent": "101",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "1013",
+      "value": "Amiodarone",
+      "parent": "101",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "1014",
+      "value": "TSH resistance",
+      "parent": "101",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "100",
+      "value": "TSH normal",
+      "parent": "10",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": "307"
+    },
+    {
+      "key": "1000",
+      "value": "Total T3 and T4 normal",
+      "parent": "100",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "10000",
+      "value": "Normal TFT",
+      "parent": "1000",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "1001",
+      "value": "Total T3 or T4 high",
+      "parent": "100",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": "308"
+    },
+    {
+      "key": "10010",
+      "value": "TBG high",
+      "parent": "1001",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "100100",
+      "value": "Compatible with Increased Thyroid Binding Globulin",
+      "parent": "10010",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "10011",
+      "value": "TBG not high",
+      "parent": "1001",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "100110",
+      "value": "Familial Dysalbuminemic Hyperthyroxinemia",
+      "parent": "10011",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "100111",
+      "value": "Transthyretin Increased or Mutated",
+      "parent": "10011",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "100-1",
+      "value": "Total T3 or T4 low",
+      "parent": "100",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": "309"
+    },
+    {
+      "key": "100-10",
+      "value": "TBG low",
+      "parent": "100-1",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "100-100",
+      "value": "Compatible with Decreased Thyroid Binding Globulin",
+      "parent": "100-10",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "100-11",
+      "value": "TBG not low",
+      "parent": "100-1",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "100-110",
+      "value": "Normal TFT",
+      "parent": "100-11",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "11",
+      "value": "Free T4 high",
+      "parent": "1",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": "300"
+    },
+    {
+      "key": "111",
+      "value": "TSH not low",
+      "parent": "11",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": "306"
+    },
+    {
+      "key": "1110",
+      "value": "Total T4 high",
+      "parent": "111",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "11100",
+      "value": "Familial Dysalbuminemic Hyperthyroxinemia",
+      "parent": "1110",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "1111",
+      "value": "Total T4 normal",
+      "parent": "111",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "11110",
+      "value": "Assay Interference",
+      "parent": "1111",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "11111",
+      "value": "TSH secreting Pituitary Adenoma",
+      "parent": "1111",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "11112",
+      "value": "Thyroid Hormone Resistance",
+      "parent": "1111",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "11113",
+      "value": "Disorder of Thyroid Hormone transport or metabolism",
+      "parent": "1111",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "110",
+      "value": "TSH low",
+      "parent": "11",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "1100",
+      "value": "Graves' Disease",
+      "parent": "110",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "1101",
+      "value": "Toxic multinodualr Goitre",
+      "parent": "110",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "1102",
+      "value": "Toxic adenoma",
+      "parent": "110",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "1103",
+      "value": "Thyroiditis",
+      "parent": "110",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "1104",
+      "value": "Excess Iodine Intake",
+      "parent": "110",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "1105",
+      "value": "Congenital Hyperthyroidism",
+      "parent": "110",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "1-1",
+      "value": "Free T4 low",
+      "parent": "1",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": "301"
+    },
+    {
+      "key": "1-10",
+      "value": "TSH high",
+      "parent": "1-1",
+      "labitemsIndex": "29",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "1-101",
+      "value": "Anti-TPO Positive",
+      "parent": "1-10",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "1-1010",
+      "value": "Auto-immune Hypothroidism (Hashimoto's Disease or Atrophic Auto-immune)",
+      "parent": "1-101",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "1-100",
+      "value": "Anti-TPO Negative",
+      "parent": "1-10",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "1-1000",
+      "value": "Post-radioiodine therapy",
+      "parent": "1-100",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "1-1001",
+      "value": "Post Thyroidectomy",
+      "parent": "1-100",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "1-1002",
+      "value": "Hypothyroid phase of Thyroiditis",
+      "parent": "1-100",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "1-1003",
+      "value": "Lithium, Anti-thyroid Drugs, Amiodarone",
+      "parent": "1-100",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "1-1004",
+      "value": "Thyrosine Kinase Inhibitors",
+      "parent": "1-100",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "1-1005",
+      "value": "Iodine Deficiency or Excess",
+      "parent": "1-100",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "1-1006",
+      "value": "Neck Irridation",
+      "parent": "1-100",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "1-1007",
+      "value": "Riedel's Thyroiditis",
+      "parent": "1-100",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "1-1008",
+      "value": "Thyroid Infiltration (Tumor, Amyloid)",
+      "parent": "1-100",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "1-1009",
+      "value": "Congenital Hypothyroidism",
+      "parent": "1-100",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "1-11",
+      "value": "TSH not high",
+      "parent": "1-1",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "1-110",
+      "value": "Central Hypothyroidism",
+      "parent": "1-11",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "1-111",
+      "value": "Isolated TSH deficiency",
+      "parent": "1-11",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "",
+      "value": "",
+      "parent": "",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "",
+      "value": "",
+      "parent": "",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    }
   ]
 ];
 class TreeNode {
