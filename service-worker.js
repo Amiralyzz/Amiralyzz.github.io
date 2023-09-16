@@ -1,20 +1,32 @@
-// TODO: Install WorkBox-build from a command prompt
-// TODO:   npm install workbox-build
-const workboxBuild = require('workbox-build');
-const BUILD_DIR = 'dist';
-const SW = 'sw.js';
+const resourcesToPrecache = [
+  "/",
+  "index.html",
+  "styles.css",
+  "JSON.js",
+  "manifest.json",
+  "engine.js",
+  "script.js",
+  "tree.js",
+  "statistics.js",
+  "TabContent.js",
+  "appIcon.png",
+];
 
-const input ={
-    swDest: `${BUILD_DIR}/${SW}`,
-    globDirectory: BUILD_DIR,
-    globPatterns: [
-        '**/*.{js,png,ico,svg,html,css}',
-        //'assets/**/*'
-    ],
-    globIgnores: [],
-    maximumFileSizeToCacheInBytes: 4000000
-};
+// Register the service worker
+self.addEventListener("install", function (event) {
+  console.log("service worker install event");
+  event.waitUntil(
+    caches.open("my-cache").then(function (cache) {
+      return cache.addAll(resourcesToPrecache);
+    })
+  );
+});
 
-workboxBuild.generateSW(input).then(() =>{
-    console.log(`The service worker ${BUILD_DIR}/${SW} has been generated with a precache list.`);
+// Serve cached content when offline
+self.addEventListener("fetch", function (event) {
+  event.respondWith(
+    caches.match(event.request).then(function (response) {
+      return response || fetch(event.request);
+    })
+  );
 });

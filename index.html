@@ -5,14 +5,20 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="style.css" />
-    <link rel="shortcut icon" href="appIcon.png" type="image/x-icon">
-    <link rel="manifest" href="manifest.json">
+    <link rel="shortcut icon" href="appIcon.png" type="image/x-icon" />
+    <link rel="manifest" href="manifest.json" />
     <title>LAB.io</title>
   </head>
   <body onload="rangeMaker('adult'); summaryMaker(); expandInfo(); startup();">
     <script>
-      if('serviceWorker' in navigator) {
-        navigator.serviceWorker.register('/service-worker.js');
+      if ("serviceWorker" in navigator) {
+        navigator.serviceWorker
+          .register("/service-worker.js")
+          .then(function (registration) {
+            console.log("sw registered, scope is: " + registration.scope);
+          });
+      } else {
+        console.log("service worker not supported");
       }
     </script>
     <script defer src="script.js"></script>
@@ -21,14 +27,10 @@
     <script defer src="engine.js"></script>
     <script defer src="statistics.js"></script>
     <script defer src="tree.js"></script>
-    <script defer src="cookie.js"></script>
+    <script defer src="service-worker.js"></script>
     <!---                           --->
     <header>
-      <img
-        src="appIcon.png"
-        id="logo"
-        alt="lab"
-      />
+      <img src="appIcon.png" id="logo" alt="lab" />
       <h1>LAB.io</h1>
       <!-- <div id="top" role="banner"><em>Lab Interpreter</em></div>  -->
     </header>
@@ -193,7 +195,7 @@
         <div class="id_tab" id="bloodPressure_id">
           <label for="SBP" class="idLabels">Blood Pressure</label>
           <div
-            style="flex-wrap: nowrap; display: flex; justify-content: center" 
+            style="flex-wrap: nowrap; display: flex; justify-content: center"
           >
             <input
               type="number"
@@ -220,7 +222,9 @@
           </div>
         </div>
         <div id="respiratoryDisorder_id" class="id_tab">
-          <label for="respiratoryDisorder" class="idLabels">Respiratory Disorder</label>
+          <label for="respiratoryDisorder" class="idLabels"
+            >Respiratory Disorder</label
+          >
           <select
             title="respiratoryDisorder"
             name="respiratoryDisorder"
