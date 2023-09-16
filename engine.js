@@ -1207,7 +1207,7 @@ function lftEngine() {
   liverPanel[6] = labItems[17].value;
   liverPanel[7] = labItems[17].max;
   liverPanel[8] = labItems[18].value;
-  let p_ldh = labItems[80].value;
+  let LDH = labItems[80].value;
   let astCoef = liverPanel[0] / liverPanel[1];
   let altCoef = liverPanel[2] / liverPanel[3];
   let alpCoef = liverPanel[4] / liverPanel[5];
@@ -1239,7 +1239,7 @@ function lftEngine() {
       }
       if (altCoef > 50 || astCoef > 50) {
         path += " &#8594 rise more than 50 times the ULN";
-        if (p_ldh > labItems[80].max) {
+        if (LDH > labItems[80].max) {
           path += " and LDH is elevated too";
         }
         patient[0].signs[0][20] = "Ischemic hepatitis";
