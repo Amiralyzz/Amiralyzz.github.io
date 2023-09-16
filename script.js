@@ -28,6 +28,7 @@ var globalVolumeStatus = 0; //-1 hypo , +1 hyper , 0 euvolumic
 var globalSmokingStatus = 0; //-1 former, +1 smoker, 0 never
 var globalDiureticStatus = 0; // 0 no 1 yes
 var globalRespiratoryChronicity = 0; //0 acute 1 chronic
+var global9afludrocortisone = 0; //0 not using 1 using
 var selectedTabId = "test_types_cbc";
 var selectedLabType = "cbc";
 var lowIcon = "https://cdn-icons-png.flaticon.com/128/8532/8532500.png";
@@ -443,20 +444,25 @@ function volume() {
   let volumeStatus = document.getElementById("volume").value;
   patient[0].signs[4][45] = "Volume status";
   patient[0].signs[4][46] = "hypervolume or not";
+  patient[0].signs[4][411] = "hypovolume or not";
   if (volumeStatus == "euvolumic") {
     globalVolumeStatus = 0;
     patient[0].signs[3][45] = 0;
     patient[0].signs[3][46] = 0;
+    patient[0].signs[3][411] = 0;
   }
   if (volumeStatus == "hypovolumic") {
     globalVolumeStatus = -1;
     patient[0].signs[3][45] = -1;
     patient[0].signs[3][46] = 0;
+    patient[0].signs[3][411] = 1;
+
   }
   if (volumeStatus == "hypervolumic") {
     globalVolumeStatus = 1;
     patient[0].signs[3][45] = 1;
     patient[0].signs[3][46] = 1;
+    patient[0].signs[3][411] = 0;
   }
   refresh();
 }
@@ -490,11 +496,25 @@ function respiratoryDisorder() {
   }
   refresh();
 }
+function nineAlphaFludrocortisone() {
+  let cortisoneUse = document.getElementById("9a-Fludrocortisone").value;
+  if (cortisoneUse == "notUsing") {
+    global9afludrocortisone = 0;
+    console.log('not using');
+  }
+  if (cortisoneUse == "using") {
+    global9afludrocortisone = 1;
+    console.log('using');
+  }
+  refresh();
+  
+}
 function startup() {
   patient[0].signs[3][42] = 0; //diuretic
   patient[0].signs[3][45] = 0; //volume
-  patient[0].signs[3][46] = 0; //volume
-  patient[0].signs[3][141] = 0; //BP
+  patient[0].signs[3][46] = 0; //hyper or not
+  patient[0].signs[4][411] = 0; //hypo or not
+  patient[0].signs[3][401] = 0; //BP
 }
 
 function bmiCalc() {
@@ -600,11 +620,11 @@ function bloodPressure() {
     DBP = SBP;
     DBPTextbox.value = SBP;
   }
-  patient[0].signs[4][141] = "Blood Pressure";
-  patient[0].signs[3][141] = undefined;
+  patient[0].signs[4][401] = "Blood Pressure";
+  patient[0].signs[3][401] = undefined;
   if (SBP != 0 && DBP != 0) {
-    if (SBP >= 130) patient[0].signs[3][141] = 1;
-    else patient[0].signs[3][141] = 0;
+    if (SBP >= 130) patient[0].signs[3][401] = 1;
+    else patient[0].signs[3][401] = 0;
   }
   refresh();
 }

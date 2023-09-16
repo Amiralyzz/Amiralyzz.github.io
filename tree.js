@@ -704,7 +704,7 @@ let algorithms = [
       "parent": "1",
       "labitemsIndex": "",
       "measurementsIndex": "",
-      "signsIndex": "140"
+      "signsIndex": "400"
     },
     {
       "key": "110",
@@ -744,7 +744,7 @@ let algorithms = [
       "parent": "11",
       "labitemsIndex": "",
       "measurementsIndex": "",
-      "signsIndex": "141"
+      "signsIndex": "401"
     },
     {
       "key": "1111",
@@ -752,7 +752,7 @@ let algorithms = [
       "parent": "111",
       "labitemsIndex": "",
       "measurementsIndex": "",
-      "signsIndex": "142"
+      "signsIndex": "402"
     },
     {
       "key": "11111",
@@ -760,7 +760,7 @@ let algorithms = [
       "parent": "1111",
       "labitemsIndex": "",
       "measurementsIndex": "",
-      "signsIndex": "143"
+      "signsIndex": "403"
     },
     {
       "key": "111111",
@@ -824,7 +824,7 @@ let algorithms = [
       "parent": "1111",
       "labitemsIndex": "",
       "measurementsIndex": "",
-      "signsIndex": "144"
+      "signsIndex": "404"
     },
     {
       "key": "111101",
@@ -968,7 +968,7 @@ let algorithms = [
       "parent": "1110",
       "labitemsIndex": "",
       "measurementsIndex": "",
-      "signsIndex": "145"
+      "signsIndex": "405"
     },
     {
       "key": "1110-10",
@@ -1051,11 +1051,433 @@ let algorithms = [
       "signsIndex": ""
     }
   ],
-  // [4] = TFT
+  // [4] = hyperkalemia without 9-a-fludrocortisone
   [
     {
       "key": "1",
-      "value": "Free T4 ",
+      "value": "K high",
+      "parent": "",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": "407"
+    },
+    {
+      "key": "11",
+      "value": "UNa < 25",
+      "parent": "1",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "110",
+      "value": "Decreased distal Na delivery",
+      "parent": "11",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "10",
+      "value": "UNa &ge; 25",
+      "parent": "1",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": "408"
+    },
+    {
+      "key": "101",
+      "value": "TTKG > 8",
+      "parent": "10",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": "409"
+    },
+    {
+      "key": "1011",
+      "value": "GFR &le; 20",
+      "parent": "101",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "10110",
+      "value": "Advanced Kidney Failure",
+      "parent": "1011",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "1010",
+      "value": "GFR > 20",
+      "parent": "101",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": "411"
+    },
+    {
+      "key": "10100",
+      "value": "ECV not compatible",
+      "parent": "1010",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "101000",
+      "value": "ECV reduced",
+      "parent": "10100",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "10101",
+      "value": "ECV reduced",
+      "parent": "1010",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "101010",
+      "value": "ECV reduced",
+      "parent": "10101",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "100",
+      "value": " 5 &ge; TTKG &le; 8",
+      "parent": "10",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "1000",
+      "value": "Reduced Tubular Flow",
+      "parent": "100",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "10-1",
+      "value": "TTKG < 5",
+      "parent": "10",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": "409"
+    },
+    {
+      "key": "10-11",
+      "value": "GFR &le; 20",
+      "parent": "10-1",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "10-110",
+      "value": "Wrong Cr Input",
+      "parent": "10-11",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "10-10",
+      "value": "9alpha-Fludrocortisone must be used",
+      "parent": "10-1",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "10-100",
+      "value": "Evaluate again after 9a-Fludrocortisone use",
+      "parent": "10-10",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "",
+      "value": "",
+      "parent": "",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "",
+      "value": "",
+      "parent": "",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "",
+      "value": "",
+      "parent": "",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "",
+      "value": "",
+      "parent": "",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "",
+      "value": "",
+      "parent": "",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "",
+      "value": "",
+      "parent": "",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    }
+  ],
+  // [5] = hyperkalemia with 9-a-fludrocortisone
+  [
+    {
+      "key": "1",
+      "value": "K high",
+      "parent": "",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": "410"
+    },
+    {
+      "key": "11",
+      "value": "TTKG > 8",
+      "parent": "1",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": "403"
+    },
+    {
+      "key": "111",
+      "value": "Renin high",
+      "parent": "11",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "1110",
+      "value": "Primary Adrenal Insufficiency",
+      "parent": "111",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "1111",
+      "value": "Isolated Aldosterone Deficiency",
+      "parent": "111",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "1112",
+      "value": "Heparin / LMWH",
+      "parent": "111",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "1113",
+      "value": "ACE-I / ARB",
+      "parent": "111",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "1114",
+      "value": "Ketoconazole",
+      "parent": "111",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "110",
+      "value": "Renin low",
+      "parent": "11",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "1100",
+      "value": "Diabetes Mellitus",
+      "parent": "110",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "1101",
+      "value": "Acute GN",
+      "parent": "110",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "1102",
+      "value": "TIN",
+      "parent": "110",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "1103",
+      "value": "PHA - type II",
+      "parent": "110",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "1104",
+      "value": "NSAIDs",
+      "parent": "110",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "1105",
+      "value": "Beta-Blockers",
+      "parent": "110",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "10",
+      "value": "TTKG < 8",
+      "parent": "1",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "100",
+      "value": "Drugs (Amiloride, Sprinolactone, Triamterene, Trimethprim, Pentamidine, Eplerenone, Drospirenone, Calcineurine Inhibitors)",
+      "parent": "10",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "101",
+      "value": "TIN",
+      "parent": "10",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "102",
+      "value": "Urinary Tract Obstruction",
+      "parent": "10",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "103",
+      "value": "PHA - type I",
+      "parent": "10",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "104",
+      "value": "PHA - type II",
+      "parent": "10",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "105",
+      "value": "Sickle Cell Disease",
+      "parent": "10",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "106",
+      "value": "Renal Transplant",
+      "parent": "10",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "107",
+      "value": "SLE",
+      "parent": "10",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "",
+      "value": "",
+      "parent": "",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "",
+      "value": "",
+      "parent": "",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "",
+      "value": "",
+      "parent": "",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    }
+  ],
+  // [6] = TFT
+  [
+    {
+      "key": "1",
+      "value": "TFT",
       "parent": "",
       "labitemsIndex": "22",
       "measurementsIndex": "",
