@@ -5,9 +5,16 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="style.css" />
-    <title>LAB|ENTER</title>
+    <link rel="shortcut icon" href="appIcon.png" type="image/x-icon">
+    <link rel="manifest" href="manifest.json">
+    <title>LAB.io</title>
   </head>
   <body onload="rangeMaker('adult'); summaryMaker(); expandInfo(); startup();">
+    <script>
+      if('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('/service-worker.js');
+      }
+    </script>
     <script defer src="script.js"></script>
     <script defer src="JSON.js"></script>
     <script defer src="TabContent.js"></script>
@@ -18,22 +25,12 @@
     <!---                           --->
     <header>
       <img
-        src="https://cdn-icons-png.flaticon.com/512/8045/8045916.png"
+        src="appIcon.png"
         id="logo"
         alt="lab"
       />
-      <h1>LAB|ENTER</h1>
+      <h1>LAB.io</h1>
       <!-- <div id="top" role="banner"><em>Lab Interpreter</em></div>  -->
-      <a
-        href="//www.dmca.com/Protection/Status.aspx?ID=a6765cf6-6b08-49a8-9e4e-6d9cd155030e"
-        title="DMCA.com Protection Status"
-        class="dmca-badge"
-      >
-        <img
-          src="https://images.dmca.com/Badges/dmca_protected_sml_120d.png?ID=a6765cf6-6b08-49a8-9e4e-6d9cd155030e"
-          alt="DMCA.com Protection Status"
-      /></a>
-      <script src="https://images.dmca.com/Badges/DMCABadgeHelper.min.js"></script>
     </header>
     <main>
       <div id="patient_info_parent">
