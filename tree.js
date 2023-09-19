@@ -2075,6 +2075,89 @@ let algorithms = [
       "measurementsIndex": "",
       "signsIndex": ""
     }
+  ],
+  // [7] = Bilirubin
+  [
+    {
+      "key": "1",
+      "value": "hyperbilirubinemia",
+      "parent": "",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": "22"
+    },
+    {
+      "key": "11",
+      "value": "Direct Bil > 15%",
+      "parent": "1",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "110",
+      "value": "Dubin-Johnson Syndrome",
+      "parent": "11",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "111",
+      "value": "Rotor Syndrome",
+      "parent": "11",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "10",
+      "value": "Direct Bil < 15%",
+      "parent": "1",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "100",
+      "value": "Hemolytic Disease",
+      "parent": "10",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "101",
+      "value": "Ineffective Erythropoesis",
+      "parent": "10",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "102",
+      "value": "Drugs",
+      "parent": "10",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "103",
+      "value": "Gilbert Syndrome",
+      "parent": "10",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "104",
+      "value": "Crigler-Najjar Syndrome",
+      "parent": "10",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    }
   ]
 ];
 class TreeNode {
