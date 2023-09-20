@@ -20,29 +20,16 @@ function whenAnInputChanges() {
       case "in_MCV":
         cbcAutoComplete();
         break;
-      case "in_MCH":
-      case "in_Hct":
-      case "in_MCHC":
+      case "in_PT":
+        ptToINR(0);
         break;
-      case "in_AST":
-      case "in_ALT":
-      case "in_ALP":
-      case "in_Bil(T)":
-      case "in_Bil(D)":
+      case "in_INR":
+        ptToINR(1);
         break;
-      case "in_Iron":
-      case "in_TIBC":
-      case "in_Ferritin":
-        // iron_profile();
-        testEngine(0);
+      case "in_PT-control":
+        ptToINR(0);
         break;
-      case "in_pH":
-      case "in_HCO3":
-      case "in_PCO2":
-        break;
-      case "in_Na":
-      case "in_Cl":
-        break;
+
       default:
     }
   }
@@ -1196,8 +1183,6 @@ function folateAndB12() {
   }
 }
 
-
-
 function dyslipidemia() {
   let totalTG = Number(labItems[100].value);
   let totalChol = Number(labItems[101].value);
@@ -1438,6 +1423,7 @@ function engineMain() {
   severeHypothyroidism();
   anemiaType();
   lftEngine();
+  viralMain();
   abgMain();
   wbcCount();
   folateAndB12();

@@ -2158,6 +2158,705 @@ let algorithms = [
       "measurementsIndex": "",
       "signsIndex": ""
     }
+  ],
+  // [8] = Hepatitis B
+  [
+    {
+      "key": "1",
+      "value": "Hep B viral markers",
+      "parent": "",
+      "labitemsIndex": "111",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "11",
+      "value": "HBsAg positive",
+      "parent": "1",
+      "labitemsIndex": "112",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "111",
+      "value": "HBsAb positive",
+      "parent": "11",
+      "labitemsIndex": "114",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "1111",
+      "value": "HBcAb IgM positive",
+      "parent": "111",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "11110",
+      "value": "HBsAg of one subtype and heterotypic HBsAb",
+      "parent": "1111",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "11111",
+      "value": "Seroconversion from HBsAg to HBsAb",
+      "parent": "1111",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "1110",
+      "value": "Recheck Tests",
+      "parent": "111",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "111-1",
+      "value": "Recheck Tests",
+      "parent": "111",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "110",
+      "value": "HBsAb intermediate",
+      "parent": "11",
+      "labitemsIndex": "114",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "1100",
+      "value": "Recheck Tests",
+      "parent": "110",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "11-1",
+      "value": "HBsAb negative",
+      "parent": "11",
+      "labitemsIndex": "114",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "11-11",
+      "value": "HBcAb IgM positive",
+      "parent": "11-1",
+      "labitemsIndex": "116",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "11-111",
+      "value": "HBeAg positive",
+      "parent": "11-11",
+      "labitemsIndex": "117",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "11-1111",
+      "value": "HBeAb positive",
+      "parent": "11-111",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "11-11111",
+      "value": "Recheck Tests",
+      "parent": "11-1111",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "11-1110",
+      "value": "HBeAb intermediate",
+      "parent": "11-111",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "11-11100",
+      "value": "Recheck Tests",
+      "parent": "11-1110",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "11-111-1",
+      "value": "HBeAb negative",
+      "parent": "11-111",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "11-111-10",
+      "value": "Acute Hepatitis B, high infectivity",
+      "parent": "11-111-1",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "11-110",
+      "value": "HBeAg intermediate",
+      "parent": "11-11",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "11-1100",
+      "value": "Recheck Tests",
+      "parent": "11-110",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "11-11-1",
+      "value": "HBeAg negative",
+      "parent": "11-11",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "11-11-10",
+      "value": "Recheck Tests",
+      "parent": "11-11-1",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "11-10",
+      "value": "HBcAb IgM intermediate",
+      "parent": "11-1",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "11-100",
+      "value": "Recheck Tests",
+      "parent": "11-10",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "11-1-1",
+      "value": "HBcAb IgM negative",
+      "parent": "11-1",
+      "labitemsIndex": "116",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "11-1-11",
+      "value": "HBeAg positive",
+      "parent": "11-1-1",
+      "labitemsIndex": "117",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "11-1-111",
+      "value": "HBeAb positive",
+      "parent": "11-1-11",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "11-1-1110",
+      "value": "Recheck Tests",
+      "parent": "11-1-111",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "11-1-110",
+      "value": "HBeAb intermediate",
+      "parent": "11-1-11",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "11-1-1100",
+      "value": "Recheck Tests",
+      "parent": "11-1-110",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "11-1-11-1",
+      "value": "HBeAb negative",
+      "parent": "11-1-11",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "11-1-11-10",
+      "value": "Chronic Hepatitis B, high infectivity",
+      "parent": "11-1-11-1",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "11-1-10",
+      "value": "HBeAg intermediate",
+      "parent": "11-1-1",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "11-1-100",
+      "value": "Recheck Tests",
+      "parent": "11-1-10",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "11-1-1-1",
+      "value": "HBeAg negative",
+      "parent": "11-1-1",
+      "labitemsIndex": "117",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "11-1-1-11",
+      "value": "HBeAb positive",
+      "parent": "11-1-1-1",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "11-1-1-110",
+      "value": "Late acute or chronic Hepatitis B, low infectivity",
+      "parent": "11-1-1-11",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "11-1-1-111",
+      "value": "HBeAg-negative Hepatitis B (chronic or rarely acute)",
+      "parent": "11-1-1-11",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "11-1-1-10",
+      "value": "HBeAb intermediate",
+      "parent": "11-1-1-1",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "11-1-1-100",
+      "value": "Recheck Tests",
+      "parent": "11-1-1-10",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "11-1-1-1-1",
+      "value": "HBeAb negative",
+      "parent": "11-1-1-1",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "11-1-1-1-10",
+      "value": "Recheck Tests",
+      "parent": "11-1-1-1-1",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "10",
+      "value": "HBsAg intermediate",
+      "parent": "1",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "100",
+      "value": "Recheck Tests",
+      "parent": "10",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "1-1",
+      "value": "HBsAg negative",
+      "parent": "1",
+      "labitemsIndex": "112",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "1-11",
+      "value": "HBsAb positive",
+      "parent": "1-1",
+      "labitemsIndex": "114",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "1-111",
+      "value": "HBcAb IgM positive",
+      "parent": "1-11",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "1-110",
+      "value": "HBcAb IgM intermediate",
+      "parent": "1-11",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "1-1100",
+      "value": "Recheck Tests",
+      "parent": "1-110",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "1-11-1",
+      "value": "HBcAb IgM negative",
+      "parent": "1-11",
+      "labitemsIndex": "116",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "1-11-11",
+      "value": "HBeAg positive",
+      "parent": "1-11-1",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "1-11-110",
+      "value": "Recheck Tests",
+      "parent": "1-11-11",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "1-11-10",
+      "value": "HBeAg intermediate",
+      "parent": "1-11-1",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "1-11-100",
+      "value": "Recheck Tests",
+      "parent": "1-11-10",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "1-11-1-1",
+      "value": "HBeAg negative",
+      "parent": "1-11-1",
+      "labitemsIndex": "117",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "1-11-1-11",
+      "value": "HBeAb positive",
+      "parent": "1-11-1-1",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "1-11-1-110",
+      "value": "Recheck Tests",
+      "parent": "1-11-1-11",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "1-11-1-10",
+      "value": "HBeAb intermediate",
+      "parent": "1-11-1-1",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "1-11-1-100",
+      "value": "Recheck Tests",
+      "parent": "1-11-1-10",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "1-11-1-1-1",
+      "value": "HBeAb negative",
+      "parent": "1-11-1-1",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "1-11-1-1-10",
+      "value": "Immunization with HBsAg (Vaccination)",
+      "parent": "1-11-1-1-1",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "1-11-1-1-11",
+      "value": "Hepatitis B in the remote past",
+      "parent": "1-11-1-1-1",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "1-11-1-1-12",
+      "value": "False Positive",
+      "parent": "1-11-1-1-1",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "1-10",
+      "value": "HBsAb intermediate",
+      "parent": "1-1",
+      "labitemsIndex": "114",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "1-100",
+      "value": "Recheck Tests",
+      "parent": "1-10",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "1-1-1",
+      "value": "HBsAb negative",
+      "parent": "1-1",
+      "labitemsIndex": "114",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "1-1-11",
+      "value": "HBcAb IgM positive",
+      "parent": "1-1-1",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "1-1-110",
+      "value": "Acute Hepatitis B",
+      "parent": "1-1-11",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "1-1-111",
+      "value": "Anti-HBc window",
+      "parent": "1-1-11",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "1-1-10",
+      "value": "HBcAb IgM intermediate",
+      "parent": "1-1-1",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "1-1-100",
+      "value": "Recheck Tests",
+      "parent": "1-1-10",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "1-1-1-1",
+      "value": "HBcAb IgM negative",
+      "parent": "1-1-1",
+      "labitemsIndex": "116",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "1-1-1-11",
+      "value": "HBeAg positive",
+      "parent": "1-1-1-1",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "1-1-1-110",
+      "value": "Recheck Tests",
+      "parent": "1-1-1-11",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "1-1-1-10",
+      "value": "HBeAg intermediate",
+      "parent": "1-1-1-1",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "1-1-1-100",
+      "value": "Recheck Tests",
+      "parent": "1-1-1-10",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "1-1-1-1-1",
+      "value": "HBeAg negative",
+      "parent": "1-1-1-1",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "1-1-1-1-10",
+      "value": "Negative for Hepatitis B",
+      "parent": "1-1-1-1-1",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "1-1-1-1-11",
+      "value": "low level Hepatitis B carrier (in case of positive HBcAb IgG)",
+      "parent": "1-1-1-1-1",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "1-1-1-1-12",
+      "value": "Hepatitis B in remote past (in case of positive HBcAb IgG)",
+      "parent": "1-1-1-1-1",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "",
+      "value": "",
+      "parent": "",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "",
+      "value": "",
+      "parent": "",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "",
+      "value": "",
+      "parent": "",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "",
+      "value": "",
+      "parent": "",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "",
+      "value": "",
+      "parent": "",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "",
+      "value": "",
+      "parent": "",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    }
   ]
 ];
 class TreeNode {
