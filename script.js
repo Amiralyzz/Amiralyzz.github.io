@@ -28,6 +28,7 @@ var globalVolumeStatus = 0; //-1 hypo , +1 hyper , 0 euvolumic
 var globalSmokingStatus = 0; //-1 former, +1 smoker, 0 never
 var globalDiureticStatus = 0; // 0 no 1 yes
 var globalRespiratoryChronicity = 0; //0 acute 1 chronic
+var globalHepaticEncephalopathy = 0; //0 no 1 yes
 var global9afludrocortisone = 0; //0 not using 1 using
 var selectedTabId = "test_types_cbc";
 var selectedLabType = "cbc";
@@ -493,6 +494,16 @@ function respiratoryDisorder() {
   }
   if (chronicityStatus == "chronic") {
     globalRespiratoryChronicity = 1;
+  }
+  refresh();
+}
+function hepaticEncephalopathy() {
+  let encephalopathyStatus = document.getElementById("hepaticEncephalopathy").value;
+  if (encephalopathyStatus == "no") {
+    globalHepaticEncephalopathy = 0;
+  }
+  if (encephalopathyStatus == "yes") {
+    globalHepaticEncephalopathy = 1;
   }
   refresh();
 }

@@ -1,20 +1,30 @@
 function lftEngine() {
-  let AST = labItems[14].value;
-  let ASTMax = labItems[14].max;
+  let AST = Number(labItems[14].value);
+  let ALT = Number(labItems[15].value);
+  let ALP = Number(labItems[16].value);
+  let BilT = Number(labItems[17].value);
+  let BilD = Number(labItems[18].value);
+  let albumin = Number(labItems[19].value);
+  let GGT = Number(labItems[20].value);
+  let LDH = Number(labItems[80].value);
+  let PT = Number(labItems[107].value);
+  let INR = Number(labItems[108].value);
+  let ASTMax = Number(labItems[14].max);
+  let ALTMax = Number(labItems[15].max);
+  let ALPMax = Number(labItems[16].max);
+  let BilTMax = Number(labItems[17].max);
+  let albuminMax = Number(labItems[19].max);
+  let GGTMax = Number(labItems[20].max);
   let ASTEntered = labItems[14].entered;
-  let ALT = labItems[15].value;
-  let ALTMax = labItems[15].max;
   let ALTEntered = labItems[15].entered;
-  let ALP = labItems[16].value;
-  let ALPMax = labItems[16].max;
   let ALPEntered = labItems[16].entered;
-  let BilT = labItems[17].value;
-  let BilTMax = labItems[17].max;
   let BilTEntered = labItems[17].entered;
-  let BilD = labItems[18].value;
   let BilDEntered = labItems[18].entered;
-  let LDH = labItems[80].value;
+  let albuminEntered = labItems[19].entered;
+  let GGTEntered = labItems[20].entered;
   let LDHEntered = labItems[80].entered;
+  let PTEntered = labItems[107].entered;
+  let INREntered = labItems[108].entered;
   let astCoef = AST / ASTMax;
   let altCoef = ALT / ALTMax;
   let alpCoef = ALP / ALPMax;
@@ -23,13 +33,16 @@ function lftEngine() {
   let path = "";
   patient[0].signs[0][20] = undefined;
   patient[0].signs[1][20] = undefined;
-  patient[0].signs[2][20] = undefined;
+  patient[0].signs[2][20] = "darkslategray";
   patient[0].signs[0][21] = undefined;
   patient[0].signs[1][21] = undefined;
-  patient[0].signs[2][21] = undefined;
+  patient[0].signs[2][21] = "darkslategray";
   patient[0].signs[0][23] = undefined;
   patient[0].signs[1][23] = undefined;
-  patient[0].signs[2][23] = undefined;
+  patient[0].signs[2][23] = "darkslategray";
+  patient[0].signs[0][24] = undefined;
+  patient[0].signs[1][24] = undefined;
+  patient[0].signs[2][24] = "darkslategray";
   patient[0].signs[4][22] = "Bilirubin"; // direct or not
   patient[0].signs[3][22] = undefined;
   if (ASTEntered == 1 && ALTEntered == 1 && ALPEntered == 1) {
@@ -39,71 +52,104 @@ function lftEngine() {
       patient[0].signs[2][20] = "darkslategray";
       return false;
     }
+    if (astCoef > 10 || altCoef > 10) {
+      //acute liver injury
+      if (INREntered == 1 && INR > 1.5 && globalHepaticEncephalopathy == 1) {
+        //acute liver failure
+        path =
+          "Marked Transaminase elevation and INR > 1.5 and Hepatic Encephalopathy";
+        patient[0].signs[0][20] = "Acute Liver Failure";
+        patient[0].signs[1][20] = path;
+        let resultArray = testEngine(9);
+        try {
+          signMaker(
+            listMaker(
+              arrayDuplicateRemover([...resultArray[0]].map((x) => x.value)),
+              "Acute Liver Failure"
+            ),
+            resultArray[1], //path
+            21,
+            "darkslategray"
+          );
+        } catch {
+          patient[0].signs[0][21] = undefined;
+          patient[0].signs[1][21] = undefined;
+        }
+        return true;
+      }
+    }
     let patternReturnArray = lftPattern(AST, ASTMax, ALT, ALTMax, ALP, ALPMax);
-    patient[0].signs[0][21] = patternReturnArray[0];
-    patient[0].signs[1][21] = patternReturnArray[1];
-    patient[0].signs[2][21] = "darkslategray";
+    patient[0].signs[0][24] = patternReturnArray[0];
+    patient[0].signs[1][24] = patternReturnArray[1];
 
     if (patternReturnArray[0] != "Cholestatic pattern") {
       if (patternReturnArray[0] == "Mixed pattern") {
         path += "Mixed pattern";
+        let rValue = altCoef / alpCoef;
+        if (rValue > 4) {
+          hepatocellularPattern(astCoef, altCoef, deRitisRatio, LDH, path);
+        } else if (altCoef > 25) {
+          hepatocellularPattern(astCoef, altCoef, deRitisRatio, LDH, path);
+        } else if (rValue < 3) {
+          path += " &#8594 Prominent ALP Elevation";
+            patient[0].signs[0][20] =
+              "Cholelastitic Injury more probable";
+            patient[0].signs[1][20] = path;
+          cholestaticPattern();
+        } else {
+            patient[0].signs[0][20] =
+              "Both Cholestatic and Hepatocellular Injury possible";
+            patient[0].signs[1][20] = path;
+          mixedPattern();
+        }
       } else {
         path += "Hepato-cellular pattern";
+        hepatocellularPattern(astCoef, altCoef, deRitisRatio, LDH, path);
       }
-      if (altCoef > 50 || astCoef > 50) {
-        path += " &#8594 rise more than 50 times the ULN";
-        if (LDH > labItems[80].max) {
-          path += " and LDH is elevated too";
+    } else {
+      if (astCoef < 3 && altCoef < 3) {
+        //isolated ALP elevation
+        if (GGTEntered == 1) {
+          if (GGT < GGTMax) {
+            //bone origin
+            path = "Cholestatic Pattern &#8594 GGT not elevated";
+            patient[0].signs[0][20] =
+              "ALP elevation is not likely of Hepatic origin";
+            patient[0].signs[1][20] = path;
+            let resultArray = testEngine(13);
+            try {
+              signMaker(
+                listMaker(
+                  arrayDuplicateRemover(
+                    [...resultArray[0]].map((x) => x.value)
+                  ),
+                  "High Bone Turnover"
+                ),
+                resultArray[1], //path
+                21,
+                "darkslategray"
+              );
+            } catch {
+              patient[0].signs[0][21] = undefined;
+              patient[0].signs[1][21] = undefined;
+            }
+            return true;
+          }
         }
-        patient[0].signs[0][20] = "Ischemic hepatitis";
-        patient[0].signs[1][20] = path;
-        patient[0].signs[2][20] = "darkslategray";
-      } else if (altCoef > 25 || astCoef > 25) {
-        path += " &#8594 rise more than 25 times the ULN";
-        //virals can be checked here
-        let prefix = "";
-        if (deRitisRatio > 2) {
-          prefix = "Fulminant ";
-          path += " &#8594 De Ritis ratio is more than 2";
-        } else if (deRitisRatio < 1) {
-          prefix = "Resolving ";
-          path += " &#8594 De Ritis ratio is less than 1";
-        }
-        patient[0].signs[0][20] =
-          prefix + "Acute viral or toxin-related hepatits";
-        patient[0].signs[1][20] = path;
-        patient[0].signs[2][20] = "darkslategray";
-      } else if (altCoef > 5 && astCoef > 8) {
-        path +=
-          " &#8594 AST and ALT rise more than 8 and 5 times the ULN respectively";
-        patient[0].signs[0][20] = "Alcoholic fatty liver disease is unlikely";
-        patient[0].signs[1][20] = path;
-        patient[0].signs[2][20] = "darkslategray";
-      } else if (altCoef > 4 && astCoef > 4) {
-        path += " &#8594 AST and ALT rise more than 4 times the ULN";
-        //ast to alt is complicated here and needs another function
-        patient[0].signs[0][20] =
-          "Non-alcoholic fatty liver disease is unlikely";
-        patient[0].signs[1][20] = path;
-        patient[0].signs[2][20] = "darkslategray";
-      } else {
-        path +=
-          " &#8594 AST and ALT rise is " +
-          astCoef.toFixed(1) +
-          " and " +
-          altCoef.toFixed(1) +
-          " times the ULN respectively";
-        patient[0].signs[0][20] = "Fatty liver disease or chronic Hepatitis";
-        patient[0].signs[1][20] = path;
-        patient[0].signs[2][20] = "darkslategray";
+        path = "Cholestatic Pattern &#8594 GGT not Entered";
+            patient[0].signs[0][20] =
+              "ALP elevation can be of Bone and Hepatic origin";
+            patient[0].signs[1][20] = path;
+        cholestaticPattern();
       }
+      cholestaticPattern();
     }
   } else if (ASTEntered == 0 && ALTEntered == 0 && ALPEntered == 0) {
     if (BilTEntered == 0 || BilDEntered == 0) {
       return 0;
     }
     if (BilT > BilTMax) {
-      //Hyperbilirubinemia
+      //isolated Hyperbilirubinemia
       if (isDirectHyperbilirubinemia(BilT, BilD)) {
         patient[0].signs[3][22] = 1;
       } else {
@@ -123,17 +169,14 @@ function lftEngine() {
       } catch {
         patient[0].signs[0][23] = undefined;
         patient[0].signs[1][23] = undefined;
-        patient[0].signs[2][23] = undefined;
       }
     } else {
       patient[0].signs[0][23] = undefined;
       patient[0].signs[1][23] = undefined;
-      patient[0].signs[2][23] = undefined;
     }
   } else {
     patient[0].signs[0][20] = "Liver tests not conclusive";
     patient[0].signs[1][20] = "AST and/or ALT and/or ALP not entered";
-    patient[0].signs[2][20] = "darkslategray";
   }
 }
 
@@ -160,6 +203,104 @@ function lftPattern(AST, ASTMax, ALT, ALTMax, ALP, ALPMax) {
   }
   return [pattern, path];
 }
+function cholestaticPattern() {
+  let resultArray = testEngine(12);
+  try {
+    signMaker(
+      listMaker(
+        arrayDuplicateRemover([...resultArray[0]].map((x) => x.value)),
+        "Cholestatic Liver Injury"
+      ),
+      resultArray[1], //path
+      21,
+      "darkslategray"
+    );
+  } catch {
+    patient[0].signs[0][21] = undefined;
+    patient[0].signs[1][21] = undefined;
+  }
+}
+function mixedPattern() {
+  let resultArray = testEngine(11);
+  try {
+    signMaker(
+      listMaker(
+        arrayDuplicateRemover([...resultArray[0]].map((x) => x.value)),
+        "Mixed Pattern Liver Injury"
+      ),
+      resultArray[1], //path
+      21,
+      "darkslategray"
+    );
+  } catch {
+    patient[0].signs[0][21] = undefined;
+    patient[0].signs[1][21] = undefined;
+  }
+}
+function hepatocellularPattern(astCoef, altCoef, deRitisRatio, LDH, path) {
+  if (altCoef > 50 || astCoef > 50) {
+    path += " &#8594 rise more than 50 times the ULN";
+    if (LDH > labItems[80].max) {
+      path += " and LDH is elevated too";
+    }
+    patient[0].signs[0][20] = "Ischemic hepatitis";
+    patient[0].signs[1][20] = path;
+  } else if (altCoef > 25 || astCoef > 25) {
+    path += " &#8594 rise more than 25 times the ULN";
+    //virals can be checked here
+    let prefix = "";
+    if (deRitisRatio > 2) {
+      prefix = "Fulminant ";
+      path += " &#8594 De Ritis ratio is more than 2";
+    } else if (deRitisRatio < 1) {
+      prefix = "Resolving ";
+      path += " &#8594 De Ritis ratio is less than 1";
+    }
+    patient[0].signs[0][20] = prefix + "Acute viral or toxin-related hepatits";
+    patient[0].signs[1][20] = path;
+  } else if (astCoef > 15 || altCoef > 15) {
+    //marked elevation
+    path += " &#8594 Marked Transaminase elevation";
+    patient[0].signs[0][20] = "Acute Liver Injury";
+    patient[0].signs[1][20] = path;
+    let resultArray = testEngine(9);
+    try {
+      signMaker(
+        listMaker(
+          arrayDuplicateRemover([...resultArray[0]].map((x) => x.value)),
+          "Acute Liver Injury"
+        ),
+        resultArray[1], //path
+        21,
+        "darkslategray"
+      );
+    } catch {
+      patient[0].signs[0][21] = undefined;
+      patient[0].signs[1][21] = undefined;
+    }
+    return true;
+  } else {
+    path += " &#8594 Mild to Moderate Transaminase elevation";
+    patient[0].signs[0][20] = "Hepatocellular Disease";
+    patient[0].signs[1][20] = path;
+    let resultArray = testEngine(10);
+    try {
+      signMaker(
+        listMaker(
+          arrayDuplicateRemover([...resultArray[0]].map((x) => x.value)),
+          "Hepatocellular Disease"
+        ),
+        resultArray[1], //path
+        21,
+        "darkslategray"
+      );
+    } catch {
+      patient[0].signs[0][21] = undefined;
+      patient[0].signs[1][21] = undefined;
+    }
+    return true;
+  }
+}
 
 function isDirectHyperbilirubinemia(BilT, BilD) {
   return BilD / BilT > 0.15;
@@ -177,11 +318,13 @@ function ptToINR(isINRChanged) {
       INR = (PT / PTc).toFixed(1);
       document.getElementById("in_INR").value = INR;
       labItems[108].value = INR;
+      labItems[108].entered = 1;
     }
     if (isINRChanged == 1 && INREntered == 1) {
       PT = (INR * PTc).toFixed(1);
       document.getElementById("in_PT").value = PT;
-      labItems[108].value = PT;
+      labItems[107].value = PT;
+      labItems[107].entered = PT;
     }
   }
 }

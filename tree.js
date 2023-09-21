@@ -2857,6 +2857,645 @@ let algorithms = [
       "measurementsIndex": "",
       "signsIndex": ""
     }
+  ],
+  // [9] = ALI/ALF
+  [
+    {
+      "key": "1",
+      "value": "ALI/ALF",
+      "parent": "",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "10",
+      "value": "Acetaminophen toxicity  ",
+      "parent": "1",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "100",
+      "value": "Idiosyncratic drug reactions",
+      "parent": "10",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "101",
+      "value": "Acute viral hepatitis or other viral infections",
+      "parent": "10",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "102",
+      "value": "acute exacerbation of chronic viral hepatitis (hepatitis B)   ",
+      "parent": "10",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "103",
+      "value": "Alcoholic hepatitis  ",
+      "parent": "10",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "104",
+      "value": "Autoimmune hepatitis  ",
+      "parent": "10",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "105",
+      "value": "Wilson disease  ",
+      "parent": "10",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "106",
+      "value": "Ischemic hepatitis  ",
+      "parent": "10",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "107",
+      "value": "Budd-Chiari syndrome  ",
+      "parent": "10",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "108",
+      "value": "Sinusoidal obstruction syndrome (veno-occlusive disease)",
+      "parent": "10",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "109",
+      "value": "Malignant infiltration",
+      "parent": "10",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "11",
+      "value": "Partial hepatectomy  ",
+      "parent": "1",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "12",
+      "value": "Toxin exposure, including mushroom poisoning  ",
+      "parent": "1",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "13",
+      "value": "Sepsis  ",
+      "parent": "1",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "14",
+      "value": "Heat stroke",
+      "parent": "1",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "15",
+      "value": "Muscle disorders, seizures, and heavy exercise",
+      "parent": "1",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    }
+  ],
+  // [10] = mild to mod
+  [
+    {
+      "key": "1",
+      "value": "Mild to Mod elevation",
+      "parent": "",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "10",
+      "value": "Medication use  ",
+      "parent": "1",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "100",
+      "value": "Chronic viral hepatitis",
+      "parent": "10",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "101",
+      "value": "Alcoholic liver disease",
+      "parent": "10",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "102",
+      "value": "Hemochromatosis  ",
+      "parent": "10",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "103",
+      "value": "Nonalcoholic fatty liver disease  ",
+      "parent": "10",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "104",
+      "value": "Autoimmune hepatitis  ",
+      "parent": "10",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "105",
+      "value": "Wilson disease  ",
+      "parent": "10",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "106",
+      "value": "Alpha-1 antitrypsin deficiency  ",
+      "parent": "10",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "107",
+      "value": "Congestive hepatopathy  ",
+      "parent": "10",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "108",
+      "value": "Adult bile ductopenia",
+      "parent": "10",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "109",
+      "value": "Malignant infiltration",
+      "parent": "10",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "11",
+      "value": "Muscle disorders",
+      "parent": "1",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "12",
+      "value": "Thyroid disorders  ",
+      "parent": "1",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "13",
+      "value": "Celiac disease  ",
+      "parent": "1",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "14",
+      "value": "Adrenal insufficiency  ",
+      "parent": "1",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "15",
+      "value": "Anorexia nervosa Macro-AST ",
+      "parent": "1",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    }
+  ],
+  // [11] = mixed
+  [
+    {
+      "key": "1",
+      "value": "ALI/ALF",
+      "parent": "",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "10",
+      "value": "Medication use  ",
+      "parent": "1",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "100",
+      "value": "Chronic viral hepatitis",
+      "parent": "10",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "101",
+      "value": "Alcoholic liver disease",
+      "parent": "10",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "102",
+      "value": "Hemochromatosis  ",
+      "parent": "10",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "103",
+      "value": "Nonalcoholic fatty liver disease  ",
+      "parent": "10",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "104",
+      "value": "Autoimmune hepatitis  ",
+      "parent": "10",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "105",
+      "value": "Wilson disease  ",
+      "parent": "10",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "106",
+      "value": "Alpha-1 antitrypsin deficiency  ",
+      "parent": "10",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "107",
+      "value": "Congestive hepatopathy  ",
+      "parent": "10",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "108",
+      "value": "Adult bile ductopenia",
+      "parent": "10",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "109",
+      "value": "Malignant infiltration",
+      "parent": "10",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "11",
+      "value": "Muscle disorders",
+      "parent": "1",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "12",
+      "value": "Thyroid disorders  ",
+      "parent": "1",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "13",
+      "value": "Celiac disease  ",
+      "parent": "1",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "14",
+      "value": "Adrenal insufficiency  ",
+      "parent": "1",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "15",
+      "value": "Anorexia nervosa Macro-AST ",
+      "parent": "1",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "16",
+      "value": "Choledocholithiasis",
+      "parent": "1",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "160",
+      "value": "Malignant bile obstruction",
+      "parent": "16",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "161",
+      "value": "Primary Sclerosing Cholangitis",
+      "parent": "16",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "162",
+      "value": "Chronic pancreatitis",
+      "parent": "16",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "163",
+      "value": "AIDS cholangiography",
+      "parent": "16",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "164",
+      "value": "Drug toxicity",
+      "parent": "16",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "165",
+      "value": "Primary Bile Cirrhosis",
+      "parent": "16",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "166",
+      "value": "Benign postoperative cholestasis",
+      "parent": "16",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "167",
+      "value": "Total Parenteral Nutrition",
+      "parent": "16",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    }
+  ],
+  // [12] = cholestatic
+  [
+    {
+      "key": "1",
+      "value": "Prominent ALP elevation",
+      "parent": "",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "10",
+      "value": "Choledocholithiasis",
+      "parent": "1",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "11",
+      "value": "Malignant bile obstruction",
+      "parent": "1",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "12",
+      "value": "Primary Sclerosing Cholangitis",
+      "parent": "1",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "13",
+      "value": "Chronic pancreatitis",
+      "parent": "1",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "14",
+      "value": "AIDS cholangiography",
+      "parent": "1",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "15",
+      "value": "Drug toxicity",
+      "parent": "1",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "16",
+      "value": "Primary Bile Cirrhosis",
+      "parent": "1",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "17",
+      "value": "Benign postoperative cholestasis",
+      "parent": "1",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "18",
+      "value": "Total Parenteral Nutrition",
+      "parent": "1",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    }
+  ],
+  // [13] = alp bone origin
+  [
+    {
+      "key": "1",
+      "value": "Cholestatic Pattern",
+      "parent": "",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "10",
+      "value": "Healing fractures",
+      "parent": "1",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "11",
+      "value": "Osteomalacia",
+      "parent": "1",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "12",
+      "value": "Hyperparathyroidism",
+      "parent": "1",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "13",
+      "value": "Hyperthyroidism",
+      "parent": "1",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "14",
+      "value": "Paget disease of bone",
+      "parent": "1",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "15",
+      "value": "Osteogenic sarcoma",
+      "parent": "1",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "16",
+      "value": "Bone metastases",
+      "parent": "1",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    }
   ]
 ];
 class TreeNode {
