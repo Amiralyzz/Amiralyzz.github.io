@@ -9,6 +9,10 @@ const resourcesToPrecache = [
   "tree.js",
   "statistics.js",
   "TabContent.js",
+  "liver.js",
+  "electrolyte.js",
+  "cbc.js",
+  "abg.js",
   "appIcon.png",
 ];
 

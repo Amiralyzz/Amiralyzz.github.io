@@ -3430,7 +3430,7 @@ let algorithms = [
       "signsIndex": ""
     }
   ],
-  // [13] = alp bone origin
+  // [13] = ALP bone origin
   [
     {
       "key": "1",
