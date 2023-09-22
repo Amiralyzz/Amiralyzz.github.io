@@ -151,98 +151,6 @@ function checkRanges(value, id, enteredStatus) {
       currentLabItem.status;
   } catch {}
 }
-function cbcAutoComplete() {
-  try {
-    var p_rbc = Number(document.getElementById("in_RBC").value); //p = patient's
-  } catch {
-    var p_rbc = labItems[1].value;
-  }
-  try {
-    var p_hb = Number(document.getElementById("in_Hb").value);
-  } catch {
-    var p_hb = labItems[2].value;
-  }
-  try {
-    var p_mcv = Number(document.getElementById("in_MCV").value);
-  } catch {
-    var p_mcv = labItems[3].value;
-  }
-  var c_hct, c_mch, c_mchc, mcv_isnotzero;
-  if (p_rbc == 0) return 0;
-  if (p_mcv != 0) {
-    mcv_isnotzero = true;
-    c_hct = (p_rbc * p_mcv) / 10;
-    c_hct = c_hct.toFixed(1);
-    labItems[4].value = c_hct;
-    try {
-      document.getElementById("in_Hct").value = c_hct;
-    } catch {}
-    checkRanges(c_hct, "in_Hct", true);
-  } else {
-    mcv_isnotzero = false;
-  }
-  if (p_hb != 0) {
-    c_mch = (p_hb * 10) / p_rbc;
-    c_mch = c_mch.toFixed(1);
-    labItems[5].value = c_mch;
-    try {
-      document.getElementById("in_MCH").value = c_mch;
-    } catch {}
-    checkRanges(c_mch, "in_MCH", true);
-    if (mcv_isnotzero) {
-      c_mchc = (p_hb * 100) / c_hct;
-      c_mchc = c_mchc.toFixed(1);
-      labItems[6].value = c_mchc;
-      try {
-        document.getElementById("in_MCHC").value = c_mchc;
-      } catch {}
-      checkRanges(c_mchc, "in_MCHC", true);
-    }
-  }
-}
-
-function wbcCount() {
-  let wbcTotalVal = labItems[0].value;
-  let wbcMaxVal = labItems[0].max;
-  let wbcMinVal = labItems[0].min;
-  let path = "";
-  let cbcColor = "darkslateblue";
-  delete patient[0].signs[0][0];
-  delete patient[0].signs[1][0];
-  delete patient[0].signs[2][0];
-  if (labItems[0].entered == 0) return 0;
-  if (wbcTotalVal > wbcMaxVal) {
-    path += "WBC > " + wbcMaxVal;
-    patient[0].signs[0][0] = "Leukocytosis";
-    patient[0].signs[1][0] = path;
-    patient[0].signs[2][0] = cbcColor;
-  } else if (wbcTotalVal < wbcMinVal) {
-    path += "WBC < " + wbcMinVal;
-    patient[0].signs[0][0] = "Leukopenia";
-    patient[0].signs[1][0] = path;
-    patient[0].signs[2][0] = cbcColor;
-  }
-}
-function abgDeltaCalc(deltaGap, deltaRatio, path) {
-  if (deltaGap > 6) {
-    path += " &#8594 &Delta;Gap > 6 and &Delta;Ratio > 1";
-    patient[0].signs[0][60] +=
-      " + Metabolic Alkalosis (based on both &Delta;Gap and &Delta;Ratio)";
-  } else if (deltaRatio > 1) {
-    path += " &#8594 Delta Ratio > 1";
-    patient[0].signs[0][60] +=
-      " + Metabolic Alkalosis (based on &Delta;Ratio only)";
-  } else if (deltaGap < -6) {
-    path += " &#8594 &Delta;Gap < -6 and &Delta;Ratio < 1";
-    patient[0].signs[0][60] +=
-      " + Metabolic Acidosis (normal AG) (based on both &Delta;Gap and &Delta;Ratio)";
-  } else if (deltaRatio < 1) {
-    path += " &#8594 &Delta;Ratio < 1";
-    patient[0].signs[0][60] +=
-      " + Metabolic Acidosis (normal AG) (based on &Delta;Ratio only)";
-  }
-  return path;
-}
 
 function dyslipidemia() {
   let totalTG = Number(labItems[100].value);
@@ -449,20 +357,15 @@ function thyroidMain() {
         "rgb(65, 87, 65)"
       );
     } catch {
-      delete patient[0].signs[0][30];
-      delete patient[0].signs[1][30];
-      delete patient[0].signs[2][30];
+      patient[0].signs[0][30] = undefined;
+      patient[0].signs[1][30] = undefined;
     }
   } else {
-    delete patient[0].signs[0][30];
-    delete patient[0].signs[1][30];
-    delete patient[0].signs[2][30];
+    patient[0].signs[0][30] = undefined;
+    patient[0].signs[1][30] = undefined;
   }
 }
-function pbsMain() {
-  conditionMaker(2);
-  conditionMaker(3);
-}
+
 function percentileFinder(input, min, max) {
   min = Number(min);
   max = Number(max);

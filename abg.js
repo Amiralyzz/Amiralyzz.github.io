@@ -508,3 +508,24 @@ function abgMain() {
       }
     }
   }
+  
+  function abgDeltaCalc(deltaGap, deltaRatio, path) {
+    if (deltaGap > 6) {
+      path += " &#8594 &Delta;Gap > 6 and &Delta;Ratio > 1";
+      patient[0].signs[0][60] +=
+        " + Metabolic Alkalosis (based on both &Delta;Gap and &Delta;Ratio)";
+    } else if (deltaRatio > 1) {
+      path += " &#8594 Delta Ratio > 1";
+      patient[0].signs[0][60] +=
+        " + Metabolic Alkalosis (based on &Delta;Ratio only)";
+    } else if (deltaGap < -6) {
+      path += " &#8594 &Delta;Gap < -6 and &Delta;Ratio < 1";
+      patient[0].signs[0][60] +=
+        " + Metabolic Acidosis (normal AG) (based on both &Delta;Gap and &Delta;Ratio)";
+    } else if (deltaRatio < 1) {
+      path += " &#8594 &Delta;Ratio < 1";
+      patient[0].signs[0][60] +=
+        " + Metabolic Acidosis (normal AG) (based on &Delta;Ratio only)";
+    }
+    return path;
+  }
