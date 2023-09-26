@@ -36,7 +36,55 @@ function whenAnInputChanges() {
 
   checkRanges(value, id, enteredStatus);
 }
-
+function cbcAutoComplete() {
+  try {
+    var p_rbc = Number(document.getElementById("in_RBC").value); //p = patient's
+  } catch {
+    var p_rbc = labItems[1].value;
+  }
+  try {
+    var p_hb = Number(document.getElementById("in_Hb").value);
+  } catch {
+    var p_hb = labItems[2].value;
+  }
+  try {
+    var p_mcv = Number(document.getElementById("in_MCV").value);
+  } catch {
+    var p_mcv = labItems[3].value;
+  }
+  var c_hct, c_mch, c_mchc, mcv_isnotzero;
+  if (p_rbc == 0) return 0;
+  if (p_mcv != 0) {
+    mcv_isnotzero = true;
+    c_hct = (p_rbc * p_mcv) / 10;
+    c_hct = c_hct.toFixed(1);
+    labItems[4].value = c_hct;
+    try {
+      document.getElementById("in_Hct").value = c_hct;
+    } catch {}
+    checkRanges(c_hct, "in_Hct", true);
+  } else {
+    mcv_isnotzero = false;
+  }
+  if (p_hb != 0) {
+    c_mch = (p_hb * 10) / p_rbc;
+    c_mch = c_mch.toFixed(1);
+    labItems[5].value = c_mch;
+    try {
+      document.getElementById("in_MCH").value = c_mch;
+    } catch {}
+    checkRanges(c_mch, "in_MCH", true);
+    if (mcv_isnotzero) {
+      c_mchc = (p_hb * 100) / c_hct;
+      c_mchc = c_mchc.toFixed(1);
+      labItems[6].value = c_mchc;
+      try {
+        document.getElementById("in_MCHC").value = c_mchc;
+      } catch {}
+      checkRanges(c_mchc, "in_MCHC", true);
+    }
+  }
+}
 function minIsNotBiggerThanMax(x, id) {
   try {
     if (id == "in_Bil(D)") {
@@ -389,7 +437,7 @@ function engineMain() {
   lftEngine();
   viralMain();
   abgMain();
-  wbcCount();
+  wbcMain();
   folateAndB12();
   isPancytopenia();
   sodiumMain();
@@ -398,28 +446,7 @@ function engineMain() {
   dyslipidemia();
   pbsMain();
   // iron_profile();
-  if (isAnemia()) {
-    let resultArray = testEngine(0);
-    try {
-      signMaker(
-        listMaker(
-          arrayDuplicateRemover([...resultArray[0]].map((x) => x.value)),
-          "Anemia"
-        ),
-        resultArray[1], //path
-        10,
-        "rgb(102, 30, 52)"
-      );
-    } catch {
-      delete patient[0].signs[0][10];
-      delete patient[0].signs[1][10];
-      delete patient[0].signs[2][10];
-    }
-  } else {
-    delete patient[0].signs[0][10];
-    delete patient[0].signs[1][10];
-    delete patient[0].signs[2][10];
-  }
+  
 }
 
 function listMaker(array, condition) {
