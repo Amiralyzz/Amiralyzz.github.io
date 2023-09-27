@@ -526,6 +526,7 @@ function startup() {
   patient[0].signs[3][46] = 0; //hyper or not
   patient[0].signs[4][411] = 0; //hypo or not
   patient[0].signs[3][401] = 0; //BP
+  patient[0].signs[4][2] == 0 //diff entered or not
 }
 
 function bmiCalc() {
@@ -749,32 +750,39 @@ function wbcCalc() {
   let eosVal = labItems[48].value;
   let basVal = labItems[49].value;
   let bandVal = labItems[50].value;
-  if (neuVal > 0) {
+  let neuEntered = labItems[45].entered;
+  let lymEntered = labItems[46].entered;
+  let monEntered = labItems[47].entered;
+  let eosEntered = labItems[48].entered;
+  let basEntered = labItems[49].entered;
+  let bandEntered = labItems[50].entered;
+  patient[0].signs[3][2] = "WBC differentials";
+  if (neuEntered == 1) {
     measurements[10].used = true;
   } else {
     measurements[10].used = false;
   }
-  if (lymVal > 0) {
+  if (lymEntered == 1) {
     measurements[11].used = true;
   } else {
     measurements[11].used = false;
   }
-  if (monVal > 0) {
+  if (monEntered == 1) {
     measurements[12].used = true;
   } else {
     measurements[12].used = false;
   }
-  if (eosVal > 0) {
+  if (eosEntered == 1) {
     measurements[13].used = true;
   } else {
     measurements[13].used = false;
   }
-  if (basVal > 0) {
+  if (basEntered == 1) {
     measurements[14].used = true;
   } else {
     measurements[14].used = false;
   }
-  if (bandVal > 0) {
+  if (bandEntered == 1) {
     measurements[15].used = true;
   } else {
     measurements[15].used = false;
@@ -785,6 +793,17 @@ function wbcCalc() {
   measurements[13].value = (0.01 * eosVal * wbcTotalVal).toFixed(1);
   measurements[14].value = (0.01 * basVal * wbcTotalVal).toFixed(1);
   measurements[15].value = (0.01 * bandVal * wbcTotalVal).toFixed(1);
+  if (!measurements[10].used &&
+      !measurements[11].used &&
+      !measurements[12].used &&
+      !measurements[13].used &&
+      !measurements[14].used &&
+      !measurements[15].used
+    ) {
+      patient[0].signs[4][2] = 0;
+    } else {
+      patient[0].signs[4][2] = 1;
+    }
 }
 
 function checkIfWBCDiffsAreLessThanHundred() {
