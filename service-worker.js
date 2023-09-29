@@ -1,7 +1,7 @@
 const resourcesToPrecache = [
   "/",
   "index.html",
-  "styles.css",
+  "style.css",
   "JSON.js",
   "manifest.json",
   "engine.js",
@@ -20,8 +20,22 @@ const resourcesToPrecache = [
 self.addEventListener("install", function (event) {
   console.log("service worker install event");
   event.waitUntil(
-    caches.open("my-cache").then(function (cache) {
-      return cache.addAll(resourcesToPrecache);
+    caches.open("my-cache").then(async (cache) => {
+      let ok;
+      try {
+        ok = await cache.addAll(resourcesToPrecache);
+
+      } catch (err){
+        console.error('sw: cache.addAll');
+        for (let i of resourcesToPrecache) {
+          try {
+            ok = await cache.add(i);
+          } catch (err) {
+            console.warn('sw: cache.add',i);
+          }
+        }
+      }
+      return ok;
     })
   );
 });

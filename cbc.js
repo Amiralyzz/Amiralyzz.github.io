@@ -682,10 +682,10 @@ function wbcDDxDecider() {
     lymphocytosisDDx = lymphocytosisDDx.concat([
       "CLL",
       "Non-Hodgkin Lymphoma",
-      "MBL",
+      "Monoclonal B-Lymphocytosis",
       "T-cell Lymphoma",
-      "LGL",
-      "MM",
+      "Large granular lymphocytic leukemia",
+      "Multiple Myeloma",
       "Amyloidosis",
     ]);
     basophiliaDDx = basophiliaDDx.concat(["CML", "CBL", "Myelofibrosis"]);
