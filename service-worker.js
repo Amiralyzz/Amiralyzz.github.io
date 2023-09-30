@@ -13,6 +13,7 @@ const resourcesToPrecache = [
   "electrolyte.js",
   "cbc.js",
   "abg.js",
+  "metabolic.js",
   "appIcon.png",
 ];
 

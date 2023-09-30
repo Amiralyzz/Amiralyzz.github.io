@@ -32,6 +32,7 @@
     <script defer src="liver.js"></script>
     <script defer src="cbc.js"></script>
     <script defer src="abg.js"></script>
+    <script defer src="metabolic.js"></script>
     <!---                           --->
     <header>
       <img src="appIcon.png" id="logo" alt="lab" />
@@ -224,6 +225,20 @@
             />
             <div style="font-family: 'Abel', sans-serif">mmHg</div>
           </div>
+        </div>
+        <div id="diabetes_id" class="id_tab">
+          <label for="diabetes" class="idLabels"
+            >Diabetes History</label
+          >
+          <select
+            title="diabetes"
+            name="diabetes"
+            id="diabetes"
+            onchange="diabetes()"
+          >
+            <option value="no" selected>No</option>
+            <option value="yes">Yes</option>
+          </select>
         </div>
         <div id="respiratoryDisorder_id" class="id_tab">
           <label for="respiratoryDisorder" class="idLabels"
