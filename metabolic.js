@@ -39,6 +39,5 @@ function dyslipidemia() {
   }
 
   function diabetesMain() {
-    console.log("working");
     conditionMaker(5);
   }
