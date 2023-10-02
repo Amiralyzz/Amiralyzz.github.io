@@ -404,6 +404,8 @@ function engineMain() {
   sodiumMain();
   potassiumMain();
   thyroidMain();
+  console.log("working");
+  diabetesMain();
   dyslipidemia();
   pbsMain();
   // iron_profile();

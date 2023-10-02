@@ -38,4 +38,7 @@ function dyslipidemia() {
     return false;
   }
 
-  
+  function diabetesMain() {
+    console.log("working");
+    conditionMaker(5);
+  }

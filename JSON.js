@@ -281,6 +281,21 @@ var statistics = [
     color: "rgb(139, 61, 104)",
     reference: "https://onlinelibrary.wiley.com/doi/abs/10.1111/ijlh.12758",
   },
+  {
+    name: "hba1cFBS",
+    labItemName: "HbA1c",
+    conditionName: "FBS > 125 mg/dL",
+    conditionIndex: 5,
+    cutoffs: [6,6.15],
+    lessIsBad: true,
+    sensitivities: [0.86,0.85],
+    specificities: [0.78,0.79],
+    myDataIndex: 36,
+    currentLikelihoodRatio: 1,
+    currentCutoffIndex: 0,
+    color: "rgb(102, 30, 52)",
+    reference: "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3075530/",
+  }
 
 ];
 
@@ -306,7 +321,7 @@ var conditions = [
     statisticsParameteresRelated: [6,7,8,9,10,11,12,13],
     likelihoodRatio: 1,
     prevalenceValue: 0.5,
-    posteriorDistribution: 2,
+    posteriorDistribution: 0.5,
     color: "darkslateblue",
   },
   {
@@ -314,9 +329,33 @@ var conditions = [
     statisticsParameteresRelated: [14,15,16,17],
     likelihoodRatio: 1,
     prevalenceValue: 0.5,
-    posteriorDistribution: 2,
+    posteriorDistribution: 0.5,
     color: "darkslateblue",
   },
+  {
+    name: "Diabetes Mellitus",
+    statisticsParameteresRelated: [19,20],
+    likelihoodRatio: 1,
+    prevalenceValue: 14,
+    posteriorDistribution: 14,
+    color: "rgb(102, 30, 52)",
+  },
+  {
+    name: "FBS > 125 mg/dL",
+    statisticsParameteresRelated: [18],
+    likelihoodRatio: 1,
+    prevalenceValue: 14,
+    posteriorDistribution: 14,
+    color: "rgb(102, 30, 52)",
+  },
+  {
+    name: "Gestational Diabetes",
+    statisticsParameteresRelated: [21],
+    likelihoodRatio: 1,
+    prevalenceValue: 14,
+    posteriorDistribution: 14,
+    color: "rgb(102, 30, 52)",
+  }
 ];
 
 var measurements = [
