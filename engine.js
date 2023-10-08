@@ -405,6 +405,7 @@ function engineMain() {
   potassiumMain();
   thyroidMain();
   diabetesMain();
+  kidneyMain()
   dyslipidemia();
   pbsMain();
   // iron_profile();

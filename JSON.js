@@ -295,7 +295,37 @@ var statistics = [
     currentCutoffIndex: 0,
     color: "rgb(102, 30, 52)",
     reference: "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3075530/",
-  }
+  },
+  {
+    name: "hba1cGDMFirstTrimester",
+    labItemName: "HbA1c",
+    conditionName: "GDM",
+    conditionIndex: 6,
+    cutoffs: [5.35],
+    lessIsBad: false,
+    sensitivities: [0.8],
+    specificities: [0.8],
+    myDataIndex: 36,
+    currentLikelihoodRatio: 1,
+    currentCutoffIndex: 0,
+    color: "rgb(102, 30, 52)",
+    reference: "https://pubmed.ncbi.nlm.nih.gov/30858937/",
+  },
+  {
+    name: "hba1cGDMSecondTrimester",
+    labItemName: "HbA1c",
+    conditionName: "GDM",
+    conditionIndex: 7,
+    cutoffs: [5.75],
+    lessIsBad: false,
+    sensitivities: [0.97],
+    specificities: [0.96],
+    myDataIndex: 36,
+    currentLikelihoodRatio: 1,
+    currentCutoffIndex: 0,
+    color: "rgb(102, 30, 52)",
+    reference: "https://pubmed.ncbi.nlm.nih.gov/30858937/",
+  },
 
 ];
 
@@ -349,11 +379,19 @@ var conditions = [
     color: "rgb(102, 30, 52)",
   },
   {
-    name: "Gestational Diabetes",
-    statisticsParameteresRelated: [21],
+    name: "Gestational Diabetes", // from first trimester HbA1c
+    statisticsParameteresRelated: [19],
     likelihoodRatio: 1,
-    prevalenceValue: 14,
-    posteriorDistribution: 14,
+    prevalenceValue: 14.7,
+    posteriorDistribution: 14.7,
+    color: "rgb(102, 30, 52)",
+  },
+  {
+    name: "Gestational Diabetes", // 
+    statisticsParameteresRelated: [20],
+    likelihoodRatio: 1,
+    prevalenceValue: 14.7,
+    posteriorDistribution: 14.7,
     color: "rgb(102, 30, 52)",
   }
 ];

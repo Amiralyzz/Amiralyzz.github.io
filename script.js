@@ -22,8 +22,10 @@ var ageGroupsArray = [
 ];
 var selectedAgeGroupIndex = 12;
 var selectedAgeGroup = "adult";
-var pregnancySituation = 0; //0 for not pregnant
-var lastPregnancySituation = 0;
+var pregnancyStatus = 0; //0 for not pregnant
+var lastPregnancyStatus = 0;
+var globalSBP = 120;
+var globalDBP = 80;
 var globalVolumeStatus = 0; //-1 hypo , +1 hyper , 0 euvolumic
 var globalSmokingStatus = 0; //-1 former, +1 smoker, 0 never
 var globalDiureticStatus = 0; // 0 no 1 yes
@@ -117,7 +119,7 @@ function summaryMaker() {
   ageString += " old ";
   let summary =
     ageString +
-    pregnancyString[pregnancySituation] +
+    pregnancyString[pregnancyStatus] +
     genderString[genderCoef / 2];
   document.getElementById("patientSummary").innerHTML = summary;
   patient[0].signs[3][45] = 0;
@@ -153,7 +155,7 @@ function gender() {
     document.getElementById("gen_logo").alt = "female";
     genderCoef = 2;
     if (ageNumber > 12 && ageUnit == "year") {
-      pregnancySituation = lastPregnancySituation;
+      pregnancyStatus = lastPregnancyStatus;
       document.getElementById("preg").disabled = false;
     }
   } else {
@@ -162,8 +164,8 @@ function gender() {
     document.getElementById("gen_logo").src = malelogo;
     document.getElementById("gen_logo").alt = "male";
     genderCoef = 0;
-    lastPregnancySituation = pregnancySituation;
-    pregnancySituation = 0;
+    lastPregnancyStatus = pregnancyStatus;
+    pregnancyStatus = 0;
   }
   refresh();
 }
@@ -172,16 +174,16 @@ function pregnancy() {
   let pregnancyVal = document.getElementById("preg").value;
   switch (pregnancyVal) {
     case "notPregnant":
-      pregnancySituation = 0;
+      pregnancyStatus = 0;
       break;
     case "firstTrimester":
-      pregnancySituation = 1;
+      pregnancyStatus = 1;
       break;
     case "secondTrimester":
-      pregnancySituation = 2;
+      pregnancyStatus = 2;
       break;
     case "thirdTrimester":
-      pregnancySituation = 3;
+      pregnancyStatus = 3;
       break;
     default:
   }
@@ -198,8 +200,8 @@ function ageCalc() {
     ageNumber = 0;
   }
   if (ageUnit == "day") {
-    lastPregnancySituation = pregnancySituation;
-    pregnancySituation = 0;
+    lastPregnancyStatus = pregnancyStatus;
+    pregnancyStatus = 0;
     document.getElementById("preg").disabled = true;
     if (ageNumber > 60) {
       ageTextbox.value = 60;
@@ -218,8 +220,8 @@ function ageCalc() {
     globalAgeMonths = Math.floor(ageNumber / 30);
   }
   if (ageUnit == "mon") {
-    lastPregnancySituation = pregnancySituation;
-    pregnancySituation = 0;
+    lastPregnancyStatus = pregnancyStatus;
+    pregnancyStatus = 0;
     document.getElementById("preg").disabled = true;
     if (ageNumber < 1) {
       ageTextbox.value = 1;
@@ -251,8 +253,8 @@ function ageCalc() {
     }
     globalAgeYears = ageNumber;
     if (ageNumber < 12) {
-      lastPregnancySituation = pregnancySituation;
-      pregnancySituation = 0;
+      lastPregnancyStatus = pregnancyStatus;
+      pregnancyStatus = 0;
       document.getElementById("preg").disabled = true;
     } else if (genderCoef == 2) {
       document.getElementById("preg").disabled = false;
@@ -329,16 +331,16 @@ function refresh() {
 function rangeMaker(key) {
   patient[0].signs[4][42] = "Diuretic use";
   let pregKey = "";
-  if (pregnancySituation == 1) {
+  if (pregnancyStatus == 1) {
     pregKey = "firstTrim";
-  } else if (pregnancySituation == 2) {
+  } else if (pregnancyStatus == 2) {
     pregKey = "secondTrim";
-  } else if (pregnancySituation == 3) {
+  } else if (pregnancyStatus == 3) {
     pregKey = "thirdTrim";
   }
   for (let labItem of labItems) {
     if (
-      pregnancySituation != 0 &&
+      pregnancyStatus != 0 &&
       labItem["firstTrim"] != "" &&
       labItem["secondTrim"] != "" &&
       labItem["thirdTrim"] != ""
@@ -643,6 +645,8 @@ function bloodPressure() {
     DBP = SBP;
     DBPTextbox.value = SBP;
   }
+  globalSBP = SBP;
+  globalDBP = DBP;
   patient[0].signs[4][401] = "Blood Pressure";
   patient[0].signs[3][401] = undefined;
   if (SBP != 0 && DBP != 0) {

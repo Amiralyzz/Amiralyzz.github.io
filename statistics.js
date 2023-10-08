@@ -49,30 +49,31 @@ function conditionMaker(conditionIndex) {
 function statisticsMaker(parameterIndex) {
   let value = 0;
   let statisticsItem = statistics[parameterIndex];
-  let enteredStatus;
+  let enteredStatus = 0;
   let mydataItem = {};
   if (statisticsItem.myDataIndex >= 0) {
     mydataItem = labItems[statisticsItem.myDataIndex];
-    enteredStatus = mydataItem.entered;
+    enteredStatus = Number(mydataItem.entered);
   } else {
     mydataItem = measurements[statisticsItem.myDataIndex * -1];
-    enteredStatus = mydataItem.used;
-    if (enteredStatus) {
+    usedStatus = mydataItem.used;
+    if (usedStatus) {
       enteredStatus = 1;
     } else {
       enteredStatus = 0;
     }
   }
-  value = mydataItem.value;
+  
+  value = Number(mydataItem.value);
   if (enteredStatus == 1) {
     patient[0].statistics[0][parameterIndex] = statisticsCalc(parameterIndex);
     patient[0].statistics[1][parameterIndex] = statistics[parameterIndex].color;
-    return 1;
+    return true;
   } else {
     statistics[parameterIndex].currentLikelihoodRatio = 1;
     patient[0].statistics[0][parameterIndex] = undefined;
     patient[0].statistics[1][parameterIndex] = undefined;
-    return 0;
+    return false;
   }
 }
 

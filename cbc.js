@@ -706,7 +706,7 @@ function wbcDDxDecider() {
       monocytosisDDx.push("ET");
     }
   }
-  if (pregnancySituation != 0) {
+  if (pregnancyStatus != 0) {
     mildLeukocytosisDDx.unshift("Pregnancy");
     neutrophiliaDDx.unshift("Pregnancy");
   }
