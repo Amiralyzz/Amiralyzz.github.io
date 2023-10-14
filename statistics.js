@@ -9,7 +9,6 @@ function prevalenceChange() {
 function posteriorCalc(ind) {
   // let conditionIndex = statistics[ind].conditionIndex;
   let conditionIndex = ind;
-  console.log("condition id = " + ind);
   let prevalenceValue = conditions[conditionIndex].prevalenceValue;
   let currentLikelihoodRatio = 1;
   let parameters = conditions[conditionIndex].statisticsParameteresRelated;
@@ -70,6 +69,7 @@ function statisticsMaker(parameterIndex) {
     patient[0].statistics[1][parameterIndex] = statistics[parameterIndex].color;
     return true;
   } else {
+    console.log("no Hb");
     statistics[parameterIndex].currentLikelihoodRatio = 1;
     patient[0].statistics[0][parameterIndex] = undefined;
     patient[0].statistics[1][parameterIndex] = undefined;

@@ -118,9 +118,7 @@ function summaryMaker() {
   if (Number(ageNumber) > 1) ageString += "s";
   ageString += " old ";
   let summary =
-    ageString +
-    pregnancyString[pregnancyStatus] +
-    genderString[genderCoef / 2];
+    ageString + pregnancyString[pregnancyStatus] + genderString[genderCoef / 2];
   document.getElementById("patientSummary").innerHTML = summary;
   patient[0].signs[3][45] = 0;
 }
@@ -460,7 +458,6 @@ function volume() {
     patient[0].signs[3][45] = -1;
     patient[0].signs[3][46] = 0;
     patient[0].signs[3][411] = 1;
-
   }
   if (volumeStatus == "hypervolumic") {
     globalVolumeStatus = 1;
@@ -479,7 +476,7 @@ function smoke() {
 }
 function diuretic() {
   let diureticStatus = document.getElementById("diuretic").value;
-  patient[0].signs[4][42] = "Diuretic use"
+  patient[0].signs[4][42] = "Diuretic use";
   if (diureticStatus == "no") {
     globalDiureticStatus = 0;
     patient[0].signs[3][42] = 0;
@@ -511,7 +508,9 @@ function diabetes() {
   refresh();
 }
 function hepaticEncephalopathy() {
-  let encephalopathyStatus = document.getElementById("hepaticEncephalopathy").value;
+  let encephalopathyStatus = document.getElementById(
+    "hepaticEncephalopathy"
+  ).value;
   if (encephalopathyStatus == "no") {
     globalHepaticEncephalopathy = 0;
   }
@@ -524,14 +523,13 @@ function nineAlphaFludrocortisone() {
   let cortisoneUse = document.getElementById("9a-Fludrocortisone").value;
   if (cortisoneUse == "notUsing") {
     global9afludrocortisone = 0;
-    console.log('not using');
+    console.log("not using");
   }
   if (cortisoneUse == "using") {
     global9afludrocortisone = 1;
-    console.log('using');
+    console.log("using");
   }
   refresh();
-  
 }
 function startup() {
   patient[0].signs[3][42] = 0; //diuretic
@@ -539,25 +537,40 @@ function startup() {
   patient[0].signs[3][46] = 0; //hyper or not
   patient[0].signs[4][411] = 0; //hypo or not
   patient[0].signs[3][401] = 0; //BP
-  patient[0].signs[4][2] == 0 //diff entered or not
+  patient[0].signs[4][2] == 0; //diff entered or not
 }
 
 function bmiCalc() {
   let bmi = 0;
   let bsa = 0;
+  let bsa2 = 0;
   if (gloalWeightGram <= 0) gloalWeightGram = 0;
   if (globalHeightCm > 0) {
     measurements[0].used = true;
     measurements[23].used = true;
+    measurements[24].used = true;
     bmi =
       gloalWeightGram / 1000 / (globalHeightCm / 100) / (globalHeightCm / 100);
     bsa = Math.sqrt(((gloalWeightGram / 1000) * globalHeightCm) / 3600);
+    if (genderCoef == 0) {
+      bsa2 =
+      0.000579479  *
+        Math.pow(gloalWeightGram / 1000, 0.38) *
+        Math.pow(globalHeightCm, 1.24);
+    } else {
+      bsa2 =
+        0.000975482 *
+        Math.pow(gloalWeightGram / 1000, 0.46) *
+        Math.pow(globalHeightCm, 1.08);
+    }
   } else {
     measurements[0].used = false;
     measurements[23].used = false;
+    measurements[24].used = false;
   }
   measurements[0].value = bmi.toFixed(1);
   measurements[23].value = bsa.toFixed(3);
+  measurements[24].value = bsa2.toFixed(3);
 }
 
 function tooltip() {
@@ -635,6 +648,7 @@ function measurementsCalc() {
   naCalc();
   ttkgCalc();
   caCrCalc();
+  osmGapCalc();
 }
 function bloodPressure() {
   let SBPTextbox = document.getElementById("SBP");
@@ -660,7 +674,7 @@ function caCrCalc() {
   let urineCaEntered = Number(labItems[83].entered);
   let urineCr = Number(labItems[84].value);
   let urineCrEntered = Number(labItems[84].entered);
-  if (urineCaEntered + urineCrEntered  == 2) {
+  if (urineCaEntered + urineCrEntered == 2) {
     let caCrRatio = urineCa / urineCr;
     measurements[27].value = caCrRatio.toFixed(2);
     measurements[27].used = true;
@@ -717,20 +731,41 @@ function oxygenCalc() {
     measurements[22].used = false;
   }
 }
+function osmGapCalc() {
+  let na = Number(labItems[32].value);
+  let bun = Number(labItems[31].value);
+  let glucose = Number(labItems[35].value); 
+  let plasmaOsm = Number(labItems[85].value); 
+  let naEntered = labItems[32].entered;
+  let bunEntered = labItems[31].entered;
+  let glucoseEntered = labItems[35].entered;
+  let plasmaOsmEntered = labItems[85].entered;
+  if(naEntered + bunEntered + glucoseEntered == 3) {
+    let calculatedOsm = na * 2 + (glucose/18) + (bun/2.8);
+    let osmGap = plasmaOsm - calculatedOsm;
+    measurements[28].used = true;
+    measurements[28].value = osmGap.toFixed(2);
+  } else {
+    measurements[28].used = false;
+  }
+}
 function anionGapCalc() {
-  let na = labItems[32].value;
-  let k = labItems[33].value;
-  let ph = labItems[87].value;
-  let hco3 = labItems[88].value;
-  let paco2 = labItems[89].value;
-  let cl = labItems[90].value;
+  let na = Number(labItems[32].value);
+  let naEntered = labItems[32].entered;
+  let k = Number(labItems[33].value);
+  let ph = Number(labItems[87].value);
+  let hco3 = Number(labItems[88].value);
+  let hco3Entered = labItems[88].entered;
+  let paco2 = Number(labItems[89].value);
+  let cl = Number(labItems[90].value);
+  let clEntered = labItems[90].entered;
   let baseExcess = 0.02786 * paco2 * 10 ** (ph - 6.1) + 13.77 * ph - 124.58;
   let deltaAnionGap = 0;
   let deltaHco3 = 25 - hco3;
   if (deltaHco3 == 0) deltaHco3 = 0.1;
   let anionGap = 0,
     anionGapPotassium = 0;
-  if (na != 0 && hco3 != 0 && cl != 0) {
+  if (naEntered != 0 && hco3Entered != 0 && clEntered != 0) {
     anionGap = na - (cl + hco3);
     deltaAnionGap = anionGap - 12;
     anionGapPotassium = na + k - (cl + hco3);
@@ -808,17 +843,18 @@ function wbcCalc() {
   measurements[13].value = (0.01 * eosVal * wbcTotalVal).toFixed(1);
   measurements[14].value = (0.01 * basVal * wbcTotalVal).toFixed(1);
   measurements[15].value = (0.01 * bandVal * wbcTotalVal).toFixed(1);
-  if (!measurements[10].used &&
-      !measurements[11].used &&
-      !measurements[12].used &&
-      !measurements[13].used &&
-      !measurements[14].used &&
-      !measurements[15].used
-    ) {
-      patient[0].signs[4][2] = 0;
-    } else {
-      patient[0].signs[4][2] = 1;
-    }
+  if (
+    !measurements[10].used &&
+    !measurements[11].used &&
+    !measurements[12].used &&
+    !measurements[13].used &&
+    !measurements[14].used &&
+    !measurements[15].used
+  ) {
+    patient[0].signs[4][2] = 0;
+  } else {
+    patient[0].signs[4][2] = 1;
+  }
 }
 
 function checkIfWBCDiffsAreLessThanHundred() {
