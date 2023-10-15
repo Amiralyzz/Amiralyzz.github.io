@@ -116,7 +116,7 @@ function diabetesControl() {
   let referenceHTML =
     "<a target='_blank' href='" +
     hba1cTargetReference +
-    "'><img src='https://cdn-icons-png.flaticon.com/128/1323/1323734.png' alt='Reference' class='referenceIcon'></a>";
+    "'><img src='/Art/link.png' alt='Reference' class='referenceIcon'></a>";
   if (HbA1cEntered == 1) {
     if (HbA1c > 7) {
       patient[0].signs[0][51] =
@@ -316,7 +316,7 @@ function preEclampsiaMain() {
     let referenceHTML =
       "<a target='_blank' href='" +
       preEclampsiaReference +
-      "'><img src='https://cdn-icons-png.flaticon.com/128/1323/1323734.png' alt='Reference' class='referenceIcon'></a>";
+      "'><img src='/Art/link.png' alt='Reference' class='referenceIcon'></a>";
     patient[0].signs[0][420] = "PreEclampsia " + referenceHTML;
     patient[0].signs[1][420] =
       "> 20 weeks of Gestation + new onset HTN " +

@@ -15,6 +15,27 @@ const resourcesToPrecache = [
   "abg.js",
   "metabolic.js",
   "appIcon.png",
+  "/Art/abg.png",
+  "/Art/analysis.png",
+  "/Art/bio.png",
+  "/Art/cbc.png",
+  "/Art/clinical.png",
+  "/Art/critical.png",
+  "/Art/ebm.png",
+  "/Art/female.png",
+  "/Art/high.png",
+  "/Art/kft.png",
+  "/Art/lft.png",
+  "/Art/link.png",
+  "/Art/low.png",
+  "/Art/male.png",
+  "/Art/measurements.png",
+  "/Art/normal.png",
+  "/Art/pbs.png",
+  "/Art/pin.png",
+  "/Art/search.png",
+  "/Art/tft.png",
+  "/Art/unpin.png"
 ];
 
 // Register the service worker

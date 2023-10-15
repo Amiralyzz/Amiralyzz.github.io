@@ -91,7 +91,7 @@ function analyseTab() {
   measurements_parent.className = "measurements_parent";
   parentElement.appendChild(measurements_parent);
   measurements_parent.innerHTML =
-    "<img src='https://cdn-icons-png.flaticon.com/128/1225/1225656.png'  class='logo_table'  alt='measure'/> Found Measurements: ";
+    "<img src='/Art/measurements.png'  class='logo_table'  alt='measure'/> Found Measurements: ";
   for (i = 0; i < measurements.length; i++) {
     try {
       if (measurements[i].used) {
@@ -142,7 +142,7 @@ function analyseTab() {
   findings_parent.className = "findings_parent";
   parentElement.appendChild(findings_parent);
   findings_parent.innerHTML =
-    "<img src='https://cdn-icons-png.flaticon.com/128/4251/4251962.png'  class='logo_table'  alt='guideline'/> Findings based on Clinical Guidelines: ";
+    "<img src='/Art/clinical.png'  class='logo_table'  alt='guideline'/> Findings based on Clinical Guidelines: ";
   for (i = 0; i < patient[0].signs[0].length; i++) {
     var signs_section = document.createElement("div");
     signs_section.className = "signs_section";
@@ -164,7 +164,7 @@ function analyseTab() {
   statisticsParent.className = "statisticsParent";
   parentElement.appendChild(statisticsParent);
   statisticsParent.innerHTML =
-    "<div style='display: block'> <img src='https://cdn-icons-png.flaticon.com/128/9596/9596720.png'  class='logo_table'  alt='ebm'/> Evidence Based Statistics: </div>";
+    "<div style='display: block'> <img src='/Art/ebm.png'  class='logo_table'  alt='ebm'/> Evidence Based Statistics: </div>";
   for (let i = 0; i < patient[0].statistics[0].length; i++) {
     var statisticsEntry = document.createElement("div");
     statisticsEntry.className = "statisticsEntry";
@@ -177,7 +177,7 @@ function analyseTab() {
       let referenceHTML =
         "<a target='_blank' href='" +
         reference +
-        "'><img src='https://cdn-icons-png.flaticon.com/128/1323/1323734.png' alt='Reference' class='referenceIcon'></a>";
+        "'><img src='/Art/link.png' alt='Reference' class='referenceIcon'></a>";
       statisticsFirstLabel.innerHTML =
         patient[0].statistics[0][i] + referenceHTML + "<br>";
       statisticsEntry.appendChild(statisticsFirstLabel);
@@ -269,7 +269,7 @@ function buildUsualEntry(index) {
 
     var warn_icon = document.createElement("img");
     warn_icon.className = "warning_icon";
-    warn_icon.src = "https://cdn-icons-png.flaticon.com/128/595/595067.png";
+    warn_icon.src = "/Art/critical.png";
     warn_icon.style.display = "none";
     new_output_frame.appendChild(warn_icon);
 
@@ -464,7 +464,7 @@ function labelMaker(entry) {
 function pinButtonMaker(index, entryId) {
   var pinButton = document.createElement("img");
   pinButton.className = "add";
-  pinButton.src = "https://cdn-icons-png.flaticon.com/512/2972/2972186.png";
+  pinButton.src = "/Art/pin.png";
   pinButton.id = index;
   pinButton.onclick = addSearch;
   document.getElementById(entryId).appendChild(pinButton);
@@ -473,7 +473,7 @@ function pinButtonMaker(index, entryId) {
 function unpinButtonMaker(index, entryId) {
   var rem_button = document.createElement("img");
   rem_button.className = "rem";
-  rem_button.src = "https://cdn-icons-png.flaticon.com/128/6342/6342193.png";
+  rem_button.src = "/Art/unpin.png";
   rem_button.id = index;
   document.getElementById(entryId).appendChild(rem_button);
   rem_button.onclick = removeSearch;

@@ -838,11 +838,11 @@ h1 {
 }
 
 .rem:hover {
-  transform: scale(1.5) translateY(-10px);
+  transform: scale(1.5) translateY(-4px);
 }
 
 .rem:active {
-  transform: scale(1.7) translateY(-15px);
+  transform: scale(1.7) translateY(-7px);
 }
 
 select {

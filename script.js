@@ -35,13 +35,9 @@ var globalDiabetesHistory = 0; //0 no 1 yes
 var global9afludrocortisone = 0; //0 not using 1 using
 var selectedTabId = "test_types_cbc";
 var selectedLabType = "cbc";
-var lowIcon = "https://cdn-icons-png.flaticon.com/128/8532/8532500.png";
-var highIcon = "https://cdn-icons-png.flaticon.com/128/8532/8532463.png";
-var sup_low_icon =
-  "https://www.iconsdb.com/icons/download/red/arrow-211-512.png";
-var sup_high_icon =
-  "https://www.iconsdb.com/icons/download/red/arrow-149-512.png";
-var normalIcon = "https://cdn-icons-png.flaticon.com/128/1722/1722017.png";
+var lowIcon = "/Art/low.png";
+var highIcon = "/Art/high.png";
+var normalIcon = "/Art/normal.png";
 
 var searchbar_show = "none";
 
@@ -141,8 +137,8 @@ function expandInfo() {
 }
 
 function gender() {
-  let malelogo = "https://cdn-icons-png.flaticon.com/512/3001/3001764.png";
-  let femalelogo = "https://cdn-icons-png.flaticon.com/512/2922/2922561.png";
+  let malelogo = "/Art/male.png";
+  let femalelogo = "/Art/female.png";
   let ageTextbox = document.getElementById("age");
   let ageUnitSelected = document.getElementById("age_unit");
   let ageNumber = Number(ageTextbox.value);
