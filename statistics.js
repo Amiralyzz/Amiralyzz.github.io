@@ -69,7 +69,6 @@ function statisticsMaker(parameterIndex) {
     patient[0].statistics[1][parameterIndex] = statistics[parameterIndex].color;
     return true;
   } else {
-    console.log("no Hb");
     statistics[parameterIndex].currentLikelihoodRatio = 1;
     patient[0].statistics[0][parameterIndex] = undefined;
     patient[0].statistics[1][parameterIndex] = undefined;

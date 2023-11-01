@@ -288,7 +288,51 @@ function isPolycytemia() {
   }
   return false;
 }
-
+function polycythemiaMain() {
+  patient[0].signs[0][12] = undefined;
+  patient[0].signs[1][12] = undefined;
+  patient[0].signs[2][12] = "darkslateblue";
+  let path = "";
+  if (isPolycytemia()) {
+    path = "high Hb";
+    let polycthemiaDDxArray = [
+      "Polycythemia Vera",
+      "Primary familial and congenital polycythemia",
+      "High altitude",
+      "Respiratory disorders",
+      "Elevated carboxyhemoglobin (eg. smoking)",
+      "Cyanotic heart diseases",
+      "Renal disorders",
+      "Hemoglobinopathies",
+      "EPO-secreting tumors",
+      "Iatrogenic causes",
+    ];
+    if (globalVolumeStatus == -1)
+      polycthemiaDDxArray.unshift("Severe Dehydration");
+    if (
+      genderCoef == 0 ||
+      isHypertension() ||
+      globalSmokingStatus != 0 ||
+      globalDiabetesHistory == 1
+    ) {
+      polycthemiaDDxArray.push("Gaisbock Syndrome (stress polycythemia)");
+    }
+    try {
+      signMaker(
+        listMaker(polycthemiaDDxArray, "Polycythemia"),
+        path, //path
+        12,
+        "darkslateblue"
+      );
+    } catch {
+      patient[0].signs[0][12] = undefined;
+      patient[0].signs[1][12] = undefined;
+    }
+  } else {
+    patient[0].signs[0][12] = undefined;
+    patient[0].signs[1][12] = undefined;
+  }
+}
 function isPancytopenia() {
   patient[0].signs[4][1] = "Pancytopenia";
   let wbc = Number(labItems[0].value);
@@ -333,6 +377,79 @@ function isThrombocytosis() {
   return false;
 }
 
+function plateletMain() {
+  let giantPlt = Number(labItems[106].value);
+  let INR = Number(labItems[108].value);
+  let INRMax = Number(labItems[108].max);
+  let INREntered = labItems[108].entered;
+  let albumin = Number(labItems[19].value);
+  let albuminMin = Number(labItems[19].min);
+  let giantPltEntered = labItems[106].entered;
+  let albuminEntered = labItems[19].entered;
+  let ddxArray = [];
+  patient[0].signs[0][13] = undefined;
+  patient[0].signs[1][13] = undefined;
+  if (isThrombocytopenia()) {
+    if (giantPltEntered == 1 && giantPlt > 1) {
+      ddxArray.push(
+        "ITP",
+        "Bernard-Soulier syndrome",
+        "Hereditary macrothrombocytopenia"
+      );
+    } else {
+      if (globalVolumeStatus == -1) ddxArray.push("Dehydration");
+      if (patient[0].signs[3][11] == 1)
+        ddxArray.push("B12 or Folate Deficiency");
+      if (
+        isLiverEnzymesTwiced() ||
+        (albuminEntered == 1 && albumin < albuminMin)
+      ) {
+        if (isAnemia() && genderCoef == 2 && pregnancyStatus != 0) {
+          ddxArray.push("HELLP syndrome");
+        }
+        ddxArray.push("Liver Failure (low thrombopoietin)");
+      }
+
+      if (INREntered == 1 && INR > INRMax) {
+        ddxArray.push("DIC");
+      }
+      if (isCrRise()) {
+        ddxArray.push("TTP", "HUS");
+      }
+      if (isAnemia()) {
+        ddxArray.push("TTP", "HUS", "Aplastic Anemia", "Leukemia");
+      }
+      if (isPancytopenia()) {
+        ddxArray.push("MDS", "Leukemia");
+      }
+      ddxArray.push(
+        "Assay Interference",
+        "ITP",
+        "Infection",
+        "Sepsis",
+        "Bernard-Soulier syndrome",
+        "Hypersplenism",
+        "SLE",
+        "Medication",
+        "TTP",
+        "HUS",
+        "DIC"
+      );
+    }
+    let path = "low Platelet count";
+    try {
+      signMaker(
+        listMaker(arrayDuplicateRemover(ddxArray), "Thrombocytopenia"),
+        path,
+        13,
+        "rgb(83, 102, 30)"
+      );
+    } catch {
+      patient[0].signs[0][13] = undefined;
+      patient[0].signs[1][13] = undefined;
+    }
+  }
+}
 function anemiaType() {
   let Hb = Number(labItems[2].value);
   let MCV = Number(labItems[3].value);
@@ -361,8 +478,8 @@ function anemiaType() {
 
   if (Hb >= HbMin) {
     path += "Hb > " + HbMin;
-    patient[0].signs[0][2] = "no anemia";
-    patient[0].signs[1][2] = path;
+    patient[0].signs[0][2] = undefined;
+    patient[0].signs[1][2] = undefined;
     return false; //no anemia
   }
 
@@ -586,7 +703,7 @@ function wbcAnalysis(path) {
     try {
       signMaker(
         listMaker(arrayDuplicateRemover(wbcDDxDecider()), "Leukocytosis"),
-        path, 
+        path,
         0,
         "rgb(61, 92, 139)"
       );

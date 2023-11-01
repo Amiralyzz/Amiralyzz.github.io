@@ -260,6 +260,13 @@ function kidneyMain() {
   isProteinuria();
   preEclampsiaMain();
 }
+function isCrRise() {
+  let creatinine = Number(labItems[30].value);
+  let creatinineMax = Number(labItems[30].max);
+  let creatinineEntered = labItems[30].max;
+  if(creatinineEntered == 1 && creatinine>creatinineMax) return true;
+  return false;
+}
 function isProteinuria() {
   let urineProtein = Number(labItems[80].value);
   let urineProteinEntered = labItems[80].value;
@@ -269,20 +276,6 @@ function isProteinuria() {
   return false;
 }
 function hba1cStatistics() {
-  let FBSEntered = labItems[35].entered;
-  let HbA1cEntered = labItems[36].entered;
-  if (pregnancyStatus == 0) {
-    if (FBSEntered == 0) {
-      conditionMaker(5);
-    } else{
-      patient[0].statistics[0][18] = undefined;
-      if (isDiabetes()) {
-        patient[0].statistics[0][19] = undefined;
-        patient[0].statistics[0][20] = undefined;
-        return 0;
-      }
-    }
-  }
   if (pregnancyStatus == 1) {
     conditionMaker(6); //GDM first trimester
   } else {
@@ -326,11 +319,15 @@ function preEclampsiaMain() {
       liverPath;
   }
 }
+function isHypertension() {
+  if (globalSBP >= 140 || globalDBP >= 90) return true;
+  return false;
+}
 function isPreEclampsia() {
   let creatinine = Number(labItems[30].value);
   let urineProtein = Number(labItems[80].value);
   if (pregnancyStatus > 1) {
-    if (globalSBP >= 140 || globalDBP >= 90) {
+    if (isHypertension()) {
       if (
         urineProtein > 300 ||
         isThrombocytopenia() ||

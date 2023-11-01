@@ -233,8 +233,8 @@ function engineMain() {
   kidneyMain()
   dyslipidemia();
   pbsMain();
-  // iron_profile();
-  
+  polycythemiaMain();
+  plateletMain();
 }
 
 function listMaker(array, condition) {
