@@ -194,7 +194,14 @@ function diabetesControl() {
       }
     }
   }
-  let text = "Diabetes Management Targets <ul>" + FBSText + OGTTText + TGText + LDLText + HDLText + "</ul>";
+  let text =
+    "Diabetes Management Targets <ul>" +
+    FBSText +
+    OGTTText +
+    TGText +
+    LDLText +
+    HDLText +
+    "</ul>";
   let path = FBSPath + OGTTPath + TGPath + LDLPath + HDLPath;
   patient[0].signs[0][52] = text;
   patient[0].signs[1][52] = path;
@@ -260,11 +267,102 @@ function kidneyMain() {
   isProteinuria();
   preEclampsiaMain();
 }
+function baseCrAnalysis() {
+  let crEntered = labItems[30].entered;
+  let baseCr = globalBaseCr;
+  measurements[29].used = false;
+  measurements[30].used = false;
+  measurements[31].used = false;
+  if (!globalBaseCrEntered) {
+    if (crEntered == 1 && globalCKDHistory == 0) {
+      akiAnalyse();
+    }
+    return 0;
+  }
+  measurements[31].used = true;
+  measurements[31].value = gfrCKD(baseCr).toFixed(2);
+  if (crEntered == 1) {
+    let currentCr = Number(labItems[30].value);
+    let percentIncrease = (currentCr / baseCr - 1) * 100;
+    let difference = currentCr - baseCr;
+    measurements[29].used = true;
+    measurements[30].used = true;
+    measurements[29].value = percentIncrease.toFixed(0);
+    measurements[30].value = difference.toFixed(2);
+    if (globalCKDHistory == 0) akiAnalyse();
+    if (globalCKDHistory == 1) ckdAnalyse();
+  }
+  return false;
+}
+function ckdAnalyse() {
+  let crDif = measurements[30].value;
+  patient[0].signs[0][421] = undefined;
+  patient[0].signs[1][421] = undefined;
+  patient[0].signs[2][421] = "rgb(128, 70, 32)";
+  let path = "";
+  if(crDif >= 0.3) {
+    path = "Cr increased &ge; 0.3";
+    patient[0].signs[0][421] = "Acute on Chronic Kidney Injury";
+    patient[0].signs[1][421] = path;
+    return 0;
+  }
+}
+function akiAnalyse() {
+  // ckd is off
+  let crPercent = measurements[29].value;
+  let crDif = measurements[30].value;
+  let currentCr = Number(labItems[30].value);
+  patient[0].signs[0][421] = undefined;
+  patient[0].signs[1][421] = undefined;
+  patient[0].signs[2][421] = "rgb(128, 70, 32)";
+  let path = "";
+  if (currentCr >= 4 && crDif >= 0.5) {
+    path = "Cr &ge; 4";
+    patient[0].signs[0][421] = "Acute Kidney Injury (RIFLE: Failure)";
+    patient[0].signs[1][421] = path;
+    return 0;
+  }
+  if(crPercent >= 200) {
+    path = "Cr rise &ge; ×3";
+    patient[0].signs[0][421] = "Acute Kidney Injury (RIFLE: Failure)";
+    patient[0].signs[1][421] = path;
+    return 0;
+  }
+  if(crPercent >= 100) {
+    path = "Cr rise &ge; ×2";
+    patient[0].signs[0][421] = "Acute Kidney Injury (RIFLE: Injury)";
+    patient[0].signs[1][421] = path;
+    return 0;
+  }
+  if(crPercent >= 50) {
+    path = "Cr rise &ge; ×1.5";
+    patient[0].signs[0][421] = "Acute Kidney Injury (RIFLE: Risk)";
+    patient[0].signs[1][421] = path;
+    return 0;
+  }
+  if(crDif >= 0.3) {
+    path = "Cr increased &ge; 0.3";
+    patient[0].signs[0][421] = "Acute Kidney Injury (RIFLE: Risk)";
+    patient[0].signs[1][421] = path;
+    return 0;
+  }
+  ckdCheck();
+  
+}
+function ckdCheck() {
+  patient[0].signs[0][422] = undefined;
+  patient[0].signs[1][422] = undefined;
+  patient[0].signs[2][422] = "rgb(128, 70, 32)";
+  if(measurements[6].value < 60) {
+    patient[0].signs[0][422] = "Probable CKD (GFR(MDRD) is " + measurements[6].value + " )";
+    patient[0].signs[1][422] = "GFR < 60";
+  }
+}
 function isCrRise() {
   let creatinine = Number(labItems[30].value);
   let creatinineMax = Number(labItems[30].max);
   let creatinineEntered = labItems[30].max;
-  if(creatinineEntered == 1 && creatinine>creatinineMax) return true;
+  if (creatinineEntered == 1 && creatinine > creatinineMax) return true;
   return false;
 }
 function isProteinuria() {

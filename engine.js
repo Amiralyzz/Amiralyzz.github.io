@@ -223,18 +223,19 @@ function engineMain() {
   lftEngine();
   viralMain();
   abgMain();
-  wbcMain();
   folateAndB12();
   isPancytopenia();
   sodiumMain();
   potassiumMain();
   thyroidMain();
   diabetesMain();
-  kidneyMain()
+  kidneyMain();
+  baseCrAnalysis();
   dyslipidemia();
   pbsMain();
   polycythemiaMain();
   plateletMain();
+  wbcMain();
 }
 
 function listMaker(array, condition) {

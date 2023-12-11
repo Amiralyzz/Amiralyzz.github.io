@@ -377,6 +377,17 @@ function isThrombocytosis() {
   return false;
 }
 
+function isIronDef() {
+  let iron = Number(labItems[40].value);
+  let ferritin = Number(labItems[41].value);
+  let ironMin = Number(labItems[40].min);
+  let ferritinMin = Number(labItems[41].min);
+  let ironEntered = labItems[40].entered;
+  let ferritinEntered = labItems[41].entered;
+  if (ferritinEntered == 1 && ferritin < ferritinMin) return true;
+  if (ironEntered == 1 && iron < ironMin) return true;
+  return false;
+}
 function plateletMain() {
   let giantPlt = Number(labItems[106].value);
   let INR = Number(labItems[108].value);
@@ -386,6 +397,8 @@ function plateletMain() {
   let albuminMin = Number(labItems[19].min);
   let giantPltEntered = labItems[106].entered;
   let albuminEntered = labItems[19].entered;
+  let blast = Number(labItems[73].value);
+  let blastEntered = labItems[73].entered;
   let ddxArray = [];
   patient[0].signs[0][13] = undefined;
   patient[0].signs[1][13] = undefined;
@@ -440,6 +453,33 @@ function plateletMain() {
     try {
       signMaker(
         listMaker(arrayDuplicateRemover(ddxArray), "Thrombocytopenia"),
+        path,
+        13,
+        "rgb(83, 102, 30)"
+      );
+    } catch {
+      patient[0].signs[0][13] = undefined;
+      patient[0].signs[1][13] = undefined;
+    }
+  }
+  if (isThrombocytosis()) {
+    if (blastEntered == 1 && blast > 10) ddxArray.push("CML");
+    if (isIronDef()) ddxArray.push("Iron deficiency");
+    if (isPolycytemia()) ddxArray.push("Polycythemia Vera");
+    if (isAnemia()) ddxArray.push("Primary Myelofibrosis");
+    ddxArray.push(
+      "Assay Interference",
+      "Infection",
+      "Tissue damage",
+      "chronic Inflammation",
+      "Essential Thrombocytosis",
+      "Primary Myelofibrosis",
+      "Malignancy"
+    );
+    let path = "high Platelet count";
+    try {
+      signMaker(
+        listMaker(arrayDuplicateRemover(ddxArray), "Thrombocytosis"),
         path,
         13,
         "rgb(83, 102, 30)"
@@ -635,11 +675,34 @@ function wbcMain() {
       }
     }
   } else {
-    console.log("sent");
     wbcAnalysis(path);
   }
 }
 
+function neutropeniaSeverity() {
+  let ANC = Number(measurements[10].value);
+  let ANCEntered = measurements[10].used;
+  if (ANCEntered && ANC < 1500) {
+    if(ANC > 1000) {
+      return 1;
+    } else if (ANC > 500) {
+      return 2;
+    } else if (ANC > 200) {
+      return 3;
+    } else {
+      return 4;
+    }
+  }
+  return false;
+}
+function isNeutropenia() {
+  let ANC = Number(measurements[10].value);
+  let ANCEntered = measurements[10].used;
+  if (ANCEntered && ANC < 1500) {
+    return true;
+  }
+  return false;
+}
 function isNeutrophilia() {
   let ANC = Number(measurements[10].value);
   let ANCEntered = measurements[10].used;
@@ -702,7 +765,7 @@ function wbcAnalysis(path) {
     path += "WBC > " + wbcMax;
     try {
       signMaker(
-        listMaker(arrayDuplicateRemover(wbcDDxDecider()), "Leukocytosis"),
+        listMaker(arrayDuplicateRemover(leukocytosisDDxDecider()), "Leukocytosis"),
         path,
         0,
         "rgb(61, 92, 139)"
@@ -713,12 +776,23 @@ function wbcAnalysis(path) {
     }
   } else if (wbcTotal < wbcMin) {
     path += "WBC < " + wbcMin;
-    patient[0].signs[0][0] = "Leukopenia";
-    patient[0].signs[1][0] = path;
+    try {
+      signMaker(
+        listMaker(arrayDuplicateRemover(leukopeniaDDxDecider()), "Leukopenia"),
+        path,
+        0,
+        "rgb(61, 92, 139)"
+      );
+    } catch {
+      patient[0].signs[0][0] = undefined;
+      patient[0].signs[1][0] = undefined;
+    }
+    
+
   }
 }
 
-function wbcDDxDecider() {
+function leukocytosisDDxDecider() {
   let wbcTotal = Number(labItems[0].value);
   let wbcMax = Number(labItems[0].max);
   let wbcMin = Number(labItems[0].min);
@@ -879,4 +953,26 @@ function wbcDDxDecider() {
     }
   }
   return ddxArray;
+}
+function leukopeniaDDxDecider() {
+  let wbcTotal = Number(labItems[0].value);
+  let wbcMin = Number(labItems[0].min);
+  let ddxArray = [];
+  let standardDDx = [
+    "Infections",
+    "Medications",
+    "Autoimmune Diseases",
+    "Hypersplenism",
+    "Leukemia",
+    "Lymphoma",
+    "Myelodysplasia",
+  ]
+  if(isAnemia()) {
+    standardDDx.push("Aplastic Anemia");
+  }
+  if(patient[0].signs[3][11] == 1) {
+    
+    standardDDx.unshift("B12 or folate deficiency");
+  }
+  return standardDDx;
 }

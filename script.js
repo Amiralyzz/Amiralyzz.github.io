@@ -32,6 +32,9 @@ var globalDiureticStatus = 0; // 0 no 1 yes
 var globalRespiratoryChronicity = 0; //0 acute 1 chronic
 var globalHepaticEncephalopathy = 0; //0 no 1 yes
 var globalDiabetesHistory = 0; //0 no 1 yes
+var globalCKDHistory = 0; //0 no 1 yes
+var globalBaseCrEntered = false;
+var globalBaseCr = 0;
 var global9afludrocortisone = 0; //0 not using 1 using
 var selectedTabId = "test_types_cbc";
 var selectedLabType = "cbc";
@@ -503,6 +506,28 @@ function diabetes() {
   }
   refresh();
 }
+function ckdHistory() {
+  let ckdStatus = document.getElementById("ckd").value;
+  if (ckdStatus == "no") {
+    globalCKDHistory = 0;
+  }
+  if (ckdStatus == "yes") {
+    globalCKDHistory = 1;
+  }
+  refresh();
+}
+function baseCr() {
+  let baseCrTextbox = document.getElementById("baseCr");
+  let baseCr = Number(baseCrTextbox.value);
+  if (baseCrTextbox.value === "" || baseCr <= 0) {
+    globalBaseCrEntered = false;
+  } else {
+    globalBaseCrEntered = true;
+    globalBaseCr = baseCr;
+  }
+  baseCrAnalysis();
+  refresh();
+}
 function hepaticEncephalopathy() {
   let encephalopathyStatus = document.getElementById(
     "hepaticEncephalopathy"
@@ -550,7 +575,7 @@ function bmiCalc() {
     bsa = Math.sqrt(((gloalWeightGram / 1000) * globalHeightCm) / 3600);
     if (genderCoef == 0) {
       bsa2 =
-      0.000579479  *
+        0.000579479 *
         Math.pow(gloalWeightGram / 1000, 0.38) *
         Math.pow(globalHeightCm, 1.24);
     } else {
@@ -730,14 +755,14 @@ function oxygenCalc() {
 function osmGapCalc() {
   let na = Number(labItems[32].value);
   let bun = Number(labItems[31].value);
-  let glucose = Number(labItems[35].value); 
-  let plasmaOsm = Number(labItems[85].value); 
+  let glucose = Number(labItems[35].value);
+  let plasmaOsm = Number(labItems[85].value);
   let naEntered = labItems[32].entered;
   let bunEntered = labItems[31].entered;
   let glucoseEntered = labItems[35].entered;
   let plasmaOsmEntered = labItems[85].entered;
-  if(naEntered + bunEntered + glucoseEntered == 3) {
-    let calculatedOsm = na * 2 + (glucose/18) + (bun/2.8);
+  if (naEntered + bunEntered + glucoseEntered == 3) {
+    let calculatedOsm = na * 2 + glucose / 18 + bun / 2.8;
     let osmGap = plasmaOsm - calculatedOsm;
     measurements[28].used = true;
     measurements[28].value = osmGap.toFixed(2);
@@ -878,13 +903,12 @@ function checkIfWBCDiffsAreLessThanHundred() {
 }
 
 function gfrCalc() {
-  let cr_val = labItems[30].value;
+  let creatinine = labItems[30].value;
   patient[0].signs[4][40] = "GFR";
-
-  if (cr_val == 0 || gloalWeightGram == 0) {
-    gfr_cg = 0;
-    gfr_mdrd = 0;
-    gfr_ckd = 0;
+  let gfr_cg = 0;
+  let gfr_mdrd = 0;
+  let gfr_ckd = 0;
+  if (creatinine == 0 || gloalWeightGram == 0) {
     measurements[5].used = false;
     measurements[6].used = false;
     measurements[7].used = false;
@@ -894,37 +918,19 @@ function gfrCalc() {
     measurements[5].used = true;
     measurements[6].used = true;
     measurements[7].used = true;
-    var coef_cg = 1; //for male
-    var coef_mdrd = 1;
-    var coef_ckd = 1;
-    var coef_ckd_k = 0.9;
-    var coef_ckd_a = -0.302;
+    let coef_cg = 1; //for male
+    let coef_mdrd = 1;
     if (genderCoef == 2) {
       //for female
       coef_cg = 0.85;
       coef_mdrd = 0.742;
-      coef_ckd = 1.012;
-      coef_ckd_k = 0.7;
-      coef_ckd_a = -0.241;
     }
     gfr_cg =
       ((140 - globalAgeYears) * (gloalWeightGram / 1000) * coef_cg) /
-      (72 * cr_val);
-    gfr_mdrd = 175 * cr_val ** -1.154 * globalAgeYears ** -0.203 * coef_mdrd;
-    var cr_to_k = cr_val / coef_ckd_k;
-    if (cr_to_k > 1) {
-      cr_to_k_min = 1;
-      cr_to_k_max = cr_to_k;
-    } else {
-      cr_to_k_min = cr_to_k;
-      cr_to_k_max = 1;
-    }
-    gfr_ckd =
-      142 *
-      cr_to_k_min ** coef_ckd_a *
-      cr_to_k_max ** -1.2 *
-      0.9938 ** globalAgeYears *
-      coef_ckd;
+      (72 * creatinine);
+    gfr_mdrd =
+      175 * creatinine ** -1.154 * globalAgeYears ** -0.203 * coef_mdrd;
+    gfr_ckd = gfrCKD(creatinine);
   }
   measurements[5].value = gfr_ckd.toFixed(3);
   measurements[6].value = gfr_mdrd.toFixed(3);
@@ -934,6 +940,36 @@ function gfrCalc() {
   } else {
     patient[0].signs[3][40] = 0;
   }
+}
+function gfrCKD(creatinine) {
+  if (creatinine == 0) return 0;
+  let GFR = 0; 
+  let coef = 1;
+  let coefK = 0.9;
+  let coefA = -0.302;
+  if (genderCoef == 2) {
+    //for female
+    coef = 1.012;
+    coefK = 0.7;
+    coefA = -0.241;
+  }
+  let crToK = creatinine / coefK;
+  let crToKMin = 0;
+  let crToKMax = 0;
+  if (crToK > 1) {
+    crToKMin = 1;
+    crToKMax = crToK;
+  } else {
+    crToKMin = crToK;
+    crToKMax = 1;
+  }
+  GFR =
+    142 *
+    crToKMin ** coefA *
+    crToKMax ** -1.2 *
+    0.9938 ** globalAgeYears *
+    coef;
+  return GFR;
 }
 function reticCalc() {
   var hct_val = labItems[4].value;

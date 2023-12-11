@@ -244,6 +244,38 @@
             <option value="yes">Yes</option>
           </select>
         </div>
+        <div id="ckd_id" class="id_tab">
+          <label for="ckd" class="idLabels"
+            >CKD History</label
+          >
+          <select
+            title="ckd"
+            name="ckd"
+            id="ckd"
+            onchange="ckdHistory()"
+          >
+            <option value="no" selected>No</option>
+            <option value="yes">Yes</option>
+          </select>
+        </div>
+        <div class="id_tab" id="baseCr_id">
+          <label for="baseCr" class="idLabels">Base Cr</label>
+          <div
+            style="flex-wrap: nowrap; display: flex; justify-content: center"
+          >
+            <input
+              type="number"
+              name="baseCr"
+              id="baseCr"
+              min="0"
+              step="0.1"
+              class="input_id"
+              value=""
+              onkeyup="baseCr()"
+              onchange="baseCr()"
+            />
+          </div>
+        </div>
         <div id="respiratoryDisorder_id" class="id_tab">
           <label for="respiratoryDisorder" class="idLabels"
             >Respiratory Disorder</label
