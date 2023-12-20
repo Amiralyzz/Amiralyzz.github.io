@@ -266,6 +266,93 @@ function isDiabetes() {
 function kidneyMain() {
   isProteinuria();
   preEclampsiaMain();
+  ckdStaging();
+  proteinuriaStaging();
+  urineVolume();
+}
+function proteinuriaStaging() {
+  let urineProtein = Number(labItems[80].value);
+  let urineProteinEntered = labItems[80].value;
+  patient[0].signs[0][423] = undefined;
+  patient[0].signs[1][423] = undefined;
+  patient[0].signs[2][423] = "rgb(128, 70, 32)";
+  if (urineProteinEntered == 0) return 0;
+  let path = "";
+  if (urineProtein >= 3500) {
+    path = "Urine protein &ge; 3500 mg/day";
+    patient[0].signs[0][423] = "Nephrotic range Proteinuria";
+    patient[0].signs[1][423] = path;
+  } else if (urineProtein >=150) {
+    path = "Urine protein > 150 mg/day";
+    patient[0].signs[0][423] = "abnormal Proteinuria";
+    patient[0].signs[1][423] = path;
+  }
+}
+function urineVolume() {
+  let urineVolume = Number(labItems[95].value);
+  let urineVolumeEntered = labItems[95].entered;
+  let kg = globalWeightGram / 1000;
+  patient[0].signs[0][424] = undefined;
+  patient[0].signs[1][424] = undefined;
+  patient[0].signs[2][424] = "rgb(128, 70, 32)";
+  if (urineVolumeEntered == 0) return 0;
+  let path = "";
+  if (globalAgeYears < 1) {
+    // olig <1 ml/kg/hr
+    let minimumUrineVolumeOliguria = 24 * 1 * kg;
+    if (urineVolume < minimumUrineVolumeOliguria) {
+      path = "Urine volume < " + minimumUrineVolumeOliguria.toFixed(0);
+      patient[0].signs[0][424] = "Oliguria";
+      patient[0].signs[1][424] = path;
+    }
+    let maximumUrineVolume = 24 * 3 * kg;
+    if (urineVolume > maximumUrineVolume) {
+      path = "Urine volume > " + maximumUrineVolume.toFixed(0);
+      patient[0].signs[0][424] = "Polyuria";
+      patient[0].signs[1][424] = path;
+    }
+  } else if (globalAgeYears < 18) {
+    // olig <0.5 ml/kg/hr
+    let minimumUrineVolumeOliguria = 24 * 0.5 * kg;
+    if (urineVolume < minimumUrineVolumeOliguria) {
+      path = "Urine volume < " + minimumUrineVolumeOliguria.toFixed(0);
+      patient[0].signs[0][424] = "Oliguria";
+      patient[0].signs[1][424] = path;
+    }
+    let maximumUrineVolume = 24 * 3 * kg;
+    if (urineVolume > maximumUrineVolume) {
+      path = "Urine volume > " + maximumUrineVolume.toFixed(0);
+      patient[0].signs[0][424] = "Polyuria";
+      patient[0].signs[1][424] = path;
+    }
+  } else {
+    if (urineVolume < 400) {
+      path = "Urine volume < 400";
+      patient[0].signs[0][424] = "Oliguria";
+      patient[0].signs[1][424] = path;
+    }
+    if (urineVolume > 3000) {
+      path = "Urine volume > 3000";
+      patient[0].signs[0][424] = "polyuria";
+      patient[0].signs[1][424] = path;
+    }
+  }
+}
+function ckdStaging() {
+  patient[0].signs[0][422] = undefined;
+  patient[0].signs[1][422] = undefined;
+  patient[0].signs[2][422] = "rgb(128, 70, 32)";
+  if (!globalBaseCrEntered || globalCKDHistory == 0) return 0;
+  let ckdStage = "";
+  let globalGFR = gfrCKD(globalBaseCr);
+  if (globalGFR >= 90) ckdStage = "G1";
+  else if (globalGFR >= 60) ckdStage = "G2";
+  else if (globalGFR >= 45) ckdStage = "G3a";
+  else if (globalGFR >= 30) ckdStage = "G3b";
+  else if (globalGFR >= 15) ckdStage = "G4";
+  else ckdStage = "G5";
+  patient[0].signs[0][422] = "CKD Stage: " + ckdStage;
+  patient[0].signs[1][422] = "based on Base GFR";
 }
 function baseCrAnalysis() {
   let crEntered = labItems[30].entered;
@@ -300,7 +387,7 @@ function ckdAnalyse() {
   patient[0].signs[1][421] = undefined;
   patient[0].signs[2][421] = "rgb(128, 70, 32)";
   let path = "";
-  if(crDif >= 0.3) {
+  if (crDif >= 0.3) {
     path = "Cr increased &ge; 0.3";
     patient[0].signs[0][421] = "Acute on Chronic Kidney Injury";
     patient[0].signs[1][421] = path;
@@ -322,39 +409,39 @@ function akiAnalyse() {
     patient[0].signs[1][421] = path;
     return 0;
   }
-  if(crPercent >= 200) {
+  if (crPercent >= 200) {
     path = "Cr rise &ge; ×3";
     patient[0].signs[0][421] = "Acute Kidney Injury (RIFLE: Failure)";
     patient[0].signs[1][421] = path;
     return 0;
   }
-  if(crPercent >= 100) {
+  if (crPercent >= 100) {
     path = "Cr rise &ge; ×2";
     patient[0].signs[0][421] = "Acute Kidney Injury (RIFLE: Injury)";
     patient[0].signs[1][421] = path;
     return 0;
   }
-  if(crPercent >= 50) {
+  if (crPercent >= 50) {
     path = "Cr rise &ge; ×1.5";
     patient[0].signs[0][421] = "Acute Kidney Injury (RIFLE: Risk)";
     patient[0].signs[1][421] = path;
     return 0;
   }
-  if(crDif >= 0.3) {
+  if (crDif >= 0.3) {
     path = "Cr increased &ge; 0.3";
     patient[0].signs[0][421] = "Acute Kidney Injury (RIFLE: Risk)";
     patient[0].signs[1][421] = path;
     return 0;
   }
   ckdCheck();
-  
 }
 function ckdCheck() {
   patient[0].signs[0][422] = undefined;
   patient[0].signs[1][422] = undefined;
   patient[0].signs[2][422] = "rgb(128, 70, 32)";
-  if(measurements[6].value < 60) {
-    patient[0].signs[0][422] = "Probable CKD (GFR(MDRD) is " + measurements[6].value + " )";
+  if (measurements[6].value < 60) {
+    patient[0].signs[0][422] =
+      "Probable CKD (GFR(MDRD) is " + measurements[6].value + " )";
     patient[0].signs[1][422] = "GFR < 60";
   }
 }

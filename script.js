@@ -1,7 +1,7 @@
 var pinnedOrNotArray = [];
 var globalAgeYears = 40,
   globalAgeMonths,
-  gloalWeightGram = 70000,
+  globalWeightGram = 70000,
   globalHeightCm = 170,
   genderCoef = 0; //genderCoef=0 male genderCoef=2 female
 var globalTSAT = 0;
@@ -383,21 +383,21 @@ function weightCalc() {
       weightTextbox.value = 500;
       weight = 500;
     }
-    gloalWeightGram = weight * 1000;
+    globalWeightGram = weight * 1000;
   }
   if (weightUnit == "gr") {
     if (weight > 10000) {
       weightTextbox.value = 10000;
       weight = 10000;
     }
-    gloalWeightGram = weight;
+    globalWeightGram = weight;
   }
   if (weightUnit == "lb") {
     if (weight > 1000) {
       weightTextbox.value = 1000;
       weight = 1000;
     }
-    gloalWeightGram = weight * 453.592;
+    globalWeightGram = weight * 453.592;
   }
   tabContent(selectedTabId, selectedLabType);
 }
@@ -565,23 +565,23 @@ function bmiCalc() {
   let bmi = 0;
   let bsa = 0;
   let bsa2 = 0;
-  if (gloalWeightGram <= 0) gloalWeightGram = 0;
+  if (globalWeightGram <= 0) globalWeightGram = 0;
   if (globalHeightCm > 0) {
     measurements[0].used = true;
     measurements[23].used = true;
     measurements[24].used = true;
     bmi =
-      gloalWeightGram / 1000 / (globalHeightCm / 100) / (globalHeightCm / 100);
-    bsa = Math.sqrt(((gloalWeightGram / 1000) * globalHeightCm) / 3600);
+      globalWeightGram / 1000 / (globalHeightCm / 100) / (globalHeightCm / 100);
+    bsa = Math.sqrt(((globalWeightGram / 1000) * globalHeightCm) / 3600);
     if (genderCoef == 0) {
       bsa2 =
         0.000579479 *
-        Math.pow(gloalWeightGram / 1000, 0.38) *
+        Math.pow(globalWeightGram / 1000, 0.38) *
         Math.pow(globalHeightCm, 1.24);
     } else {
       bsa2 =
         0.000975482 *
-        Math.pow(gloalWeightGram / 1000, 0.46) *
+        Math.pow(globalWeightGram / 1000, 0.46) *
         Math.pow(globalHeightCm, 1.08);
     }
   } else {
@@ -908,7 +908,7 @@ function gfrCalc() {
   let gfr_cg = 0;
   let gfr_mdrd = 0;
   let gfr_ckd = 0;
-  if (creatinine == 0 || gloalWeightGram == 0) {
+  if (creatinine == 0 || globalWeightGram == 0) {
     measurements[5].used = false;
     measurements[6].used = false;
     measurements[7].used = false;
@@ -926,7 +926,7 @@ function gfrCalc() {
       coef_mdrd = 0.742;
     }
     gfr_cg =
-      ((140 - globalAgeYears) * (gloalWeightGram / 1000) * coef_cg) /
+      ((140 - globalAgeYears) * (globalWeightGram / 1000) * coef_cg) /
       (72 * creatinine);
     gfr_mdrd =
       175 * creatinine ** -1.154 * globalAgeYears ** -0.203 * coef_mdrd;
@@ -1041,20 +1041,25 @@ function heightPercentileCalc() {
       (o) => o.Age === globalAgeYears.toString()
     );
   } else {
+    measurements[33].used = false;
     measurements[2].used = false;
     return 0;
   }
+  let L="", M="", S="";
   if (genderCoef == 0) {
-    var L = currentAgeObject.L;
-    var M = currentAgeObject.M;
-    var S = currentAgeObject.S;
+    L = currentAgeObject.L;
+    M = currentAgeObject.M;
+    S = currentAgeObject.S;
   } else {
-    var L = currentAgeObject.L2;
-    var M = currentAgeObject.M2;
-    var S = currentAgeObject.S2;
+    L = currentAgeObject.L2;
+    M = currentAgeObject.M2;
+    S = currentAgeObject.S2;
   }
-  var heightZScore = ((globalHeightCm / M) ** L - 1) / (S * L);
-  var heightPercentile = ztable_finder(heightZScore) * 100;
+  let heightZScore = ((globalHeightCm / M) ** L - 1) / (S * L);
+  let heightPercentile = ztable_finder(heightZScore) * 100;
+  let meanHeight = Number(M);
+  measurements[33].used = true;
+  measurements[33].value = meanHeight.toFixed(1);
   measurements[2].value = heightPercentile.toFixed(2);
   measurements[2].used = true;
 }
@@ -1074,21 +1079,26 @@ function weightPercentileCalc() {
       (o) => o.Age === globalAgeYears.toString()
     );
   } else {
+    measurements[32].used = false;
     measurements[1].used = false;
     return 0;
   }
+  let L="", M="", S="";
   if (genderCoef == 0) {
-    var L = currentAgeObject.L;
-    var M = currentAgeObject.M;
-    var S = currentAgeObject.S;
+    L = currentAgeObject.L;
+    M = currentAgeObject.M;
+    S = currentAgeObject.S;
   } else {
-    var L = currentAgeObject.L2;
-    var M = currentAgeObject.M2;
-    var S = currentAgeObject.S2;
+    L = currentAgeObject.L2;
+    M = currentAgeObject.M2;
+    S = currentAgeObject.S2;
   }
-  var weightKg = gloalWeightGram / 1000;
+  var weightKg = globalWeightGram / 1000;
   var weightZScore = ((weightKg / M) ** L - 1) / (S * L);
   var weightPercentile = ztable_finder(weightZScore) * 100;
+  let meanWeight = Number(M);
+  measurements[32].used = true;
+  measurements[32].value = meanWeight.toFixed(1);
   measurements[1].value = weightPercentile.toFixed(2);
   measurements[1].used = true;
 }

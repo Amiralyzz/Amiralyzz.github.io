@@ -751,6 +751,29 @@ var measurements = [
     color: "rgb(128, 70, 32)",
     tooltip: "Base GFR (CKD-EPI) ",
   },
+  {
+    name: "Median Weight ",
+    value: "0",
+    min: "",
+    max: "",
+    minArray: "",
+    maxArray: "",
+    used: false,
+    color: "rgb(38, 3, 58)",
+    tooltip: "Median Weight (50th percentile) for this age ",
+  },
+  {
+    name: "Median Height ",
+    value: "0",
+    min: "",
+    max: "",
+    minArray: "",
+    maxArray: "",
+    used: false,
+    color: "rgb(38, 3, 58)",
+    tooltip: "Median Height (50th percentile) for this age ",
+  },
+
   
 ];
 
