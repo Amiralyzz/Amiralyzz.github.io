@@ -55,7 +55,8 @@ function tabContent(tabId, testCategory) {
     for (let index = 0; index < labItems.length; index++) {
       if (
         document.getElementById("searchbar").value != "" &&
-        pinnedOrNotArray[index] != 1
+        pinnedOrNotArray[index] != 1 &&
+        labItems[index].showed != 0
       ) {
         if (
           labItems[index]["name"].search(search_val) != -1 ||
@@ -74,7 +75,7 @@ function tabContent(tabId, testCategory) {
   //for usual tabs
   if (testCategory != "searchbar" && testCategory != "analyse") {
     for (let index = 0; index < labItems.length; index++) {
-      if (labItems[index]["type"] == testCategory) {
+      if (labItems[index]["type"] == testCategory && labItems[index].showed != 0) {
         parentElement.appendChild(buildUsualEntry(index));
       }
     }

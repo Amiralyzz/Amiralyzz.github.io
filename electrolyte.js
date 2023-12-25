@@ -284,7 +284,7 @@ function sodiumMain() {
   }
   function isHyperkalemia() {
     let k = Number(labItems[33].value);
-    let kMax = Number(labItems[33].min);
+    let kMax = Number(labItems[33].max);
     let kEntered = labItems[33].entered;
     if (kEntered == 1) {
       urineNahyperkalemia(); //[407]
@@ -292,10 +292,8 @@ function sodiumMain() {
       gfrHyperkalemia(); //[409] <20 or not
       if (k > kMax) {
         return true;
-      } else {
-        return false;
       }
-    } else return false;
+    } return false;
   }
   function urineNahyperkalemia() {
     patient[0].signs[4][407] = "TTKG";
@@ -364,8 +362,8 @@ function sodiumMain() {
   function aldosteroneHypokalemia() {
     patient[0].signs[4][402] = "Aldosterone";
     patient[0].signs[3][402] = undefined;
-    let aldosterone = labItems[96].value;
-    let aldosteroneMax = labItems[96].max;
+    let aldosterone = Number(labItems[96].value);
+    let aldosteroneMax = Number(labItems[96].max);
     let aldosteroneEntered = labItems[96].entered;
     if (aldosteroneEntered == 1) {
       if (aldosterone > aldosteroneMax) {
@@ -378,8 +376,8 @@ function sodiumMain() {
   function reninHypokalemia() {
     patient[0].signs[4][403] = "Renin";
     patient[0].signs[3][403] = undefined;
-    let renin = labItems[97].value;
-    let reninMax = labItems[97].max;
+    let renin = Number(labItems[97].value);
+    let reninMax = Number(labItems[97].max);
     let reninEntered = labItems[97].entered;
     if (reninEntered == 1) {
       if (renin > reninMax) {

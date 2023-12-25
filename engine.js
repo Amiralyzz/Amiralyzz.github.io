@@ -228,6 +228,7 @@ function engineMain() {
   sodiumMain();
   potassiumMain();
   thyroidMain();
+  aldosteroneMain();
   diabetesMain();
   kidneyMain();
   baseCrAnalysis();

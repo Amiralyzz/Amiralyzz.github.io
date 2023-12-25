@@ -282,7 +282,7 @@ function proteinuriaStaging() {
     path = "Urine protein &ge; 3500 mg/day";
     patient[0].signs[0][423] = "Nephrotic range Proteinuria";
     patient[0].signs[1][423] = path;
-  } else if (urineProtein >=150) {
+  } else if (urineProtein >= 150) {
     path = "Urine protein > 150 mg/day";
     patient[0].signs[0][423] = "abnormal Proteinuria";
     patient[0].signs[1][423] = path;
@@ -712,5 +712,22 @@ function thyroidMain() {
   } else {
     patient[0].signs[0][30] = undefined;
     patient[0].signs[1][30] = undefined;
+  }
+}
+function aldosteroneMain() {
+  patient[0].signs[0][32] = undefined;
+  patient[0].signs[1][32] = undefined;
+  patient[0].signs[2][32] = "rgb(65, 87, 65)";
+  let aldosterone = Number(labItems[96].value);
+  let aldosteroneEntered = labItems[96].entered;
+  let renin = Number(labItems[97].value);
+  let reninEntered = labItems[97].entered;
+  if (aldosteroneEntered == 1 && reninEntered == 1) {
+    let ARR = aldosterone / renin; //aldosterone to renin ratio
+    if (aldosterone > 15 && ARR > 30) {
+      let path = "Aldosterone > 15 and Aldo-renin Ration > 30";
+      patient[0].signs[0][32] = "check for Primary Hyperaldosteronism";
+      patient[0].signs[1][32] = path;
+    }
   }
 }

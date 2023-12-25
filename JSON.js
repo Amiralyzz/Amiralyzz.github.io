@@ -1975,6 +1975,7 @@ var labItems = [
   {
     "name": "WBC",
     "tooltip": "White Blood Cells",
+    "showed": "1",
     "value": "",
     "min": "",
     "max": "",
@@ -2008,6 +2009,7 @@ var labItems = [
   {
     "name": "RBC",
     "tooltip": "Red Blood Cells",
+    "showed": "1",
     "value": "",
     "min": "",
     "max": "",
@@ -2041,6 +2043,7 @@ var labItems = [
   {
     "name": "Hb",
     "tooltip": "Hemoglobin",
+    "showed": "1",
     "value": "",
     "min": "",
     "max": "",
@@ -2074,6 +2077,7 @@ var labItems = [
   {
     "name": "MCV",
     "tooltip": "Mean Corpuscular Volume",
+    "showed": "1",
     "value": "",
     "min": "",
     "max": "",
@@ -2107,6 +2111,7 @@ var labItems = [
   {
     "name": "Hct",
     "tooltip": "Hematocrit",
+    "showed": "1",
     "value": "",
     "min": "",
     "max": "",
@@ -2140,6 +2145,7 @@ var labItems = [
   {
     "name": "MCH",
     "tooltip": "Mean Corpuscular Hemoglobin",
+    "showed": "1",
     "value": "",
     "min": "",
     "max": "",
@@ -2173,6 +2179,7 @@ var labItems = [
   {
     "name": "MCHC",
     "tooltip": "Mean Corpuscular Hemoglobin Concentration",
+    "showed": "1",
     "value": "",
     "min": "",
     "max": "",
@@ -2206,6 +2213,7 @@ var labItems = [
   {
     "name": "Plt",
     "tooltip": "Platelets",
+    "showed": "1",
     "value": "",
     "min": "",
     "max": "",
@@ -2239,6 +2247,7 @@ var labItems = [
   {
     "name": "RDW",
     "tooltip": "Red blood cells Distribution Width",
+    "showed": "1",
     "value": "",
     "min": "",
     "max": "",
@@ -2272,6 +2281,7 @@ var labItems = [
   {
     "name": "MPV",
     "tooltip": "Mean Platelet Volume",
+    "showed": "1",
     "value": "",
     "min": "",
     "max": "",
@@ -2305,6 +2315,7 @@ var labItems = [
   {
     "name": "NRBC",
     "tooltip": "Nucleated Red Blood Cells",
+    "showed": "1",
     "value": "",
     "min": "",
     "max": "",
@@ -2338,6 +2349,7 @@ var labItems = [
   {
     "name": "Retic",
     "tooltip": "Reticulocyte Count",
+    "showed": "1",
     "value": "",
     "min": "",
     "max": "",
@@ -2371,6 +2383,7 @@ var labItems = [
   {
     "name": "ESR",
     "tooltip": "Erythrocyte Sedimentation Rate",
+    "showed": "1",
     "value": "",
     "min": "",
     "max": "",
@@ -2404,6 +2417,7 @@ var labItems = [
   {
     "name": "CRP",
     "tooltip": "C-Reactive Protein",
+    "showed": "1",
     "value": "",
     "min": "",
     "max": "",
@@ -2437,6 +2451,7 @@ var labItems = [
   {
     "name": "AST",
     "tooltip": "Aspartate transaminase or SGOT",
+    "showed": "1",
     "value": "",
     "min": "",
     "max": "",
@@ -2470,6 +2485,7 @@ var labItems = [
   {
     "name": "ALT",
     "tooltip": "Alanine transaminase or SGPT",
+    "showed": "1",
     "value": "",
     "min": "",
     "max": "",
@@ -2503,6 +2519,7 @@ var labItems = [
   {
     "name": "ALP",
     "tooltip": "Alkaline Phosphatase",
+    "showed": "1",
     "value": "",
     "min": "",
     "max": "",
@@ -2536,6 +2553,7 @@ var labItems = [
   {
     "name": "Bil(T)",
     "tooltip": "Total Bilirubin",
+    "showed": "1",
     "value": "",
     "min": "",
     "max": "",
@@ -2569,6 +2587,7 @@ var labItems = [
   {
     "name": "Bil(D)",
     "tooltip": "Direct (Conjugated) Bilirubin",
+    "showed": "1",
     "value": "",
     "min": "",
     "max": "",
@@ -2602,6 +2621,7 @@ var labItems = [
   {
     "name": "Alb",
     "tooltip": "Total Albumin",
+    "showed": "1",
     "value": "",
     "min": "",
     "max": "",
@@ -2635,6 +2655,7 @@ var labItems = [
   {
     "name": "GGT",
     "tooltip": "Gamma-glutamyl transferase",
+    "showed": "1",
     "value": "",
     "min": "",
     "max": "",
@@ -2668,6 +2689,7 @@ var labItems = [
   {
     "name": "TSH",
     "tooltip": "Thyroid Stimulating Hormone",
+    "showed": "1",
     "value": "",
     "min": "",
     "max": "",
@@ -2701,6 +2723,7 @@ var labItems = [
   {
     "name": "FT4",
     "tooltip": "Free Thyroxin",
+    "showed": "1",
     "value": "",
     "min": "",
     "max": "",
@@ -2734,6 +2757,7 @@ var labItems = [
   {
     "name": "T4",
     "tooltip": "Total Thyroxin",
+    "showed": "1",
     "value": "",
     "min": "",
     "max": "",
@@ -2767,6 +2791,7 @@ var labItems = [
   {
     "name": "FT3",
     "tooltip": "Free Triiodothyronine",
+    "showed": "1",
     "value": "",
     "min": "",
     "max": "",
@@ -2800,6 +2825,7 @@ var labItems = [
   {
     "name": "T3",
     "tooltip": "Total Triiodothyronine",
+    "showed": "1",
     "value": "",
     "min": "",
     "max": "",
@@ -2833,6 +2859,7 @@ var labItems = [
   {
     "name": "RIU",
     "tooltip": "Radioactive Iodine Uptake",
+    "showed": "1",
     "value": "",
     "min": "",
     "max": "",
@@ -2866,6 +2893,7 @@ var labItems = [
   {
     "name": "TSI",
     "tooltip": "Thyroid-stimulating Immunoglobulin",
+    "showed": "1",
     "value": "",
     "min": "",
     "max": "",
@@ -2899,6 +2927,7 @@ var labItems = [
   {
     "name": "TBG",
     "tooltip": "Thyroxine-binding Globulin",
+    "showed": "1",
     "value": "",
     "min": "",
     "max": "",
@@ -2932,6 +2961,7 @@ var labItems = [
   {
     "name": "Anti-TPO",
     "tooltip": "Anti Thyroid Peroxidase Antibody",
+    "showed": "1",
     "value": "",
     "min": "",
     "max": "",
@@ -2965,6 +2995,7 @@ var labItems = [
   {
     "name": "Cr",
     "tooltip": "Serum Creatinine",
+    "showed": "1",
     "value": "",
     "min": "",
     "max": "",
@@ -2998,6 +3029,7 @@ var labItems = [
   {
     "name": "BUN",
     "tooltip": "Blood Urea Nitrogen",
+    "showed": "1",
     "value": "",
     "min": "",
     "max": "",
@@ -3031,6 +3063,7 @@ var labItems = [
   {
     "name": "Na",
     "tooltip": "Serum Sodium",
+    "showed": "1",
     "value": "",
     "min": "",
     "max": "",
@@ -3064,6 +3097,7 @@ var labItems = [
   {
     "name": "K",
     "tooltip": "Serum Potassium",
+    "showed": "1",
     "value": "",
     "min": "",
     "max": "",
@@ -3097,6 +3131,7 @@ var labItems = [
   {
     "name": "Uric Acid",
     "tooltip": "Uric Acid",
+    "showed": "1",
     "value": "",
     "min": "",
     "max": "",
@@ -3130,6 +3165,7 @@ var labItems = [
   {
     "name": "FBS",
     "tooltip": "Serum Glucose",
+    "showed": "1",
     "value": "",
     "min": "",
     "max": "",
@@ -3163,6 +3199,7 @@ var labItems = [
   {
     "name": "HbA1c",
     "tooltip": "Glycosylated Hemoglobin",
+    "showed": "1",
     "value": "",
     "min": "",
     "max": "",
@@ -3196,6 +3233,7 @@ var labItems = [
   {
     "name": "2h-OGTT",
     "tooltip": "Oral GLucose Tolerance Test (2h)",
+    "showed": "1",
     "value": "",
     "min": "",
     "max": "",
@@ -3229,6 +3267,7 @@ var labItems = [
   {
     "name": "1h-OGTT",
     "tooltip": "Oral GLucose Tolerance Test (1h)",
+    "showed": "1",
     "value": "",
     "min": "",
     "max": "",
@@ -3262,6 +3301,7 @@ var labItems = [
   {
     "name": "LDH",
     "tooltip": "Serum Lactate dehydrogenase",
+    "showed": "1",
     "value": "",
     "min": "",
     "max": "",
@@ -3295,6 +3335,7 @@ var labItems = [
   {
     "name": "Iron",
     "tooltip": "Serum Iron",
+    "showed": "1",
     "value": "",
     "min": "",
     "max": "",
@@ -3328,6 +3369,7 @@ var labItems = [
   {
     "name": "Ferritin",
     "tooltip": "Serum Ferritin",
+    "showed": "1",
     "value": "",
     "min": "",
     "max": "",
@@ -3361,6 +3403,7 @@ var labItems = [
   {
     "name": "TIBC",
     "tooltip": "Total Iron Binding Capacity",
+    "showed": "1",
     "value": "",
     "min": "",
     "max": "",
@@ -3394,6 +3437,7 @@ var labItems = [
   {
     "name": "Folate",
     "tooltip": "Serum Vitamin B9 (Folate)",
+    "showed": "1",
     "value": "",
     "min": "",
     "max": "",
@@ -3427,6 +3471,7 @@ var labItems = [
   {
     "name": "B12",
     "tooltip": "Serum Vitamin B12 (Cobalamin)",
+    "showed": "1",
     "value": "",
     "min": "",
     "max": "",
@@ -3460,6 +3505,7 @@ var labItems = [
   {
     "name": "Neu",
     "tooltip": "Neutrophils percentage",
+    "showed": "1",
     "value": "",
     "min": "",
     "max": "",
@@ -3493,6 +3539,7 @@ var labItems = [
   {
     "name": "Lym",
     "tooltip": "Lymphocytes percentage",
+    "showed": "1",
     "value": "",
     "min": "",
     "max": "",
@@ -3526,6 +3573,7 @@ var labItems = [
   {
     "name": "Mono",
     "tooltip": "Monocytes percentage",
+    "showed": "1",
     "value": "",
     "min": "",
     "max": "",
@@ -3559,6 +3607,7 @@ var labItems = [
   {
     "name": "Eos",
     "tooltip": "Eosinophiles percentage",
+    "showed": "1",
     "value": "",
     "min": "",
     "max": "",
@@ -3592,6 +3641,7 @@ var labItems = [
   {
     "name": "Baso",
     "tooltip": "Basophils percentage",
+    "showed": "1",
     "value": "",
     "min": "",
     "max": "",
@@ -3625,6 +3675,7 @@ var labItems = [
   {
     "name": "Band",
     "tooltip": "Band cells percentage",
+    "showed": "1",
     "value": "",
     "min": "",
     "max": "",
@@ -3658,6 +3709,7 @@ var labItems = [
   {
     "name": "Poikilo",
     "tooltip": "Poikilocytosis",
+    "showed": "1",
     "value": "",
     "min": "",
     "max": "",
@@ -3691,6 +3743,7 @@ var labItems = [
   {
     "name": "Aniso",
     "tooltip": "Anisocytosis",
+    "showed": "1",
     "value": "",
     "min": "",
     "max": "",
@@ -3724,6 +3777,7 @@ var labItems = [
   {
     "name": "Polychrome",
     "tooltip": "Polychromatic Cells",
+    "showed": "1",
     "value": "",
     "min": "",
     "max": "",
@@ -3757,6 +3811,7 @@ var labItems = [
   {
     "name": "Hypochrome",
     "tooltip": "Hypochromatic Cells",
+    "showed": "1",
     "value": "",
     "min": "",
     "max": "",
@@ -3790,6 +3845,7 @@ var labItems = [
   {
     "name": "Microcytes",
     "tooltip": "Microcytes",
+    "showed": "1",
     "value": "",
     "min": "",
     "max": "",
@@ -3823,6 +3879,7 @@ var labItems = [
   {
     "name": "Macrocytes",
     "tooltip": "Macrocytes",
+    "showed": "1",
     "value": "",
     "min": "",
     "max": "",
@@ -3856,6 +3913,7 @@ var labItems = [
   {
     "name": "Sphero",
     "tooltip": "Spherocytes",
+    "showed": "1",
     "value": "",
     "min": "",
     "max": "",
@@ -3889,6 +3947,7 @@ var labItems = [
   {
     "name": "Ovalo",
     "tooltip": "Ovalocytes",
+    "showed": "1",
     "value": "",
     "min": "",
     "max": "",
@@ -3922,6 +3981,7 @@ var labItems = [
   {
     "name": "Ellipto",
     "tooltip": "Elliptocytosis",
+    "showed": "1",
     "value": "",
     "min": "",
     "max": "",
@@ -3955,6 +4015,7 @@ var labItems = [
   {
     "name": "Stomato",
     "tooltip": "Stomatocytes",
+    "showed": "1",
     "value": "",
     "min": "",
     "max": "",
@@ -3988,6 +4049,7 @@ var labItems = [
   {
     "name": "Bite",
     "tooltip": "Bite cells",
+    "showed": "1",
     "value": "",
     "min": "",
     "max": "",
@@ -4021,6 +4083,7 @@ var labItems = [
   {
     "name": "Helmet",
     "tooltip": "Helmet cells",
+    "showed": "1",
     "value": "",
     "min": "",
     "max": "",
@@ -4054,6 +4117,7 @@ var labItems = [
   {
     "name": "Schisto",
     "tooltip": "Schistocytes",
+    "showed": "1",
     "value": "",
     "min": "",
     "max": "",
@@ -4087,6 +4151,7 @@ var labItems = [
   {
     "name": "Target",
     "tooltip": "Target cells",
+    "showed": "1",
     "value": "",
     "min": "",
     "max": "",
@@ -4120,6 +4185,7 @@ var labItems = [
   {
     "name": "Sickle",
     "tooltip": "Sickle cells",
+    "showed": "1",
     "value": "",
     "min": "",
     "max": "",
@@ -4153,6 +4219,7 @@ var labItems = [
   {
     "name": "Echino",
     "tooltip": "Echinocytes (Burr cells)",
+    "showed": "1",
     "value": "",
     "min": "",
     "max": "",
@@ -4186,6 +4253,7 @@ var labItems = [
   {
     "name": "Acantho",
     "tooltip": "Acanthocytes (Spur cells)",
+    "showed": "1",
     "value": "",
     "min": "",
     "max": "",
@@ -4219,6 +4287,7 @@ var labItems = [
   {
     "name": "Blister",
     "tooltip": "Blister cells (Basket cells)",
+    "showed": "1",
     "value": "",
     "min": "",
     "max": "",
@@ -4252,6 +4321,7 @@ var labItems = [
   {
     "name": "Tear",
     "tooltip": "Tear drop cells",
+    "showed": "1",
     "value": "",
     "min": "",
     "max": "",
@@ -4285,6 +4355,7 @@ var labItems = [
   {
     "name": "Howell-jolly",
     "tooltip": "Howell-Jolly bodies",
+    "showed": "1",
     "value": "",
     "min": "",
     "max": "",
@@ -4318,6 +4389,7 @@ var labItems = [
   {
     "name": "Heinz",
     "tooltip": "Heinz bodies",
+    "showed": "1",
     "value": "",
     "min": "",
     "max": "",
@@ -4351,6 +4423,7 @@ var labItems = [
   {
     "name": "Strippling",
     "tooltip": "Basophilic strippling",
+    "showed": "1",
     "value": "",
     "min": "",
     "max": "",
@@ -4384,6 +4457,7 @@ var labItems = [
   {
     "name": "Blast",
     "tooltip": "Blasts",
+    "showed": "1",
     "value": "",
     "min": "",
     "max": "",
@@ -4417,6 +4491,7 @@ var labItems = [
   {
     "name": "Hyperseg-N",
     "tooltip": "Hypersegmented neutrophiles",
+    "showed": "1",
     "value": "",
     "min": "",
     "max": "",
@@ -4450,6 +4525,7 @@ var labItems = [
   {
     "name": "Hyposeg-N",
     "tooltip": "Hyposegmented neutrophiles",
+    "showed": "1",
     "value": "",
     "min": "",
     "max": "",
@@ -4483,6 +4559,7 @@ var labItems = [
   {
     "name": "Dohle",
     "tooltip": "Dohle bodies",
+    "showed": "1",
     "value": "",
     "min": "",
     "max": "",
@@ -4516,6 +4593,7 @@ var labItems = [
   {
     "name": "Smudge",
     "tooltip": "Smudge cells",
+    "showed": "1",
     "value": "",
     "min": "",
     "max": "",
@@ -4549,6 +4627,7 @@ var labItems = [
   {
     "name": "Auer",
     "tooltip": "Auer rods",
+    "showed": "1",
     "value": "",
     "min": "",
     "max": "",
@@ -4582,6 +4661,7 @@ var labItems = [
   {
     "name": "Atyp-lym",
     "tooltip": "Atypical Lymphocytes",
+    "showed": "1",
     "value": "",
     "min": "",
     "max": "",
@@ -4615,6 +4695,7 @@ var labItems = [
   {
     "name": "UPro",
     "tooltip": "Urine Protein (24h)",
+    "showed": "1",
     "value": "",
     "min": "",
     "max": "",
@@ -4648,6 +4729,7 @@ var labItems = [
   {
     "name": "UNa",
     "tooltip": "Urine Sodium",
+    "showed": "1",
     "value": "",
     "min": "",
     "max": "",
@@ -4681,6 +4763,7 @@ var labItems = [
   {
     "name": "UK",
     "tooltip": "Urine Potassium",
+    "showed": "1",
     "value": "",
     "min": "",
     "max": "",
@@ -4714,6 +4797,7 @@ var labItems = [
   {
     "name": "UCa",
     "tooltip": "Urine Calcium",
+    "showed": "1",
     "value": "",
     "min": "",
     "max": "",
@@ -4747,6 +4831,7 @@ var labItems = [
   {
     "name": "UCr",
     "tooltip": "Urine Creatinine",
+    "showed": "1",
     "value": "",
     "min": "",
     "max": "",
@@ -4780,6 +4865,7 @@ var labItems = [
   {
     "name": "Posm",
     "tooltip": "Plasma Osmolarity",
+    "showed": "1",
     "value": "",
     "min": "",
     "max": "",
@@ -4813,6 +4899,7 @@ var labItems = [
   {
     "name": "Uosm",
     "tooltip": "Urine Osmolarity",
+    "showed": "1",
     "value": "",
     "min": "",
     "max": "",
@@ -4846,6 +4933,7 @@ var labItems = [
   {
     "name": "pH",
     "tooltip": "Blood pH",
+    "showed": "1",
     "value": "",
     "min": "",
     "max": "",
@@ -4879,6 +4967,7 @@ var labItems = [
   {
     "name": "HCO3",
     "tooltip": "Blood Bicarbonate",
+    "showed": "1",
     "value": "",
     "min": "",
     "max": "",
@@ -4912,6 +5001,7 @@ var labItems = [
   {
     "name": "PaCO2",
     "tooltip": "Blood Partial Pressure of Carbon Dioxide",
+    "showed": "1",
     "value": "",
     "min": "",
     "max": "",
@@ -4945,6 +5035,7 @@ var labItems = [
   {
     "name": "Cl",
     "tooltip": "Serum Chlorine",
+    "showed": "1",
     "value": "",
     "min": "",
     "max": "",
@@ -4978,6 +5069,7 @@ var labItems = [
   {
     "name": "PaO2",
     "tooltip": "Blood Partial Pressure of Oxygen",
+    "showed": "1",
     "value": "",
     "min": "",
     "max": "",
@@ -5011,6 +5103,7 @@ var labItems = [
   {
     "name": "FIO2",
     "tooltip": "Fraction of Inspired Oxygen",
+    "showed": "1",
     "value": "21",
     "min": "",
     "max": "",
@@ -5044,6 +5137,7 @@ var labItems = [
   {
     "name": "PB",
     "tooltip": "Air Pressure",
+    "showed": "1",
     "value": "760",
     "min": "",
     "max": "",
@@ -5077,6 +5171,7 @@ var labItems = [
   {
     "name": "UCl",
     "tooltip": "Urine Chloride",
+    "showed": "1",
     "value": "",
     "min": "",
     "max": "",
@@ -5110,6 +5205,7 @@ var labItems = [
   {
     "name": "Uvol",
     "tooltip": "Urine Volume",
+    "showed": "1",
     "value": "2000",
     "min": "",
     "max": "",
@@ -5143,6 +5239,7 @@ var labItems = [
   {
     "name": "Aldosterone",
     "tooltip": "Serum Aldosterone",
+    "showed": "1",
     "value": "",
     "min": "",
     "max": "",
@@ -5176,6 +5273,7 @@ var labItems = [
   {
     "name": "PRA",
     "tooltip": "Plasma Renin Activity",
+    "showed": "1",
     "value": "",
     "min": "",
     "max": "",
@@ -5209,6 +5307,7 @@ var labItems = [
   {
     "name": "Cortisol6am",
     "tooltip": "Morning Cortisol",
+    "showed": "1",
     "value": "",
     "min": "",
     "max": "",
@@ -5242,6 +5341,7 @@ var labItems = [
   {
     "name": "Cortisol4pm",
     "tooltip": "Evening Cortisol",
+    "showed": "0",
     "value": "",
     "min": "",
     "max": "",
@@ -5275,6 +5375,7 @@ var labItems = [
   {
     "name": "TG",
     "tooltip": "Total Triglycerid",
+    "showed": "1",
     "value": "",
     "min": "",
     "max": "",
@@ -5308,6 +5409,7 @@ var labItems = [
   {
     "name": "Chol",
     "tooltip": "Total Cholestrol",
+    "showed": "1",
     "value": "",
     "min": "",
     "max": "",
@@ -5341,6 +5443,7 @@ var labItems = [
   {
     "name": "LDL",
     "tooltip": "Low Density Lipoprotein",
+    "showed": "1",
     "value": "",
     "min": "",
     "max": "",
@@ -5374,6 +5477,7 @@ var labItems = [
   {
     "name": "HDL",
     "tooltip": "High Density Lipoprotein",
+    "showed": "1",
     "value": "",
     "min": "",
     "max": "",
@@ -5407,6 +5511,7 @@ var labItems = [
   {
     "name": "Ca",
     "tooltip": "Calcium",
+    "showed": "1",
     "value": "",
     "min": "",
     "max": "",
@@ -5440,6 +5545,7 @@ var labItems = [
   {
     "name": "PlasmaC",
     "tooltip": "Plasma cells",
+    "showed": "1",
     "value": "",
     "min": "",
     "max": "",
@@ -5473,6 +5579,7 @@ var labItems = [
   {
     "name": "Giant-plt",
     "tooltip": "Giant platelets",
+    "showed": "1",
     "value": "",
     "min": "",
     "max": "",
@@ -5506,6 +5613,7 @@ var labItems = [
   {
     "name": "PT",
     "tooltip": "Prothrombine Time",
+    "showed": "1",
     "value": "",
     "min": "",
     "max": "",
@@ -5539,6 +5647,7 @@ var labItems = [
   {
     "name": "INR",
     "tooltip": "International Normalized Ratio",
+    "showed": "1",
     "value": "",
     "min": "",
     "max": "",
@@ -5572,6 +5681,7 @@ var labItems = [
   {
     "name": "PTT",
     "tooltip": "Partial Thromboplastin Time",
+    "showed": "1",
     "value": "",
     "min": "",
     "max": "",
@@ -5605,6 +5715,7 @@ var labItems = [
   {
     "name": "PT-control",
     "tooltip": "Control Prothrombine Time",
+    "showed": "1",
     "value": "12.5",
     "min": "",
     "max": "",
@@ -5638,6 +5749,7 @@ var labItems = [
   {
     "name": "HBsAg",
     "tooltip": "Hepatitis B surface antigen",
+    "showed": "1",
     "value": "",
     "min": "",
     "max": "",
@@ -5671,6 +5783,7 @@ var labItems = [
   {
     "name": "HBsAb",
     "tooltip": "Hepatitis B surface antibody",
+    "showed": "1",
     "value": "",
     "min": "",
     "max": "",
@@ -5704,6 +5817,7 @@ var labItems = [
   {
     "name": "HAV-IgM",
     "tooltip": "Hepatitis A IgM antibody",
+    "showed": "1",
     "value": "",
     "min": "",
     "max": "",
@@ -5737,6 +5851,7 @@ var labItems = [
   {
     "name": "HBc-IgM",
     "tooltip": "Hepatitis B core IgM antibody",
+    "showed": "1",
     "value": "",
     "min": "",
     "max": "",
@@ -5770,6 +5885,7 @@ var labItems = [
   {
     "name": "HCVAb",
     "tooltip": "Hepatitis C antibody",
+    "showed": "1",
     "value": "",
     "min": "",
     "max": "",
@@ -5803,6 +5919,7 @@ var labItems = [
   {
     "name": "HBeAg",
     "tooltip": "Hepatitis B e-antigen",
+    "showed": "1",
     "value": "",
     "min": "",
     "max": "",
@@ -5836,6 +5953,7 @@ var labItems = [
   {
     "name": "HBeAb",
     "tooltip": "Hepatitis B e-antibody",
+    "showed": "1",
     "value": "",
     "min": "",
     "max": "",
