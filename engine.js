@@ -227,6 +227,9 @@ function engineMain() {
   isPancytopenia();
   sodiumMain();
   potassiumMain();
+  uricAcidMain();
+  tlsCheck();
+  // caMain();
   thyroidMain();
   aldosteroneMain();
   diabetesMain();

@@ -731,3 +731,110 @@ function aldosteroneMain() {
     }
   }
 }
+function uricAcidMain() {
+  let uricAcid = Number(labItems[34].value);
+  let uricAcidMax = Number(labItems[34].max);
+  let uricAcidMin = Number(labItems[34].min);
+  let uricAcidEntered = labItems[34].entered;
+  patient[0].signs[0][414] = undefined;
+  patient[0].signs[1][414] = undefined;
+  patient[0].signs[2][414] = "rgb(128, 70, 32)";
+  let path = "";
+  let hyperuricemiaDDx = [
+    "Gout",
+    "Nephrolithiasis",
+    "Uric acid nephropathies",
+    "Genetic Overprodection Syndromes",
+  ];
+  if (isPreEclampsia()) hyperuricemiaDDx.unshift("Preeclampsia");
+  if (uricAcid > uricAcidMax) {
+    path = "Uric Acid > " + uricAcidMax;
+    try {
+      signMaker(
+        listMaker(hyperuricemiaDDx, "Hyperuricemia"),
+        path,
+        414,
+        "rgb(128, 70, 32)"
+      );
+    } catch {
+      patient[0].signs[0][414] = undefined;
+      patient[0].signs[1][414] = undefined;
+    }
+  }
+}
+function tlsCheck() {
+  let creatinine = Number(labItems[30].value);
+  let creatinineEntered = labItems[30].entered;
+  let potassium = Number(labItems[33].value);
+  let potassiumEntered = labItems[33].entered;
+  let uricAcid = Number(labItems[34].value);
+  let uricAcidEntered = labItems[34].entered;
+  let calcium = Number(labItems[104].value);
+  let calciumEntered = labItems[104].entered;
+  let phosphate = Number(labItems[118].value);
+  let phosphateEntered = labItems[118].entered;
+  patient[0].signs[0][415] = undefined;
+  patient[0].signs[1][415] = undefined;
+  patient[0].signs[2][415] = "rgb(128, 70, 32)";
+  let path = "";
+  if (
+    Number(creatinineEntered) +
+      Number(uricAcidEntered) +
+      Number(calciumEntered) +
+      Number(phosphateEntered) +
+      Number(potassiumEntered) <
+    2
+  )
+    return 0;
+  if (creatinine > 1.4) {
+    path = "Cr > 1.4<br>";
+    let score = 0;
+    if (uricAcid > 7.5) {
+      path += "Uric acid > 7.5";
+      score++;
+    }
+    if (potassium > 5) {
+      if (score != 0) path += "<br>K > 5";
+      else path += "K > 5";
+      score++;
+    }
+    if (phosphate > 5) {
+      if (score != 0) path += "<br>P > 5";
+      else path += "P > 5";
+      score++;
+    }
+    if (calcium < 8) {
+      if (score != 0) path += "<br>Ca < 8 ";
+      else path += "Ca < 8 ";
+      score++;
+    }
+    if (score >= 1) {
+      patient[0].signs[0][415] = "Labratory Tumor Lysis Syndrome";
+      patient[0].signs[1][415] = path;
+    }
+  } else {
+    let score = 0;
+    if (uricAcid > 7.5) {
+      path += "Uric acid > 7.5";
+      score++;
+    }
+    if (potassium > 5) {
+      if (score != 0) path += "<br>K > 5";
+      else path += "K > 5";
+      score++;
+    }
+    if (phosphate > 5) {
+      if (score != 0) path += "<br>P > 5";
+      else path += "P > 5";
+      score++;
+    }
+    if (calcium < 8) {
+      path += "<br>Ca < 8 ";
+      score++;
+    }
+    if (score >= 2) {
+      patient[0].signs[0][415] = "Labratory Tumor Lysis Syndrome";
+      patient[0].signs[1][415] = path;
+    }
+  }
+}

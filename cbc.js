@@ -620,8 +620,8 @@ function folateAndB12() {
 }
 
 function pbsMain() {
-  conditionMaker(2);
-  conditionMaker(3);
+  // conditionMaker(2);
+  // conditionMaker(3);
 }
 
 function wbcMain() {

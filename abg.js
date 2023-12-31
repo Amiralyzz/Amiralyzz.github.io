@@ -54,8 +54,8 @@ function abgMain() {
           let predictedHCO3High = 0;
           if (globalRespiratoryChronicity == 0) {
             //acute respiratory
-            predictedHCO3High = 25 + (paco2 - 40) / 10 + 3;
-            predictedHCO3Low = 25 + (paco2 - 40) / 10 - 3;
+            predictedHCO3High = (25 + (paco2 - 40) / 10 + 3).toFixed(1);
+            predictedHCO3Low = (25 + (paco2 - 40) / 10 - 3).toFixed(1);
             if (!anionGapAvailable || (anionGap <= 12 && anionGapAvailable)) {
               if (hco3 > predictedHCO3High) {
                 path += "HCO3 > " + predictedHCO3High + " (Predicted HCO3)";
@@ -186,8 +186,8 @@ function abgMain() {
           path += "PaCO2 &le; 40 &#8594 ";
           patient[0].signs[3][61] = 1;
           patient[0].signs[3][62] = 0;
-          let predictedPaco2Low = hco3 * 1.5 + 8 - 2; //winter formula
-          let predictedPaco2High = hco3 * 1.5 + 8 + 2;
+          let predictedPaco2Low = (hco3 * 1.5 + 8 - 2).toFixed(1); //winter formula
+          let predictedPaco2High = (hco3 * 1.5 + 8 + 2).toFixed(1);
           if (paco2 > predictedPaco2High) {
             // met acid + res acid
             path +=
@@ -220,8 +220,8 @@ function abgMain() {
         } else if (anionGapAvailable && anionGap > 12) {
           // metabolic and high anion gap
           path += "PaCO2 &le; 40 &#8594 ";
-          let predictedPaco2Low = hco3 * 1.5 + 8 - 2; //winter formula
-          let predictedPaco2High = hco3 * 1.5 + 8 + 2;
+          let predictedPaco2Low = (hco3 * 1.5 + 8 - 2).toFixed(1); //winter formula
+          let predictedPaco2High = (hco3 * 1.5 + 8 + 2).toFixed(1);
           patient[0].signs[3][61] = 1;
           patient[0].signs[3][62] = 1;
           if (paco2 > predictedPaco2High) {
@@ -264,8 +264,8 @@ function abgMain() {
           let predictedHCO3High = 0;
           if (globalRespiratoryChronicity == 0) {
             //acute respiratory
-            predictedHCO3High = 25 - ((paco2 - 40) / 10) * 2 + 0.1;
-            predictedHCO3Low = 25 - ((paco2 - 40) / 10) * 2 - 0.1;
+            predictedHCO3High = (25 - ((paco2 - 40) / 10) * 2 + 0.1).toFixed(1);
+            predictedHCO3Low = (25 - ((paco2 - 40) / 10) * 2 - 0.1).toFixed(1);
             if (!anionGapAvailable || (anionGap <= 12 && anionGapAvailable)) {
               if (hco3 > predictedHCO3High) {
                 path += "HCO3 > " + predictedHCO3High + " (Predicted HCO3)";
@@ -394,8 +394,8 @@ function abgMain() {
         } else {
           path += "PaCO2 &ge; 40 &#8594 ";
           //met alkalosis
-          let predictedPaco2High = 40 + ((hco3 - 25) / 10) * 6 + 0.1;
-          let predictedPaco2Low = 40 + ((hco3 - 25) / 10) * 6 - 0.1;
+          let predictedPaco2High = (40 + ((hco3 - 25) / 10) * 6 + 0.1).toFixed(1);
+          let predictedPaco2Low = (40 + ((hco3 - 25) / 10) * 6 - 0.1).toFixed(1);
           patient[0].signs[3][61] = -1;
           if (paco2 > predictedPaco2High) {
             // met alkalosis + res acid
@@ -426,8 +426,8 @@ function abgMain() {
       if (ph >= 7.35 && ph <= 7.45 && hco3 >= 22 && hco3 <= 28) {
         path = "";
         //ph,paco2,hco3 in normal range but high anion gap
-        let predictedPaco2Low = hco3 * 1.5 + 8 - 2; //winter formula
-        let predictedPaco2High = hco3 * 1.5 + 8 + 2;
+        let predictedPaco2Low = (hco3 * 1.5 + 8 - 2).toFixed(1); //winter formula
+        let predictedPaco2High = (hco3 * 1.5 + 8 + 2).toFixed(1);
         if (
           paco2 >= predictedPaco2Low &&
           paco2 <= predictedPaco2High &&
