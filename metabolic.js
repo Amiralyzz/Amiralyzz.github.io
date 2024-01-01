@@ -838,3 +838,42 @@ function tlsCheck() {
     }
   }
 }
+function vitDMain() {
+  let vitDEntered = labItems[119].entered;
+  patient[0].signs[0][53] = undefined;
+  patient[0].signs[1][53] = undefined;
+  if (vitDEntered == 0) return 0;
+  patient[0].signs[2][53] = "rgb(102, 30, 52)";
+  let vitD = Number(labItems[119].value);
+  let path = "";
+  if (vitD < 10) {
+    path = "Vit D < 10";
+    patient[0].signs[0][53] = "Severe Vitamin D deficiency";
+    patient[0].signs[1][53] = path;
+    return 0;
+  }
+  if (vitD < 20) {
+    path = "Vit D < 20";
+    patient[0].signs[0][53] = "Vitamin D deficiency";
+    patient[0].signs[1][53] = path;
+    return 0;
+  }
+  if (vitD < 30) {
+    path = "Vit D < 30";
+    patient[0].signs[0][53] = "Vitamin D insufficiency";
+    patient[0].signs[1][53] = path;
+    return 0;
+  }
+  if (vitD <= 150) {
+    path = "Vit D > 30";
+    patient[0].signs[0][53] = "Sufficient Vitamin D";
+    patient[0].signs[1][53] = path;
+    return 0;
+  }
+  if (vitD >150) {
+    path = "Vit D > 150";
+    patient[0].signs[0][53] = "Vitamin D intoxication";
+    patient[0].signs[1][53] = path;
+    return 0;
+  }
+}

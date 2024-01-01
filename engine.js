@@ -230,6 +230,7 @@ function engineMain() {
   uricAcidMain();
   tlsCheck();
   // caMain();
+  vitDMain();
   thyroidMain();
   aldosteroneMain();
   diabetesMain();
