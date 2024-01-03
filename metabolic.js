@@ -809,7 +809,7 @@ function tlsCheck() {
       score++;
     }
     if (score >= 1) {
-      patient[0].signs[0][415] = "Labratory Tumor Lysis Syndrome";
+      patient[0].signs[0][415] = "Laboratory Tumor Lysis Syndrome";
       patient[0].signs[1][415] = path;
     }
   } else {
@@ -833,7 +833,7 @@ function tlsCheck() {
       score++;
     }
     if (score >= 2) {
-      patient[0].signs[0][415] = "Labratory Tumor Lysis Syndrome";
+      patient[0].signs[0][415] = "Laboratory Tumor Lysis Syndrome";
       patient[0].signs[1][415] = path;
     }
   }

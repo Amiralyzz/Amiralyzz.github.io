@@ -900,3 +900,8 @@ li {
   border-radius: 5px;
   padding: 0px 5px;
 }
+
+#top {
+  font-size: 0.78rem; 
+  margin-top: -10px;
+}

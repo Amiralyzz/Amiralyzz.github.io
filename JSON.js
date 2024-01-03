@@ -2233,7 +2233,7 @@ var labItems = [
     "step": "1,000",
     "unit": "/&#181L",
     "status": "",
-    "color": "darkslateblue",
+    "color": "rgb(83, 102, 30)",
     "type": "hemato",
     "critmin": "20,000",
     "critmax": "1,000,000",
@@ -3301,7 +3301,7 @@ var labItems = [
   {
     "name": "LDH",
     "tooltip": "Serum Lactate dehydrogenase",
-    "showed": "1",
+    "showed": "0",
     "value": "",
     "min": "",
     "max": "",
