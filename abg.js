@@ -402,14 +402,14 @@ function abgMain() {
             path += "PaCO2 > " + predictedPaco2High + " (predicted PaCO2)";
             patient[0].signs[0][60] =
               "Metabolic Alkalosis + Respiratory Acidosis";
-            patient[0].signs[1][60] = path;
-            return 0;
+            // patient[0].signs[1][60] = path;
+            
           } else if (paco2 < predictedPaco2Low) {
             path += "PaCO2 < " + predictedPaco2Low + " (predicted PaCO2)";
             patient[0].signs[0][60] =
               "Metabolic Alkalosis + Respiratory Alkalosis";
-            patient[0].signs[1][60] = path;
-            return 0;
+            // patient[0].signs[1][60] = path;
+            
           } else {
             path +=
               "PaCO2 in " +
@@ -418,9 +418,17 @@ function abgMain() {
               predictedPaco2High +
               " (predicted PaCO2 Range)";
             patient[0].signs[0][60] = "Metabolic Alkalosis";
-            patient[0].signs[1][60] = path;
-            return 0;
+            // patient[0].signs[1][60] = path;
+            
           }
+          if (anionGapAvailable && anionGap > 12) {
+            path += "&#8594 AG > 12";
+              patient[0].signs[0][60] +=
+                " + Metabolic Acidosis (high AG)";
+              patient[0].signs[1][60] = path;
+          }
+          patient[0].signs[1][60] = path;
+          return 0;
         }
       }
       if (ph >= 7.35 && ph <= 7.45 && hco3 >= 22 && hco3 <= 28) {

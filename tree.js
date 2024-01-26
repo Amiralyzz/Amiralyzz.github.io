@@ -270,7 +270,7 @@ let algorithms = [
     },
     {
       "key": "10",
-      "value": "Plasma Osmolarity >280",
+      "value": "Plasma Osmolarity > 280",
       "parent": "1",
       "labitemsIndex": "",
       "measurementsIndex": "",
@@ -330,28 +330,44 @@ let algorithms = [
       "parent": "1000",
       "labitemsIndex": "",
       "measurementsIndex": "",
+      "signsIndex": "425"
+    },
+    {
+      "key": "100011",
+      "value": "massive proteinuria",
+      "parent": "10001",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
+      "signsIndex": ""
+    },
+    {
+      "key": "1000110",
+      "value": "Nephrotic Syndrome",
+      "parent": "100011",
+      "labitemsIndex": "",
+      "measurementsIndex": "",
       "signsIndex": ""
     },
     {
       "key": "100010",
-      "value": "Nephrotic Syndrome",
+      "value": "no massive proteinuria",
       "parent": "10001",
       "labitemsIndex": "",
       "measurementsIndex": "",
       "signsIndex": ""
     },
     {
-      "key": "100011",
+      "key": "1000100",
       "value": "Cirrhosis",
-      "parent": "10001",
+      "parent": "100010",
       "labitemsIndex": "",
       "measurementsIndex": "",
       "signsIndex": ""
     },
     {
-      "key": "100012",
+      "key": "1000101",
       "value": "Heart Failure",
-      "parent": "10001",
+      "parent": "100010",
       "labitemsIndex": "",
       "measurementsIndex": "",
       "signsIndex": ""
@@ -569,7 +585,7 @@ let algorithms = [
     },
     {
       "key": "101",
-      "value": "Urine volume < 500 and Urine Osmolarity > 800",
+      "value": "Urine volume < 500 and Urine Osmolality > 800",
       "parent": "10",
       "labitemsIndex": "",
       "measurementsIndex": "",
@@ -609,7 +625,7 @@ let algorithms = [
     },
     {
       "key": "1001",
-      "value": "Urine osmolarity > 750",
+      "value": "Urine osmolality > 750",
       "parent": "100",
       "labitemsIndex": "",
       "measurementsIndex": "",
@@ -633,7 +649,7 @@ let algorithms = [
     },
     {
       "key": "1000",
-      "value": "Urine osmolarity &le; 750",
+      "value": "Urine osmolality &le; 750",
       "parent": "100",
       "labitemsIndex": "",
       "measurementsIndex": "",

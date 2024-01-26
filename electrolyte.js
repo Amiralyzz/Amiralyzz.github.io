@@ -87,7 +87,7 @@ function sodiumMain() {
     }
   }
   function minimalUrineMaximumConcentration() {
-    patient[0].signs[4][48] = "urine volume and osmolarity";
+    patient[0].signs[4][48] = "urine volume and osmolality";
     patient[0].signs[3][48] = undefined;
     let urineVolume = labItems[95].value;
     let urineVolumeEntered = labItems[95].entered;
@@ -101,13 +101,13 @@ function sodiumMain() {
       }
     }
   }
-  function serumOsmolarity() {
+  function serumOsmolality() {
     let plasmaOsm = Number(labItems[85].value);
     let plasmaOsmEntered = labItems[85].entered;
     let urineOsm = Number(labItems[86].value);
     let urineOsmEntered = labItems[86].entered;
-    patient[0].signs[4][41] = "Plasma Osmolarity";
-    patient[0].signs[4][43] = "Urine Osmolarity";
+    patient[0].signs[4][41] = "Plasma Osmolality";
+    patient[0].signs[4][43] = "Urine Osmolality";
     if (plasmaOsmEntered != 1) {
       plasmaOsm = 285;
     }

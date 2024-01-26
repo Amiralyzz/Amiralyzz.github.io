@@ -683,7 +683,7 @@ function neutropeniaSeverity() {
   let ANC = Number(measurements[10].value);
   let ANCEntered = measurements[10].used;
   if (ANCEntered && ANC < 1500) {
-    if(ANC > 1000) {
+    if (ANC > 1000) {
       return 1;
     } else if (ANC > 500) {
       return 2;
@@ -761,11 +761,14 @@ function wbcAnalysis(path) {
     patient[0].signs[1][0] = "value set for WBC max is too high";
     return false;
   }
-  if (wbcTotal > wbcMax) {
+  if (wbcTotal >= wbcMin) {
     path += "WBC > " + wbcMax;
     try {
       signMaker(
-        listMaker(arrayDuplicateRemover(leukocytosisDDxDecider()), "Leukocytosis"),
+        listMaker(
+          arrayDuplicateRemover(leukocytosisDDxDecider()),
+          "Leukocytosis"
+        ),
         path,
         0,
         "rgb(61, 92, 139)"
@@ -787,8 +790,6 @@ function wbcAnalysis(path) {
       patient[0].signs[0][0] = undefined;
       patient[0].signs[1][0] = undefined;
     }
-    
-
   }
 }
 
@@ -911,6 +912,7 @@ function leukocytosisDDxDecider() {
   }
   if (patient[0].signs[4][2] == 0) {
     //no differential entered
+    if (wbcTotal <= wbcMax) return 0;
     if (
       isPancytopenia() ||
       wbcTotal > 30000 ||
@@ -923,6 +925,7 @@ function leukocytosisDDxDecider() {
       ddxArray = mildLeukocytosisDDx;
     }
   } else {
+    //if differential entered
     if (isNeutrophilia()) {
       ddxArray = ddxArray.concat(neutrophiliaDDx);
     }
@@ -947,8 +950,10 @@ function leukocytosisDDxDecider() {
         isThrombocytosis()
       ) {
         ddxArray = severeLeukocytosisDDx;
-      } else {
+      } else if (wbcTotal > wbcMax) {
         ddxArray = mildLeukocytosisDDx;
+      } else {
+        return 0;
       }
     }
   }
@@ -966,12 +971,11 @@ function leukopeniaDDxDecider() {
     "Leukemia",
     "Lymphoma",
     "Myelodysplasia",
-  ]
-  if(isAnemia()) {
+  ];
+  if (isAnemia()) {
     standardDDx.push("Aplastic Anemia");
   }
-  if(patient[0].signs[3][11] == 1) {
-    
+  if (patient[0].signs[3][11] == 1) {
     standardDDx.unshift("B12 or folate deficiency");
   }
   return standardDDx;

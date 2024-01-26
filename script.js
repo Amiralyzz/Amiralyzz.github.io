@@ -666,7 +666,7 @@ function measurementsCalc() {
   wbcCalc();
   anionGapCalc();
   oxygenCalc();
-  naCalc();
+  naCaCalc();
   ttkgCalc();
   caCrCalc();
   osmGapCalc();
@@ -703,7 +703,13 @@ function caCrCalc() {
     measurements[27].used = false;
   }
 }
-
+function correctedCa(calcium) {
+  let albumin = Number(labItems[19].value);
+  let albuminEntered = labItems[19].entered;
+  if(albuminEntered == 0) return calcium;
+  let correctedCalcium = (4 - albumin) * 0.8 + calcium;
+  return correctedCalcium;
+}
 function ttkgCalc() {
   let k = Number(labItems[33].value);
   let kEntered = Number(labItems[33].entered);
@@ -721,10 +727,19 @@ function ttkgCalc() {
     measurements[26].used = false;
   }
 }
-function naCalc() {
+function naCaCalc() {
   let na = Number(labItems[32].value);
   let naEntered = labItems[32].entered;
-  if (naEntered != 1) {
+  let calcium = Number(labItems[104].value);
+  let calciumEntered = labItems[104].entered;
+  let albumin = Number(labItems[19].value);
+  let albuminEntered = labItems[19].entered;
+  measurements[21].used = false;
+  if (calciumEntered == 1) {
+    measurements[21].value = correctedCa(calcium);
+    measurements[21].used = true;
+  } 
+  if (naEntered == 0) {
     measurements[25].used = false;
     measurements[25].value = 0;
     return 0;
@@ -790,11 +805,11 @@ function anionGapCalc() {
     anionGap = na - (cl + hco3);
     deltaAnionGap = anionGap - 12;
     anionGapPotassium = na + k - (cl + hco3);
-    measurements[16].value = anionGap;
+    measurements[16].value = anionGap.toFixed(1);
     measurements[16].used = true;
-    measurements[17].value = anionGapPotassium;
+    measurements[17].value = anionGapPotassium.toFixed(1);
     measurements[17].used = true;
-    measurements[19].value = deltaAnionGap - deltaHco3;
+    measurements[19].value = (deltaAnionGap - deltaHco3).toFixed(1);
     measurements[20].value = (deltaAnionGap / deltaHco3).toFixed(1);
     measurements[19].used = true;
     measurements[20].used = true;
@@ -943,7 +958,7 @@ function gfrCalc() {
 }
 function gfrCKD(creatinine) {
   if (creatinine == 0) return 0;
-  let GFR = 0; 
+  let GFR = 0;
   let coef = 1;
   let coefK = 0.9;
   let coefA = -0.302;
@@ -972,32 +987,33 @@ function gfrCKD(creatinine) {
   return GFR;
 }
 function reticCalc() {
-  var hct_val = labItems[4].value;
-  var retic_val = labItems[11].value;
-  var crcVal = 0;
-  var rbcMaturation = 0,
+  measurements[3].used = false;
+  measurements[4].used = false;
+  let hct = labItems[4].value;
+  let retic = labItems[11].value;
+  let hctEntered = labItems[4].entered;
+  let reticEntered = labItems[11].entered;
+  if (hctEntered == 0 || reticEntered == 0) {
+    return 0;
+  }
+  let crcVal = 0;
+  let rbcMaturation = 0,
     rpiVal = 0;
-  var normal_hct_gender = 45 - genderCoef * 2.5;
-  if (hct_val >= 40) {
+  let normalHctGender = 45 - genderCoef * 2.5;
+  if (hct >= 40) {
     rbcMaturation = 1;
-  } else if (hct_val >= 30) {
+  } else if (hct >= 30) {
     rbcMaturation = 1.5;
-  } else if (hct_val >= 20) {
+  } else if (hct >= 20) {
     rbcMaturation = 2;
   } else {
     rbcMaturation = 2.5;
   }
-  if (hct_val <= 0 || retic_val <= 0) {
-    crcVal = 0;
-    rpiVal = 0;
-    measurements[3].used = false;
-    measurements[4].used = false;
-  } else {
-    measurements[3].used = true;
-    measurements[4].used = true;
-    crcVal = retic_val * (hct_val / normal_hct_gender);
-    rpiVal = ((hct_val / 45) * retic_val) / rbcMaturation;
-  }
+  measurements[3].used = true;
+  measurements[4].used = true;
+  crcVal = retic * (hct / normalHctGender);
+  rpiVal = ((hct / 45) * retic) / rbcMaturation;
+
   measurements[3].value = crcVal.toFixed(2);
   measurements[4].value = rpiVal.toFixed(2);
 }
@@ -1045,7 +1061,9 @@ function heightPercentileCalc() {
     measurements[2].used = false;
     return 0;
   }
-  let L="", M="", S="";
+  let L = "",
+    M = "",
+    S = "";
   if (genderCoef == 0) {
     L = currentAgeObject.L;
     M = currentAgeObject.M;
@@ -1083,7 +1101,9 @@ function weightPercentileCalc() {
     measurements[1].used = false;
     return 0;
   }
-  let L="", M="", S="";
+  let L = "",
+    M = "",
+    S = "";
   if (genderCoef == 0) {
     L = currentAgeObject.L;
     M = currentAgeObject.M;

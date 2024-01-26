@@ -11,8 +11,8 @@ function dyslipidemia() {
   let path = "";
   patient[0].signs[0][50] = undefined;
   patient[0].signs[2][50] = "rgb(102, 30, 52)";
-  if (totalTGEntered == 1 && totalTG >= 200) {
-    path = "Total Triglycerides &ge; 200";
+  if (totalTGEntered == 1 && totalTG >= 170) {
+    path = "Total Triglycerides &ge; 170";
     criteriaMet++;
   }
   if (totalCholEntered == 1 && totalChol >= 240) {
@@ -20,14 +20,14 @@ function dyslipidemia() {
     path += "Total Cholesterol &ge; 240";
     criteriaMet++;
   }
-  if (LDLCholEntered == 1 && LDLChol >= 160) {
+  if (LDLCholEntered == 1 && LDLChol >= 130) {
     if (criteriaMet > 0) path += " and ";
-    path += "LDL-C &ge; 240";
+    path += "LDL-C &ge; 130";
     criteriaMet++;
   }
-  if (HDLCholEntered == 1 && HDLChol < 40) {
+  if (HDLCholEntered == 1 && HDLChol < 35) {
     if (criteriaMet > 0) path += " and ";
-    path += "HDL-C Cholesterol < 40";
+    path += "HDL-C Cholesterol < 35";
     criteriaMet++;
   }
   patient[0].signs[1][50] = path;
@@ -264,7 +264,6 @@ function isDiabetes() {
   return false;
 }
 function kidneyMain() {
-  isProteinuria();
   preEclampsiaMain();
   ckdStaging();
   proteinuriaStaging();
@@ -276,7 +275,15 @@ function proteinuriaStaging() {
   patient[0].signs[0][423] = undefined;
   patient[0].signs[1][423] = undefined;
   patient[0].signs[2][423] = "rgb(128, 70, 32)";
+  patient[0].signs[4][425] = "urine protein";
+  patient[0].signs[3][425] = undefined;
   if (urineProteinEntered == 0) return 0;
+  let nephroticState = isNephrotic();
+  if (nephroticState == 1) {
+    patient[0].signs[3][425] = 1;
+  } else if (nephroticState == 2) {
+    patient[0].signs[3][425] = 0;
+  }
   let path = "";
   if (urineProtein >= 3500) {
     path = "Urine protein &ge; 3500 mg/day";
@@ -377,7 +384,7 @@ function baseCrAnalysis() {
     measurements[29].value = percentIncrease.toFixed(0);
     measurements[30].value = difference.toFixed(2);
     if (globalCKDHistory == 0) akiAnalyse();
-    if (globalCKDHistory == 1) ckdAnalyse();
+    if (globalCKDHistory == 1) akiAnalyse();
   }
   return false;
 }
@@ -454,11 +461,20 @@ function isCrRise() {
 }
 function isProteinuria() {
   let urineProtein = Number(labItems[80].value);
-  let urineProteinEntered = labItems[80].value;
+  let urineProteinEntered = labItems[80].entered;
   if (urineProteinEntered == 1) {
     if (urineProtein > 150) return true;
   }
   return false;
+}
+function isNephrotic() {
+  let urineProtein = Number(labItems[80].value);
+  let urineProteinEntered = labItems[80].entered;
+  if (urineProteinEntered == 1) {
+    if (urineProtein > 3500) return 1;
+    else return 2;
+  }
+  return 0;
 }
 function hba1cStatistics() {
   if (pregnancyStatus == 1) {
@@ -667,6 +683,29 @@ function thyroidMain() {
   patient[0].signs[0][31] = undefined;
   patient[0].signs[1][31] = undefined;
   patient[0].signs[2][31] = undefined;
+
+  if (TSHEntered == 1 && FT4Entered == 1) {
+    let resultArray = testEngine(6);
+    // resultArray[0] = arrayDuplicateRemover(resultArray[0]);
+    try {
+      signMaker(
+        listMaker(
+          arrayDuplicateRemover([...resultArray[0]].map((x) => x.value)),
+          "Thyroid Function Tests"
+        ),
+        resultArray[1], //path
+        30,
+        "rgb(65, 87, 65)"
+      );
+      return 0;
+    } catch {
+      patient[0].signs[0][30] = undefined;
+      patient[0].signs[1][30] = undefined;
+    }
+  } else {
+    patient[0].signs[0][30] = undefined;
+    patient[0].signs[1][30] = undefined;
+  }
   if (RIUEntered == 1 && FT4Entered == 1) {
     if (FT4 > FT4Max && RIU < RIUMin) {
       try {
@@ -691,28 +730,6 @@ function thyroidMain() {
       }
     }
   }
-
-  if (TSHEntered == 1 && FT4Entered == 1) {
-    let resultArray = testEngine(6);
-    // resultArray[0] = arrayDuplicateRemover(resultArray[0]);
-    try {
-      signMaker(
-        listMaker(
-          arrayDuplicateRemover([...resultArray[0]].map((x) => x.value)),
-          "Thyroid Function Tests"
-        ),
-        resultArray[1], //path
-        30,
-        "rgb(65, 87, 65)"
-      );
-    } catch {
-      patient[0].signs[0][30] = undefined;
-      patient[0].signs[1][30] = undefined;
-    }
-  } else {
-    patient[0].signs[0][30] = undefined;
-    patient[0].signs[1][30] = undefined;
-  }
 }
 function aldosteroneMain() {
   patient[0].signs[0][32] = undefined;
@@ -734,24 +751,46 @@ function aldosteroneMain() {
 function uricAcidMain() {
   let uricAcid = Number(labItems[34].value);
   let uricAcidMax = Number(labItems[34].max);
-  let uricAcidMin = Number(labItems[34].min);
+  let calcium = Number(labItems[104].value);
+  let calciumMax = Number(labItems[104].max);
+  let calciumEntered = labItems[104].entered;
   let uricAcidEntered = labItems[34].entered;
   patient[0].signs[0][414] = undefined;
   patient[0].signs[1][414] = undefined;
   patient[0].signs[2][414] = "rgb(128, 70, 32)";
+  if (uricAcidEntered == 0) return 0;
   let path = "";
   let hyperuricemiaDDx = [
     "Gout",
-    "Nephrolithiasis",
+    "Pseudogout",
+    "Purin rich diet",
+    "Fructose rich diet",
+    "Hemolytic Anemia",
+    "Lymphoma",
+    "Alcoholic Ketoacidosis",
     "Uric acid nephropathies",
+    "Nephrolithiasis",
+    "Hyperparathyroidism",
+    "Hypothyroidism",
+    "Acute Kidney Injury",
+    "Chronic Kidney Disease",
+    "Diuretics (Loop and Thiazides)",
+    "Rhabdomyolysis",
+    "Myeloproliferative Disease",
+    "Diabetic Ketoacidosis",
     "Genetic Overprodection Syndromes",
   ];
+  if (globalCKDHistory == 1) hyperuricemiaDDx.unshift("Chronic Kidney Disease");
+  if (patient[0].signs[3][30] == 1) hyperuricemiaDDx.unshift("Hypothyroidism");
+  if (globalDiureticStatus == 1)
+    hyperuricemiaDDx.unshift("Diuretics (Loop and Thiazides)");
   if (isPreEclampsia()) hyperuricemiaDDx.unshift("Preeclampsia");
+  if (calciumEntered == 1 && calcium>calciumMax) hyperuricemiaDDx.unshift("Hyperparathyroidism");
   if (uricAcid > uricAcidMax) {
     path = "Uric Acid > " + uricAcidMax;
     try {
       signMaker(
-        listMaker(hyperuricemiaDDx, "Hyperuricemia"),
+        listMaker(arrayDuplicateRemover(hyperuricemiaDDx), "Hyperuricemia"),
         path,
         414,
         "rgb(128, 70, 32)"
@@ -786,24 +825,24 @@ function tlsCheck() {
     2
   )
     return 0;
-  if (creatinine > 1.4) {
+  if (creatinine > 1.4 && creatinineEntered == 1) {
     path = "Cr > 1.4<br>";
     let score = 0;
-    if (uricAcid > 7.5) {
+    if (uricAcid > 7.5 && uricAcidEntered == 1) {
       path += "Uric acid > 7.5";
       score++;
     }
-    if (potassium > 5) {
+    if (potassium > 5 && potassiumEntered == 1) {
       if (score != 0) path += "<br>K > 5";
       else path += "K > 5";
       score++;
     }
-    if (phosphate > 5) {
+    if (phosphate > 5 && phosphateEntered == 1) {
       if (score != 0) path += "<br>P > 5";
       else path += "P > 5";
       score++;
     }
-    if (calcium < 8) {
+    if (calcium < 8 && calciumEntered == 1) {
       if (score != 0) path += "<br>Ca < 8 ";
       else path += "Ca < 8 ";
       score++;
@@ -814,21 +853,21 @@ function tlsCheck() {
     }
   } else {
     let score = 0;
-    if (uricAcid > 7.5) {
+    if (uricAcid > 7.5 && uricAcidEntered == 1) {
       path += "Uric acid > 7.5";
       score++;
     }
-    if (potassium > 5) {
+    if (potassium > 5 && potassiumEntered == 1) {
       if (score != 0) path += "<br>K > 5";
       else path += "K > 5";
       score++;
     }
-    if (phosphate > 5) {
+    if (phosphate > 5 && phosphateEntered == 1) {
       if (score != 0) path += "<br>P > 5";
       else path += "P > 5";
       score++;
     }
-    if (calcium < 8) {
+    if (calcium < 8 && calciumEntered == 1) {
       path += "<br>Ca < 8 ";
       score++;
     }
@@ -870,10 +909,112 @@ function vitDMain() {
     patient[0].signs[1][53] = path;
     return 0;
   }
-  if (vitD >150) {
+  if (vitD > 150) {
     path = "Vit D > 150";
     patient[0].signs[0][53] = "Vitamin D intoxication";
     patient[0].signs[1][53] = path;
     return 0;
   }
+}
+function caMain() {
+  let calciumEntered = labItems[104].entered;
+  patient[0].signs[0][54] = undefined;
+  patient[0].signs[1][54] = undefined;
+  if (calciumEntered == 0) {
+    return false;
+  }
+  patient[0].signs[2][54] = "rgb(102, 30, 52)";
+  let calcium = Number(labItems[104].value);
+  calcium = correctedCa(calcium);
+  let calciumMax = Number(labItems[104].max);
+  let calciumMin = Number(labItems[104].min);
+  if (calcium > calciumMax) {
+    try {
+      let path = "Ca > " + calciumMax;
+      let ddxArray = hyperCaDDx();
+      signMaker(
+        listMaker(arrayDuplicateRemover(ddxArray), "Hypercalcemia"),
+        path,
+        54,
+        "rgb(102, 30, 52)"
+      );
+    } catch {
+      patient[0].signs[0][54] = undefined;
+      patient[0].signs[1][54] = undefined;
+    }
+  }
+  if (calcium < calciumMin) {
+    try {
+      let path = "Ca < " + calciumMin;
+      let ddxArray = hypoCaDDx();
+      signMaker(
+        listMaker(arrayDuplicateRemover(ddxArray), "Hypocalcemia"),
+        path,
+        54,
+        "rgb(102, 30, 52)"
+      );
+    } catch {
+      patient[0].signs[0][54] = undefined;
+      patient[0].signs[1][54] = undefined;
+    }
+  }
+}
+function hyperCaDDx() {
+  let phosphate = Number(labItems[118].value);
+  let phosphateMin = Number(labItems[118].min);
+  let phosphateEntered = labItems[118].entered;
+  let vitD = Number(labItems[119].value);
+  let vitDEntered = labItems[119].entered;
+  let urineCa = Number(labItems[83].value);
+  let urineCaMin = Number(labItems[83].min);
+  let urineCaEntered = Number(labItems[83].entered);
+  let mainDDx = [
+    "Primary Hyperparathyroidism",
+    "Malignancy",
+    "Tertiary Hyperparathyroidism",
+    "Familial Hypocalciuric Hypercalcemia",
+    "Granulomatous diseases",
+    "Immobilization",
+    "Lithium",
+    "Vitamin D intoxication",
+    "Excessive Ca intake",
+    "Hypothyroidism",
+  ];
+  if (vitDEntered == 1 && vitD > 80) mainDDx.unshift("Granulomatous diseases");
+  if (vitDEntered == 1 && vitD > 150) mainDDx.unshift("Vitamin D intoxication");
+  if ((phosphateEntered == 1) & (phosphate < phosphateMin))
+    mainDDx.unshift("Primary Hyperparathyroidism");
+  if (patient[0].signs[3][30] == 1) mainDDx.unshift("Hypothyroidism");
+  if (urineCaEntered == 1 && urineCa < urineCaMin)
+    mainDDx.unshift("Familial Hypocalciuric Hypercalcemia");
+  return mainDDx;
+}
+function hypoCaDDx() {
+  let phosphate = Number(labItems[118].value);
+  let phosphateMax = Number(labItems[118].max);
+  let phosphateEntered = labItems[118].entered;
+  let vitD = Number(labItems[119].value);
+  let vitDEntered = labItems[119].entered;
+  let mainDDx = [
+    "Surgical manipulation of Parathyroid",
+    "Radiation to Parathyroid",
+    "Vitamin D deficiency",
+    "Chronic Kidney disease",
+    "Parathyroid infilteration",
+    "PseudohypoParathyroidism",
+    "Hypomagnesemia",
+    "Bisphosphonates",
+    "Phenytoin",
+    "Ketoconazole",
+    "Plicamycin",
+    "Acute Pancreatis",
+    "Acute Rhabdomyolysis",
+    "Acute hyperphosphatemia",
+    "Parathyroid Agenesis",
+  ];
+  if (vitDEntered == 1 && vitD < 20) mainDDx.unshift("Vitamin D deficiency");
+  if (globalCKDHistory==1) mainDDx.unshift("Chronic Kidney disease");
+  if ((phosphateEntered == 1) & (phosphate > 5))
+    mainDDx.unshift("Acute hyperphosphatemia");
+  return mainDDx;
 }

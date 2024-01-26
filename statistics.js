@@ -107,7 +107,7 @@ function statisticsCalc(labItemIndex) {
           message +=
             " is " +
             scientificNumber(currentLikelihoodRatio) +
-            " times lower now";
+            " times higher now";
         }
         statistics[labItemIndex].currentLikelihoodRatio =
           currentLikelihoodRatio;

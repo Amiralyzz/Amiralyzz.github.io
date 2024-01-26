@@ -217,7 +217,7 @@ function percentileFinder(input, min, max) {
 function engineMain() {
   //activates when user goes to analyse tab
   measurementsCalc();
-  serumOsmolarity();
+  serumOsmolality();
   severeHypothyroidism();
   anemiaType();
   lftEngine();
@@ -225,16 +225,16 @@ function engineMain() {
   abgMain();
   folateAndB12();
   isPancytopenia();
+  kidneyMain();
   sodiumMain();
   potassiumMain();
   uricAcidMain();
   tlsCheck();
-  // caMain();
+  caMain();
   vitDMain();
   thyroidMain();
   aldosteroneMain();
   diabetesMain();
-  kidneyMain();
   baseCrAnalysis();
   dyslipidemia();
   pbsMain();

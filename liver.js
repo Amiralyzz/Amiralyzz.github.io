@@ -194,7 +194,7 @@ function lftPattern(AST, ASTMax, ALT, ALTMax, ALP, ALPMax) {
       path += "&le; 2";
       pattern = "Cholestatic pattern";
     } else {
-      path = "2 < " + path + " < 5";
+      path = "2 < " + path + " < 5 and is " + rValue.toFixed(1);
       pattern = "Mixed pattern";
     }
   } else {

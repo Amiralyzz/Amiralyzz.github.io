@@ -902,6 +902,7 @@ li {
 }
 
 #top {
-  font-size: 0.78rem; 
+  /* font-size: 0.78rem;  */
+  font-size: 2.15vmin;
   margin-top: -10px;
 }
