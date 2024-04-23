@@ -304,6 +304,17 @@ input {
   width: 9vmin;
   height: 9vmin;
 }
+#logoAja {
+  float: right;
+  vertical-align: middle;
+  position: inherit;
+  margin-top: 5px;
+  margin-left: 30px;
+  padding-right: 10px;
+  transition: transform 0.2s;
+  width: 9vmin;
+  height: 9vmin;
+}
 
 h1 {
   color: rgb(178, 173, 212);
