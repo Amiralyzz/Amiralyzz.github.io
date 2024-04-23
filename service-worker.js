@@ -35,7 +35,8 @@ const resourcesToPrecache = [
   "/Art/pin.png",
   "/Art/search.png",
   "/Art/tft.png",
-  "/Art/unpin.png"
+  "/Art/unpin.png",
+  "/Art/aja.png"
 ];
 
 // Register the service worker
